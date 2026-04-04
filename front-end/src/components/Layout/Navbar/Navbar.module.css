@@ -1,0 +1,405 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+
+
+
+
+/* --------------Style of the navbar---------------------*/
+
+.navBarSection {
+    z-index: 9999;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0px;
+    background-color: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(12px);
+}
+
+
+
+
+/* -------------------Logo STYLE------------------- */
+
+h1 {
+    font-size: 2em;
+}
+
+
+/* -------------------Upper Navbar STYLE------------------- */
+.upperNavbar {
+    background-color: var(--upper-footer-bg);
+    color: var(--bg);
+    display: flex;
+    text-align: center;
+    justify-content: space-around;
+    gap: 30px;
+    word-break: break-all;
+    padding: 8px 12px;
+    margin-left: 0px;
+    position: relative;
+    /* letter-spacing: 1.1px; */
+    font-size: 14px;
+}
+
+.upperNavbar img {
+    width: 16px;
+}
+
+.upperNavbar .content {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    /* flex-wrap: wrap; */
+}
+
+.upperNavbar .content .item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+
+
+.upperNavbar .language select {
+    background-color: transparent;
+    border-radius: 4px;
+    color: var(--code-bg);
+    border: none;
+    padding: 10px;
+    box-sizing: border-box;
+    text-align: center;
+    text-align-last: center;
+    -moz-text-align-last: center;
+    cursor: pointer;
+    font-size: 17px;
+    font-weight: 600;
+
+}
+
+.upperNavbar .language select:active {
+    border: none;
+    color: var(--accent);
+}
+
+.upperNavbar .language select:focus-visible {
+    outline: none;
+    box-shadow: none;
+}
+
+.upperNavbar .language select option {
+    background-color: var(--section-bg);
+    text-align: center;
+    color: #000;
+    text-align-last: center;
+    border-radius: 23px;
+    border: none;
+}
+
+
+
+
+/* -------------------Links STYLE------------------- */
+
+nav * {
+    font-size: 16px;
+    justify-content: space-between;
+    padding: 0 20px;
+    color: var(--bg-upper-navbar);
+    font-weight: 600;
+    font-size: 16px;
+    position: relative;
+}
+
+nav>* {
+    text-decoration: none;
+}
+
+.link1 {
+    display: none;
+}
+
+nav ul a {
+    position: relative;
+    text-decoration: none;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    text-decoration: none;
+    /* border: #000 solid 2px; */
+}
+
+nav .dropdownMenu {
+    position: absolute;
+    background-color: inherit;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    margin-block-end: 0;
+    padding-inline-start: 0;
+    padding-inline-end: 0;
+    padding-top: 35px;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: transform 0.4s ease;
+    visibility: hidden;
+    
+
+}
+
+/* -------handle the li that is at the subelement ---- */
+
+nav .dropdownMenu li {
+    margin-block-start: 0;
+    margin-block-end: 0;
+    padding-inline-start: 0;
+    unicode-bidi: 0;
+    border: var(--border) 1px solid;
+    transition: 0.3s all ease-in-out;
+    width: 200px;
+    transform: translateX(-10px);
+    padding: 16px 15px;
+    background-color: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(12px);
+}
+
+
+nav .dropdownMenu li:hover {
+    background-color: var(--accent);
+    visibility: visible;
+    transform: translateX(0);
+}
+
+.link2 nav .hasDropDown:hover>.dropdownMenu {
+    opacity: 1;
+    display: block;
+    transform: translateY(0);
+    visibility: visible;
+}
+
+/* ------------- AsideBar ----------------  */
+
+aside {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--section-bg);
+
+    padding: 20px 40px;
+    top: 75px;
+    right: 0;
+    position: fixed;
+    height: 120vh;
+    overflow-y: auto;
+    width: 230px;
+    border: var(--color-text) 1px solid;
+    border-top: none;
+
+    background-color: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+
+.asideItem button {
+    all: unset;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+    padding: 20px 20px;
+}
+
+
+.asideItem button img {
+    cursor: pointer;
+    width: 15px;
+    height: 15px;
+    transition: 0.3s all ease-in-out;
+    border-radius: 50%;
+}
+
+.asideItem button img:active {
+    scale: 1.3;
+    transform: translateX(2px);
+}
+
+.asideItem a {
+    text-decoration: none;
+}
+
+
+
+
+
+aside ul {
+    list-style: none;
+    margin-block-start: 0;
+    margin-block-end: 1em;
+    padding-inline-start: 0px;
+
+}
+
+
+.submenuWrapper {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: 0.3s all ease-in-out;
+    overflow: hidden;
+}
+
+.isOpen {
+    grid-template-rows: 1fr;
+}
+
+.dropdownMenuAside {
+    min-height: 0;
+    list-style: none;
+    padding-left: 1rem;
+    margin: 0;
+}
+
+.dropdownMenuAside li {
+    border-bottom: #0004 solid 1px;
+    padding: 12px;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.isOpen .dropdownMenuAside li {
+    opacity: 1;
+    transition-delay: 0.1s;
+}
+
+/* ------------------ */
+
+.link1 {
+    display: block;
+    height: 100%;
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+    right: 0px;
+    top: 20px;
+    transition: 0.3s all ease-in-out;
+    align-items: flex-end;
+    display: none;
+    background-color: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(12px);
+    backdrop-filter: blur(8px) saturate(150%) brightness(1.2);
+    z-index: 9999;
+}
+
+.link1 nav .hasDropDown:active>.dropdownMenu {
+    opacity: 1;
+    display: block;
+    transform: translateY(0);
+    visibility: visible;
+}
+
+.link1 img {
+    width: 35px;
+    height: 35px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* -------------------- Responsive Design ------------------ */
+
+
+/* tablet  */
+@media(max-width:1024px) {
+    .warperSearchBar .searchWithIcon {
+        display: none;
+
+    }
+
+    .searchIconResponsive {
+        display: flex;
+    }
+
+    nav * {
+        padding: 10px;
+    }
+}
+
+/* phone  */
+@media(max-width:577px) {
+    .upperNavbar {
+        font-size: 10px;
+    }
+
+    .upperNavbar .content .item {
+        flex-direction: column;
+    }
+
+    h1 {
+        font-size: 1.5em;
+    }
+
+    .link2 {
+        display: none;
+        visibility: hidden;
+        opacity: 0;
+        position: fixed;
+    }
+
+    .navBarSection {
+        justify-content: start;
+
+    }
+
+    .link1 {
+        display: block;
+        position: absolute;
+        display: flex;
+        /* height: 100%; */
+        z-index: 9999;
+        background: transparent;
+    }
+
+    .link1::before {
+        content: "";
+        inset: 0;
+        position: absolute;
+        background-color: rgba(255, 255, 255, 0.3);
+        backdrop-filter: blur(12px);
+        backdrop-filter: blur(8px) saturate(150%) brightness(1.2);
+        z-index: -1;
+        border-radius: inherit;
+    }
+
+
+
+
+}
+
+
+/* standard desktop */
+@media(min-width:2000px) {
+    .upperNavbar {
+        justify-content: center;
+    }
+}
+
+/* large desktop */
+@media(min-width:1441px) {}

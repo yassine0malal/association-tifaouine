@@ -1,0 +1,37 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root {
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F4F4F5;
+  --text-primary: #18181B;
+  --text-secondary: #71717A;
+  --border-color: #E4E4E7;
+  --accent-color: #3B82F6;
+  --background-input: #f5f5f5;
+  --main-button-color: #DB4444;
+  --bg-upper-navbar:#000000;
+  --promotion-button:#00FF66;
+  --border-bold:#363738;
+  --text-footer:#FAFAFA;
+}
+
+.dark {
+  --bg-primary: #18181B;
+  --bg-secondary: #27272A;
+  --text-primary: #FAFAFA;
+  --text-secondary: #A1A1AA;
+  --border-color: #3F3F46;
+}
+
+body{
+  margin: 0;
+}
+html {
+  box-sizing: border-box;
+}
+*, *::before, *::after {
+  box-sizing: inherit;
+} */
+

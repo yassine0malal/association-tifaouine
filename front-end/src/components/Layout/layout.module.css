@@ -1,0 +1,36 @@
+
+.layout{
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    background-color:var(--bg);
+    margin: 0;
+}
+
+
+/*------------- Responsive design -------- */
+
+/* phone  */
+@media(max-width:480px){
+    nav{
+        display: none;
+    }
+    
+}
+ 
+/* tablet  */
+@media(max-width:1024px){
+   
+    
+}
+/* standard desktop */
+@media(max-width:1440px){
+   
+    
+}
+/* large desktop */
+@media(min-width:1441px){
+   
+    
+}

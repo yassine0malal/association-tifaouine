@@ -1,0 +1,198 @@
+.warper {
+    background-color: var(--upper-footer-bg);
+    color: var(--text-footer);
+    box-sizing: border-box;
+
+    /* position: relative; ((((((((((((((())))))))))))))))))) */
+}
+
+
+.footerSection {
+    padding: 30px;
+
+    /* height: 400px; */
+    background-color: var(--upper-footer-bg);
+    color: var(--color-background);
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    gap: 20px;
+}
+
+/* ---------Style of the send input ---------*/
+.company {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.footerSection .send {
+    border: #FAFAFA 1.5px solid;
+    width: 237px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding: 0 5px;
+    gap: 2px;
+    margin-left: 12px;
+    position: relative;
+    border-radius: 8px;
+}
+
+.footerSection .send input {
+    background: none;
+    border: none;
+    outline: none;
+    color: var(--color-background);
+    padding: 23px;
+}
+
+.footerSection .send img {
+    width: 20px;
+    height: 18px;
+    position: absolute;
+    right: 10px;
+    transition: 0.4s all ease-in-out;
+    color: #FAFAFA;
+
+}
+
+.footerSection .send img:active {
+    scale: 1.2;
+    rotate: -63deg;
+    translate: 23px;
+}
+
+/* ---------Style of the links ---------*/
+
+.siteMap nav {
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+
+}
+
+.siteMap nav ::first-letter {
+    text-transform: uppercase;
+}
+
+.siteMap nav a {
+    transition: 0.3s ease-in-out;
+    position: relative;
+    text-decoration: none;
+    padding-bottom: 5px;
+    margin-bottom: 18px;
+
+}
+
+.siteMap nav a::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--icons-color);
+    transition: width 0.3s ease-in-out;
+
+}
+
+.siteMap nav :hover {
+    transform: scale(1.1);
+}
+
+.siteMap nav a:hover::after {
+    width: 100%;
+}
+
+/* ----------------style of network------------- */
+.socialNetwork img {
+    width: 35px;
+    height: 35px;
+    background-color: #ffffff80;
+    border-radius: 20px;
+    transition: 0.3s ease-in-out;
+}
+
+.socialNetwork img:hover {
+    background-color: #fff;
+    transform: scale(1.2);
+}
+
+.socialNetwork .net {
+    display: flex;
+    justify-content: space-around;
+    gap: 25px;
+}
+
+/* ----------------style of copyrights------------- */
+hr {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    border: 1px solid #ffffff08;
+}
+
+.copyrights {
+    color: #ffffff80;
+    display: flex;
+    box-sizing: border-box;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* --------------------- Responsive Design ----------------- */
+
+/* phone  */
+@media(max-width:480px) {
+    .copyrights {
+        padding-top: 0px;
+        /* margin-top: 12px; */
+        text-align: center;
+
+    }
+
+    hr {
+
+        position: relative;
+        width: 100%;
+        left: 0;
+        border: 1px solid #ffffff08;
+    }
+
+    .siteMap nav a::after {
+        left: 50px;
+    }
+
+
+
+}
+
+/* tablet  */
+@media(max-width:1024px) {
+    .footerSection {
+        flex-direction: column;
+        /* height: 100vh; */
+        text-align: center  ;
+        z-index: -1;
+    }
+
+    .siteMap nav a:hover::after {
+        width: 25%;
+    }
+    .footerSection .send{
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        width: auto;
+    }
+}
+
+/* standard desktop */
+@media(max-width:1440px) {}
+
+/* large desktop */
+@media(min-width:1441px) {}
