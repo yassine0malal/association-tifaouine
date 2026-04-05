@@ -5,6 +5,11 @@ class DomaineController {
     // fonction pour creer un domaine depuis l'api
     async create(req, res) {
         try {
+            // si une image a ete uploadee par Multer, on construit le chemin public
+            if (req.file) {
+                req.body.icone = '/data/domaines/' + req.file.filename;
+            }
+
             // donnees venant du frontend ou postman via req.body   
             const result = await domaineService.createDomaine(req.body);
             return res.status(201).json({
@@ -62,6 +67,12 @@ class DomaineController {
     async update(req, res) {
         try {
             const { id } = req.params;
+
+            // si une nouvelle icone est uploadee, on construit le chemin public
+            if (req.file) {
+                req.body.icone = '/data/domaines/' + req.file.filename;
+            }
+
             const theUpdate = await domaineService.updateDomaine(id, req.body);
             return res.status(200).json({
                 success: true,
