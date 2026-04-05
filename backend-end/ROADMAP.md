@@ -26,14 +26,20 @@ L'équipe a déjà mis en place une structure solide qui correspond parfaitement
 
 Puisque les **Modèles (Database)** existent déjà avec leurs relations exactes issues du diagramme UML, la mission actuelle est de développer les couches d'accès aux données, la logique métier, et les points de terminaison (Endpoints) spécifiés dans le CDC.
 
-### 🧩 3.1. Implémentation du Module `Domaine`
-> *Lien CDC : Les domaines portent les thématiques (Eau Potable, Agriculture, Social, etc.).*
-- [ ] **Repository :** `src/repositories/domaine.repository.js` (Lister tous les domaines pour le menu de navigation frontend).
-- [ ] **Service :** `src/services/domaine.service.js`.
-- [ ] **Controller :** `src/controllers/domaine.controller.js`.
-- [ ] **Routes :** `src/routes/domaines.routes.js`.
-  - Endpoint Publique : `GET /api/domaines`
-  - Endpoints Admin (JWT) : `POST`, `PUT`, `DELETE /api/admin/domaines/:id`
+### 🛡️ 3.0. Standards de Code Obligatoires (Sécurité & Intégrité)
+> **IMPORTANT :** À partir du module `Domaine` et pour tous les modules suivants, le code doit scrupuleusement respecter le niveau de sécurité imposé par le module `benevole` de vos camarades.
+- [ ] **Transactions BDD (Services) :** Toute opération d'écriture (Create, Update, Delete) doit obligatoirement être encapsulée dans une transaction Sequelize : `await sequelize.transaction(async (t) => { ... })`.
+- [ ] **Protection des Routes (Middlewares) :** Les routes qui modifient la donnée (POST, PUT, DELETE) doivent être protégées par `verifyToken` et `isAdmin` importées depuis `../middlewares/auth.middleware`. Seuls les administrateurs connectés peuvent modifier ces tables.
+- [ ] **Gestion des Fichiers (Middlewares) :** Si une ressource nécessite une image (ex: l"`icone`" du Domaine), l'upload doit passer par `uploadMiddleware` (qui filtre et sauvegarde le fichier) !
+- [ ] **Protection Anti-Spam (Rate Limiter) :** Veiller à ce que l'API soit protégée par `apiLimiter` (du fichier `rateLimit.middleware.js`) pour empêcher les attaques DDoS ou le piratage.
+
+### 🧩 3.1. Refactoring et Sécurisation du Module `Domaine`
+> *Lien CDC : Les domaines portent les thématiques (Eau Potable, Agriculture, Social, etc.). L'entité possède un champ `icone`.*
+- [ ] **Routes (`domaines.routes.js`) :**
+  - Ajouter `verifyToken` et `isAdmin` sur `POST`, `PUT`, `DELETE`.
+  - Ajouter le middleware `uploadMiddleware('domaines', 'icone')` sur les requêtes `POST` et `PUT` pour capturer l'image de l'icône !
+- [ ] **Controller (`domaine.controller.js`) :** Intercepter `req.file` et ajouter son chemin (`/data/domaines/${req.file.filename}`) dans `req.body.icone` avant d'appeler le Service (exactement comme le fait `benevole.controller.js`).
+- [ ] **Service (`domaine.service.js`) :** Ajouter le bloc `sequelize.transaction` autour de la création, la modification et la suppression. Ajouter aussi la logique pour supprimer l'ancienne icône du disque dur serveur lors d'un UPDATE ou d'un DELETE.
 
 ### 🏗️ 3.2. Implémentation du Module `Projet`
 > *Lien CDC (BF-04) : Fiches détaillées des projets reliés aux domaines, avec nb_beneficiaires, dates, statut.*

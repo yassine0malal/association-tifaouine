@@ -30,23 +30,23 @@ class DomaineRepository {
     }
 
     // requete de creation 
-    async create(data) {
-        return await Domaine.create(data);
+    async create(data, options = {}) {
+        return await Domaine.create(data, options);
     }
     
     // modifier le domaine
-    async update(id, data) {
+    async update(id, data, options = {}) {
         const domaine = await Domaine.findByPk(id);
         // verifier si il existe
         if (!domaine) return null;
-        return await domaine.update(data);
+        return await domaine.update(data, options);
     }
 
     // supprimer le domaine
-    async delete(id) {
+    async delete(id, options = {}) {
         const domaine = await Domaine.findByPk(id);
         if (!domaine) return false;
-        await domaine.destroy();
+        await domaine.destroy(options);
         return true;
     }
 }
