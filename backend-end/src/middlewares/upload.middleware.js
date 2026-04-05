@@ -23,9 +23,9 @@ const storage = (subfolder) => multer.diskStorage({
     }
 });
 
-// Filtre pour n'accepter que les images
-const imageFilter = (req, file, cb) => {
-    const allowedTypes = /jpeg|jpg|png|webp|gif/;
+// Filtre pour n'accepter que les images et videos
+const mediaFilter = (req, file, cb) => {
+    const allowedTypes = /jpeg|jpg|png|webp|gif|mp4|webm|mov|mkv|avi/;
     const ext = path.extname(file.originalname).toLowerCase();
     const mimetype = allowedTypes.test(file.mimetype);
     const extension = allowedTypes.test(ext);
@@ -33,7 +33,7 @@ const imageFilter = (req, file, cb) => {
     if (mimetype && extension) {
         return cb(null, true);
     } else {
-        cb(new Error("Format de fichier non supporté. Accepte seulement : JPEG, JPG, PNG, WEBP, GIF"), false);
+        cb(new Error("Format de fichier non supporte. Accepte seulement : JPEG, JPG, PNG, WEBP, GIF, MP4, WEBM, MOV, MKV, AVI"), false);
     }
 };
 
@@ -45,9 +45,9 @@ const imageFilter = (req, file, cb) => {
 const uploadMiddleware = (subfolder, fieldName) => {
     return multer({
         storage: storage(subfolder),
-        fileFilter: imageFilter,
+        fileFilter: mediaFilter,
         limits: {
-            fileSize: 5 * 1024 * 1024 // 5 Mo maximum
+            fileSize: 50 * 1024 * 1024 // 50 Mo maximum
         }
     }).single(fieldName);
 };
