@@ -9,7 +9,7 @@ backend-end/.env
 backend-end/ROADMAP.md
 ROADMAP.md
 
-backend-end/src/data/
+
 front-end/dist/
 front-end/build/
 .DS_Store
@@ -21,9 +21,3 @@ yarn-debug.log*
 yarn-error.log*
 .vscode/
 
-package-lock.json
-backend-end/package-lock.json
-front-end/package-lock.json
-
-backend-end/package.json
-front-end/package.json
