@@ -3,6 +3,8 @@ const router = express.Router();
 const domaineController = require('../controllers/domaine.controller');
 const { verifyToken, isAdmin } = require('../middlewares/auth.middleware');
 const uploadMiddleware = require('../middlewares/upload.middleware');
+const { validate } = require('../middlewares/validate.middleware');
+const { createDomaineSchema, updateDomaineSchema } = require('../validations/domaine.validation');
 
 // Routes publiques (lecture seule)
 router.get('/', domaineController.getAll.bind(domaineController));
@@ -12,8 +14,8 @@ router.get('/:id', domaineController.getById.bind(domaineController));
 router.use(verifyToken);
 router.use(isAdmin);
 
-router.post('/', uploadMiddleware('domaines', 'icone'), domaineController.create.bind(domaineController));
-router.put('/:id', uploadMiddleware('domaines', 'icone'), domaineController.update.bind(domaineController));
+router.post('/', uploadMiddleware('domaines', 'icone'), validate(createDomaineSchema), domaineController.create.bind(domaineController));
+router.put('/:id', uploadMiddleware('domaines', 'icone'), validate(updateDomaineSchema), domaineController.update.bind(domaineController));
 router.delete('/:id', domaineController.delete.bind(domaineController));
 
 module.exports = router;
