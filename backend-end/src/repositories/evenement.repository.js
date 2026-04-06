@@ -20,10 +20,6 @@ class EvenementRepository {
 
         return await Evenement.findAll({
             where,
-            include: [
-                { model: Domaine, required: false },
-                { model: Projet, required: false }
-            ],
             order: [['date_debut', 'DESC']]
         });
     }
@@ -32,12 +28,7 @@ class EvenementRepository {
      * Trouver un événement par son ID
      */
     async findById(id) {
-        return await Evenement.findByPk(id, {
-            include: [
-                { model: Domaine, required: false },
-                { model: Projet, required: false }
-            ]
-        });
+        return await Evenement.findByPk(id);
     }
 
     /**
