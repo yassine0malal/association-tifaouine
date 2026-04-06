@@ -22,10 +22,6 @@ class ProjetRepository {
 
         return await Projet.findAll({
             where,
-            include: [{
-                model: Domaine,
-                required: false
-            }],
             order: [['date_debut', 'DESC']]
         });
     }
@@ -35,12 +31,7 @@ class ProjetRepository {
      * @param {number} id 
      */
     async findById(id) {
-        return await Projet.findByPk(id, {
-            include: [{
-                model: Domaine,
-                required: false
-            }]
-        });
+        return await Projet.findByPk(id);
     }
 
     /**

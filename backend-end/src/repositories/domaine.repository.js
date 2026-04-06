@@ -3,20 +3,12 @@ const { Domaine, Projet } = require('../models');
 class DomaineRepository {
     // recupere tout les domaines 
     async findAll() {
-        return await Domaine.findAll({
-            // on inclut les projets lies a ce domaine selon le cdc
-            include: [{
-                model: Projet,
-                required: false // car on peut avoir des domaines sans projets au debut
-            }]
-        });
+        return await Domaine.findAll();
     }
 
     // trouve un domaine par id
     async findById(id) {
-        return await Domaine.findByPk(id, {
-            include: [{ model: Projet, required: false }]
-        });
+        return await Domaine.findByPk(id);
     }
 
     // cherche un domaine par son nom (pour eviter les doublons dans la bd)
