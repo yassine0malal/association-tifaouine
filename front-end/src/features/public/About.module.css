@@ -5,9 +5,11 @@
   --gap: 60px;
 }
 
-.AboutSection{
-
+.AboutSection {
+   width: 100%;
+  max-width: 1450px;
 }
+
 .carouselWrapper {
   z-index: 1;
   width: 100%;
@@ -17,7 +19,135 @@
   perspective: 1500px;
   display: flex;
   position: relative;
+
 }
+
+/* ----association defenition---- - */
+
+.associationDescription {
+  padding: 6rem 3rem 3rem 8rem;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(500px,100%), 1fr));
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  gap: 4rem;
+}
+
+.associationDescription .imageWrapper img {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 1;
+  border: 6px solid #FFFFFF;
+}
+
+.associationDescription .imageWrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  margin-bottom: 8rem;
+  /* padding: 12px; */
+}
+
+.associationDescription .imageWrapper::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 90%;
+  background-color: var(--accent-hover);
+  background-color: #EDEDE9;
+  bottom: -70px;
+  left: -70px;
+}
+
+.associationDescription .description p:first-child {
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.associationDescription .description p:last-child {
+  /* font-size: 15px; */
+  /* letter-spacing: 1px; */
+  /* text-align: justify; */
+
+}
+
+.associationDescription .description h2 {
+  position: relative;
+  padding-bottom: 15px;
+  margin-bottom: 12px;
+
+}
+
+.associationDescription .description h2::before {
+  position: absolute;
+  content: "";
+  background-color: var(--accent);
+  width: 5rem;
+  height: 3px;
+  bottom: -1.2rem;
+  border-radius: 3px;
+
+
+}
+
+.associationDescription .description {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.optionWarper img {
+  width: 20px;
+  height: 20px;
+}
+
+.optionWarper {
+  display: flex;
+  gap: 20px;
+  justify-content: flex-start;
+  align-items: center;
+  padding-bottom: 5px;
+}
+.interaction{
+  display: flex;
+  gap: 4rem;
+  padding: 20px;
+  justify-content: center;
+  align-items: center;
+}
+.interaction .phone img{
+  width: 20px;
+  height: 20px;
+}
+.interaction .button button{
+  transition: 0.3s ease-in-out ;
+  min-width: 150px;
+  text-align: center;
+}
+.interaction .button button:hover  {
+  transform: translateY(-12px);
+}
+
+.interaction .phone{
+  display: flex;
+  gap: 10px;
+}
+.interaction .phone p{
+  /* font-weight: 600; */
+}
+
+
+
+/* -------hashed text section------- */
+
+.hashtage{
+  
+}
+
 
 .carouselTrack {
   display: flex;
@@ -112,7 +242,7 @@
 }
 
 /* In CSS Modules, sibling selectors with generated classes work like this: */
-.carouselCard:hover + .cardFooter {
+.carouselCard:hover+.cardFooter {
   opacity: 1;
 }
 
@@ -140,15 +270,23 @@
   bottom: 0;
 }
 
-.carouselCard:hover + .cardFooter h3::before {
+.carouselCard:hover+.cardFooter h3::before {
   width: 20%;
   height: 2px;
 }
+.options{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+/* Responsive */
 
 @media (max-width: 768px) {
-  :root {
-    --card-w: 180px;
-    --card-h: 270px;
-    --gap: 30px;
+
+  .associationDescription{
+    margin-top: 30%;
+    padding: 3rem;
   }
+  
 }
