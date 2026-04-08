@@ -5,13 +5,26 @@ const fs = require('fs');
 // Configuration du stockage Multer
 const storage = (subfolder) => multer.diskStorage({
     destination: function (req, file, cb) {
-        const uploadPath = path.join(__dirname, '../data', subfolder);
+        let finalPath = path.join(__dirname, '../data', subfolder);
         
-        // Vérifier si le dossier existe (au cas où)
-        if (!fs.existsSync(uploadPath)) {
-            fs.mkdirSync(uploadPath, { recursive: true });
+        // Si on est dans le module ressources, on sépare images, vidéos et documents
+        if (subfolder === 'ressources') {
+            const ext = path.extname(file.originalname).toLowerCase();
+            const isImage = /jpeg|jpg|png|webp|gif/.test(ext);
+            const isVideo = /mp4|webm|mov|mkv|avi/.test(ext);
+            
+            let subType = 'documents';
+            if (isImage) subType = 'images';
+            else if (isVideo) subType = 'videos';
+
+            finalPath = path.join(finalPath, subType);
         }
-        cb(null, uploadPath);
+
+        // Vérifier si le dossier existe (au cas où)
+        if (!fs.existsSync(finalPath)) {
+            fs.mkdirSync(finalPath, { recursive: true });
+        }
+        cb(null, finalPath);
     },
     filename: function (req, file, cb) {
         // Nettoyage du nom de fichier original (enlever espaces et caractères spéciaux)
@@ -23,17 +36,16 @@ const storage = (subfolder) => multer.diskStorage({
     }
 });
 
-// Filtre pour n'accepter que les images et videos
+// Filtre pour n'accepter que les images, videos et documents standard
 const mediaFilter = (req, file, cb) => {
-    const allowedTypes = /jpeg|jpg|png|webp|gif|mp4|webm|mov|mkv|avi/;
+    const allowedTypes = /jpeg|jpg|png|webp|gif|mp4|webm|mov|mkv|avi|pdf|doc|docx|xls|xlsx/;
     const ext = path.extname(file.originalname).toLowerCase();
-    const mimetype = allowedTypes.test(file.mimetype);
-    const extension = allowedTypes.test(ext);
+    const mimetype = allowedTypes.test(file.mimetype) || allowedTypes.test(ext);
 
-    if (mimetype && extension) {
+    if (mimetype) {
         return cb(null, true);
     } else {
-        cb(new Error("Format de fichier non supporte. Accepte seulement : JPEG, JPG, PNG, WEBP, GIF, MP4, WEBM, MOV, MKV, AVI"), false);
+        cb(new Error("Format de fichier non supporte. Accepte : IMAGES, VIDEOS (MP4, WEBM...), DOCUMENTS (PDF, DOCX, XLSX)"), false);
     }
 };
 
