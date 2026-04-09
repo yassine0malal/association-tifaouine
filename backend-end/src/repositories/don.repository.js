@@ -31,7 +31,7 @@ class DonRepository {
             where,
             include: this._buildIncludes(),
             order:   [['date_reception', 'DESC']],
-            limit:   limit  || 10,
+            limit:   limit  || 9,
             offset:  offset || 0
         });
     }

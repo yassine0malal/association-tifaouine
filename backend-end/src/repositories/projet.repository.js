@@ -23,7 +23,7 @@ class ProjetRepository {
         return await Projet.findAndCountAll({
             where,
             order:  [['date_debut', 'DESC']],
-            limit:  limit  || 10,
+            limit:  limit  || 9,
             offset: offset || 0
         });
     }

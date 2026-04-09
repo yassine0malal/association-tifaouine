@@ -9,7 +9,7 @@ class MembreRepository {
         return await Utilisateur.findAndCountAll({
             where:   { type: 'membre' },
             include: [{ model: membre, required: true }],
-            limit:   limit  || 10,
+            limit:   limit  || 9,
             offset:  offset || 0
         });
     }

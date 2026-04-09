@@ -9,7 +9,7 @@ class BenevoleRepository {
         return await Utilisateur.findAndCountAll({
             where:   { type: 'benevole' },
             include: [{ model: benevole, required: true }],
-            limit:   limit  || 10,
+            limit:   limit  || 9,
             offset:  offset || 0
         });
     }

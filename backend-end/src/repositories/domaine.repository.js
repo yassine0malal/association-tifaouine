@@ -5,7 +5,7 @@ class DomaineRepository {
         const { limit, offset } = filters;
         return await Domaine.findAndCountAll({
             order:  [['created_at', 'ASC']],
-            limit:  limit  || 10,
+            limit:  limit  || 9,
             offset: offset || 0
         });
     }

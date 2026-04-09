@@ -9,7 +9,7 @@ class MessageRepository {
         const { limit, offset } = filters;
         return await MessageContact.findAndCountAll({
             order:  [['created_at', 'DESC']],
-            limit:  limit  || 10,
+            limit:  limit  || 9,
             offset: offset || 0
         });
     }
