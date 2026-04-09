@@ -15,8 +15,8 @@ class MessageService {
     /**
      * @desc Récupérer tous les messages (Admin)
      */
-    async getAllMessages() {
-        return await messageRepository.findAll();
+    async getAllMessages(filters = {}) {
+        return await messageRepository.findAll(filters);
     }
 
     /**

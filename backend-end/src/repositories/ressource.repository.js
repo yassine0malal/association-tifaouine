@@ -6,15 +6,17 @@ class RessourceRepository {
      * @param {Object} filters - type, projet_id
      */
     async findAll(filters = {}) {
-        const { type, projet_id } = filters;
+        const { type, projet_id, limit, offset } = filters;
         const where = {};
 
-        if (type) where.type = type;
-        if (projet_id) where.projet_id = projet_id;
+        if (type)       where.type       = type;
+        if (projet_id)  where.projet_id  = projet_id;
 
-        return await Ressource.findAll({
+        return await Ressource.findAndCountAll({
             where,
-            order: [['created_at', 'DESC']]
+            order:  [['created_at', 'DESC']],
+            limit:  limit  || 10,
+            offset: offset || 0
         });
     }
 

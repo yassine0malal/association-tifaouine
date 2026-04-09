@@ -23,8 +23,8 @@ class PartenariatService {
     /**
      * Récupérer tous les partenariats
      */
-    async getAllPartenariats() {
-        return await partenariatRepository.findAll();
+    async getAllPartenariats(filters = {}) {
+        return await partenariatRepository.findAll(filters);
     }
 
     /**

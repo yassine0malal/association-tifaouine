@@ -1,9 +1,13 @@
 const { Domaine, Projet } = require('../models');
 
 class DomaineRepository {
-    // recupere tout les domaines 
-    async findAll() {
-        return await Domaine.findAll();
+    async findAll(filters = {}) {
+        const { limit, offset } = filters;
+        return await Domaine.findAndCountAll({
+            order:  [['created_at', 'ASC']],
+            limit:  limit  || 10,
+            offset: offset || 0
+        });
     }
 
     // trouve un domaine par id

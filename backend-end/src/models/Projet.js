@@ -24,6 +24,18 @@ const Projet = sequelize.define('Projet', {
         type: DataTypes.STRING(255),
         allowNull: false,
     },
+    description_fr: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+    },
+    description_ar: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+    },
+    description_en: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+    },
     statut: {
         type: DataTypes.STRING(20),
         allowNull: false,

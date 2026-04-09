@@ -1,4 +1,5 @@
 const partenariatService = require('../services/partenariat.service');
+const { buildPaginatedResponse } = require('../utils/paginate');
 
 class PartenariatController {
     /**
@@ -31,18 +32,14 @@ class PartenariatController {
      */
     async getAll(req, res) {
         try {
-            const list = await partenariatService.getAllPartenariats();
+            const { page, limit, offset } = req.pagination;
+            const result = await partenariatService.getAllPartenariats({ limit, offset });
             return res.status(200).json({
                 success: true,
-                count: list.length,
-                data: list
+                ...buildPaginatedResponse(result, page, limit)
             });
         } catch (error) {
-            console.error("Erreur lors de la récupération des partenariats : ", error.message);
-            return res.status(500).json({
-                success: false,
-                message: "Erreur serveur lors de la récupération des partenariats"
-            });
+            return res.status(500).json({ success: false, message: "Erreur serveur lors de la récupération des partenariats" });
         }
     }
 

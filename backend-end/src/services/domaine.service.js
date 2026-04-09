@@ -30,8 +30,8 @@ class DomaineService {
     /**
      * @desc    Recuperation de toutes les donnees 
      */
-    async getAllDomaines() {
-        return await domaineRepository.findAll();
+    async getAllDomaines(filters = {}) {
+        return await domaineRepository.findAll(filters);
     }
 
     /**

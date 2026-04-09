@@ -1,4 +1,5 @@
 const domaineService = require('../services/domaine.service');
+const { buildPaginatedResponse } = require('../utils/paginate');
 
 class DomaineController {
     
@@ -30,18 +31,14 @@ class DomaineController {
     // recuperer tous les domaines pour affichage dans la navigation 
     async getAll(req, res) {
         try {
-            const malist = await domaineService.getAllDomaines();
+            const { page, limit, offset } = req.pagination;
+            const result = await domaineService.getAllDomaines({ limit, offset });
             return res.status(200).json({
                 success: true,
-                count: malist.length,
-                data: malist
+                ...buildPaginatedResponse(result, page, limit)
             });
         } catch (error) {
-            console.error("probleme pour lister les domaines : ", error.message);
-            return res.status(500).json({
-                success: false,
-                message: "erreur serveur"
-            });
+            return res.status(500).json({ success: false, message: "erreur serveur" });
         }
     }
 

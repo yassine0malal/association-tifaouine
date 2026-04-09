@@ -1,4 +1,5 @@
 const evenementService = require('../services/evenement.service');
+const { buildPaginatedResponse } = require('../utils/paginate');
 
 class EvenementController {
     /**
@@ -8,22 +9,14 @@ class EvenementController {
     async getAll(req, res) {
         try {
             const { domaine_id, projet_id, annee } = req.query;
-            const eves = await evenementService.getAllEvenements({
-                domaine_id,
-                projet_id,
-                annee
-            });
+            const { page, limit, offset } = req.pagination;
+            const result = await evenementService.getAllEvenements({ domaine_id, projet_id, annee, limit, offset });
             return res.status(200).json({
                 success: true,
-                count: eves.length,
-                data: eves
+                ...buildPaginatedResponse(result, page, limit)
             });
         } catch (error) {
-            return res.status(500).json({
-                success: false,
-                message: "Erreur lors de la récupération des événements",
-                error: error.message
-            });
+            return res.status(500).json({ success: false, message: "Erreur lors de la récupération des événements", error: error.message });
         }
     }
 

@@ -1,4 +1,5 @@
 ﻿const donService = require('../services/don.service');
+const { buildPaginatedResponse } = require('../utils/paginate');
 
 class DonController {
 
@@ -48,14 +49,13 @@ class DonController {
     async getAll(req, res) {
         try {
             const { type_don, statut, type_destination, projet_id } = req.query;
-            const dons = await donService.getAllDons({ type_don, statut, type_destination, projet_id });
+            const { page, limit, offset } = req.pagination;
+            const result = await donService.getAllDons({ type_don, statut, type_destination, projet_id, limit, offset });
             return res.status(200).json({
                 success: true,
-                count: dons.length,
-                data: dons
+                ...buildPaginatedResponse(result, page, limit)
             });
         } catch (error) {
-            console.error("Erreur getAll dons controller :", error.message);
             return res.status(500).json({ success: false, message: "Impossible de récupérer les dons." });
         }
     }

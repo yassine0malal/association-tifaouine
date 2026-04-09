@@ -4,10 +4,10 @@ const ressourceController = require('../controllers/ressource.controller');
 const { verifyToken, isAdmin } = require('../middlewares/auth.middleware');
 const uploadMiddleware = require('../middlewares/upload.middleware');
 const { validate } = require('../middlewares/validate.middleware');
+const { paginate } = require('../middlewares/pagination.middleware');
 const { createRessourceSchema, updateRessourceSchema } = require('../validations/ressource.validation');
 
-// --- ROUTES PUBLIQUES ---
-router.get('/', ressourceController.getAll.bind(ressourceController));
+router.get('/', paginate, ressourceController.getAll.bind(ressourceController));
 router.get('/:id', ressourceController.getById.bind(ressourceController));
 
 // --- ROUTES PRIVÉES (Admin seulement) ---

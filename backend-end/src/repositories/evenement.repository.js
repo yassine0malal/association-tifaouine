@@ -7,20 +7,22 @@ class EvenementRepository {
      * @param {Object} filters - domaine_id, projet_id, annee
      */
     async findAll(filters = {}) {
-        const { domaine_id, projet_id, annee } = filters;
+        const { domaine_id, projet_id, annee, limit, offset } = filters;
         const where = {};
 
         if (domaine_id) where.domaine_id = domaine_id;
-        if (projet_id) where.projet_id = projet_id;
+        if (projet_id)  where.projet_id  = projet_id;
         if (annee) {
             where.date_debut = {
                 [Op.between]: [`${annee}-01-01`, `${annee}-12-31`]
             };
         }
 
-        return await Evenement.findAll({
+        return await Evenement.findAndCountAll({
             where,
-            order: [['date_debut', 'DESC']]
+            order:  [['date_debut', 'DESC']],
+            limit:  limit  || 10,
+            offset: offset || 0
         });
     }
 

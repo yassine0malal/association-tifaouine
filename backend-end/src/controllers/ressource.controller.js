@@ -1,4 +1,5 @@
 const ressourceService = require('../services/ressource.service');
+const { buildPaginatedResponse } = require('../utils/paginate');
 const path = require('path');
 
 class RessourceController {
@@ -9,18 +10,14 @@ class RessourceController {
     async getAll(req, res) {
         try {
             const { type, projet_id } = req.query;
-            const ressources = await ressourceService.getAllRessources({ type, projet_id });
+            const { page, limit, offset } = req.pagination;
+            const result = await ressourceService.getAllRessources({ type, projet_id, limit, offset });
             return res.status(200).json({
                 success: true,
-                count: ressources.length,
-                data: ressources
+                ...buildPaginatedResponse(result, page, limit)
             });
         } catch (error) {
-            return res.status(500).json({
-                success: false,
-                message: "Erreur lors de la récupération des ressources",
-                error: error.message
-            });
+            return res.status(500).json({ success: false, message: "Erreur lors de la récupération des ressources", error: error.message });
         }
     }
 

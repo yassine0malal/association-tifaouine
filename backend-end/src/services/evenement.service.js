@@ -8,10 +8,6 @@ class EvenementService {
     async getAllEvenements(filters = {}) {
         return await evenementRepository.findAll(filters);
     }
-
-    /**
-     * Récupérer un événement par ID
-     */
     async getEvenementById(id) {
         const eve = await evenementRepository.findById(id);
         if (!eve) {

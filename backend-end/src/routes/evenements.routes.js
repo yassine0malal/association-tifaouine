@@ -3,13 +3,10 @@ const router = express.Router();
 const evenementController = require('../controllers/evenement.controller');
 const { verifyToken, isAdmin } = require('../middlewares/auth.middleware');
 const { validate } = require('../middlewares/validate.middleware');
+const { paginate } = require('../middlewares/pagination.middleware');
 const { createEvenementSchema, updateEvenementSchema } = require('../validations/evenement.validation');
 
-/**
- * @route   GET /api/evenements
- * @desc    Récupérer tous les événements (Public)
- */
-router.get('/', evenementController.getAll.bind(evenementController));
+router.get('/', paginate, evenementController.getAll.bind(evenementController));
 
 /**
  * @route   GET /api/evenements/:id

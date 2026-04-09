@@ -10,10 +10,6 @@ class RessourceService {
     async getAllRessources(filters = {}) {
         return await ressourceRepository.findAll(filters);
     }
-
-    /**
-     * Récupérer une ressource par ID
-     */
     async getRessourceById(id) {
         const ressource = await ressourceRepository.findById(id);
         if (!ressource) {

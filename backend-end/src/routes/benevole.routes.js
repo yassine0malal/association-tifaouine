@@ -4,15 +4,10 @@ const benevoleController = require('../controllers/benevole.controller');
 const { verifyToken, isAdmin } = require('../middlewares/auth.middleware');
 const uploadMiddleware = require('../middlewares/upload.middleware');
 const { validate } = require('../middlewares/validate.middleware');
+const { paginate } = require('../middlewares/pagination.middleware');
 const { createBenevoleSchema, updateBenevoleSchema } = require('../validations/benevole.validation');
 
-// --- ROUTES PUBLIQUES ---
-
-/**
- * @route   GET /api/benevoles
- * @desc    Récupérer tous les bénévoles
- */
-router.get('/', benevoleController.getAll);
+router.get('/', paginate, benevoleController.getAll);
 
 /**
  * @route   GET /api/benevoles/:id

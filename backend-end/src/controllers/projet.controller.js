@@ -1,4 +1,5 @@
 const projetService = require('../services/projet.service');
+const { buildPaginatedResponse } = require('../utils/paginate');
 
 class ProjetController {
     /**
@@ -8,21 +9,15 @@ class ProjetController {
     async getAll(req, res) {
         try {
             const { domaine_id, annee } = req.query;
-            const projets = await projetService.getAllProjets({
-                domaine_id,
-                annee
-            });
+            const { page, limit, offset } = req.pagination;
+            const result = await projetService.getAllProjets({ domaine_id, annee, limit, offset });
             return res.status(200).json({
                 success: true,
-                count: projets.length,
-                data: projets
+                count:   result.count,
+                ...buildPaginatedResponse(result, page, limit)
             });
         } catch (error) {
-            return res.status(500).json({
-                success: false,
-                message: "Erreur lors de la récupération des projets",
-                error: error.message
-            });
+            return res.status(500).json({ success: false, message: "Erreur lors de la récupération des projets", error: error.message });
         }
     }
 

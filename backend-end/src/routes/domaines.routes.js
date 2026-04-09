@@ -4,10 +4,10 @@ const domaineController = require('../controllers/domaine.controller');
 const { verifyToken, isAdmin } = require('../middlewares/auth.middleware');
 const uploadMiddleware = require('../middlewares/upload.middleware');
 const { validate } = require('../middlewares/validate.middleware');
+const { paginate } = require('../middlewares/pagination.middleware');
 const { createDomaineSchema, updateDomaineSchema } = require('../validations/domaine.validation');
 
-// Routes publiques (lecture seule)
-router.get('/', domaineController.getAll.bind(domaineController));
+router.get('/', paginate, domaineController.getAll.bind(domaineController));
 router.get('/:id', domaineController.getById.bind(domaineController));
 
 // Routes privées (Admin seulement) protégées par authentification

@@ -5,9 +5,12 @@ class MessageRepository {
         return await MessageContact.create(data, { transaction });
     }
 
-    async findAll() {
-        return await MessageContact.findAll({
-            order: [['created_at', 'DESC']]
+    async findAll(filters = {}) {
+        const { limit, offset } = filters;
+        return await MessageContact.findAndCountAll({
+            order:  [['created_at', 'DESC']],
+            limit:  limit  || 10,
+            offset: offset || 0
         });
     }
 

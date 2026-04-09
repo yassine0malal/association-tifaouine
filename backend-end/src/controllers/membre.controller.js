@@ -1,4 +1,5 @@
 const membreService = require('../services/membre.service');
+const { buildPaginatedResponse } = require('../utils/paginate');
 
 class MembreController {
     /**
@@ -35,18 +36,14 @@ class MembreController {
     */
     async getAll(req, res) {
         try {
-            const members = await membreService.getAllMembers();
+            const { page, limit, offset } = req.pagination;
+            const result = await membreService.getAllMembers({ limit, offset });
             return res.status(200).json({
                 success: true,
-                count: members.length,
-                data: members
+                ...buildPaginatedResponse(result, page, limit)
             });
         } catch (error) {
-            console.error("Erreur getAll membres controller : ", error.message);
-            return res.status(500).json({
-                success: false,
-                message: "Impossible de récupérer les membres."
-            });
+            return res.status(500).json({ success: false, message: "Impossible de récupérer les membres." });
         }
     }
 

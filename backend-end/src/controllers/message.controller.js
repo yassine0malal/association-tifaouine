@@ -1,4 +1,5 @@
 const messageService = require('../services/message.service');
+const { buildPaginatedResponse } = require('../utils/paginate');
 
 class MessageController {
     /**
@@ -61,17 +62,14 @@ class MessageController {
      */
     async getAll(req, res) {
         try {
-            const messages = await messageService.getAllMessages();
+            const { page, limit, offset } = req.pagination;
+            const result = await messageService.getAllMessages({ limit, offset });
             return res.status(200).json({
                 success: true,
-                data: messages
+                ...buildPaginatedResponse(result, page, limit)
             });
         } catch (error) {
-            return res.status(500).json({
-                success: false,
-                message: "Erreur lors de la récupération des messages.",
-                error: error.message
-            });
+            return res.status(500).json({ success: false, message: "Erreur lors de la récupération des messages.", error: error.message });
         }
     }
 

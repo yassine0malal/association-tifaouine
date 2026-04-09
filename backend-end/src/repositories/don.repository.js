@@ -19,7 +19,7 @@ class DonRepository {
      * @param {Object} filters - type_don, statut, type_destination, projet_id
      */
     async findAll(filters = {}) {
-        const { type_don, statut, type_destination, projet_id } = filters;
+        const { type_don, statut, type_destination, projet_id, limit, offset } = filters;
         const where = {};
 
         if (type_don)         where.type_don         = type_don;
@@ -27,10 +27,12 @@ class DonRepository {
         if (type_destination) where.type_destination = type_destination;
         if (projet_id)        where.projet_id        = projet_id;
 
-        return await Don.findAll({
+        return await Don.findAndCountAll({
             where,
             include: this._buildIncludes(),
-            order: [['date_reception', 'DESC']]
+            order:   [['date_reception', 'DESC']],
+            limit:   limit  || 10,
+            offset:  offset || 0
         });
     }
 

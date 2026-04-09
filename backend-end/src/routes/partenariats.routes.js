@@ -4,13 +4,10 @@ const partenariatController = require('../controllers/partenariat.controller');
 const { verifyToken, isAdmin } = require('../middlewares/auth.middleware');
 const uploadMiddleware = require('../middlewares/upload.middleware');
 const { validate } = require('../middlewares/validate.middleware');
+const { paginate } = require('../middlewares/pagination.middleware');
 const { createPartenariatSchema, updatePartenariatSchema } = require('../validations/partenariat.validation');
 
-/**
- * @route   GET /api/partenariats
- * @desc    Récupérer tous les partenariats (Public)
- */
-router.get('/', partenariatController.getAll.bind(partenariatController));
+router.get('/', paginate, partenariatController.getAll.bind(partenariatController));
 
 /**
  * @route   GET /api/partenariats/:id

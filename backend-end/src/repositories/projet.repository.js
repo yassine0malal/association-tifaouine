@@ -7,7 +7,7 @@ class ProjetRepository {
      * @param {Object} filters - domaine_id, annee
      */
     async findAll(filters = {}) {
-        const { domaine_id, annee } = filters;
+        const { domaine_id, annee, limit, offset } = filters;
         const where = {};
 
         if (domaine_id) {
@@ -20,9 +20,11 @@ class ProjetRepository {
             };
         }
 
-        return await Projet.findAll({
+        return await Projet.findAndCountAll({
             where,
-            order: [['date_debut', 'DESC']]
+            order:  [['date_debut', 'DESC']],
+            limit:  limit  || 10,
+            offset: offset || 0
         });
     }
 

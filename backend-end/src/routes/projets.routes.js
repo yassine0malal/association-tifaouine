@@ -3,13 +3,10 @@ const router = express.Router();
 const projetController = require('../controllers/projet.controller');
 const { verifyToken, isAdmin } = require('../middlewares/auth.middleware');
 const { validate } = require('../middlewares/validate.middleware');
+const { paginate } = require('../middlewares/pagination.middleware');
 const { createProjetSchema, updateProjetSchema } = require('../validations/projet.validation');
 
-/**
- * @route   GET /api/projets
- * @desc    Récupérer tous les projets (Public)
- */
-router.get('/', projetController.getAll.bind(projetController));
+router.get('/', paginate, projetController.getAll.bind(projetController));
 
 /**
  * @route   GET /api/projets/:id

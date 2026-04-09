@@ -4,9 +4,12 @@ class PartenariatRepository {
     /**
      * Récupérer tous les partenariats
      */
-    async findAll() {
-        return await Partenariat.findAll({
-            order: [['created_at', 'DESC']]
+    async findAll(filters = {}) {
+        const { limit, offset } = filters;
+        return await Partenariat.findAndCountAll({
+            order:  [['created_at', 'DESC']],
+            limit:  limit  || 10,
+            offset: offset || 0
         });
     }
 

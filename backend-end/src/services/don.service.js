@@ -100,10 +100,6 @@ class DonService {
     async getAllDons(filters = {}) {
         return await donRepository.findAll(filters);
     }
-
-    /**
-     * @desc    Récupérer un don par ID — Admin
-     */
     async getDonById(id) {
         const don = await donRepository.findById(id);
         if (!don) throw new Error(`Don avec l'ID ${id} introuvable.`);

@@ -8,10 +8,6 @@ class ProjetService {
     async getAllProjets(filters = {}) {
         return await projetRepository.findAll(filters);
     }
-
-    /**
-     * Récupérer un projet par ID
-     */
     async getProjetById(id) {
         const projet = await projetRepository.findById(id);
         if (!projet) {

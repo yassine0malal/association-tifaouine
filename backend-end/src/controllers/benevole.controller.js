@@ -1,4 +1,5 @@
 const benevoleService = require('../services/benevole.service');
+const { buildPaginatedResponse } = require('../utils/paginate');
 
 class BenevoleController {
     /**
@@ -33,18 +34,14 @@ class BenevoleController {
      */
     async getAll(req, res) {
         try {
-            const list = await benevoleService.getAllBenevoles();
+            const { page, limit, offset } = req.pagination;
+            const result = await benevoleService.getAllBenevoles({ limit, offset });
             return res.status(200).json({
                 success: true,
-                count: list.length,
-                data: list
+                ...buildPaginatedResponse(result, page, limit)
             });
         } catch (error) {
-            console.error("Erreur getAll benevoles controller : ", error.message);
-            return res.status(500).json({
-                success: false,
-                message: "Impossible de récupérer les bénévoles."
-            });
+            return res.status(500).json({ success: false, message: "Impossible de récupérer les bénévoles." });
         }
     }
 
