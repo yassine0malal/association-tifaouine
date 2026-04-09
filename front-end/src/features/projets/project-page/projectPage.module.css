@@ -1,0 +1,261 @@
+.projectPage {
+    background-color: var(--bg);
+}
+
+/* Status Bar */
+.statusBar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--accent);
+    color: var(--bg);
+    gap: 2rem;
+    padding: 0.75rem 1rem;
+    flex-wrap: wrap;
+}
+
+.statusBar span {
+    font-size: 0.875rem;
+    font-weight: 600;
+    padding: 0.3rem 0;
+    text-align: center;
+}
+
+.statusBar span.devider {
+    display: block;
+    width: 2px;
+    height: 20px;
+    background-color: #fff;
+}
+
+/* Content Container */
+.projectPage .content {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+}
+
+/* Project Section */
+.projectPage .project {
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.projectPage .projectImage {
+    flex: 1 1 45%;
+    min-width: 280px;
+}
+
+.projectPage .projectImage img {
+    width: 100%;
+    height: auto;
+    min-height: 250px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.projectPage .project .details {
+    flex: 1 1 45%;
+    min-width: 280px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.projectPage .details .title {
+    font-size: clamp(1.5rem, 4vw, 2.3rem);
+    font-weight: bold;
+    line-height: 1.2;
+}
+
+.projectPage .details .description {
+    font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+    line-height: 1.6;
+    color: #4B5563;
+}
+
+/* Meta Box */
+.projectPage .metaBox {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 0.5rem 1.3rem;
+    border-left: 5px solid var(--accent);
+}
+
+.projectPage .metaBox div {
+    font-size: clamp(0.9rem, 2vw, 1.05rem);
+}
+
+.projectPage .metaBox div strong {
+    margin-right: 5px;
+    font-weight: 700;
+}
+
+/* Buttons Section */
+.projectPage .btns {
+    margin-top: 2.5rem;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+}
+
+.projectPage .btns a {
+    text-decoration: none;
+    padding: 0.875rem 1.75rem;
+    color: #fff;
+    background-color: var(--accent);
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    text-align: center;
+    flex: 0 1 auto;
+    min-width: 200px;
+}
+
+.projectPage .btns a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    opacity: 0.9;
+}
+
+.projectPage .btns a:first-child {
+    background-color: var(--second-buttons-bg);
+}
+
+/* Divider */
+.content .devider {
+    width: 100%;
+    background: linear-gradient(90deg, transparent, #ccc, transparent);
+    height: 2px;
+    margin: 3rem 0;
+}
+
+/* Responsive Design - Non Gallery */
+@media screen and (max-width: 1024px) {
+    .projectPage .content {
+        padding: 2rem 1.5rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .statusBar {
+        gap: 1rem;
+        padding: 0.5rem;
+    }
+    
+    .statusBar span {
+        font-size: 0.75rem;
+    }
+    
+    .statusBar span.devider {
+        display: none;
+    }
+    
+    .projectPage .content {
+        padding: 1.5rem;
+    }
+    
+    .projectPage .project {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    
+    .projectPage .projectImage {
+        flex: auto;
+        width: 100%;
+    }
+    
+    .projectPage .project .details {
+        flex: auto;
+        width: 100%;
+    }
+    
+    .projectPage .btns a {
+        min-width: 100%;
+        padding: 0.75rem 1.5rem;
+    }
+    
+    .content .devider {
+        margin: 2rem 0;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .statusBar {
+        flex-direction: column;
+        gap: 0.25rem;
+        padding: 0.5rem;
+    }
+    
+    .statusBar span {
+        font-size: 0.7rem;
+    }
+    
+    .projectPage .content {
+        padding: 1rem;
+    }
+    
+    .projectPage .metaBox {
+        padding: 0.5rem 1rem;
+    }
+}
+
+/* Fix for image height in projectImage */
+.projectPage .projectImage img {
+    aspect-ratio: 3/2;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+/* Smooth scrolling */
+.projectPage {
+    scroll-behavior: smooth;
+}
+
+/* Accessibility improvements */
+.projectPage .btns a:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+.loaderContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+}
+.loader {
+  width: 100px;
+  aspect-ratio: 1;
+  padding: 10px;
+  box-sizing: border-box;
+  display: grid;
+  background: #fff;
+  filter: blur(5px) contrast(10) hue-rotate(300deg);
+  mix-blend-mode: darken;
+}
+.loader:before,
+.loader:after{ 
+  content: "";
+  grid-area: 1/1; 
+  width: 40px;
+  height: 40px;
+  background: #ffff00;
+  animation: l7 2s infinite;
+}
+.loader:after{ 
+  animation-delay: -1s;
+}
+@keyframes l7{
+  0%   {transform: translate(   0,0)}
+  25%  {transform: translate(100%,0)}
+  50%  {transform: translate(100%,100%)}
+  75%  {transform: translate(   0,100%)}
+  100% {transform: translate(   0,0)}
+}

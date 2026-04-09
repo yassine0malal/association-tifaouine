@@ -15,56 +15,11 @@
       "state": "En cours",
       "date": "2026-02-28",
       "image": "https://picsum.photos/300/200"
-    },
-    {
-      "id": 3,
-      "title": "AI Chatbot System",
-      "description": "Building an intelligent chatbot using NLP and machine learning techniques.",
-      "state": "Planifié",
-      "date": "2026-04-10",
-      "image": "https://picsum.photos/300/200"
-    },
-    {
-      "id": 4,
-      "title": "E-commerce Platform",
-      "description": "Full-stack e-commerce platform with payment integration and admin dashboard.",
-      "state": "Terminé",
-      "date": "2025-12-05",
-      "image": "https://picsum.photos/300/200"
-    },
-    {
-      "id": 5,
-      "title": "Real-time Chat App",
-      "description": "A real-time messaging app using WebSockets and scalable backend architecture.",
-      "state": "En cours",
-      "date": "2026-01-20",
-      "image": "https://picsum.photos/300/200"
-    },
-    {
-      "id": 6,
-      "title": "Portfolio Website",
-      "description": "Personal portfolio website with animations and responsive design.",
-      "state": "Terminé",
-      "date": "2025-11-15",
-      "image": "https://picsum.photos/300/200"
-    },
-    {
-      "id": 7,
-      "title": "Task Management System",
-      "description": "A productivity tool to manage tasks, deadlines, and team collaboration.",
-      "state": "Planifié",
-      "date": "2026-05-01",
-      "image": "https://picsum.photos/300/200"
-    },
-    {
-      "id": 8,
-      "title": "Machine Learning Dashboard",
-      "description": "Interactive dashboard to visualize ML model performance and datasets.",
-      "state": "En cours",
-      "date": "2026-03-05",
-      "image": "https://picsum.photos/300/200"
     }
   ],
-  "currentPage": 1,
-  "totalPages": 10
+  "currentPage": 9,
+  "nextPage":10,
+  "prevPage":8,
+  "totalPages": 10,
+  "itemsPerPage":8
 }

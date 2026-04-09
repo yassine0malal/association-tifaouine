@@ -1,32 +1,28 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import ProjectCard from "../../components/common/ProjectCard";
-import ProjectCardSkeleton from "../../components/common/ProjectCardSkeleton";
-import PageHero from "../../components/common/PageHero";
-import Pagination from "../../components/common/Pagination";
+import ProjectCard from "../../../components/common/ProjectCard";
+import ProjectCardSkeleton from "../../../components/common/ProjectCardSkeleton";
+import PageHero from "../../../components/common/PageHero";
+import Pagination from "../../../components/common/Pagination";
 
 import styles from "./projectList.module.css";
-import heroImg from "../../assets/images/projects_hero.jpg";
+import heroImg from "../../../assets/images/projects_hero.jpg";
 
 import { fetchProjects, setPage, setFilter } from "./projectsSlice";
 
 export default function Projets() {
   const dispatch = useDispatch();
 
-  const {
-    data,
-    loading,
-    currentPage,
-    totalPages,
-    currentfilter,
-  } = useSelector((state) => state.projects);
+  const { data, loading, currentPage, totalPages, currentfilter } = useSelector(
+    (state) => state.projects,
+  );
 
   const filters = ["All", "Terminé", "En cours", "En attente"];
 
   // 🔹 Fetch projects when page OR filter changes
   useEffect(() => {
-    dispatch(fetchProjects(currentPage));
+    dispatch(fetchProjects({ page: currentPage, filter: currentfilter }));
   }, [dispatch, currentPage, currentfilter]);
 
   // 🔹 Handlers
@@ -62,9 +58,7 @@ export default function Projets() {
       return <p>No projects found.</p>;
     }
 
-    return data.map((project) => (
-      <ProjectCard key={project.id} {...project} />
-    ));
+    return data.map((project) => <ProjectCard key={project.id} {...project} />);
   };
 
   return (

@@ -4,8 +4,10 @@ import { fetchProjectsAPI } from "./projectsService";
 // async thunk
 export const fetchProjects = createAsyncThunk(
   "projects/fetchProjects",
-  async (page , filter) => {
-    const data = await fetchProjectsAPI(page , filter);
+  async ({ page, filter }) => {
+    console.log(page , filter);
+    
+    const data = await fetchProjectsAPI(page, filter);
     return data;
   },
 );
@@ -16,7 +18,7 @@ const projectsSlice = createSlice({
     data: [],
     loading: false,
     error: null,
-    currentfilter:'All',
+    currentfilter: "All",
     currentPage: 1,
     totalPages: 10,
   },
@@ -24,9 +26,9 @@ const projectsSlice = createSlice({
     setPage: (state, action) => {
       state.currentPage = action.payload;
     },
-    setFilter : (state , action) => {
-        state.currentfilter = action.payload;
-        state.currentPage = 1;
+    setFilter: (state, action) => {
+      state.currentfilter = action.payload;
+      state.currentPage = 1;
     },
   },
   extraReducers: (builder) => {
@@ -41,8 +43,11 @@ const projectsSlice = createSlice({
       .addCase(fetchProjects.fulfilled, (state, action) => {
         state.loading = false;
         state.data = action.payload.projects;
+        state.currentPage = action.payload.currentPage;
         state.totalPages = action.payload.totalPages;
-        console.log("-----",state.data)
+        state.nextPage = action.payload.nextPage;
+        state.prevPage = action.payload.prevPage;
+        state.itemPerPage = action.payload.itemPerPage;
       })
 
       // error
@@ -53,5 +58,5 @@ const projectsSlice = createSlice({
   },
 });
 
-export const { setPage , setFilter } = projectsSlice.actions;
+export const { setPage, setFilter } = projectsSlice.actions;
 export default projectsSlice.reducer;
