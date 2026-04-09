@@ -19,11 +19,12 @@ createRoot(document.getElementById("root")).render(
   <Provider store={store}>
     <StrictMode>
       <BrowserRouter>
+
         <Routes>
           {/* Main Route: Home */}
           <Route path="/" element={<App />}>
             {/* Default one  */}
-            <Route index element={<About/>} />
+            {/* <Route index element={<About/>} /> */}
 
             {/* Main Route: A propos */}
             <Route path="/about">
@@ -32,7 +33,7 @@ createRoot(document.getElementById("root")).render(
             </Route>
 
             {/* Main Routes : Activites */}
-            <Route path="/activites">
+            <Route path="activites">
               <Route path="projets" element={<Projets />} />
               <Route path="evenements" element={<Footer />} />
               <Route path="actualites" element={<Footer />} />
@@ -67,7 +68,9 @@ createRoot(document.getElementById("root")).render(
           <Route path="/project-page" element={<ProjectPage />} />
           <Route path="/project/:id" element={<ProjectPage />} />
           <Route path="/skelton" element={<ProjectCardSkeleton />} />
+
         </Routes>
+
       </BrowserRouter>
     </StrictMode>
   </Provider>,

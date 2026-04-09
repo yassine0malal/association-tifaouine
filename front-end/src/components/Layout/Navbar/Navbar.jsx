@@ -47,7 +47,7 @@ export default function NavBar() {
             <div className={styles.navBarSection}>
 
                 <div>
-                    <img src={logo} width="160px"/>
+                    <Link to="/"><img src={logo} width="160px"  /></Link>
                 </div>
 
                  {/* The Nabbar of the phone  */}

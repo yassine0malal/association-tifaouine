@@ -8,6 +8,17 @@ import association from "../../assets/images/about-us.png"
 import checked from "../../assets/icons/checked.png"
 import HeroBg from "../../assets/images/projects_hero.jpg"
 import call from "../../assets/icons/call.png"
+import arrow from "../../assets/icons/arrow-right.png"
+//Partenairs
+import agriculture from "../../assets/images/partenaires/agriculture.png"
+import analphabetisme from "../../assets/images/partenaires/analphabitisme.png"
+import anapec from "../../assets/images/partenaires/anapec.png"
+import entraide from "../../assets/images/partenaires/entraide-nationale.png"
+import equipement from "../../assets/images/partenaires/equipement.png"
+import habous from "../../assets/images/partenaires/habous.png"
+import province from "../../assets/images/partenaires/province-el-haouz.png"
+import travail from "../../assets/images/partenaires/travail.png"
+import bgImage from "../../assets/images/partenaires/bg-image.png"
 // Import CSS Module
 import styles from './About.module.css';
 import PageHero from '../../components/common/PageHero';
@@ -21,6 +32,16 @@ const teamData = [
   { id: 5, src: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80", title: "Task & Project Tracking", desc: "Assign tasks, set deadlines, and visualize progress." },
   { id: 6, src: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80", title: "Performance Insights", desc: "Make smarter decisions with real-time analytics." },
 ];
+const partners = [
+  { id: 1, title: "Project 1", image: agriculture },
+  { id: 2, title: "Project 2", image: analphabetisme },
+  { id: 3, title: "Project 3", image: anapec },
+  { id: 4, title: "Project 4", image: entraide },
+  { id: 5, title: "Project 5", image: equipement },
+  { id: 6, title: "Project 6", image: habous },
+  { id: 7, title: "Project 7", image: province },
+  { id: 8, title: "Project 8", image: travail },
+]
 
 const infiniteData = [...teamData, ...teamData];
 
@@ -29,6 +50,17 @@ const About = () => {
   const [isPaused, setIsPaused] = useState(false);
   const trackRef = useRef(null);
   const x = useMotionValue(0);
+  const [index, setIndex] = useState(0);
+  const [visibleItems, setVisibleItems] = useState(4);
+
+  const maxindex = partners.length - visibleItems;
+  const next = () => {
+    console.log(index)
+    setIndex((prev) => (prev < maxindex ? prev + 1 : 0))
+  }
+  const prev = () => {
+    setIndex((prev) => (prev > 0 ? prev - 1 : maxindex))
+  }
 
   useEffect(() => {
     const updateWidth = () => {
@@ -40,6 +72,21 @@ const About = () => {
     updateWidth();
     window.addEventListener('resize', updateWidth);
     return () => window.removeEventListener('resize', updateWidth);
+  }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setVisibleItems(1);
+      } else if (window.innerWidth < 1024) {
+        setVisibleItems(2);
+      } else {
+        setVisibleItems(4)
+      }
+    }
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   useAnimationFrame((t, delta) => {
@@ -109,14 +156,18 @@ const About = () => {
           <h3>Depuis plus de 30 ans, notre engagement se traduit par des actions concrètes au service des communautés au Al Haouz-Maroc.</h3>
 
           <p>Équipement du siège de l’association # Autonomisation des femmes (couture, tissage, artisanat) # Lutte contre l’analphabétisme # Formations en gestion administrative et financière # Formation des agriculteurs
-             (apiculture, agriculture biologique, élevage) # Plantation et distribution d’arbres fruitiers # Protection de l’environnement et lutte contre l’érosion # Ouverture de pistes rurales pour désenclaver 
-             les villages # Accès à l’eau potable et assainissement # Construction d’infrastructures sociales # Création de centres de formation et clubs féminins # Soutien à l’éducation préscolaire et aux enfants 
-             # Réalisation d’un hammam public # Développement d’activités génératrices de revenus # Campagnes de sensibilisation sanitaire et environnementale # Accueil de délégations nationales et internationales # Accompagnement des agriculteurs # Soutien aux établissements scolaires</p>
+            (apiculture, agriculture biologique, élevage) # Plantation et distribution d’arbres fruitiers # Protection de l’environnement et lutte contre l’érosion # Ouverture de pistes rurales pour désenclaver
+            les villages # Accès à l’eau potable et assainissement # Construction d’infrastructures sociales # Création de centres de formation et clubs féminins # Soutien à l’éducation préscolaire et aux enfants
+            # Réalisation d’un hammam public # Développement d’activités génératrices de revenus # Campagnes de sensibilisation sanitaire et environnementale # Accueil de délégations nationales et internationales # Accompagnement des agriculteurs # Soutien aux établissements scolaires</p>
         </div>
+
+
+
 
 
         {/* Carousel Card */}
         <div className={styles.carouselWrapper}>
+          <h2>EQUIPE</h2>
           <motion.div
             ref={trackRef}
             className={styles.carouselTrack}
@@ -132,6 +183,42 @@ const About = () => {
             ))}
           </motion.div>
         </div>
+
+
+
+        <div className={styles.partenaires}>
+          <h2>Partenariat pour un Impact Enrichissant</h2>
+          <div
+            className={styles.slide}
+          >
+            <motion.div
+              animate={{ x: `-${index * (100 / visibleItems)}%` }}
+              transition={{ type: "spring", stiffness: 80, damping: 20 }}
+              className={styles.partenairesImages}
+            >
+
+              {partners.map((p) => (
+                <div
+                  key={p.id}
+                  className={styles.partnerCard}
+                  style={{ minWidth: `${100 / visibleItems}%` }}
+                >
+
+                  <img src={p.image} alt={p.title} />
+                </div>
+              ))}
+
+            </motion.div>
+          </div>
+
+          <div className={styles.buttons}>
+            <button onClick={prev} > <img src={arrow} /> </button>
+            <button onClick={next} > <img src={arrow} /> </button>
+          </div>
+
+
+        </div>
+
       </div>
     </>
   );
@@ -154,5 +241,6 @@ const CarouselCard = ({ item, styles }) => {
     </div>
   );
 };
+
 
 export default About;

@@ -6,7 +6,7 @@
 }
 
 .AboutSection {
-   width: 100%;
+  width: 100%;
   max-width: 1450px;
 }
 
@@ -19,7 +19,14 @@
   perspective: 1500px;
   display: flex;
   position: relative;
+  flex-direction: column;
 
+}
+.carouselWrapper h2{
+  color: var(--accent);
+  padding: 0 30px;
+  text-align: center;
+  font-size: 40px;
 }
 
 /* ----association defenition---- - */
@@ -28,7 +35,7 @@
   padding: 6rem 3rem 3rem 8rem;
 
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(500px,100%), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(500px, 100%), 1fr));
   gap: 1rem;
   justify-content: center;
   align-items: center;
@@ -112,31 +119,37 @@
   align-items: center;
   padding-bottom: 5px;
 }
-.interaction{
+
+.interaction {
   display: flex;
   gap: 4rem;
   padding: 20px;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
 }
-.interaction .phone img{
+
+.interaction .phone img {
   width: 20px;
   height: 20px;
 }
-.interaction .button button{
-  transition: 0.3s ease-in-out ;
+
+.interaction .button button {
+  transition: 0.3s ease-in-out;
   min-width: 150px;
   text-align: center;
 }
-.interaction .button button:hover  {
+
+.interaction .button button:hover {
   transform: translateY(-12px);
 }
 
-.interaction .phone{
+.interaction .phone {
   display: flex;
   gap: 10px;
 }
-.interaction .phone p{
+
+.interaction .phone p {
   /* font-weight: 600; */
 }
 
@@ -144,12 +157,32 @@
 
 /* -------hashed text section------- */
 
-.hashtage{
-  
+.hashtage {
+  margin-left: auto;
+  margin-right: auto;
+  padding: 30px;
+  background-color: var(--accent-very-light);
+  margin: 40px;
+  border-radius: 15px;
+}
+
+.hashtage h3 {
+  margin: 40px;
+}
+
+.hashtage p {
+  margin: 16px;
+  letter-spacing: 1.1px;
+  line-height: 26px;
+  color: var(--paragraph-color);
 }
 
 
+
+/* -------Members carousel ------- */
+
 .carouselTrack {
+  margin-top: 60px;
   display: flex;
   gap: var(--gap);
   padding-left: var(--gap);
@@ -241,7 +274,6 @@
   transition: all 0.4s ease-in-out;
 }
 
-/* In CSS Modules, sibling selectors with generated classes work like this: */
 .carouselCard:hover+.cardFooter {
   opacity: 1;
 }
@@ -252,6 +284,7 @@
   margin-bottom: 8px;
   color: #1a1a1a;
   position: relative;
+  margin-top: 20px;
 }
 
 .cardFooter p {
@@ -274,19 +307,90 @@
   width: 20%;
   height: 2px;
 }
-.options{
+
+.options {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
 
-/* Responsive */
+
+
+/* ---------------Partenaires text section------------- */
+
+.partenaires {
+  padding: 20px;
+  background-image: url("../../assets/images/partenaires/bg-image.png");
+  /* background-repeat: no-repeat; */
+}
+
+.partenaires h2{
+  color: var(--accent);
+  font-size: 40px;
+}
+
+.partenaires img {
+  max-width: 150px;
+
+}
+
+.partenaires .slide {
+  overflow: hidden;
+  width: 100%;
+  margin: auto;
+}
+
+.partenaires .partenairesImages {
+  display: flex;
+}
+
+.partenaires .buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.partenairesImages .partnerCard {
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  /* border-radius: 12px; */
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  backdrop-filter: blur(8px) saturate(150%) brightness(1.2);
+}
+
+.partenaires .buttons button {
+  all: unset;
+  cursor: pointer;
+}
+
+.partenaires .buttons button img {
+  width: 40px;
+  transition: all 0.3s ease-in-out;
+}
+
+.partenaires .buttons button img:active {
+  scale: 1.2;
+}
+
+.partenaires .buttons button:first-child {
+  rotate: 180deg;
+}
+
+/*------------- Responsive ------------------- */
 
 @media (max-width: 768px) {
 
-  .associationDescription{
+  .associationDescription {
     margin-top: 30%;
-    padding: 3rem;
+    padding: 1rem;
   }
-  
+
+  .associationDescription .imageWrapper img {
+    /* height: auto; */
+  }
+
 }
