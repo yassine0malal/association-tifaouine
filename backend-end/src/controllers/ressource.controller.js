@@ -9,9 +9,15 @@ class RessourceController {
      */
     async getAll(req, res) {
         try {
-            const { type, projet_id } = req.query;
+            const { type, projet_id, evenement_id } = req.query;
             const { page, limit, offset } = req.pagination;
-            const result = await ressourceService.getAllRessources({ type, projet_id, limit, offset });
+            const result = await ressourceService.getAllRessources({ 
+                type, 
+                projet_id, 
+                evenement_id, 
+                limit, 
+                offset 
+            });
             return res.status(200).json({
                 success: true,
                 ...buildPaginatedResponse(result, page, limit)

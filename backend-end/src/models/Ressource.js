@@ -10,7 +10,11 @@ const Ressource = sequelize.define('Ressource', {
     },
     projet_id: {
         type: DataTypes.INTEGER,
-        allowNull: true, // NULL = Ressource générale de l'association
+        allowNull: true,
+    },
+    evenement_id: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
     },
     type: {
         type: DataTypes.STRING(20),
