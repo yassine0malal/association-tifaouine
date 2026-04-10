@@ -14,6 +14,7 @@ import ProjectCardSkeleton from "./components/common/ProjectCardSkeleton.jsx";
 import { Provider } from "react-redux";
 import { store }  from './app/store.js';
 import About from "./features/public/About.jsx";
+import Contact from "./features/public/Contact.jsx";
 
 createRoot(document.getElementById("root")).render(
   <Provider store={store}>
@@ -29,7 +30,7 @@ createRoot(document.getElementById("root")).render(
             {/* Main Route: A propos */}
             <Route path="/about">
               <Route path="nous" element={<About />} />
-              <Route path="contact" element={<Footer />} />
+              <Route path="contact" element={<Contact />} />
             </Route>
 
             {/* Main Routes : Activites */}

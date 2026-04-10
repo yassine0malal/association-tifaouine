@@ -13,14 +13,14 @@
 .carouselWrapper {
   z-index: 1;
   width: 100%;
-  padding: 100px 0;
+  padding: 80px 0;
   background-color: var(--section-bg);
   overflow: hidden;
   perspective: 1500px;
   display: flex;
   position: relative;
   flex-direction: column;
-
+  /* margin-bottom:40px ; */
 }
 .carouselWrapper h2{
   color: var(--accent);
@@ -321,12 +321,13 @@
 .partenaires {
   padding: 20px;
   background-image: url("../../assets/images/partenaires/bg-image.png");
-  /* background-repeat: no-repeat; */
+ 
 }
 
 .partenaires h2{
   color: var(--accent);
   font-size: 40px;
+  margin: 35px;
 }
 
 .partenaires img {
