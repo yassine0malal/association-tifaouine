@@ -16,14 +16,16 @@ import { useTranslation } from "react-i18next";
 export default function NavBar() {
     const { i18n } = useTranslation();
 
-    const [displayBefore, setDisplayBefore] = useState(i18n.language)
-    console.log("--", displayBefore)
+    const [showAside, setShowAside] = useState(false);
 
-   
+    const handleShowAside = () => {
+        setShowAside(!showAside);
+    }
+
     function changeLanguage(lang) {
-        setDisplayBefore(lang)
         i18n.changeLanguage(lang);
     }
+
     const currentLang = i18n.language;
 
     return (
@@ -64,8 +66,10 @@ export default function NavBar() {
 
                 {/* The Nabbar of the phone  */}
                 <div className={styles.link1}>
-                    <img src={menu} alt="menu" />
-                    <Aside />
+                    <div className={styles.imageContainer}>
+                        <img onClick={() => { handleShowAside() }} src={menu} alt="menu" />
+                    </div>
+                    {showAside == true ? <Aside /> : ""}
                 </div>
 
                 <div className={styles.link2}>
