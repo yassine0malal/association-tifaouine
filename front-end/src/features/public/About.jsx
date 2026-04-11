@@ -24,6 +24,7 @@ import styles from './About.module.css';
 import PageHero from '../../components/common/PageHero';
 import Btn from '../../components/common/Button';
 import { useTranslation } from 'react-i18next';
+import i18n from 'i18next';
 
 const teamData = [
   { id: 1, src: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80", title: "Real-Time Collaboration", desc: "Communicate seamlessly and keep everyone in sync." },
@@ -44,7 +45,7 @@ const partners = [
   { id: 8, title: "Project 8", image: travail },
 ]
 
-const infiniteData = [...teamData, ...teamData];
+const infiniteData = [...teamData, ...teamData, ...teamData];
 
 const About = () => {
   const [trackWidth, setTrackWidth] = useState(0);
@@ -53,8 +54,12 @@ const About = () => {
   const x = useMotionValue(0);
   const [index, setIndex] = useState(0);
   const [visibleItems, setVisibleItems] = useState(4);
-  const {t}  = useTranslation("about");
+  const { t } = useTranslation("about");
+  const [isRTL, setIsRTL] = useState(i18n.language === "ar");
+  const isRTLRef = useRef(i18n.language === "ar");
 
+  console.log("🟡 MOUNT — i18n.language:", i18n.language, "| isRTL:", i18n.language === "ar");
+  console.log("🟡 MOUNT — document.dir:", document.documentElement.dir);
 
   const maxindex = partners.length - visibleItems;
   const next = () => {
@@ -65,16 +70,56 @@ const About = () => {
   }
 
   useEffect(() => {
-    const updateWidth = () => {
-      if (trackRef.current) {
-        setTrackWidth(trackRef.current.scrollWidth / 2);
+    const updateDirection = (lng) => {
+      console.log("🔵 languageChanged fired — lng:", lng, "| rtl:", lng === "ar", "| trackWidth:", trackWidth);
+
+      const rtl = lng === "ar";
+      isRTLRef.current = rtl;
+      setIsRTL(rtl);
+      setIndex(0);
+
+      if (trackWidth > 0) {
+        x.set(0); // ← reset simple à zéro
+      } else {
+        console.warn("⚠️ languageChanged fired but trackWidth is 0 — x was NOT reset!");
       }
     };
 
+    i18n.on("languageChanged", updateDirection);
+    return () => i18n.off("languageChanged", updateDirection);
+  }, [trackWidth]);
+
+  useEffect(() => {
+    const updateWidth = () => {
+      if (trackRef.current) {
+        // With 3 copies, the width of one copy = scrollWidth / 3
+        const measured = trackRef.current.scrollWidth / 3;
+        console.log("📐 trackWidth measured:", measured, "| scrollWidth:", trackRef.current.scrollWidth);
+        setTrackWidth(measured);
+      }
+    };
     updateWidth();
     window.addEventListener('resize', updateWidth);
     return () => window.removeEventListener('resize', updateWidth);
   }, []);
+
+  const handleDragEnd = () => {
+    setIsPaused(false);
+    let currentX = x.get();
+
+    if (isRTLRef.current) {
+      // RTL: wrap within [0, trackWidth]
+      while (currentX > trackWidth) currentX -= trackWidth;
+      while (currentX < 0) currentX += trackWidth;
+    } else {
+      // LTR: wrap within [-trackWidth, 0]
+      while (currentX < -trackWidth) currentX += trackWidth;
+      while (currentX > 0) currentX -= trackWidth;
+    }
+    x.set(currentX);
+  };
+
+
 
   useEffect(() => {
     const handleResize = () => {
@@ -91,135 +136,157 @@ const About = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  useEffect(() => {
+    if (trackWidth > 0) {
+      x.set(0); // ← toujours 0, quelle que soit la langue
+    }
+  }, [trackWidth]);
+
+
+  // Add a counter so it only logs every 120 frames (not every frame)
+
   useAnimationFrame((t, delta) => {
     if (isPaused || trackWidth === 0) return;
 
-    let moveBy = -0.05 * delta;
+    const direction = isRTLRef.current ? 1 : -1;
+    const moveBy = direction * 0.05 * delta;
     let newX = x.get() + moveBy;
 
-    if (newX <= -trackWidth) {
-      newX += trackWidth;
-    } else if (newX > 0) {
-      newX -= trackWidth;
+    // Symmetric rebound for LTR and RTL
+    if (isRTLRef.current) {
+      // RTL: keep x between 0 and trackWidth
+      if (newX > trackWidth) newX -= trackWidth;
+      else if (newX < 0) newX += trackWidth;
+    } else {
+      // LTR: keep x between -trackWidth and 0
+      if (newX < -trackWidth) newX += trackWidth;
+      else if (newX > 0) newX -= trackWidth;
     }
 
     x.set(newX);
   });
+  return (
+    <>
+      <PageHero title={t('hero.title')} heroImg={HeroBg} />
+      <div className={styles.AboutSection}>
 
- return (
-  <>
-    <PageHero title={t('hero.title')} heroImg={HeroBg} />
-    <div className={styles.AboutSection}>
+        <div className={styles.associationDescription}>
 
-      <div className={styles.associationDescription}>
+          {/* ----First section of the definition of the association-----  */}
+          <div className={styles.imageWrapper}>
+            <img src={association} alt="tifaouine" />
+          </div>
+          <div className={styles.description}>
+            <p>{t('intro.question')}</p>
+            <h2>{t('intro.title')}</h2>
+            <p>
+              {t('intro.description')}
+            </p>
 
-        <div className={styles.imageWrapper}>
-          <img src={association} alt="tifaouine" />
-        </div>
-        <div className={styles.description}>
-          <p>{t('intro.question')}</p>
-          <h2>{t('intro.title')}</h2>
-          <p>
-            {t('intro.description')}
-          </p>
-
-          <div className={styles.options}>
-            <div className={styles.optionWarper}>
-              <img src={checked} alt="task" />
-              <p><b>{t('objectives.desenclaver').split(' ')[0]}</b> {t('objectives.desenclaver').split(' ').slice(1).join(' ')}</p>
-            </div>
-            <div className={styles.optionWarper}>
-              <img src={checked} alt="task" />
-              <p><b>{t('objectives.eduquer').split(' ')[0]}</b> {t('objectives.eduquer').split(' ').slice(1).join(' ')}</p>
-            </div>
-            <div className={styles.optionWarper}>
-              <img src={checked} alt="task" />
-              <p><b>{t('objectives.promouvoir').split(' ')[0]}</b> {t('objectives.promouvoir').split(' ').slice(1).join(' ')}</p>
-            </div>
-
-            <div className={styles.interaction}>
-              <div className={styles.button}>
-                <Btn title={t('actions.don')} />
+            <div className={styles.options}>
+              <div className={styles.optionWarper}>
+                <img src={checked} alt="task" />
+                <p><b>{t('objectives.desenclaver').split(' ')[0]}</b> {t('objectives.desenclaver').split(' ').slice(1).join(' ')}</p>
               </div>
-              <div className={styles.phone}>
-                <img src={call} alt="" />
-                <p>{t('actions.phone')}</p>
+              <div className={styles.optionWarper}>
+                <img src={checked} alt="task" />
+                <p><b>{t('objectives.eduquer').split(' ')[0]}</b> {t('objectives.eduquer').split(' ').slice(1).join(' ')}</p>
               </div>
-            </div>
+              <div className={styles.optionWarper}>
+                <img src={checked} alt="task" />
+                <p><b>{t('objectives.promouvoir').split(' ')[0]}</b> {t('objectives.promouvoir').split(' ').slice(1).join(' ')}</p>
+              </div>
 
+              <div className={styles.interaction}>
+                <div className={styles.button}>
+                  <Btn title={t('actions.don')} />
+                </div>
+                <div className={styles.phone}>
+                  <img src={call} alt="" />
+                  <p className="phoneNumber">{t('actions.phone')}</p>
+                </div>
+              </div>
+
+
+            </div>
 
           </div>
 
+
         </div>
-      </div>
 
-      <div className={styles.hashtage}>
-        <h3>{t('stats.title')}</h3>
+        <div className={styles.hashtage}>
+          <h3>{t('stats.title')}</h3>
 
-        <p>{t('stats.list')}</p>
-      </div>
-
+          <p>{t('stats.list')}</p>
+        </div>
 
 
 
 
-      {/* Carousel Card */}
-      <div className={styles.carouselWrapper}>
-        <h2>{t('team.title')}</h2>
-        <motion.div
-          ref={trackRef}
-          className={styles.carouselTrack}
-          drag="x"
-          style={{ x }}
-          onDragStart={() => setIsPaused(true)}
-          onDragEnd={() => setIsPaused(false)}
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
-        >
-          {infiniteData.map((item, index) => (
-            <CarouselCard key={index} item={item} styles={styles} />
-          ))}
-        </motion.div>
-      </div>
 
-
-
-      <div className={styles.partenaires}>
-        <h2>{t('partners.title')}</h2>
-        <div
-          className={styles.slide}
-        >
+        {/* Carousel Card */}
+        <div className={styles.carouselWrapper}>
+          <h2>{t('team.title')}</h2>
           <motion.div
-            animate={{ x: `-${index * (100 / visibleItems)}%` }}
-            transition={{ type: "spring", stiffness: 80, damping: 20 }}
-            className={styles.partenairesImages}
+            ref={trackRef}
+            className={styles.carouselTrack}
+            drag="x"
+            style={{ x }}
+            onDragStart={() => setIsPaused(true)}
+            onDragEnd={handleDragEnd}   // ← use the new handler
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
           >
-
-            {partners.map((p) => (
-              <div
-                key={p.id}
-                className={styles.partnerCard}
-                style={{ minWidth: `${100 / visibleItems}%` }}
-              >
-
-                <img src={p.image} alt={p.title} />
-              </div>
+            {infiniteData.map((item, index) => (
+              <CarouselCard key={index} item={item} styles={styles} />
             ))}
-
           </motion.div>
-        </div>
 
-        <div className={styles.buttons}>
-          <button onClick={prev} > <img src={arrow} /> </button>
-          <button onClick={next} > <img src={arrow} /> </button>
         </div>
 
 
-      </div>
 
-    </div>
-  </>
-);
+        <div className={styles.partenaires}>
+          <h2>{t('partners.title')}</h2>
+          <div
+            className={styles.slide}
+          >
+            <motion.div
+              animate={{
+                x: isRTL
+                  ? `${index * (100 / visibleItems)}%`
+                  : `-${index * (100 / visibleItems)}%`
+              }}
+              transition={{ type: "spring", stiffness: 80, damping: 20 }}
+              className={styles.partenairesImages}
+            >
+
+              {partners.map((p) => (
+                <div
+                  key={p.id}
+                  className={styles.partnerCard}
+                  style={{ minWidth: `${100 / visibleItems}%` }}
+                >
+
+                  <img src={p.image} alt={p.title} />
+                </div>
+              ))}
+
+            </motion.div>
+          </div>
+
+          <div className={styles.buttons}>
+            <button onClick={prev} > <img src={arrow} /> </button>
+            <button onClick={next} > <img src={arrow} /> </button>
+          </div>
+
+
+        </div>
+
+      </div >
+    </>
+  );
 }
 const CarouselCard = ({ item, styles }) => {
   return (

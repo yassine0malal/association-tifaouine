@@ -33,7 +33,7 @@ export default function Contact() {
                             <p>{t('contact.info.cards.email.value')}</p>
                         </div>
                         <div className={styles.card}>
-                            <img src={phone} alt="" />
+                            <img src={phone} alt="" className={styles.phoneNumber}/>
                             <h2>{t('contact.info.cards.phone.title')}</h2>
                             <p>{t('contact.info.cards.phone.value')}</p>
                         </div>

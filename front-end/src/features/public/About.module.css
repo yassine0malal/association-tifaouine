@@ -8,6 +8,9 @@
 .AboutSection {
   width: 100%;
   max-width: 1450px;
+  
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .carouselWrapper {
@@ -22,7 +25,8 @@
   flex-direction: column;
   /* margin-bottom:40px ; */
 }
-.carouselWrapper h2{
+
+.carouselWrapper h2 {
   color: var(--accent);
   padding: 0 30px;
   text-align: center;
@@ -67,7 +71,7 @@
   background-color: var(--accent-hover);
   background-color: #EDEDE9;
   bottom: -70px;
-  left: -70px;
+  inset-inline-start: -70px;
 }
 
 .associationDescription .description p:first-child {
@@ -105,6 +109,10 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
+}
+
+[dir="rtl"] .description {
+  text-align: right;
 }
 
 .optionWarper img {
@@ -147,12 +155,45 @@
 .interaction .phone {
   display: flex;
   gap: 10px;
+  border: 1px solid var(--accent);
+  padding: 15px 30px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+.interaction .phone:hover {
+  background-color: var(--accent-border);
+  border: none;
+}
+.interaction .phone:hover > * {
+  color: var(--bg-cream);
+  font-weight: 600;
 }
 
-.interaction .phone p {
-  /* font-weight: 600; */
+[dir="rtl"] .interaction {
+  flex-direction: row-reverse;
 }
 
+[dir="rtl"] .phone {
+  flex-direction: row-reverse;
+}
+
+
+[dir="rtl"] .associationDescription {
+  justify-items: center;
+  align-items: center;
+}
+
+[dir="rtl"] .associationDescription .imageWrapper {
+  margin-inline: auto;
+  display: flex;
+  justify-content: center;
+  
+}
+[dir="rtl"] .associationDescription .imageWrapper::before {
+inset-inline-start: auto;
+inset-inline-end: 70px;
+}
 
 
 /* -------hashed text section------- */
@@ -185,10 +226,12 @@
   margin-top: 60px;
   display: flex;
   gap: var(--gap);
-  padding-left: var(--gap);
+  padding-inline-start: var(--gap);
+  /* ← automatically LEFT in LTR, RIGHT in RTL */
   transform-style: preserve-3d;
   cursor: grab;
   will-change: transform;
+  transform: translate3d(0, 0, 0);
 }
 
 .carouselTrack:active {
@@ -254,8 +297,9 @@
 }
 
 .carouselCard:hover {
-  scale: 1.1;
+  scale: 1.16;
   rotate: 4deg;
+
 }
 
 .carouselCard img {
@@ -301,7 +345,10 @@
   position: absolute;
   transition: width 0.5s ease-in-out;
   bottom: 0;
+  /* inset-inline-start: 0; */
+
 }
+
 
 .carouselCard:hover+.cardFooter h3::before {
   width: 20%;
@@ -321,10 +368,10 @@
 .partenaires {
   padding: 20px;
   background-image: url("../../assets/images/partenaires/bg-image.png");
- 
+
 }
 
-.partenaires h2{
+.partenaires h2 {
   color: var(--accent);
   font-size: 40px;
   margin: 35px;
@@ -339,7 +386,20 @@
   overflow: hidden;
   width: 100%;
   margin: auto;
+
 }
+
+/* .carouselWrapper{
+  position: relative;
+  
+  
+}
+[dir="rtl"] .carouselWrapper > .carouselTrack{
+ position: absolute;
+ right:-111px;
+ height: 300px;
+ 
+} */
 
 .partenaires .partenairesImages {
   display: flex;
@@ -378,6 +438,14 @@
 }
 
 .partenaires .buttons button:first-child {
+  rotate: 180deg;
+}
+
+[dir="rtl"] .partenaires .buttons button:first-child {
+  rotate: 0deg;
+}
+
+[dir="rtl"] .partenaires .buttons button:last-child {
   rotate: 180deg;
 }
 

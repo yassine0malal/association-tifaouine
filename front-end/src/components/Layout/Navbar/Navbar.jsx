@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Links from "./Links";
 import { Link } from "react-router-dom"
 import Aside from './Aside'
@@ -10,15 +10,22 @@ import tel from "../../../assets/icons/call.png";
 import email from "../../../assets/icons/email.png";
 import map from "../../../assets/icons/map.png";
 import logo from "../../../assets/images/logo.png";
-import i18n from "i18next";
 import { useTranslation } from "react-i18next";
 
-function changeLanguage(lang){
-    i18n.changeLanguage(lang);
-}
 
 export default function NavBar() {
     const { i18n } = useTranslation();
+
+    const [displayBefore, setDisplayBefore] = useState(i18n.language)
+    console.log("--", displayBefore)
+
+   
+    function changeLanguage(lang) {
+        setDisplayBefore(lang)
+        i18n.changeLanguage(lang);
+    }
+    const currentLang = i18n.language;
+
     return (
         <>
             <div className={styles.upperNavbar}>
@@ -39,9 +46,11 @@ export default function NavBar() {
                 </div>
 
                 <div className={styles.language}>
-                    <button onClick={() => changeLanguage("fr")}>FR</button>
-                    <button onClick={() => changeLanguage("ar")}>AR</button>
-                    <button onClick={() => changeLanguage("en")}>EN</button>
+                    <button className={currentLang == "fr" ? "isActive" : ""} onClick={() => changeLanguage("fr")}>Français</button>
+                    <span>|</span>
+                    <button className={currentLang == "en" ? "isActive" : ""} onClick={() => changeLanguage("en")}>English</button>
+                    <span>|</span>
+                    <button className={currentLang == "ar" ? "isActive" : ""} onClick={() => changeLanguage("ar")}>العربية</button>
                 </div>
 
 
