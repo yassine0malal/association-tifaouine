@@ -13,7 +13,7 @@ export default function ProjectCard({
   return (
     <div className={styles.projectCard}>
       <div className={styles.cardImg}>
-        <img src={image} alt="" />
+        <img src={image} alt="" aria-label="loading"/>
       </div>
 
       <div className={styles.cardContent}>

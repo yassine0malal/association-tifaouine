@@ -46,7 +46,7 @@ const ProjectPage = () => {
       <div className={styles.content}>
         <div className={styles.project}>
           <div className={styles.projectImage}>
-            <img src={img} alt="" />
+            <img src={img} alt="" aria-label="loading"/>
           </div>
 
           <div className={styles.details}>

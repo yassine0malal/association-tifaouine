@@ -1,0 +1,178 @@
+.skeletonEventCard {
+    width: 100%;
+    display: block;
+    height: auto;
+    aspect-ratio: 4 / 3;
+}
+
+.skeletonCardBody {
+    padding: 1rem;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #eff0f0 0%, #f8f8f8 100%);
+    border-radius: 8px;
+    display: flex;
+    align-items: flex-end;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Shimmer animation */
+.skeletonCardBody::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.4),
+        rgba(255, 255, 255, 0.7),
+        rgba(255, 255, 255, 0.4),
+        transparent
+    );
+    animation: shimmer 1.5s infinite;
+    z-index: 0;
+}
+
+@keyframes shimmer {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+.skeletonContent {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+}
+
+.skeletonMeta {
+    display: flex;
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.skeletonDomain {
+    display: inline-block;
+    width: 120px;
+    height: 32px;
+    background: rgba(0, 0, 0, 0.08);
+    border-radius: 2rem;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+.skeletonDate {
+    display: inline-block;
+    width: 100px;
+    height: 32px;
+    background: rgba(0, 0, 0, 0.08);
+    border-radius: 2rem;
+    animation: pulse 1.5s ease-in-out infinite 0.2s;
+}
+
+.skeletonTitle {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.skeletonLine {
+    height: 24px;
+    background: rgba(0, 0, 0, 0.08);
+    border-radius: 4px;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+.skeletonLine:first-child {
+    width: 90%;
+    animation-delay: 0.1s;
+}
+
+.skeletonLine:last-child {
+    width: 70%;
+    animation-delay: 0.3s;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 0.4;
+    }
+    50% {
+        opacity: 0.9;
+    }
+}
+
+/* Tablet Responsive */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .skeletonCardBody {
+        border-radius: 14px;
+    }
+    
+    .skeletonMeta {
+        gap: 0.5rem;
+    }
+    
+    .skeletonDomain,
+    .skeletonDate {
+        height: 30px;
+    }
+    
+    .skeletonLine {
+        height: 22px;
+    }
+}
+
+/* Mobile Responsive */
+@media (max-width: 767px) {
+    .skeletonCardBody {
+        border-radius: 12px;
+        padding: 0.8rem;
+    }
+    
+    .skeletonMeta {
+        gap: 0.4rem;
+        margin-bottom: 0.7rem;
+    }
+    
+    .skeletonDomain {
+        width: 100px;
+        height: 28px;
+    }
+    
+    .skeletonDate {
+        width: 85px;
+        height: 28px;
+    }
+    
+    .skeletonLine {
+        height: 20px;
+    }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+    .skeletonCardBody {
+        padding: 0.7rem;
+    }
+    
+    .skeletonDomain {
+        width: 90px;
+        height: 26px;
+    }
+    
+    .skeletonDate {
+        width: 75px;
+        height: 26px;
+    }
+    
+    .skeletonLine {
+        height: 18px;
+    }
+}
