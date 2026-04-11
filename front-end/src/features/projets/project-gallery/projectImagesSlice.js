@@ -19,7 +19,7 @@ const projectImagesSlice = createSlice({
     totalPages: 1,
     nextPage: 2,
     prevPage: 0,
-    itemPerPage: 0,
+    itemsPerPage: 0,
   },
   reducers: {
     setImagesPage: (state, action) => {
@@ -45,11 +45,10 @@ const projectImagesSlice = createSlice({
           (img) => !existingIds.has(img.id),
         );
         state.images.push(...filteredImages);
-        state.currentPage = action.payload.currentPage;
         state.totalPages = action.payload.totalPages;
         state.nextPage = action.payload.nextPage;
         state.prevPage = action.payload.prevPage;
-        state.itemPerPage = action.payload.itemPerPage;
+        state.itemsPerPage = action.payload.itemsPerPage;
       })
 
       .addCase(fetchProjectImages.rejected, (state, action) => {

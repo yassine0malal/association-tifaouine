@@ -5,25 +5,32 @@ import ProjectCard from "../../../components/common/ProjectCard";
 import ProjectCardSkeleton from "../../../components/common/ProjectCardSkeleton";
 import PageHero from "../../../components/common/PageHero";
 import Pagination from "../../../components/common/Pagination";
+import FilterButtons from "../../../components/common/FilterButtons";
 
 import styles from "./projectList.module.css";
 import heroImg from "../../../assets/images/projects_hero.jpg";
 
 import { fetchProjects, setPage, setFilter } from "./projectsSlice";
 
+
 export default function Projets() {
   const dispatch = useDispatch();
 
-  const { data, loading, currentPage, totalPages, currentfilter } = useSelector(
-    (state) => state.projects,
-  );
+  const {
+    data,
+    loading,
+    currentPage,
+    totalPages,
+    currentFilter,
+    itemsPerPage,
+  } = useSelector((state) => state.projects);
 
   const filters = ["All", "Terminé", "En cours", "En attente"];
 
   // 🔹 Fetch projects when page OR filter changes
   useEffect(() => {
-    dispatch(fetchProjects({ page: currentPage, filter: currentfilter }));
-  }, [dispatch, currentPage, currentfilter]);
+    dispatch(fetchProjects({ page: currentPage, filter: currentFilter }));
+  }, [dispatch, currentPage, currentFilter]);
 
   // 🔹 Handlers
   const handleFilterChange = (filter) => {
@@ -34,28 +41,18 @@ export default function Projets() {
     dispatch(setPage(page));
   };
 
-  // 🔹 Render Filters
-  const renderFilters = () =>
-    filters.map((filter) => (
-      <button
-        key={filter}
-        onClick={() => handleFilterChange(filter)}
-        className={currentfilter === filter ? styles.active : ""}
-      >
-        {filter}
-      </button>
-    ));
+  console.log(itemsPerPage);
 
   // 🔹 Render Project Cards
   const renderProjects = () => {
     if (loading) {
-      return Array.from({ length: 6 }, (_, i) => (
+      return Array.from({ length: itemsPerPage }, (_, i) => (
         <ProjectCardSkeleton key={`skeleton-${i}`} />
       ));
     }
 
     if (!data || data.length === 0) {
-      return <p>No projects found.</p>;
+      return <p style={{ alignItems: "center" }}>No projects found.</p>;
     }
 
     return data.map((project) => <ProjectCard key={project.id} {...project} />);
@@ -69,7 +66,11 @@ export default function Projets() {
         {/* 🔹 Filters */}
         <div className={styles.filterContainer}>
           <h2 className={styles.header}>Voir les projets</h2>
-          <div className={styles.filter}>{renderFilters()}</div>
+          <FilterButtons
+            currentFilter={currentFilter}
+            filters={filters}
+            handleFilterChange={handleFilterChange}
+          />
         </div>
 
         {/* 🔹 Projects */}

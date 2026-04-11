@@ -1,0 +1,68 @@
+/* projectList.module.css - Filter Styles Only */
+
+/* Filter Buttons Container */
+.filter {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+/* Filter Buttons */
+.filter button {
+    background: var(--bg, #fff);
+    color: var(--text, #6b6375);
+    padding: 0.6rem 1.5rem;
+    text-align: center;
+    display: block;
+    border-radius: 2rem;
+    border: 1px solid var(--border, #e5e4e7);
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Filter Button Hover & Active States */
+.filter button:hover,
+.filter button:active {
+    border-color: var(--accent, #CB914F);
+    color: var(--accent, #CB914F);
+    transform: translateY(-2px);
+}
+
+/* Filter Button Active Press State */
+.filter button:active {
+    transform: translateY(0);
+}
+
+/* Active Filter Button */
+.filter button.active {
+    background: var(--accent, #CB914F);
+    color: var(--bg, #fff);
+    border-color: var(--accent, #CB914F);
+    box-shadow: 0 4px 12px rgba(203, 145, 79, 0.3);
+}
+
+/* Responsive Filter Styles */
+
+/* Tablets */
+@media (max-width: 768px) {
+    .filter {
+        gap: 10px;
+    }
+    
+    .filter button {
+        padding: 0.5rem 1.25rem;
+        font-size: 0.85rem;
+    }
+}
+
+/* Phones */
+@media (max-width: 640px) {
+    .filter button {
+        padding: 0.4rem 1rem;
+        font-size: 0.8rem;
+    }
+}

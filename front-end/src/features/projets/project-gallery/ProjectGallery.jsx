@@ -23,7 +23,7 @@ function ProjectGallery({ id }) {
 
   const generateImages = (images) => {
     return images.map((img) => (
-      <img src={img.src} alt={img.alt} key={img.id} />
+      <img src={img.src} alt={img.alt} key={img.id} aria-label="loading" />
     ));
   };
 

@@ -5,10 +5,20 @@ import { fetchProjectsAPI } from "./projectsService";
 export const fetchProjects = createAsyncThunk(
   "projects/fetchProjects",
   async ({ page, filter }) => {
-    console.log(page , filter);
-    
     const data = await fetchProjectsAPI(page, filter);
     return data;
+  },
+  {
+    condition: ({ page, filter }, { getState }) => {
+      const { projects } = getState();
+      // 🚫 don't fetch if already loading
+      if (projects.loading) return false;
+
+      // 🚫 don't fetch same page + same filter again
+      // if (projects.currentPage === page && projects.currentFilter === filter) {
+      //   return false;
+      // }
+    },
   },
 );
 
@@ -18,17 +28,19 @@ const projectsSlice = createSlice({
     data: [],
     loading: false,
     error: null,
-    currentfilter: "All",
-    currentPage: 1,
-    totalPages: 10,
+    currentFilter: "All",
+    currentPage: null,
+    totalPages: null,
+    itemsPerPage: 0,
   },
   reducers: {
     setPage: (state, action) => {
       state.currentPage = action.payload;
     },
     setFilter: (state, action) => {
-      state.currentfilter = action.payload;
+      state.currentFilter = action.payload;
       state.currentPage = 1;
+      state.data = []
     },
   },
   extraReducers: (builder) => {
@@ -42,12 +54,13 @@ const projectsSlice = createSlice({
       // success
       .addCase(fetchProjects.fulfilled, (state, action) => {
         state.loading = false;
-        state.data = action.payload.projects;
+        state.data = action.payload.projects || [];
+
         state.currentPage = action.payload.currentPage;
         state.totalPages = action.payload.totalPages;
         state.nextPage = action.payload.nextPage;
         state.prevPage = action.payload.prevPage;
-        state.itemPerPage = action.payload.itemPerPage;
+        state.itemsPerPage = action.payload.itemsPerPage;
       })
 
       // error

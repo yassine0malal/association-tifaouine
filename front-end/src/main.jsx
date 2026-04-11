@@ -18,6 +18,9 @@ import Contact from "./features/public/Contact.jsx";
 import Home from "./features/public/Accueil.jsx";
 
 import "./i18n";
+import EventList from "./features/evenements/event-list/EventList.jsx";
+import './styles/globals.css'
+import EventPage from "./features/evenements/event-page/EventPage.jsx";
 
 createRoot(document.getElementById("root")).render(
   <Provider store={store}>
@@ -39,7 +42,7 @@ createRoot(document.getElementById("root")).render(
             {/* Main Routes : Activites */}
             <Route path="activites">
               <Route path="projets" element={<Projets />} />
-              <Route path="evenements" element={<Footer />} />
+              <Route path="evenements" element={<EventList />} />
               <Route path="actualites" element={<Footer />} />
             </Route>
 
@@ -72,7 +75,7 @@ createRoot(document.getElementById("root")).render(
           <Route path="/project-page" element={<ProjectPage />} />
           <Route path="/project/:id" element={<ProjectPage />} />
           <Route path="/skelton" element={<ProjectCardSkeleton />} />
-
+          <Route path="/evenement/:id" element={<EventPage />} />
         </Routes>
 
       </BrowserRouter>
