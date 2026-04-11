@@ -3,14 +3,15 @@ const { Ressource, Projet } = require('../models');
 class RessourceRepository {
     /**
      * Récupérer toutes les ressources avec filtres
-     * @param {Object} filters - type, projet_id
+     * @param {Object} filters - type, projet_id, evenement_id
      */
     async findAll(filters = {}) {
-        const { type, projet_id, limit, offset } = filters;
+        const { type, projet_id, evenement_id, limit, offset } = filters;
         const where = {};
 
-        if (type)       where.type       = type;
-        if (projet_id)  where.projet_id  = projet_id;
+        if (type)         where.type         = type;
+        if (projet_id)    where.projet_id    = projet_id;
+        if (evenement_id) where.evenement_id = evenement_id;
 
         return await Ressource.findAndCountAll({
             where,
