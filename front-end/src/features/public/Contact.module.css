@@ -83,6 +83,10 @@
     margin-bottom: 15px;
 }
 
+[dir="rtl"] input[type="tel"]{
+    direction: ltr;
+    text-align: right;
+}
 .inputs input,
 textarea {
     width: 100%;

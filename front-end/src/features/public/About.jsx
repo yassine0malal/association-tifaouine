@@ -23,6 +23,7 @@ import bgImage from "../../assets/images/partenaires/bg-image.png"
 import styles from './About.module.css';
 import PageHero from '../../components/common/PageHero';
 import Btn from '../../components/common/Button';
+import { useTranslation } from 'react-i18next';
 
 const teamData = [
   { id: 1, src: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80", title: "Real-Time Collaboration", desc: "Communicate seamlessly and keep everyone in sync." },
@@ -52,10 +53,11 @@ const About = () => {
   const x = useMotionValue(0);
   const [index, setIndex] = useState(0);
   const [visibleItems, setVisibleItems] = useState(4);
+  const {t}  = useTranslation("about");
+
 
   const maxindex = partners.length - visibleItems;
   const next = () => {
-    console.log(index)
     setIndex((prev) => (prev < maxindex ? prev + 1 : 0))
   }
   const prev = () => {
@@ -104,126 +106,121 @@ const About = () => {
     x.set(newX);
   });
 
-  return (
-    <>
-      <PageHero title={"À propos de nous "} heroImg={HeroBg} />
-      <div className={styles.AboutSection}>
+ return (
+  <>
+    <PageHero title={t('hero.title')} heroImg={HeroBg} />
+    <div className={styles.AboutSection}>
 
-        <div className={styles.associationDescription}>
+      <div className={styles.associationDescription}>
 
-          <div className={styles.imageWrapper}>
-            <img src={association} alt="tifaouine" />
-          </div>
-          <div className={styles.description}>
-            <p>Qui sommes nous ?</p>
-            <h2>Tifaouine, c’est la clarté de l’espoir pour éclairer le chemin des plus démunis.</h2>
-            <p>
-              Depuis sa création le 6 août 1998 à Asni, l’association Tifaouine s'engage pour le développement social et rural dans la province d'Al Haouz. Notre mission est d'offrir un accompagnement global aux populations locales à travers le désenclavement, l'accès à l'éducation et le soutien à l'agriculture durable .
-              À travers nos projets et formations, nos équipes travaillent chaque jour pour restaurer les droits fondamentaux des citoyens et leur permettre de construire un avenir digne au cœur de leurs montagnes.
-            </p>
+        <div className={styles.imageWrapper}>
+          <img src={association} alt="tifaouine" />
+        </div>
+        <div className={styles.description}>
+          <p>{t('intro.question')}</p>
+          <h2>{t('intro.title')}</h2>
+          <p>
+            {t('intro.description')}
+          </p>
 
-            <div className={styles.options}>
-              <div className={styles.optionWarper}>
-                <img src={checked} alt="task" />
-                <p><b>Désenclaver</b> en aménageant des pistes rurales et en facilitant l'accès à l'eau potable .</p>
-              </div>
-              <div className={styles.optionWarper}>
-                <img src={checked} alt="task" />
-                <p><b>Éduquer</b> et former à travers la lutte contre l'analphabétisme, le soutien scolaire et la formation technique des agriculteurs .</p>
-              </div>
-              <div className={styles.optionWarper}>
-                <img src={checked} alt="task" />
-                <p><b>Promouvoir</b> l'autonomie en accompagnant les femmes et les paysans vers des projets de développement durable et économique .</p>
-              </div>
-
-              <div className={styles.interaction}>
-                <div className={styles.button}>
-                  <Btn title={"FAIRE UN DON"} />
-                </div>
-                <div className={styles.phone}>
-                  <img src={call} alt="" />
-                  <p>+212 522 75 69 65</p>
-                </div>
-              </div>
-
-
+          <div className={styles.options}>
+            <div className={styles.optionWarper}>
+              <img src={checked} alt="task" />
+              <p><b>{t('objectives.desenclaver').split(' ')[0]}</b> {t('objectives.desenclaver').split(' ').slice(1).join(' ')}</p>
+            </div>
+            <div className={styles.optionWarper}>
+              <img src={checked} alt="task" />
+              <p><b>{t('objectives.eduquer').split(' ')[0]}</b> {t('objectives.eduquer').split(' ').slice(1).join(' ')}</p>
+            </div>
+            <div className={styles.optionWarper}>
+              <img src={checked} alt="task" />
+              <p><b>{t('objectives.promouvoir').split(' ')[0]}</b> {t('objectives.promouvoir').split(' ').slice(1).join(' ')}</p>
             </div>
 
+            <div className={styles.interaction}>
+              <div className={styles.button}>
+                <Btn title={t('actions.don')} />
+              </div>
+              <div className={styles.phone}>
+                <img src={call} alt="" />
+                <p>{t('actions.phone')}</p>
+              </div>
+            </div>
+
+
           </div>
+
         </div>
+      </div>
 
-        <div className={styles.hashtage}>
-          <h3>Depuis plus de 30 ans, notre engagement se traduit par des actions concrètes au service des communautés au Al Haouz-Maroc.</h3>
+      <div className={styles.hashtage}>
+        <h3>{t('stats.title')}</h3>
 
-          <p>Équipement du siège de l’association # Autonomisation des femmes (couture, tissage, artisanat) # Lutte contre l’analphabétisme # Formations en gestion administrative et financière # Formation des agriculteurs
-            (apiculture, agriculture biologique, élevage) # Plantation et distribution d’arbres fruitiers # Protection de l’environnement et lutte contre l’érosion # Ouverture de pistes rurales pour désenclaver
-            les villages # Accès à l’eau potable et assainissement # Construction d’infrastructures sociales # Création de centres de formation et clubs féminins # Soutien à l’éducation préscolaire et aux enfants
-            # Réalisation d’un hammam public # Développement d’activités génératrices de revenus # Campagnes de sensibilisation sanitaire et environnementale # Accueil de délégations nationales et internationales # Accompagnement des agriculteurs # Soutien aux établissements scolaires</p>
-        </div>
+        <p>{t('stats.list')}</p>
+      </div>
 
 
 
 
 
-        {/* Carousel Card */}
-        <div className={styles.carouselWrapper}>
-          <h2>EQUIPE</h2>
+      {/* Carousel Card */}
+      <div className={styles.carouselWrapper}>
+        <h2>{t('team.title')}</h2>
+        <motion.div
+          ref={trackRef}
+          className={styles.carouselTrack}
+          drag="x"
+          style={{ x }}
+          onDragStart={() => setIsPaused(true)}
+          onDragEnd={() => setIsPaused(false)}
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
+          {infiniteData.map((item, index) => (
+            <CarouselCard key={index} item={item} styles={styles} />
+          ))}
+        </motion.div>
+      </div>
+
+
+
+      <div className={styles.partenaires}>
+        <h2>{t('partners.title')}</h2>
+        <div
+          className={styles.slide}
+        >
           <motion.div
-            ref={trackRef}
-            className={styles.carouselTrack}
-            drag="x"
-            style={{ x }}
-            onDragStart={() => setIsPaused(true)}
-            onDragEnd={() => setIsPaused(false)}
-            onMouseEnter={() => setIsPaused(true)}
-            onMouseLeave={() => setIsPaused(false)}
+            animate={{ x: `-${index * (100 / visibleItems)}%` }}
+            transition={{ type: "spring", stiffness: 80, damping: 20 }}
+            className={styles.partenairesImages}
           >
-            {infiniteData.map((item, index) => (
-              <CarouselCard key={index} item={item} styles={styles} />
+
+            {partners.map((p) => (
+              <div
+                key={p.id}
+                className={styles.partnerCard}
+                style={{ minWidth: `${100 / visibleItems}%` }}
+              >
+
+                <img src={p.image} alt={p.title} />
+              </div>
             ))}
+
           </motion.div>
         </div>
 
-
-
-        <div className={styles.partenaires}>
-          <h2>Partenariat pour un Impact Enrichissant</h2>
-          <div
-            className={styles.slide}
-          >
-            <motion.div
-              animate={{ x: `-${index * (100 / visibleItems)}%` }}
-              transition={{ type: "spring", stiffness: 80, damping: 20 }}
-              className={styles.partenairesImages}
-            >
-
-              {partners.map((p) => (
-                <div
-                  key={p.id}
-                  className={styles.partnerCard}
-                  style={{ minWidth: `${100 / visibleItems}%` }}
-                >
-
-                  <img src={p.image} alt={p.title} />
-                </div>
-              ))}
-
-            </motion.div>
-          </div>
-
-          <div className={styles.buttons}>
-            <button onClick={prev} > <img src={arrow} /> </button>
-            <button onClick={next} > <img src={arrow} /> </button>
-          </div>
-
-
+        <div className={styles.buttons}>
+          <button onClick={prev} > <img src={arrow} /> </button>
+          <button onClick={next} > <img src={arrow} /> </button>
         </div>
 
-      </div>
-    </>
-  );
-};
 
+      </div>
+
+    </div>
+  </>
+);
+}
 const CarouselCard = ({ item, styles }) => {
   return (
     <div className={styles.cardGroup}>
@@ -241,6 +238,5 @@ const CarouselCard = ({ item, styles }) => {
     </div>
   );
 };
-
 
 export default About;

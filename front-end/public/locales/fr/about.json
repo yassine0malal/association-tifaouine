@@ -1,0 +1,43 @@
+{
+    "hero": {
+        "title": "À propos de nous"
+    },
+    "intro": {
+        "question": "Qui sommes nous ?",
+        "title": "Tifaouine, c’est la clarté de l’espoir pour éclairer le chemin des plus démunis.",
+        "description": "Depuis sa création le 6 août 1998 à Asni, l’association Tifaouine s'engage pour le développement social et rural dans la province d'Al Haouz. Notre mission est d'offrir un accompagnement global aux populations locales à travers le désenclavement, l'accès à l'éducation et le soutien à l'agriculture durable. À travers nos projets et formations, nos équipes travaillent chaque jour pour restaurer les droits fondamentaux des citoyens et leur permettre de construire un avenir digne au cœur de leurs montagnes."
+    },
+    "objectives": {
+        "desenclaver": "Désenclaver en aménageant des pistes rurales et en facilitant l'accès à l'eau potable.",
+        "eduquer": "Éduquer et former à travers la lutte contre l'analphabétisme, le soutien scolaire et la formation technique des agriculteurs.",
+        "promouvoir": "Promouvoir l'autonomie en accompagnant les femmes et les paysans vers des projets de développement durable et économique."
+    },
+    "actions": {
+        "don": "FAIRE UN DON",
+        "phone": "+212 522 75 69 65"
+    },
+    "stats": {
+        "title": "Depuis plus de 30 ans, notre engagement se traduit par des actions concrètes au service des communautés au Al Haouz-Maroc.",
+        "list": "Équipement du siège de l’association # Autonomisation des femmes (couture, tissage, artisanat) # Lutte contre l’analphabétisme # Formations en gestion administrative et financière # Formation des agriculteurs (apiculture, agriculture biologique, élevage) # Plantation et distribution d’arbres fruitiers # Protection de l’environnement et lutte contre l’érosion # Ouverture de pistes rurales pour désenclaver les villages # Accès à l’eau potable et assainissement # Construction d’infrastructures sociales # Création de centres de formation et clubs féminins # Soutien à l’éducation préscolaire et aux enfants # Réalisation d’un hammam public # Développement d’activités génératrices de revenus # Campagnes de sensibilisation sanitaire et environnementale # Accueil de délégations nationales et internationales # Accompagnement des agriculteurs # Soutien aux établissements scolaires"
+    },
+    "team": {
+        "title": "ÉQUIPE",
+        "members": [
+            {
+                "title": "Collaboration en temps réel",
+                "desc": "Communiquez de manière fluide et gardez tout le monde synchronisé."
+            },
+            {
+                "title": "Suivi des tâches et des projets",
+                "desc": "Attribuez des tâches, fixez des échéances et visualisez les progrès."
+            },
+            {
+                "title": "Aperçus de performance",
+                "desc": "Prenez des décisions plus intelligentes grâce à des analyses en temps réel."
+            }
+        ]
+    },
+    "partners": {
+        "title": "Partenariat pour un impact enrichissant"
+    }
+}
