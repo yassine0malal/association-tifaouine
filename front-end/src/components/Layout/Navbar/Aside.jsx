@@ -3,15 +3,27 @@ import { useTranslation } from "react-i18next";
 import styles from "./Navbar.module.css";
 import plus from "../../../assets/icons/plus.png";
 import minus from "../../../assets/icons/minus.png";
-import { useState } from "react";
+import { useState,useEffect } from "react";
+import { useDispatch ,useSelector } from "react-redux";
 
 export default function Aside() {
     const { t } = useTranslation("nav");
     const [openMenu, setOpenMenu] = useState(null);
+    const dispatch = useDispatch()
+    const { data, status } = useSelector((state) => state.domains);
+
+    useEffect(() => {
+        if (status === "idle") {
+            dispatch(fetchDomains());
+        }
+    }, [status, dispatch])
 
     const handleToggle = (id) => {
         setOpenMenu(openMenu === id ? null : id);
     };
+
+    if (status == "pending") return <h2>Loading Domains...</h2>
+
 
     const menuData = [
         {
@@ -28,7 +40,6 @@ export default function Aside() {
             subItems: [
                 { label: t("nav.dropdown.activities.projects"), path: "/activites/projets" },
                 { label: t("nav.dropdown.activities.events"), path: "/activites/evenements" },
-                { label: t("nav.dropdown.activities.news"), path: "/activites/actualites" }
             ]
         },
         {
@@ -42,17 +53,16 @@ export default function Aside() {
         {
             id: "domaines",
             title: t("nav.domains"),
-            subItems: [
-                { label: t("nav.dropdown.domains.education"), path: "/domaines/education" },
-                { label: t("nav.dropdown.domains.water"), path: "/domaines/eau" },
-                { label: t("nav.dropdown.domains.agriculture"), path: "/domaines/agriculture" }
-            ]
+            subItems: data?.map((domain) => ({
+                label: domain.label,
+                path: `/activites/${domain.id}`
+            }))
         },
         {
             id: "ressources",
             title: t("nav.resources"),
             subItems: [
-                { label: t("nav.dropdown.resources.reports"), path: "/ressources/rapport" },
+                { label: t("nav.dropdown.resources.reports"), path: "/ressources/rapports" },
                 { label: t("nav.dropdown.resources.partners"), path: "/ressources/partenaires" }
             ]
         }
@@ -69,12 +79,11 @@ export default function Aside() {
 
                     {
                         <div
-                            className={`${styles.submenuWrapper} ${
-                                item.id === openMenu ? styles.isOpen : ""
-                            }`}
+                            className={`${styles.submenuWrapper} ${item.id === openMenu ? styles.isOpen : ""
+                                }`}
                         >
                             <ul className={`${styles.dropdownMenuAside} `}>
-                                {item.subItems.map((subItem) => (
+                                {item.subItems?.map((subItem) => (
                                     <li key={subItem.label}>
                                         <Link to={subItem.path}>{subItem.label}</Link>
                                     </li>

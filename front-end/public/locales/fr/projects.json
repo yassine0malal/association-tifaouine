@@ -1,0 +1,13 @@
+{
+    "projects": {
+        "heroTitle": "Découvrir nos projets",
+        "filters": {
+            "all": "All",
+            "completed": "Terminé",
+            "inProgress": "En cours",
+            "pending": "En attente"
+        },
+        "viewProjects": "Voir les projets",
+        "noProjects": "Aucun projet trouvé."
+    }
+}

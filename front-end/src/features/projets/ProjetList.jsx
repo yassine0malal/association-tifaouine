@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next"; 
 
 import ProjectCard from "../../components/common/ProjectCard";
 import ProjectCardSkeleton from "../../components/common/ProjectCardSkeleton";
@@ -13,6 +14,7 @@ import { fetchProjects, setPage, setFilter } from "./projectsSlice";
 
 export default function Projets() {
   const dispatch = useDispatch();
+  const { t } = useTranslation("projects");
 
   const {
     data,
@@ -22,7 +24,12 @@ export default function Projets() {
     currentfilter,
   } = useSelector((state) => state.projects);
 
-  const filters = ["All", "Terminé", "En cours", "En attente"];
+  const filters = [
+    { key: "all", label: t("projects.filters.all") },
+    { key: "completed", label: t("projects.filters.completed") },
+    { key: "inProgress", label: t("projects.filters.inProgress") },
+    { key: "pending", label: t("projects.filters.pending") },
+  ];
 
   // 🔹 Fetch projects when page OR filter changes
   useEffect(() => {
@@ -30,8 +37,8 @@ export default function Projets() {
   }, [dispatch, currentPage, currentfilter]);
 
   // 🔹 Handlers
-  const handleFilterChange = (filter) => {
-    dispatch(setFilter(filter));
+  const handleFilterChange = (filterKey) => {
+    dispatch(setFilter(filterKey));
   };
 
   const handlePageChange = (page) => {
@@ -40,13 +47,13 @@ export default function Projets() {
 
   // 🔹 Render Filters
   const renderFilters = () =>
-    filters.map((filter) => (
+    filters.map(({ key, label }) => (
       <button
-        key={filter}
-        onClick={() => handleFilterChange(filter)}
-        className={currentfilter === filter ? styles.active : ""}
+        key={key}
+        onClick={() => handleFilterChange(key)}
+        className={currentfilter === key ? styles.active : ""}
       >
-        {filter}
+        {label}
       </button>
     ));
 
@@ -59,7 +66,7 @@ export default function Projets() {
     }
 
     if (!data || data.length === 0) {
-      return <p>No projects found.</p>;
+      return <p>{t("projects.noProjects")}</p>;
     }
 
     return data.map((project) => (
@@ -69,19 +76,16 @@ export default function Projets() {
 
   return (
     <div className={styles.projectList}>
-      <PageHero heroImg={heroImg} title="Découvrir nos projets" />
+      <PageHero heroImg={heroImg} title={t("projects.heroTitle")} />
 
       <div className={styles.projectsContainer}>
-        {/* 🔹 Filters */}
         <div className={styles.filterContainer}>
-          <h2 className={styles.header}>Voir les projets</h2>
+          <h2 className={styles.header}>{t("projects.viewProjects")}</h2>
           <div className={styles.filter}>{renderFilters()}</div>
         </div>
 
-        {/* 🔹 Projects */}
         <div className={styles.projects}>{renderProjects()}</div>
 
-        {/* 🔹 Pagination */}
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}

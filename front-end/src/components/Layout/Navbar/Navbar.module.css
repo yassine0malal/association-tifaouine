@@ -233,6 +233,7 @@ aside {
     gap: 10px;
     width: 100%;
     padding: 20px 20px;
+    
 }
 
 
@@ -251,6 +252,13 @@ aside {
 
 .asideItem a {
     text-decoration: none;
+    color: var(--color-text);
+}
+.asideItem li {
+    transition: all 0.3s ease-in-out;
+}
+.asideItem li:active {
+    scale: 1.2;
 }
 
 
@@ -289,10 +297,12 @@ aside ul {
     padding: 12px;
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
+    
 }
 
+
 .isOpen .dropdownMenuAside li {
-    opacity: 1;
+    opacity: 1;    
     transition-delay: 0.1s;
 }
 

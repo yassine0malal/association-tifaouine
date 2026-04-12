@@ -2,53 +2,85 @@ import { Link } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
 import styles from './Navbar.module.css';
 
+import { fetchDomains } from "../../../features/domains/domainsSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 export default function Links() {
     const { t } = useTranslation("nav");
+    const dispatch = useDispatch()
+    const { data, status } = useSelector((state) => state.domains);
+
+    useEffect(() => {
+        if ( status=== "idle") {
+            dispatch(fetchDomains());
+        }
+    }, [status, dispatch])
+
+    if (status == "pending") return <h2>Loading Domains...</h2>
+    const menuData = [
+        {
+            id: "a-propos",
+            title: t("nav.about"),
+            to: null, // pas de lien direct
+            subItems: [
+                { label: t("nav.dropdown.about.us"), path: "/about/nous" },
+                { label: t("nav.dropdown.about.contact"), path: "/about/contact" }
+            ]
+        },
+        {
+            id: "activites",
+            title: t("nav.activities"),
+            to: null,
+            subItems: [
+                { label: t("nav.dropdown.activities.projects"), path: "/activites/projets" },
+                { label: t("nav.dropdown.activities.events"), path: "/activites/evenements" },
+            ]
+        },
+        {
+            id: "participez",
+            title: t("nav.getInvolved"),
+            to: null,
+            subItems: [
+                { label: t("nav.dropdown.getInvolved.donate"), path: "/partisipez/Faire-un-don" },
+                { label: t("nav.dropdown.getInvolved.becomeMember"), path: "/partisipez/Devenir-membre" }
+            ]
+        },
+        {
+            id: "domaines",
+            title: t("nav.domains"),
+            to: "/about",
+            subItems: (data?.map((domain) => ({
+                label: domain.label,
+                path: `/activites/${domain.id}`
+            })))
+            
+        },
+        {
+            id: "ressources",
+            title: t("nav.resources"),
+            to: null,
+            subItems: [
+                { label: t("nav.dropdown.resources.reports"), path: "/ressources/rapports" },
+                { label: t("nav.dropdown.resources.partners"), path: "/ressources/partenaires" }
+            ]
+        }
+    ];
 
     return (
         <nav>
             <ul>
-                <li className={`${styles.navItem} ${styles.hasDropDown}`}>
-                    <Link>{t('nav.about')}</Link>
-                    <ul className={styles.dropdownMenu}>
-                        <li><Link to={'/about/nous'}>{t('nav.dropdown.about.us')}</Link></li>
-                        <li><Link to={'/about/contact'}>{t('nav.dropdown.about.contact')}</Link></li>
-                    </ul>
-                </li>
-
-                <li className={`${styles.navItem} ${styles.hasDropDown}`}>
-                    <Link>{t('nav.activities')}</Link>
-                    <ul className={styles.dropdownMenu}>
-                        <li><Link to="/activites/projets">{t('nav.dropdown.activities.projects')}</Link></li>
-                        <li><Link to="/activites/evenements">{t('nav.dropdown.activities.events')}</Link></li>
-                        <li><Link to="/activites/actualites">{t('nav.dropdown.activities.news')}</Link></li>
-                    </ul>
-                </li>
-
-                <li className={`${styles.navItem} ${styles.hasDropDown}`}>
-                    <Link>{t('nav.getInvolved')}</Link>
-                    <ul className={styles.dropdownMenu}>
-                        <li><Link to="/partisipez/Faire-un-don">{t('nav.dropdown.getInvolved.donate')}</Link></li>
-                        <li><Link to="/partisipez/Devenir-membre">{t('nav.dropdown.getInvolved.becomeMember')}</Link></li>
-                    </ul>
-                </li>
-
-                <li className={`${styles.navItem} ${styles.hasDropDown}`}>
-                    <Link to="/about">{t('nav.domains')}</Link>
-                    <ul className={styles.dropdownMenu}>
-                        <li><Link to="/activites/education">{t('nav.dropdown.domains.education')}</Link></li>
-                        <li><Link to="/activites/eau">{t('nav.dropdown.domains.water')}</Link></li>
-                        <li><Link to="/activites/agriculture">{t('nav.dropdown.domains.agriculture')}</Link></li>
-                    </ul>
-                </li>
-
-                <li className={`${styles.navItem} ${styles.hasDropDown}`}>
-                    <Link>{t('nav.resources')}</Link>
-                    <ul className={styles.dropdownMenu}>
-                        <li><Link to="/ressources/rapports">{t('nav.dropdown.resources.reports')}</Link></li>
-                        <li><Link to="/ressources/partenaires">{t('nav.dropdown.resources.partners')}</Link></li>
-                    </ul>
-                </li>
+                {menuData.map((item) => (
+                    <li key={item.id} className={`${styles.navItem} ${styles.hasDropDown}`}>
+                        <Link >{item.title}</Link>
+                        <ul className={styles.dropdownMenu}>
+                            {item.subItems?.map((subItem) => (
+                                <li key={subItem.path}>
+                                    <Link to={subItem.path}>{subItem.label}</Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </li>
+                ))}
             </ul>
         </nav>
     );
