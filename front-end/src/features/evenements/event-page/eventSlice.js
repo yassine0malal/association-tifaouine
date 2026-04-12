@@ -3,12 +3,12 @@ import { fetchEventAPI } from "./eventService";
 
 export const fetchEvent = createAsyncThunk(
   "event/fetchEvent",
-  async ({ id }) => {
-    const data = await fetchEventAPI(id);    
+  async ({ id , lang }) => {
+    const data = await fetchEventAPI(id , lang);    
     return data
   },
   {
-    condition: ({ id }, { getState }) => {
+    condition: ({ id , lang }, { getState }) => {
       const { event } = getState();
 
       // prevent call when loading

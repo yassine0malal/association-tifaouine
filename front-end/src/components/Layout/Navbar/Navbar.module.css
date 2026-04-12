@@ -47,6 +47,7 @@ h1 {
     position: relative;
     /* letter-spacing: 1.1px; */
     font-size: 14px;
+    direction: ltr;
 }
 
 .upperNavbar img {
@@ -79,6 +80,8 @@ h1 {
     color: var(--section-bg);
     letter-spacing: 1.1px;
     flex-wrap: wrap;
+    transition: all 0.3s ease-in-out;
+
 
 }
 
@@ -86,14 +89,15 @@ h1 {
     all: unset;
     cursor: pointer;
     position: relative;
-    transition: 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
     text-wrap: unset;
 }
 
 .upperNavbar .language button:hover {
     scale: 1.1;
 }
-.upperNavbar .language button:active{
+
+.upperNavbar .language button:active {
     color: #333;
 }
 
@@ -110,10 +114,8 @@ button[class*="isActive"]::before {
     background-color: var(--accent);
     bottom: -5px;
     border-radius: 4px;
-    /* display: none; */
 }
-.upperNavbar .language button::before {
-}
+
 
 
 
@@ -124,7 +126,7 @@ button[class*="isActive"]::before {
 nav * {
     font-size: 16px;
     justify-content: space-between;
-    padding: 0 20px;
+    padding: 0 13px;
     color: var(--bg-upper-navbar);
     font-weight: 600;
     font-size: 16px;
@@ -212,13 +214,13 @@ aside {
     height: 120vh;
     overflow-y: auto;
     width: 230px;
-    border: var(--color-text) 1px solid;
+    /* border: var(--color-text) 1px solid; */
     border-top: none;
 
     background-color: rgba(255, 255, 255, 0.9);
+    /* background-color: #f8f9fac2; */
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    display: none;
 }
 
 
@@ -231,6 +233,7 @@ aside {
     gap: 10px;
     width: 100%;
     padding: 20px 20px;
+    
 }
 
 
@@ -249,6 +252,13 @@ aside {
 
 .asideItem a {
     text-decoration: none;
+    color: var(--color-text);
+}
+.asideItem li {
+    transition: all 0.3s ease-in-out;
+}
+.asideItem li:active {
+    scale: 1.2;
 }
 
 
@@ -287,30 +297,29 @@ aside ul {
     padding: 12px;
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
+    
 }
 
+
 .isOpen .dropdownMenuAside li {
-    opacity: 1;
+    opacity: 1;    
     transition-delay: 0.1s;
 }
 
 /* ------------------ */
 
 .link1 {
-    display: block;
-    height: 100%;
-    display: flex;
     position: absolute;
     flex-direction: column;
     right: 0px;
-    top: 20px;
+    top: 14px;
+    /* margin-right: 12px; */
     transition: 0.3s all ease-in-out;
     align-items: flex-end;
-    display: none;
     background-color: rgba(255, 255, 255, 0.3);
+    background-color: var(--accent);
     backdrop-filter: blur(12px);
     backdrop-filter: blur(8px) saturate(150%) brightness(1.2);
-    z-index: 9999;
 }
 
 .link1 nav .hasDropDown:active>.dropdownMenu {
@@ -320,9 +329,20 @@ aside ul {
     visibility: visible;
 }
 
-.link1 img {
+.link1 .imageContainer {
+    position: relative;
+    width: 60px;
+    height: 60px;
+}
+
+.link1 img:first-child {
     width: 35px;
     height: 35px;
+    position: absolute;
+    left: 15px;
+    right: auto;
+    bottom: auto;
+    top: 10px;
 }
 
 
@@ -378,28 +398,25 @@ aside ul {
 
     .navBarSection {
         justify-content: start;
+        direction: ltr;
 
     }
 
     .link1 {
-        position: absolute;
-        display: flex;
-        /* height: 100%; */
+
         z-index: 9999;
-        background: transparent;
         display: block;
+            /* border-radius: 0px; */
+
     }
 
-    .link1::before {
-        content: "";
-        inset: 0;
-        position: absolute;
-        background-color: rgba(255, 255, 255, 0.3);
-        backdrop-filter: blur(12px);
-        backdrop-filter: blur(8px) saturate(150%) brightness(1.2);
-        z-index: -1;
-        border-radius: inherit;
+    .link1 .imageContainer {
+        position: relative;
+        border-radius: 12px;
+
     }
+
+
 
 
 
@@ -416,7 +433,7 @@ aside ul {
 
 /* large desktop */
 @media(max-width:940px) {
-    .upperNavbar{
+    .upperNavbar {
         flex-direction: column;
     }
 }

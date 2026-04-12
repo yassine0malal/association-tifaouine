@@ -3,10 +3,16 @@ import { projectImagesAPI } from "./projectImagesService";
 
 export const fetchProjectImages = createAsyncThunk(
   "projectImages/fetchProjectImages",
-  async ({ project, page }) => {
-    const data = await projectImagesAPI(project, page);
+  async ({ project, page , lang }) => {
+    const data = await projectImagesAPI(project, page , lang);
     return data;
   },
+  {
+    condition:({ project, page , lang } , {getState}) => {
+      const { projectImages } = getState();
+      if(projectImages.loading) return false;
+    }
+  }
 );
 
 const projectImagesSlice = createSlice({
@@ -35,8 +41,11 @@ const projectImagesSlice = createSlice({
       })
 
       .addCase(fetchProjectImages.fulfilled, (state, action) => {
+
         state.loading = false;
-        const newImages = action.payload.images;
+        const newImages = action.payload?.images || [];
+        console.log(action.payload);
+        
 
         // Remove duplicates based on id
         const existingIds = new Set(state.images.map((img) => img.id));

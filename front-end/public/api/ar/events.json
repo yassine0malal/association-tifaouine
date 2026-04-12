@@ -1,0 +1,51 @@
+{
+  "events": [
+    {
+      "id": 1,
+      "title": "كيف يحسن العمل الجماعي جودة التصميم",
+      "domain": "الماء والبيئة",
+      "date": "14 أبريل 2024",
+      "img": "https://picsum.photos/300/200?random=1"
+    },
+    {
+      "id": 2,
+      "title": "بناء مصممين أفضل عبر التعاون",
+      "domain": "الماء والبيئة",
+      "date": "14 أبريل 2024",
+      "img": "https://picsum.photos/300/200?random=2"
+    },
+    {
+      "id": 3,
+      "title": "قوة العمل المشترك في التصميم",
+      "domain": "الماء والبيئة",
+      "date": "14 أبريل 2024",
+      "img": "https://picsum.photos/300/200?random=3"
+    },
+    {
+      "id": 4,
+      "title": "تطور التصميم من خلال التعاون",
+      "domain": "الماء والبيئة",
+      "date": "14 أبريل 2024",
+      "img": "https://picsum.photos/300/200?random=4"
+    },
+    {
+      "id": 5,
+      "title": "لماذا يعد التعاون أساسياً في التصميم الحديث",
+      "domain": "الماء والبيئة",
+      "date": "14 أبريل 2024",
+      "img": "https://picsum.photos/300/200?random=5"
+    },
+    {
+      "id": 6,
+      "title": "ابتكار التصميم بقيادة الفريق",
+      "domain": "الماء والبيئة",
+      "date": "14 أبريل 2024",
+      "img": "https://picsum.photos/300/200?random=6"
+    }
+  ],
+  "currentPage": 9,
+  "nextPage": 10,
+  "prevPage": 8,
+  "totalPages": 10,
+  "itemsPerPage": 8
+}

@@ -1,0 +1,51 @@
+{
+  "events": [
+    {
+      "id": 1,
+      "title": "How teamwork improves design outcomes",
+      "domain": "Water & Environment",
+      "date": "April 14, 2024",
+      "img": "https://picsum.photos/300/200?random=1"
+    },
+    {
+      "id": 2,
+      "title": "Building better designers through collaboration",
+      "domain": "Water & Environment",
+      "date": "April 14, 2024",
+      "img": "https://picsum.photos/300/200?random=2"
+    },
+    {
+      "id": 3,
+      "title": "The power of working together in design",
+      "domain": "Water & Environment",
+      "date": "April 14, 2024",
+      "img": "https://picsum.photos/300/200?random=3"
+    },
+    {
+      "id": 4,
+      "title": "Design growth through collaboration",
+      "domain": "Water & Environment",
+      "date": "April 14, 2024",
+      "img": "https://picsum.photos/300/200?random=4"
+    },
+    {
+      "id": 5,
+      "title": "Why collaboration matters in modern design",
+      "domain": "Water & Environment",
+      "date": "April 14, 2024",
+      "img": "https://picsum.photos/300/200?random=5"
+    },
+    {
+      "id": 6,
+      "title": "Team-driven design innovation explained",
+      "domain": "Water & Environment",
+      "date": "April 14, 2024",
+      "img": "https://picsum.photos/300/200?random=6"
+    }
+  ],
+  "currentPage": 9,
+  "nextPage": 10,
+  "prevPage": 8,
+  "totalPages": 10,
+  "itemsPerPage": 8
+}

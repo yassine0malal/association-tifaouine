@@ -58,8 +58,7 @@ const About = () => {
   const [isRTL, setIsRTL] = useState(i18n.language === "ar");
   const isRTLRef = useRef(i18n.language === "ar");
 
-  console.log("🟡 MOUNT — i18n.language:", i18n.language, "| isRTL:", i18n.language === "ar");
-  console.log("🟡 MOUNT — document.dir:", document.documentElement.dir);
+
 
   const maxindex = partners.length - visibleItems;
   const next = () => {
@@ -71,7 +70,6 @@ const About = () => {
 
   useEffect(() => {
     const updateDirection = (lng) => {
-      console.log("🔵 languageChanged fired — lng:", lng, "| rtl:", lng === "ar", "| trackWidth:", trackWidth);
 
       const rtl = lng === "ar";
       isRTLRef.current = rtl;
@@ -81,7 +79,6 @@ const About = () => {
       if (trackWidth > 0) {
         x.set(0); // ← reset simple à zéro
       } else {
-        console.warn("⚠️ languageChanged fired but trackWidth is 0 — x was NOT reset!");
       }
     };
 
@@ -94,7 +91,6 @@ const About = () => {
       if (trackRef.current) {
         // With 3 copies, the width of one copy = scrollWidth / 3
         const measured = trackRef.current.scrollWidth / 3;
-        console.log("📐 trackWidth measured:", measured, "| scrollWidth:", trackRef.current.scrollWidth);
         setTrackWidth(measured);
       }
     };

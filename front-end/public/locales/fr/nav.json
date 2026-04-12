@@ -1,0 +1,33 @@
+{
+  "nav": {
+    "about": "À propos",
+    "activities": "Activités",
+    "getInvolved": "Participez",
+    "domains": "Domaines",
+    "resources": "Ressources",
+    "dropdown": {
+      "about": {
+        "us": "Nous",
+        "contact": "Contact"
+      },
+      "activities": {
+        "projects": "Projets",
+        "events": "Événement",
+        "news": "Actualités"
+      },
+      "getInvolved": {
+        "donate": "Faire un don",
+        "becomeMember": "Devenir membre"
+      },
+      "domains": {
+        "education": "Education",
+        "water": "Eau",
+        "agriculture": "Agriculture"
+      },
+      "resources": {
+        "reports": "Rapport",
+        "partners": "Partenaires"
+      }
+    }
+  }
+}

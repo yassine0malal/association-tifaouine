@@ -4,8 +4,8 @@ import { fetchProjectsAPI } from "./projectsService";
 // async thunk
 export const fetchProjects = createAsyncThunk(
   "projects/fetchProjects",
-  async ({ page, filter }) => {
-    const data = await fetchProjectsAPI(page, filter);
+  async ({ page, lang, filter }) => {
+    const data = await fetchProjectsAPI(page, filter, lang);
     return data;
   },
   {
@@ -28,10 +28,10 @@ const projectsSlice = createSlice({
     data: [],
     loading: false,
     error: null,
-    currentFilter: "All",
-    currentPage: null,
+    currentFilter: "all",
+    currentPage: 1,
     totalPages: null,
-    itemsPerPage: 0,
+    itemsPerPage: 8,
   },
   reducers: {
     setPage: (state, action) => {
@@ -54,9 +54,9 @@ const projectsSlice = createSlice({
       // success
       .addCase(fetchProjects.fulfilled, (state, action) => {
         state.loading = false;
-        state.data = action.payload.projects || [];
+        state.data = action.payload?.projects || [];
 
-        state.currentPage = action.payload.currentPage;
+        // state.currentPage = action.payload.currentPage;
         state.totalPages = action.payload.totalPages;
         state.nextPage = action.payload.nextPage;
         state.prevPage = action.payload.prevPage;

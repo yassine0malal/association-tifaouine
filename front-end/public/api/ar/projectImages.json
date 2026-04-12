@@ -1,0 +1,49 @@
+{
+  "images": [
+    {
+      "id": 1,
+      "alt": "image 1",
+      "src": "https://picsum.photos/300/200?random=1"
+    },
+    {
+      "id": 2,
+      "alt": "image 2",
+      "src": "https://picsum.photos/300/200?random=2"
+    },
+    {
+      "id": 3,
+      "alt": "image 3",
+      "src": "https://picsum.photos/300/200?random=3"
+    },
+    {
+      "id": 4,
+      "alt": "image 4",
+      "src": "https://picsum.photos/300/200?random=4"
+    },
+    {
+      "id": 5,
+      "alt": "image 5",
+      "src": "https://picsum.photos/300/200?random=5"
+    },
+    {
+      "id": 6,
+      "alt": "image 6",
+      "src": "https://picsum.photos/300/200?random=6"
+    },
+    {
+      "id": 7,
+      "alt": "image 7",
+      "src": "https://picsum.photos/300/200?random=7"
+    },
+    {
+      "id": 8,
+      "alt": "image 8",
+      "src": "https://picsum.photos/300/200?random=8"
+    }
+  ],
+  "currentPage": 9,
+  "nextPage": 10,
+  "prevPage": 8,
+  "totalPages": 10,
+  "itemsPerPage": 8
+}

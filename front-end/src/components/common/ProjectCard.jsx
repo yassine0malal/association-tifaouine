@@ -1,6 +1,7 @@
 import styles from "./projectCard.module.css";
 import projectImg from "../../assets/images/project.jpeg";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export default function ProjectCard({
   id,
@@ -10,6 +11,8 @@ export default function ProjectCard({
   description,
   image,
 }) {
+
+  const { t } = useTranslation('common')
   return (
     <div className={styles.projectCard}>
       <div className={styles.cardImg}>
@@ -32,7 +35,7 @@ export default function ProjectCard({
         <p className={styles.description}>{description}</p>
 
         <Link to={`/project/${id}`}>
-          <span>Voir plus </span>
+          <span>{t('projectCard.see_more')}</span>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"

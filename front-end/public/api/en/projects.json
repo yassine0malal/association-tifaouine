@@ -1,0 +1,73 @@
+{
+  "projects": [
+    {
+      "id": 1,
+      "title": "Bill Walsh Leadership Lessons",
+      "description": "Discover the secrets to transforming a team into a true success story.",
+      "state": "Completed",
+      "date": "2026-03-12",
+      "image": "https://picsum.photos/300/200"
+    },
+    {
+      "id": 2,
+      "title": "Modern Web Architecture",
+      "description": "Learn how to design scalable web applications.",
+      "state": "In Progress",
+      "date": "2026-02-28",
+      "image": "https://picsum.photos/300/200"
+    },
+    {
+      "id": 3,
+      "title": "AI Chatbot System",
+      "description": "Building an intelligent chatbot using NLP techniques.",
+      "state": "Planned",
+      "date": "2026-04-10",
+      "image": "https://picsum.photos/300/200"
+    },
+    {
+      "id": 4,
+      "title": "E-commerce Platform",
+      "description": "A complete application with integrated payment system.",
+      "state": "Completed",
+      "date": "2025-12-05",
+      "image": "https://picsum.photos/300/200"
+    },
+    {
+      "id": 5,
+      "title": "Real-time Chat Application",
+      "description": "Instant messaging app powered by WebSockets.",
+      "state": "In Progress",
+      "date": "2026-01-20",
+      "image": "https://picsum.photos/300/200"
+    },
+    {
+      "id": 6,
+      "title": "Portfolio Website",
+      "description": "Modern and responsive personal portfolio website.",
+      "state": "Completed",
+      "date": "2025-11-15",
+      "image": "https://picsum.photos/300/200"
+    },
+    {
+      "id": 7,
+      "title": "Task Management System",
+      "description": "A tool to organize tasks and projects efficiently.",
+      "state": "Planned",
+      "date": "2026-05-01",
+      "image": "https://picsum.photos/300/200"
+    },
+    {
+      "id": 8,
+      "title": "Machine Learning Dashboard",
+      "description": "Visualization of machine learning model performance.",
+      "state": "In Progress",
+      "date": "2026-03-05",
+      "image": "https://picsum.photos/300/200"
+    }
+  ],
+  "currentPage": 9,
+  "nextPage": 10,
+  "prevPage": 8,
+  "totalPages": 10,
+  "itemsPerPage": 8
+}

@@ -1,6 +1,12 @@
 /* projectList.module.css - Filter Styles Only */
 
 /* Filter Buttons Container */
+
+[dir='rtl'] .filter * {
+    font-family: var(--ar-lang);
+}
+
+
 .filter {
     display: flex;
     gap: 12px;

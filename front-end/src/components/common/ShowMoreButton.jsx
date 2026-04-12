@@ -1,10 +1,12 @@
+import { useTranslation } from "react-i18next";
 import styles from "./showMoreButton.module.css";
 
 function ShowMoreButton({ loading, currentPage, totalPages, onPageChange }) {
+  const {t} = useTranslation('common')
   if (!currentPage || !totalPages) return null;
 
   if (currentPage === totalPages) {
-    return <p style={{ textAlign: "center" }}>you have reached the end</p>;
+    return <p className={styles.noMoreData}>{t('showMoreBtn.end')}</p>;
   }
 
   const handleClick = () => {
@@ -18,7 +20,7 @@ function ShowMoreButton({ loading, currentPage, totalPages, onPageChange }) {
         className={`${loading ? styles.loading : ""}`}
         onClick={handleClick}
       >
-        <span>show more</span>
+        <span>{t('projectCard.see_more')}</span>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink"

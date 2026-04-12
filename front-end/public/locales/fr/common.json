@@ -1,3 +1,15 @@
 {
-  "welcome_message": "Bonjour le Monde"
+  "pagination": {
+    "next": "Suivant",
+    "prev": "Précédent"
+  },
+  "projectCard": {
+    "see_more": "Voir plus"
+  },
+  "gallery": {
+    "title": "Album du projet"
+  },
+  "showMoreBtn": {
+    "end": "Vous êtes arrivé à la fin"
+  }
 }

@@ -78,6 +78,7 @@
 
 /* Meta Box */
 .projectPage .metaBox {
+    margin-left: 5px;
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -85,13 +86,25 @@
     border-left: 5px solid var(--accent);
 }
 
+[dir="rtl"] .projectPage .metaBox {
+    border-right: 5px solid var(--accent);
+    border-left: unset;
+    margin-right: 5px;
+    margin-left: unset;
+}
+
 .projectPage .metaBox div {
     font-size: clamp(0.9rem, 2vw, 1.05rem);
 }
 
 .projectPage .metaBox div strong {
-    margin-right: 5px;
+    margin-right: 10px;
     font-weight: 700;
+}
+
+[dir="rtl"] .projectPage .metaBox div strong {
+    margin-right: unset; 
+    margin-left: 10px;  
 }
 
 /* Buttons Section */

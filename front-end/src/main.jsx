@@ -33,34 +33,34 @@ createRoot(document.getElementById("root")).render(
             <Route index element={<Home/>} />
 
             {/* Main Route: A propos */}
-            <Route path="/about">
+            <Route path="/:lang">
               <Route path="nous" element={<About />} />
               <Route path="contact" element={<Contact />} />
             </Route>
 
             {/* Main Routes : Activites */}
-            <Route path="activites">
+            <Route path="/:lnag">
               <Route path="projets" element={<Projets />} />
               <Route path="evenements" element={<EventList />} />
               <Route path="actualites" element={<Footer />} />
             </Route>
 
             {/* Main Routes : Participez */}
-            <Route path="/partisipez">
+            <Route path="/:lang">
               <Route path="Faire-un-don" element={<Footer />} />
               <Route path="Devenir-membre" element={<Footer />} />
               <Route path="Benevolat" element={<Footer />} />
             </Route>
 
             {/* Main Routes : Doamaines */}
-            <Route path="/domaines">
+            <Route path="/:lang">
               <Route path="education" element={<Footer />} />
               <Route path="eau" element={<Footer />} />
               <Route path="agriculture" element={<Footer />} />
             </Route>
 
             {/* Main Routes : Ressources */}
-            <Route path="/ressources">
+            <Route path="/:lang">
               <Route path="rapports" element={<Footer />} />
               <Route path="partenaires" element={<Footer />} />
             </Route>

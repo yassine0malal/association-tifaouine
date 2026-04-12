@@ -3,10 +3,10 @@ import { fetchProjectAPI } from "./projectService";
 
 export const fetchProject = createAsyncThunk(
   "project/fetchProject",
-  async (project) => {
-    const data = await fetchProjectAPI(project);
+  async ({ id, lang }) => {
+    const data = await fetchProjectAPI(id, lang);
     return data;
-  },
+  }
 );
 
 const projectSlice = createSlice({

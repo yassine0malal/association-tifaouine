@@ -1,10 +1,9 @@
 /* ProjectCard.module.css */
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+[dir="rtl"] .projectCard * {
+  font-family: var(--ar-lang);
 }
+
 
 .projectCard {
   width: 100%;
@@ -203,6 +202,7 @@
 }
 
 .projectCard a {
+  margin-top: 1rem;
   text-decoration: none;
   background: linear-gradient(
     135deg,
@@ -227,6 +227,10 @@
 .projectCard a svg path {
   fill: var(--accent);
   filter: drop-shadow(0 0 2px var(--accent));
+}
+
+[dir="rtl"] .projectCard a svg {
+  rotate: 180deg;
 }
 
 .projectCard a::before {

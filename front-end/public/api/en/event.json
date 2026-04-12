@@ -1,58 +1,63 @@
 {
   "id": 1,
-  "title": "LA CONSTRUCTION D’UN STATATION D’EAU",
-  "categorie": "Le projet de develepement durable",
-  "description": "Ce projet representing your event images, this approach allows you to highlight key moments by mixing different photo aspect ratiosand sizes, adding depth and narrative to the gallery section. Theuse of generous whitespace and a clean, professional color palette(like deep teal and warm accents shown here) further enhances thebeauty and readability of the interface. When representing yourevent images, this approach allows you to highlight key moments bymixing different photo aspect ratios and sizes, adding depth andnarrative to the gallery section. The use of generous whitespaceand a clean, professional color palette (like deep teal and warmaccents shown here) further enhances the beauty and readability ofthe interface. Ce projet representing your event images, thisapproach allows you to highlight key moments by mixing differentphoto aspect ratios and sizes, adding depth and narrative to thegallery section. The use of generous whitespace and a clean,professional color palette (like deep teal and warm accents shownhere) further enhances the beauty and readability of theinterface. When representing your event images, this approachallows you to highlight key moments by mixing different photoaspect ratios and sizes, adding depth and narrative to the gallerysection. The use of generous whitespace and a clean, professionalcolor palette (like deep teal and warm accents shown here) furtherenhances the beauty and readability of the interface.",
-  "location": "Doar asni , Al lhouz, Marrakech",
-  "date_fin": "12 avril 2025",
-  "date_debut": "10 avril 2025",
+  "title": "Construction of a Water Station",
+  "category": "Sustainable Development Project",
+  "description": "This project focuses on building a water station to improve access to clean water in rural areas. It highlights key stages of development, from planning to implementation, showcasing real impact on local communities. Through visual storytelling, the project captures important moments and demonstrates how sustainable solutions can enhance quality of life.",
+  "location": "Douar Asni, Al Haouz, Marrakech",
+  "date_start": "April 10, 2025",
+  "date_end": "April 12, 2025",
+
   "related_events": [
     {
       "id": 1,
       "img": "https://picsum.photos/900/600?random=1",
-      "title": "Tech Innovation Summit",
-      "date_debut": "10 avril 2025",
-      "date_fin": "12 avril 2025"
+      "title": "Water Innovation Summit",
+      "date_start": "April 10, 2025",
+      "date_end": "April 12, 2025"
     },
     {
       "id": 2,
       "img": "https://picsum.photos/900/600?random=2",
-      "title": "Digital Creators Meetup",
-      "date_debut": "18 avril 2025",
-      "date_fin": "19 avril 2025"
+      "title": "Sustainability Meetup",
+      "date_start": "April 18, 2025",
+      "date_end": "April 19, 2025"
     },
     {
       "id": 3,
       "img": "https://picsum.photos/900/600?random=3",
-      "title": "Startup & AI Conference",
-      "date_debut": "25 avril 2025",
-      "date_fin": "27 avril 2025"
+      "title": "Climate Action Conference",
+      "date_start": "April 25, 2025",
+      "date_end": "April 27, 2025"
     }
   ],
-  
-  "last_events": [
+
+  "common_events": [
     {
       "id": 1,
       "img": "https://picsum.photos/900/600?random=1",
-      "title": "Tech Innovation Summit",
-      "date_debut": "10 avril 2025",
-      "date_fin": "12 avril 2025"
+      "title": "Water Projects Forum",
+      "domain": "Water",
+      "date_start": "April 10, 2025",
+      "date_end": "April 12, 2025"
     },
     {
       "id": 2,
       "img": "https://picsum.photos/900/600?random=2",
-      "title": "Digital Creators Meetup",
-      "date_debut": "18 avril 2025",
-      "date_fin": "19 avril 2025"
+      "title": "Agriculture & Sustainability",
+      "domain": "Agriculture",
+      "date_start": "April 18, 2025",
+      "date_end": "April 19, 2025"
     },
     {
       "id": 3,
       "img": "https://picsum.photos/900/600?random=3",
-      "title": "Startup & AI Conference",
-      "date_debut": "25 avril 2025",
-      "date_fin": "27 avril 2025"
+      "title": "Women in Development",
+      "domain": "Women",
+      "date_start": "April 25, 2025",
+      "date_end": "April 27, 2025"
     }
   ],
+
   "images": [
     {
       "id": 1,

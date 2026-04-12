@@ -1,3 +1,15 @@
 {
-  "welcome_message": "marhaban"
+  "pagination": {
+    "next": "التالي",
+    "prev": "السابق"
+  },
+  "projectCard": {
+    "see_more": "عرض المزيد"
+  },
+  "gallery": {
+    "title": "ألبوم المشروع"
+  },
+  "showMoreBtn": {
+    "end": "لقد وصلت إلى النهاية"
+  }
 }

@@ -1,3 +1,7 @@
+[dir="rtl"] .loaderContainer {
+  direction: ltr;
+}
+
 .loaderContainer {
     display: flex;
     justify-content: center;
@@ -7,7 +11,7 @@
     background-color: #fff;
 }
 .loader {
-  width: 100px;
+  width: 140px;
   aspect-ratio: 1;
   padding: 10px;
   box-sizing: border-box;
@@ -20,8 +24,8 @@
 .loader:after{ 
   content: "";
   grid-area: 1/1; 
-  width: 40px;
-  height: 40px;
+  width: 60px;
+  height: 60px;
   background: #ffff00;
   animation: l7 2s infinite;
 }

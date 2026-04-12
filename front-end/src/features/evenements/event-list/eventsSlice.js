@@ -3,13 +3,12 @@ import { fetchEventsAPI } from "./eventsService";
 
 export const fetchEvents = createAsyncThunk(
   "events/fetchEvents",
-  async ({ page, filter }) => {
-    const data = await fetchEventsAPI(page, filter);
+  async ({ page, filter, lang }) => {
+    const data = await fetchEventsAPI(page, filter, lang);
     return data;
-  }
-  ,
+  },
   {
-    condition: ({ page, filter }, { getState }) => {
+    condition: ({ page, filter, lang }, { getState }) => {
       const { events } = getState();
 
       // prevent call when loading
@@ -20,7 +19,7 @@ export const fetchEvents = createAsyncThunk(
       //     return false;
       // }
     },
-  }
+  },
 );
 
 const eventsSlice = createSlice({
@@ -29,7 +28,7 @@ const eventsSlice = createSlice({
     data: [],
     loading: false,
     error: null,
-    currentFilter: "Tout",
+    currentFilter: 1,
     currentPage: 1,
     totalPages: 10,
     itemsPerPage: 0,
@@ -53,22 +52,20 @@ const eventsSlice = createSlice({
       })
       .addCase(fetchEvents.fulfilled, (state, action) => {
         state.loading = false;
-        state.data = action.payload.events || [];
-        
+        state.data = action.payload?.events || [];
+
         state.currentPage = action.payload.currentPage;
         state.totalPages = action.payload.totalPages;
         state.nextPage = action.payload.nextPage;
         state.prevPage = action.payload.prevPage;
         state.itemsPerPage = action.payload.itemsPerPage;
       })
-      .addCase(fetchEvents.rejected , (state , action) => {
+      .addCase(fetchEvents.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });
   },
 });
 
-
-
-export const { setPage , setFilter } = eventsSlice.actions;
-export default eventsSlice.reducer
+export const { setPage, setFilter } = eventsSlice.actions;
+export default eventsSlice.reducer;
