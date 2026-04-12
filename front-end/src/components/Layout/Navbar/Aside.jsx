@@ -3,20 +3,24 @@ import { useTranslation } from "react-i18next";
 import styles from "./Navbar.module.css";
 import plus from "../../../assets/icons/plus.png";
 import minus from "../../../assets/icons/minus.png";
-import { useState,useEffect } from "react";
-import { useDispatch ,useSelector } from "react-redux";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import i18n from "../../../i18n";
+import { fetchDomains } from "../../../features/domains/domainsSlice";
+
 
 export default function Aside() {
     const { t } = useTranslation("nav");
     const [openMenu, setOpenMenu] = useState(null);
     const dispatch = useDispatch()
-    const { data, status } = useSelector((state) => state.domains);
+    const { data: domains, status } = useSelector((state) => state.domains);
 
     useEffect(() => {
-        if (status === "idle") {
-            dispatch(fetchDomains());
-        }
-    }, [status, dispatch])
+        // console.log("compo -----> "+status);
+        const lang = i18n.resolvedLanguage || "fr";
+        dispatch(fetchDomains(lang));
+        console.log(domains)
+    }, [dispatch, i18n.language]);
 
     const handleToggle = (id) => {
         setOpenMenu(openMenu === id ? null : id);
@@ -53,10 +57,12 @@ export default function Aside() {
         {
             id: "domaines",
             title: t("nav.domains"),
-            subItems: data?.map((domain) => ({
-                label: domain.label,
-                path: `/activites/${domain.id}`
-            }))
+            subItems: domains?.length
+                ? domains.map((domain) => ({
+                    label: domain.label,
+                    path: `/activites/${domain.id}`
+                }))
+                : []
         },
         {
             id: "ressources",

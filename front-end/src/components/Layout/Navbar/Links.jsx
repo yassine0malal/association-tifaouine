@@ -5,23 +5,28 @@ import styles from './Navbar.module.css';
 import { fetchDomains } from "../../../features/domains/domainsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import i18n from "../../../i18n";
+
+
 export default function Links() {
     const { t } = useTranslation("nav");
     const dispatch = useDispatch()
-    const { data, status } = useSelector((state) => state.domains);
+    const { data: domains, status } = useSelector((state) => state.domains);
+
 
     useEffect(() => {
-        if ( status=== "idle") {
-            dispatch(fetchDomains());
-        }
-    }, [status, dispatch])
+        // console.log("compo -----> "+status);
+        const lang = i18n.resolvedLanguage || "fr";
+        dispatch(fetchDomains(lang));
+    }, [dispatch, i18n.language]);
+
 
     if (status == "pending") return <h2>Loading Domains...</h2>
     const menuData = [
         {
             id: "a-propos",
             title: t("nav.about"),
-            to: null, // pas de lien direct
+            to: null,
             subItems: [
                 { label: t("nav.dropdown.about.us"), path: "/about/nous" },
                 { label: t("nav.dropdown.about.contact"), path: "/about/contact" }
@@ -48,12 +53,14 @@ export default function Links() {
         {
             id: "domaines",
             title: t("nav.domains"),
-            to: "/about",
-            subItems: (data?.map((domain) => ({
-                label: domain.label,
-                path: `/activites/${domain.id}`
-            })))
-            
+            to: null,
+            subItems: domains?.length
+                ? domains.map((domain) => ({
+                    label: domain.label,
+                    path: `/activites/${domain.id}`
+                }))
+                : []
+
         },
         {
             id: "ressources",
@@ -71,7 +78,7 @@ export default function Links() {
             <ul>
                 {menuData.map((item) => (
                     <li key={item.id} className={`${styles.navItem} ${styles.hasDropDown}`}>
-                        <Link >{item.title}</Link>
+                        <span>{item.title} </span>
                         <ul className={styles.dropdownMenu}>
                             {item.subItems?.map((subItem) => (
                                 <li key={subItem.path}>

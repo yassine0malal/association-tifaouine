@@ -3,8 +3,9 @@ import { fetchDomainsApi } from "./domainsService";
 
 export const fetchDomains = createAsyncThunk(
     "domains/fetchDomains",
-    async () => {
-        const data = await fetchDomainsApi();
+    async (lang) => {
+        const data = await fetchDomainsApi(lang);
+        // console.log("slicer-->"+data)
         return data;
     },
 );
@@ -26,8 +27,8 @@ const domainsSlice = createSlice({
             })
             .addCase(fetchDomains.fulfilled, (state, action) => {
                 state.status = "succeeded";
-                state.data = action.payload.domains;
-                console.log("---data---", state.data)
+                state.data = action.payload?.domains || [];
+                // console.log("---data---",state.data )
             })
             .addCase(fetchDomains.rejected, (state, action) => {
                 state.status = "failed";

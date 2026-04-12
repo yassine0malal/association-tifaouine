@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Links from "./Links";
 import { Link } from "react-router-dom"
 import Aside from './Aside'
@@ -15,18 +15,18 @@ import { useTranslation } from "react-i18next";
 
 export default function NavBar() {
     const { i18n } = useTranslation();
-
+    const currentLang = i18n.language;
     const [showAside, setShowAside] = useState(false);
+
+
 
     const handleShowAside = () => {
         setShowAside(!showAside);
     }
-
     function changeLanguage(lang) {
         i18n.changeLanguage(lang);
     }
 
-    const currentLang = i18n.language;
 
     return (
         <>

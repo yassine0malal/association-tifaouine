@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useTranslation } from "react-i18next"; 
+import { useTranslation } from "react-i18next";
 
 import ProjectCard from "../../components/common/ProjectCard";
 import ProjectCardSkeleton from "../../components/common/ProjectCardSkeleton";
@@ -11,6 +11,7 @@ import styles from "./projectList.module.css";
 import heroImg from "../../assets/images/projects_hero.jpg";
 
 import { fetchProjects, setPage, setFilter } from "./projectsSlice";
+import i18n from "../../i18n";
 
 export default function Projets() {
   const dispatch = useDispatch();
@@ -33,8 +34,9 @@ export default function Projets() {
 
   // 🔹 Fetch projects when page OR filter changes
   useEffect(() => {
-    dispatch(fetchProjects(currentPage));
-  }, [dispatch, currentPage, currentfilter]);
+    const lang = i18n.language || "fr";
+    dispatch(fetchProjects({ page: currentPage, lang, filter: currentfilter }));
+  }, [dispatch, currentPage, currentfilter, i18n.language]);
 
   // 🔹 Handlers
   const handleFilterChange = (filterKey) => {
