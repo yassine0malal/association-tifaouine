@@ -26,7 +26,6 @@ createRoot(document.getElementById("root")).render(
   <Provider store={store}>
     <StrictMode>
       <BrowserRouter>
-
         <Routes>
           {/* Main Route: Home */}
           <Route path="/" element={<App />}>

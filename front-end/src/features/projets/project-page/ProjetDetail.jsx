@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { fetchProject } from "./projectSlice";
 import { div, p } from "framer-motion/client";
 import ProjectGallery from "../project-gallery/ProjectGallery";
+import Loader from "../../../components/common/Loader";
 
 const ProjectPage = () => {
   const dispatch = useDispatch();
@@ -20,11 +21,7 @@ const ProjectPage = () => {
   }, [dispatch, id]);
 
   if (loading) {
-    return (
-      <div className={styles.loaderContainer}>
-        <div className={styles.loader}></div>
-      </div>
-    );
+    return <Loader />
   }
 
   if (!data) {

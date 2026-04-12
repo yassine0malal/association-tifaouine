@@ -3,12 +3,14 @@ import projectsReducer from '../features/projets/projects-list/projectsSlice'
 import projectReducer from '../features/projets/project-page/projectSlice'
 import projectImagesReducer from '../features/projets/project-gallery/projectImagesSlice'
 import eventsReducer from '../features/evenements/event-list/eventsSlice'
+import eventReducer from '../features/evenements/event-page/eventSlice'
 
 export const store = configureStore({
     reducer: {
         projects:projectsReducer,
         project:projectReducer,
         projectImages:projectImagesReducer,
-        events:eventsReducer
+        events:eventsReducer,
+        event:eventReducer
     },
 })

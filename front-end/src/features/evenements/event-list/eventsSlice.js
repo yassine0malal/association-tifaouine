@@ -20,7 +20,7 @@ export const fetchEvents = createAsyncThunk(
       //     return false;
       // }
     },
-  },
+  }
 );
 
 const eventsSlice = createSlice({
