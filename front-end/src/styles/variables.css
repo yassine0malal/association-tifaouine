@@ -5,12 +5,18 @@
     --text: #6b6375;
     --text-h: #08060d;
     --bg: #fff;
+    --bg-card: #ffffff;
+    --bg-small:#ffddbb;
+    --accent-strong:#845417;
+    --accent-strong-v3:#845417;
+    --accent-strong-v2:#4e2d00;
     --border-input:#E3E3E3;
     --border: #e5e4e7;
     --code-bg: #f4f3ec;
     --accent: #CB914F;
     --accent-light: #cb914f89;
     --accent-very-light: #F8F7F0;
+    --accent-src:#FCF9F2;
     --accent-hover: #cb914f4e;
     --accent-bg: rgba(170, 59, 255, 0.1);
     --accent-border: #F1904C;
@@ -23,7 +29,9 @@
     --color-text: #374151;
     --color-text-light: #6B7280;
     --color-border: #E5E7EB;
+    --color-border-v2: #837567;
     --color-background: #F9FAFB;
+    --color-sec:#f6f3ec;
     /* fin me */
     --social-bg: rgba(244, 243, 236, 0.5);
     --shadow: rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;

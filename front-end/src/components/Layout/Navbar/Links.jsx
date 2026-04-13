@@ -28,8 +28,8 @@ export default function Links() {
             title: t("nav.about"),
             to: null,
             subItems: [
-                { label: t("nav.dropdown.about.us"), path: "/about/nous" },
-                { label: t("nav.dropdown.about.contact"), path: "/about/contact" }
+                { label: t("nav.dropdown.about.us"), path: `/${i18n.language}/nous` },
+                { label: t("nav.dropdown.about.contact"), path: `/${i18n.language}/contact` }
             ]
         },
         {
@@ -37,8 +37,8 @@ export default function Links() {
             title: t("nav.activities"),
             to: null,
             subItems: [
-                { label: t("nav.dropdown.activities.projects"), path: "/activites/projets" },
-                { label: t("nav.dropdown.activities.events"), path: "/activites/evenements" },
+                { label: t("nav.dropdown.activities.projects"), path: `/${i18n.language}/projets` },
+                { label: t("nav.dropdown.activities.events"), path: `/${i18n.language}/evenements` },
             ]
         },
         {
@@ -46,8 +46,8 @@ export default function Links() {
             title: t("nav.getInvolved"),
             to: null,
             subItems: [
-                { label: t("nav.dropdown.getInvolved.donate"), path: "/partisipez/Faire-un-don" },
-                { label: t("nav.dropdown.getInvolved.becomeMember"), path: "/partisipez/Devenir-membre" }
+                { label: t("nav.dropdown.getInvolved.donate"), path: `/${i18n.language}/Faire-un-don` },
+                { label: t("nav.dropdown.getInvolved.becomeMember"), path: `/${i18n.language}/Devenir-membre` }
             ]
         },
         {
@@ -57,7 +57,7 @@ export default function Links() {
             subItems: domains?.length
                 ? domains.map((domain) => ({
                     label: domain.label,
-                    path: `/activites/${domain.id}`
+                    path: `/${i18n.language}/${domain.id}`
                 }))
                 : []
 
@@ -67,8 +67,8 @@ export default function Links() {
             title: t("nav.resources"),
             to: null,
             subItems: [
-                { label: t("nav.dropdown.resources.reports"), path: "/ressources/rapports" },
-                { label: t("nav.dropdown.resources.partners"), path: "/ressources/partenaires" }
+                { label: t("nav.dropdown.resources.reports"), path: `/${i18n.language}/rapports` },
+                { label: t("nav.dropdown.resources.partners"), path: `/${i18n.language}/partenaires` }
             ]
         }
     ];

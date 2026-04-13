@@ -34,24 +34,24 @@ export default function Aside() {
             id: "a-propos",
             title: t("nav.about"),
             subItems: [
-                { label: t("nav.dropdown.about.us"), path: "/about/nous" },
-                { label: t("nav.dropdown.about.contact"), path: "/about/contact" }
+                { label: t("nav.dropdown.about.us"), path: `/${i18n.language}/nous` },
+                { label: t("nav.dropdown.about.contact"), path: `/${i18n.language}/contact` }
             ]
         },
         {
             id: "activites",
             title: t("nav.activities"),
             subItems: [
-                { label: t("nav.dropdown.activities.projects"), path: "/activites/projets" },
-                { label: t("nav.dropdown.activities.events"), path: "/activites/evenements" },
+                { label: t("nav.dropdown.activities.projects"), path: `/${i18n.language}/projets` },
+                { label: t("nav.dropdown.activities.events"), path: `/${i18n.language}/evenements` },
             ]
         },
         {
             id: "participez",
             title: t("nav.getInvolved"),
             subItems: [
-                { label: t("nav.dropdown.getInvolved.donate"), path: "/participez/don" },
-                { label: t("nav.dropdown.getInvolved.becomeMember"), path: "/participez/membre" }
+                { label: t("nav.dropdown.getInvolved.donate"), path: `/${i18n.language}/don` },
+                { label: t("nav.dropdown.getInvolved.becomeMember"), path: `/${i18n.language}/membre` }
             ]
         },
         {
@@ -68,8 +68,8 @@ export default function Aside() {
             id: "ressources",
             title: t("nav.resources"),
             subItems: [
-                { label: t("nav.dropdown.resources.reports"), path: "/ressources/rapports" },
-                { label: t("nav.dropdown.resources.partners"), path: "/ressources/partenaires" }
+                { label: t("nav.dropdown.resources.reports"), path: `/${i18n.language}/rapports` },
+                { label: t("nav.dropdown.resources.partners"), path: `/${i18n.language}/partenaires` }
             ]
         }
     ];

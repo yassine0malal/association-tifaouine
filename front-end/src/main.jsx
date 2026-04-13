@@ -12,12 +12,13 @@ import Pagination from "./components/common/Pagination.jsx";
 import ProjectPage from "./features/projets/ProjetDetail.jsx";
 import ProjectCardSkeleton from "./components/common/ProjectCardSkeleton.jsx";
 import { Provider } from "react-redux";
-import { store }  from './app/store.js';
+import { store } from './app/store.js';
 import About from "./features/public/About.jsx";
 import Contact from "./features/public/Contact.jsx";
 import Home from "./features/public/Accueil.jsx";
 
 import "./i18n";
+import RessourcesPage from "./features/ressources/Ressources.jsx";
 
 createRoot(document.getElementById("root")).render(
   <Provider store={store}>
@@ -28,7 +29,7 @@ createRoot(document.getElementById("root")).render(
           {/* Main Route: Home */}
           <Route path="/" element={<App />}>
             {/* Default one  */}
-            <Route index element={<Home/>} />
+            <Route index element={<Home />} />
 
             {/* Main Route: A propos */}
             <Route path="/:lang">
@@ -37,7 +38,7 @@ createRoot(document.getElementById("root")).render(
             </Route>
 
             {/* Main Routes : Activites */}
-            <Route path="/:lnag">
+            <Route path="/:lang">
               <Route path="projets" element={<Projets />} />
               <Route path="evenements" element={<Footer />} />
             </Route>
@@ -58,7 +59,7 @@ createRoot(document.getElementById("root")).render(
 
             {/* Main Routes : Ressources */}
             <Route path="/:lang">
-              <Route path="rapports" element={<Footer />} />
+              <Route path="rapports" element={<RessourcesPage />} />
               <Route path="partenaires" element={<Footer />} />
             </Route>
           </Route>
