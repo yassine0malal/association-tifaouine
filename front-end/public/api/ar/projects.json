@@ -65,6 +65,9 @@
       "image": "https://picsum.photos/300/200"
     }
   ],
-  "currentPage": 8,
-  "totalPages": 8
+  "currentPage": 9,
+  "nextPage":10,
+  "prevPage":8,
+  "totalPages": 10,
+  "itemsPerPage":8
 }

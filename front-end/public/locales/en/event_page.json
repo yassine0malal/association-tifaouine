@@ -1,0 +1,12 @@
+{
+  "project": {
+    "peopleHelped": "People Helped",
+    "target_region": "Target Region",
+    "status": "Status",
+    "completion": "Completion",
+    "partners": "Partners",
+    "domain": "Domain",
+    "vol_btn": "Become a Volunteer",
+    "donate_btn": "Donate to Similar Projects"
+  }
+}

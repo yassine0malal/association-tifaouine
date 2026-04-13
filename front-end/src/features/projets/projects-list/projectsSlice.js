@@ -8,6 +8,18 @@ export const fetchProjects = createAsyncThunk(
     const data = await fetchProjectsAPI(page, filter, lang);
     return data;
   },
+  {
+    condition: ({ page, filter }, { getState }) => {
+      const { projects } = getState();
+      // 🚫 don't fetch if already loading
+      if (projects.loading) return false;
+
+      // 🚫 don't fetch same page + same filter again
+      // if (projects.currentPage === page && projects.currentFilter === filter) {
+      //   return false;
+      // }
+    },
+  },
 );
 
 const projectsSlice = createSlice({
@@ -16,17 +28,19 @@ const projectsSlice = createSlice({
     data: [],
     loading: false,
     error: null,
-    currentfilter: 'All',
+    currentFilter: "all",
     currentPage: 1,
-    totalPages: 10,
+    totalPages: null,
+    itemsPerPage: 8,
   },
   reducers: {
     setPage: (state, action) => {
       state.currentPage = action.payload;
     },
     setFilter: (state, action) => {
-      state.currentfilter = action.payload;
+      state.currentFilter = action.payload;
       state.currentPage = 1;
+      state.data = []
     },
   },
   extraReducers: (builder) => {
@@ -40,9 +54,13 @@ const projectsSlice = createSlice({
       // success
       .addCase(fetchProjects.fulfilled, (state, action) => {
         state.loading = false;
-        state.data = action.payload.projects;
+        state.data = action.payload?.projects || [];
+
+        // state.currentPage = action.payload.currentPage;
         state.totalPages = action.payload.totalPages;
-        console.log("-----", state.data)
+        state.nextPage = action.payload.nextPage;
+        state.prevPage = action.payload.prevPage;
+        state.itemsPerPage = action.payload.itemsPerPage;
       })
 
       // error

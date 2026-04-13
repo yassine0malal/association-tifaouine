@@ -2,7 +2,7 @@
     "projects": {
         "heroTitle": "Découvrir nos projets",
         "filters": {
-            "all": "All",
+            "all": "Tout",
             "completed": "Terminé",
             "inProgress": "En cours",
             "pending": "En attente"

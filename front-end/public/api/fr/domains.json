@@ -1,20 +1,8 @@
 {
-    "domains": [
-        {
-            "id": 1,
-            "label": "Eau"
-        },
-        {
-            "id": 2,
-            "label": "Agriculture"
-        },
-        {
-            "id": 3,
-            "label": "Scolaire"
-        },
-        {
-            "id": 4,
-            "label": "Femmes"
-        }
-    ]
+  "domains": [
+    { "id": 1, "label": "Eau" },
+    { "id": 2, "label": "Agriculture" },
+    { "id": 3, "label": "Éducation" },
+    { "id": 4, "label": "Femme" }
+  ]
 }

@@ -2,16 +2,17 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
-import ProjectCard from "../../components/common/ProjectCard";
-import ProjectCardSkeleton from "../../components/common/ProjectCardSkeleton";
-import PageHero from "../../components/common/PageHero";
-import Pagination from "../../components/common/Pagination";
+import ProjectCard from "../../../components/common/ProjectCard";
+import ProjectCardSkeleton from "../../../components/common/ProjectCardSkeleton";
+import PageHero from "../../../components/common/PageHero";
+import Pagination from "../../../components/common/Pagination";
+import FilterButtons from "../../../components/common/FilterButtons";
 
 import styles from "./projectList.module.css";
-import heroImg from "../../assets/images/projects_hero.jpg";
+import heroImg from "../../../assets/images/projects_hero.jpg";
 
 import { fetchProjects, setPage, setFilter } from "./projectsSlice";
-import i18n from "../../i18n";
+import i18n from "../../../i18n";
 
 export default function Projets() {
   const dispatch = useDispatch();
@@ -22,7 +23,8 @@ export default function Projets() {
     loading,
     currentPage,
     totalPages,
-    currentfilter,
+    currentFilter,
+    itemsPerPage,
   } = useSelector((state) => state.projects);
 
   const filters = [
@@ -33,10 +35,11 @@ export default function Projets() {
   ];
 
   // 🔹 Fetch projects when page OR filter changes
+  const currentLang = i18n.language || "fr";
+
   useEffect(() => {
-    const lang = i18n.language || "fr";
-    dispatch(fetchProjects({ page: currentPage, lang, filter: currentfilter }));
-  }, [dispatch, currentPage, currentfilter, i18n.language]);
+    dispatch(fetchProjects({ page: currentPage, filter: currentFilter,lang: currentLang}));
+  }, [dispatch, currentPage, currentFilter, currentLang]);
 
   // 🔹 Handlers
   const handleFilterChange = (filterKey) => {
@@ -47,13 +50,14 @@ export default function Projets() {
     dispatch(setPage(page));
   };
 
+  console.log(itemsPerPage);
   // 🔹 Render Filters
   const renderFilters = () =>
     filters.map(({ key, label }) => (
       <button
         key={key}
         onClick={() => handleFilterChange(key)}
-        className={currentfilter === key ? styles.active : ""}
+        className={currentFilter === key ? styles.active : ""}
       >
         {label}
       </button>
@@ -62,7 +66,7 @@ export default function Projets() {
   // 🔹 Render Project Cards
   const renderProjects = () => {
     if (loading) {
-      return Array.from({ length: 6 }, (_, i) => (
+      return Array.from({ length: itemsPerPage }, (_, i) => (
         <ProjectCardSkeleton key={`skeleton-${i}`} />
       ));
     }
@@ -71,9 +75,7 @@ export default function Projets() {
       return <p>{t("projects.noProjects")}</p>;
     }
 
-    return data.map((project) => (
-      <ProjectCard key={project.id} {...project} />
-    ));
+    return data.map((project) => <ProjectCard key={project.id} {...project} />);
   };
 
   return (
@@ -83,7 +85,11 @@ export default function Projets() {
       <div className={styles.projectsContainer}>
         <div className={styles.filterContainer}>
           <h2 className={styles.header}>{t("projects.viewProjects")}</h2>
-          <div className={styles.filter}>{renderFilters()}</div>
+          <FilterButtons
+            currentFilter={currentFilter}
+            filters={filters}
+            handleFilterChange={handleFilterChange}
+          />
         </div>
 
         <div className={styles.projects}>{renderProjects()}</div>

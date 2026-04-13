@@ -3,68 +3,71 @@
     {
       "id": 1,
       "title": "Leçons de leadership de Bill Walsh",
-      "description": "Vous souhaitez connaître les secrets pour transformer une équipe de 2-14 en une dynastie triple vainqueur du Super Bowl ?",
+      "description": "Découvrez les secrets pour transformer une équipe en véritable succès.",
       "state": "Terminé",
       "date": "2026-03-12",
       "image": "https://picsum.photos/300/200"
     },
     {
       "id": 2,
-      "title": "Architecture Web Moderne",
-      "description": "Apprenez à concevoir des applications web évolutives et faciles à maintenir à l'aide d'outils modernes.",
+      "title": "Architecture Web moderne",
+      "description": "Apprenez à concevoir des applications web évolutives.",
       "state": "En cours",
       "date": "2026-02-28",
       "image": "https://picsum.photos/300/200"
     },
     {
       "id": 3,
-      "title": "Système de Chatbot IA",
-      "description": "Création d'un chatbot intelligent utilisant le traitement du langage naturel et des techniques d'apprentissage automatique.",
+      "title": "Système de chatbot IA",
+      "description": "Création d’un chatbot intelligent avec le NLP.",
       "state": "Planifié",
       "date": "2026-04-10",
       "image": "https://picsum.photos/300/200"
     },
     {
       "id": 4,
-      "title": "Plateforme E-commerce",
-      "description": "Plateforme e-commerce full-stack avec intégration de paiement et tableau de bord d'administration.",
+      "title": "Plateforme e-commerce",
+      "description": "Application complète avec paiement intégré.",
       "state": "Terminé",
       "date": "2025-12-05",
       "image": "https://picsum.photos/300/200"
     },
     {
       "id": 5,
-      "title": "Application de Chat en Temps Réel",
-      "description": "Une application de messagerie instantanée utilisant WebSockets et une architecture backend évolutive.",
+      "title": "Application de chat en temps réel",
+      "description": "Messagerie instantanée avec WebSockets.",
       "state": "En cours",
       "date": "2026-01-20",
       "image": "https://picsum.photos/300/200"
     },
     {
       "id": 6,
-      "title": "Site Portfolio",
-      "description": "Site portfolio personnel avec animations et design responsive.",
+      "title": "Site portfolio",
+      "description": "Portfolio personnel moderne et responsive.",
       "state": "Terminé",
       "date": "2025-11-15",
       "image": "https://picsum.photos/300/200"
     },
     {
       "id": 7,
-      "title": "Système de Gestion de Tâches",
-      "description": "Un outil de productivité pour gérer les tâches, les échéances et la collaboration d'équipe.",
+      "title": "Système de gestion de tâches",
+      "description": "Outil pour organiser tâches et projets.",
       "state": "Planifié",
       "date": "2026-05-01",
       "image": "https://picsum.photos/300/200"
     },
     {
       "id": 8,
-      "title": "Tableau de Bord Machine Learning",
-      "description": "Tableau de bord interactif pour visualiser les performances des modèles ML et les jeux de données.",
+      "title": "Dashboard Machine Learning",
+      "description": "Visualisation des performances des modèles ML.",
       "state": "En cours",
       "date": "2026-03-05",
       "image": "https://picsum.photos/300/200"
     }
   ],
-  "currentPage": 8,
-  "totalPages": 8
+  "currentPage": 9,
+  "nextPage": 10,
+  "prevPage": 8,
+  "totalPages": 10,
+  "itemsPerPage": 8
 }

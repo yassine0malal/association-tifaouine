@@ -1,0 +1,163 @@
+{
+  "id": 1,
+  "title": "Construction of a Water Station",
+  "category": "Sustainable Development Project",
+  "description": "This project focuses on building a water station to improve access to clean water in rural areas. It highlights key stages of development, from planning to implementation, showcasing real impact on local communities. Through visual storytelling, the project captures important moments and demonstrates how sustainable solutions can enhance quality of life.",
+  "location": "Douar Asni, Al Haouz, Marrakech",
+  "date_start": "April 10, 2025",
+  "date_end": "April 12, 2025",
+
+  "related_events": [
+    {
+      "id": 1,
+      "img": "https://picsum.photos/900/600?random=1",
+      "title": "Water Innovation Summit",
+      "date_start": "April 10, 2025",
+      "date_end": "April 12, 2025"
+    },
+    {
+      "id": 2,
+      "img": "https://picsum.photos/900/600?random=2",
+      "title": "Sustainability Meetup",
+      "date_start": "April 18, 2025",
+      "date_end": "April 19, 2025"
+    },
+    {
+      "id": 3,
+      "img": "https://picsum.photos/900/600?random=3",
+      "title": "Climate Action Conference",
+      "date_start": "April 25, 2025",
+      "date_end": "April 27, 2025"
+    }
+  ],
+
+  "common_events": [
+    {
+      "id": 1,
+      "img": "https://picsum.photos/900/600?random=1",
+      "title": "Water Projects Forum",
+      "domain": "Water",
+      "date_start": "April 10, 2025",
+      "date_end": "April 12, 2025"
+    },
+    {
+      "id": 2,
+      "img": "https://picsum.photos/900/600?random=2",
+      "title": "Agriculture & Sustainability",
+      "domain": "Agriculture",
+      "date_start": "April 18, 2025",
+      "date_end": "April 19, 2025"
+    },
+    {
+      "id": 3,
+      "img": "https://picsum.photos/900/600?random=3",
+      "title": "Women in Development",
+      "domain": "Women",
+      "date_start": "April 25, 2025",
+      "date_end": "April 27, 2025"
+    }
+  ],
+
+  "images": [
+    {
+      "id": 1,
+      "src": "https://picsum.photos/900/600?random=1",
+      "alt": "image 1"
+    },
+    {
+      "id": 2,
+      "src": "https://picsum.photos/900/600?random=2",
+      "alt": "image 2"
+    },
+    {
+      "id": 3,
+      "src": "https://picsum.photos/900/600?random=3",
+      "alt": "image 3"
+    },
+    {
+      "id": 4,
+      "src": "https://picsum.photos/900/600?random=4",
+      "alt": "image 4"
+    },
+    {
+      "id": 5,
+      "src": "https://picsum.photos/900/600?random=5",
+      "alt": "image 5"
+    },
+    {
+      "id": 6,
+      "src": "https://picsum.photos/900/600?random=6",
+      "alt": "image 6"
+    },
+    {
+      "id": 7,
+      "src": "https://picsum.photos/900/600?random=7",
+      "alt": "image 7"
+    },
+    {
+      "id": 8,
+      "src": "https://picsum.photos/900/600?random=8",
+      "alt": "image 8"
+    },
+    {
+      "id": 9,
+      "src": "https://picsum.photos/900/600?random=9",
+      "alt": "image 9"
+    },
+    {
+      "id": 10,
+      "src": "https://picsum.photos/900/600?random=10",
+      "alt": "image 10"
+    },
+    {
+      "id": 11,
+      "src": "https://picsum.photos/900/600?random=11",
+      "alt": "image 11"
+    },
+    {
+      "id": 12,
+      "src": "https://picsum.photos/900/600?random=12",
+      "alt": "image 12"
+    },
+    {
+      "id": 13,
+      "src": "https://picsum.photos/900/600?random=13",
+      "alt": "image 13"
+    },
+    {
+      "id": 14,
+      "src": "https://picsum.photos/900/600?random=14",
+      "alt": "image 14"
+    },
+    {
+      "id": 15,
+      "src": "https://picsum.photos/900/600?random=15",
+      "alt": "image 15"
+    },
+    {
+      "id": 16,
+      "src": "https://picsum.photos/900/600?random=16",
+      "alt": "image 16"
+    },
+    {
+      "id": 17,
+      "src": "https://picsum.photos/900/600?random=17",
+      "alt": "image 17"
+    },
+    {
+      "id": 18,
+      "src": "https://picsum.photos/900/600?random=18",
+      "alt": "image 18"
+    },
+    {
+      "id": 19,
+      "src": "https://picsum.photos/900/600?random=19",
+      "alt": "image 19"
+    },
+    {
+      "id": 20,
+      "src": "https://picsum.photos/900/600?random=20",
+      "alt": "image 20"
+    }
+  ]
+}

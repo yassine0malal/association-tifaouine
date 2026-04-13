@@ -1,0 +1,12 @@
+{
+  "project": {
+    "peopleHelped": "عدد المستفيدين",
+    "target_region": "المنطقة المستهدفة",
+    "status": "الحالة",
+    "completion": " الإنجاز",
+    "partners": "الشركاء",
+    "domain": "المجال",
+    "vol_btn": "كن متطوعًا",
+    "donate_btn": "تبرع لمشاريع مشابهة"
+  }
+}
