@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import styles from "./showMoreButton.module.css";
 
 function ShowMoreButton({ loading, currentPage, totalPages, onPageChange }) {
+  console.log("iiii"+loading, currentPage, totalPages, onPageChange)
   const {t} = useTranslation('common')
   if (!currentPage || !totalPages) return null;
 
@@ -23,7 +24,7 @@ function ShowMoreButton({ loading, currentPage, totalPages, onPageChange }) {
         <span>{t('projectCard.see_more')}</span>
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          xmlns:xlink="http://www.w3.org/1999/xlink"
+          xmlnsXlink="http://www.w3.org/1999/xlink"
           width="10px"
           height="10px"
           viewBox="-4.5 0 20 20"
@@ -35,10 +36,10 @@ function ShowMoreButton({ loading, currentPage, totalPages, onPageChange }) {
           <defs></defs>
           <g
             id="Page-1"
-            stroke="none"
-            stroke-width="1"
+            stroke="none" 
+            strokeWidth="1"
             fill="none"
-            fill-rule="evenodd"
+            fillRule="evenodd"
           >
             <g
               id="Dribbble-Light-Preview"
