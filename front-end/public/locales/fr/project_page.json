@@ -1,0 +1,12 @@
+{
+  "project": {
+    "peopleHelped": "PERSONNES AIDÉES",
+    "target_region": "RÉGION CIBLE",
+    "status": "STATUT",
+    "completion": "Avancement",
+    "partners": "Partenaires",
+    "domain": "Domaine",
+    "vol_btn": "DEVENIR BÉNÉVOLE",
+    "donate_btn": "FAIRE UN DON"
+  }
+}

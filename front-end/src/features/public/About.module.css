@@ -5,27 +5,233 @@
   --gap: 60px;
 }
 
-.AboutSection{
-
+.AboutSection {
+  width: 100%;
+  max-width: 1450px;
+  
+  margin-left: auto;
+  margin-right: auto;
 }
+
 .carouselWrapper {
   z-index: 1;
   width: 100%;
-  padding: 100px 0;
+  padding: 80px 0;
   background-color: var(--section-bg);
   overflow: hidden;
   perspective: 1500px;
   display: flex;
   position: relative;
+  flex-direction: column;
+  /* margin-bottom:40px ; */
 }
 
+.carouselWrapper h2 {
+  color: var(--accent);
+  padding: 0 30px;
+  text-align: center;
+  font-size: 40px;
+}
+
+/* ----association defenition---- - */
+
+.associationDescription {
+  padding: 6rem 3rem 3rem 8rem;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(500px, 100%), 1fr));
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  gap: 4rem;
+}
+
+.associationDescription .imageWrapper img {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 1;
+  border: 6px solid #FFFFFF;
+}
+
+.associationDescription .imageWrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  margin-bottom: 8rem;
+  /* padding: 12px; */
+}
+
+.associationDescription .imageWrapper::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 90%;
+  background-color: var(--accent-hover);
+  background-color: #EDEDE9;
+  bottom: -70px;
+  inset-inline-start: -70px;
+}
+
+.associationDescription .description p:first-child {
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.associationDescription .description p:last-child {
+  /* font-size: 15px; */
+  /* letter-spacing: 1px; */
+  /* text-align: justify; */
+
+}
+
+.associationDescription .description h2 {
+  position: relative;
+  padding-bottom: 15px;
+  margin-bottom: 12px;
+
+}
+
+.associationDescription .description h2::before {
+  position: absolute;
+  content: "";
+  background-color: var(--accent);
+  width: 5rem;
+  height: 3px;
+  bottom: -1.2rem;
+  border-radius: 3px;
+
+
+}
+
+.associationDescription .description {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+[dir="rtl"] .description {
+  text-align: right;
+}
+
+.optionWarper img {
+  width: 20px;
+  height: 20px;
+}
+
+.optionWarper {
+  display: flex;
+  gap: 20px;
+  justify-content: flex-start;
+  align-items: center;
+  padding-bottom: 5px;
+}
+
+.interaction {
+  display: flex;
+  gap: 4rem;
+  padding: 20px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.interaction .phone img {
+  width: 20px;
+  height: 20px;
+}
+
+.interaction .button button {
+  transition: 0.3s ease-in-out;
+  min-width: 150px;
+  text-align: center;
+}
+
+.interaction .button button:hover {
+  transform: translateY(-12px);
+}
+
+.interaction .phone {
+  display: flex;
+  gap: 10px;
+  border: 1px solid var(--accent);
+  padding: 15px 30px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+.interaction .phone:hover {
+  background-color: var(--accent-border);
+  border: none;
+}
+.interaction .phone:hover > * {
+  color: var(--bg-cream);
+  font-weight: 600;
+}
+
+[dir="rtl"] .interaction {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .phone {
+  flex-direction: row-reverse;
+}
+
+
+[dir="rtl"] .associationDescription {
+  justify-items: center;
+  align-items: center;
+}
+
+[dir="rtl"] .associationDescription .imageWrapper {
+  margin-inline: auto;
+  display: flex;
+  justify-content: center;
+  
+}
+[dir="rtl"] .associationDescription .imageWrapper::before {
+inset-inline-start: auto;
+inset-inline-end: 70px;
+}
+
+
+/* -------hashed text section------- */
+
+.hashtage {
+  margin-left: auto;
+  margin-right: auto;
+  padding: 30px;
+  background-color: var(--accent-very-light);
+  margin: 40px;
+  border-radius: 15px;
+}
+
+.hashtage h3 {
+  margin: 40px;
+}
+
+.hashtage p {
+  margin: 16px;
+  letter-spacing: 1.1px;
+  line-height: 26px;
+  color: var(--paragraph-color);
+}
+
+
+
+/* -------Members carousel ------- */
+
 .carouselTrack {
+  margin-top: 60px;
   display: flex;
   gap: var(--gap);
-  padding-left: var(--gap);
+  padding-inline-start: var(--gap);
+  /* ← automatically LEFT in LTR, RIGHT in RTL */
   transform-style: preserve-3d;
   cursor: grab;
   will-change: transform;
+  transform: translate3d(0, 0, 0);
 }
 
 .carouselTrack:active {
@@ -91,8 +297,9 @@
 }
 
 .carouselCard:hover {
-  scale: 1.1;
+  scale: 1.16;
   rotate: 4deg;
+
 }
 
 .carouselCard img {
@@ -111,8 +318,7 @@
   transition: all 0.4s ease-in-out;
 }
 
-/* In CSS Modules, sibling selectors with generated classes work like this: */
-.carouselCard:hover + .cardFooter {
+.carouselCard:hover+.cardFooter {
   opacity: 1;
 }
 
@@ -122,6 +328,7 @@
   margin-bottom: 8px;
   color: #1a1a1a;
   position: relative;
+  margin-top: 20px;
 }
 
 .cardFooter p {
@@ -138,17 +345,121 @@
   position: absolute;
   transition: width 0.5s ease-in-out;
   bottom: 0;
+  /* inset-inline-start: 0; */
+
 }
 
-.carouselCard:hover + .cardFooter h3::before {
+
+.carouselCard:hover+.cardFooter h3::before {
   width: 20%;
   height: 2px;
 }
 
+.options {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+
+
+/* ---------------Partenaires text section------------- */
+
+.partenaires {
+  padding: 20px;
+  background-image: url("../../assets/images/partenaires/bg-image.png");
+
+}
+
+.partenaires h2 {
+  color: var(--accent);
+  font-size: 40px;
+  margin: 35px;
+}
+
+.partenaires img {
+  max-width: 150px;
+
+}
+
+.partenaires .slide {
+  overflow: hidden;
+  width: 100%;
+  margin: auto;
+
+}
+
+/* .carouselWrapper{
+  position: relative;
+  
+  
+}
+[dir="rtl"] .carouselWrapper > .carouselTrack{
+ position: absolute;
+ right:-111px;
+ height: 300px;
+ 
+} */
+
+.partenaires .partenairesImages {
+  display: flex;
+}
+
+.partenaires .buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.partenairesImages .partnerCard {
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  /* border-radius: 12px; */
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  backdrop-filter: blur(8px) saturate(150%) brightness(1.2);
+}
+
+.partenaires .buttons button {
+  all: unset;
+  cursor: pointer;
+}
+
+.partenaires .buttons button img {
+  width: 40px;
+  transition: all 0.3s ease-in-out;
+}
+
+.partenaires .buttons button img:active {
+  scale: 1.2;
+}
+
+.partenaires .buttons button:first-child {
+  rotate: 180deg;
+}
+
+[dir="rtl"] .partenaires .buttons button:first-child {
+  rotate: 0deg;
+}
+
+[dir="rtl"] .partenaires .buttons button:last-child {
+  rotate: 180deg;
+}
+
+/*------------- Responsive ------------------- */
+
 @media (max-width: 768px) {
-  :root {
-    --card-w: 180px;
-    --card-h: 270px;
-    --gap: 30px;
+
+  .associationDescription {
+    margin-top: 30%;
+    padding: 1rem;
   }
+
+  .associationDescription .imageWrapper img {
+    /* height: auto; */
+  }
+
 }

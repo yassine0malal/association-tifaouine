@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import Links from "./Links";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom"
 import Aside from './Aside'
 
 import styles from "./Navbar.module.css";
@@ -11,10 +10,24 @@ import tel from "../../../assets/icons/call.png";
 import email from "../../../assets/icons/email.png";
 import map from "../../../assets/icons/map.png";
 import logo from "../../../assets/images/logo.png";
+import { useTranslation } from "react-i18next";
 
 
 export default function NavBar() {
-    const navigate = useNavigate();
+    const { i18n } = useTranslation();
+    const currentLang = i18n.language;
+    const [showAside, setShowAside] = useState(false);
+
+
+
+    const handleShowAside = () => {
+        setShowAside(!showAside);
+    }
+    function changeLanguage(lang) {
+        i18n.changeLanguage(lang);
+    }
+
+
     return (
         <>
             <div className={styles.upperNavbar}>
@@ -35,10 +48,11 @@ export default function NavBar() {
                 </div>
 
                 <div className={styles.language}>
-                    <select name="lang" id="">
-                        <option value="fr">Fr</option>
-                        <option value="ar">Ar</option>
-                    </select>
+                    <button className={currentLang == "fr" ? "isActive" : ""} onClick={() => changeLanguage("fr")}>Français</button>
+                    <span>|</span>
+                    <button className={currentLang == "en" ? "isActive" : ""} onClick={() => changeLanguage("en")}>English</button>
+                    <span>|</span>
+                    <button className={currentLang == "ar" ? "isActive" : ""} onClick={() => changeLanguage("ar")}>العربية</button>
                 </div>
 
 
@@ -47,13 +61,15 @@ export default function NavBar() {
             <div className={styles.navBarSection}>
 
                 <div>
-                    <img src={logo} width="160px"/>
+                    <Link to="/"><img src={logo} width="160px" /></Link>
                 </div>
 
-                 {/* The Nabbar of the phone  */}
+                {/* The Nabbar of the phone  */}
                 <div className={styles.link1}>
-                    <img src={menu} alt="menu" />
-                    <Aside/>
+                    <div className={styles.imageContainer}>
+                        <img onClick={() => { handleShowAside() }} src={menu} alt="menu" />
+                    </div>
+                    {showAside == true ? <Aside /> : ""}
                 </div>
 
                 <div className={styles.link2}>

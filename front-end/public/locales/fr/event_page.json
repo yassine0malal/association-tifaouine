@@ -1,0 +1,15 @@
+{
+  "event": {
+    "details": "Détails",
+    "location": "Lieu",
+    "date_start": "Date de début",
+    "date_end": "Date de fin",
+    "benevole_btn": "Devenir bénévole",
+    "last_posts": "Derniers articles",
+    "contribute": "Contribuer",
+    "contribute_text": "Votre soutien peut faire la différence. Chaque don, même le plus petit, contribue à améliorer des vies et à construire un avenir meilleur. Rejoignez-nous dans cette mission solidaire.",
+    "donate_btn": "Faire un don",
+    "category": "Catégorie",
+    "common_events": "Événements similaires"
+  }
+}

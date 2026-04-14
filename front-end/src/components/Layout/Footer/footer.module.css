@@ -84,6 +84,9 @@
     text-decoration: none;
     padding-bottom: 5px;
     margin-bottom: 18px;
+    width: fit-content;
+    text-align: center;
+    align-self: center;
 
 }
 
@@ -176,14 +179,15 @@ hr {
     .footerSection {
         flex-direction: column;
         /* height: 100vh; */
-        text-align: center  ;
+        text-align: center;
         z-index: -1;
     }
 
     .siteMap nav a:hover::after {
         width: 25%;
     }
-    .footerSection .send{
+
+    .footerSection .send {
         display: flex;
         justify-content: center;
         text-align: center;

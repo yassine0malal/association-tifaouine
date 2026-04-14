@@ -1,0 +1,36 @@
+{
+  "contact": {
+    "hero": {
+      "title": "Contact"
+    },
+    "info": {
+      "heading": "Get in touch with us",
+      "subheading": "Fill out the form below or schedule a meeting with us at your convenience.",
+      "cards": {
+        "email": {
+          "title": "Email Address",
+          "value": "contact@tifaouine.org"
+        },
+        "phone": {
+          "title": "Phone Number",
+          "value": "+212 655146069"
+        },
+        "location": {
+          "title": "Address / Location",
+          "value": "douar asni lakdim 42150, Marrakech Al Haouz - Maroc"
+        }
+      }
+    },
+    "form": {
+      "heading": "Contact Us",
+      "subheading": "Have a question?",
+      "placeholders": {
+        "fullName": "Full Name",
+        "email": "Email",
+        "phone": "Phone",
+        "subject": "Subject",
+        "message": "Message"
+      }
+    }
+  }
+}

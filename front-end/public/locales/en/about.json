@@ -1,0 +1,43 @@
+{
+    "hero": {
+        "title": "About Us"
+    },
+    "intro": {
+        "question": "Who are we?",
+        "title": "Tifaouine is the clarity of hope to light the way for the most disadvantaged.",
+        "description": "Since its creation on August 6, 1998 in Asni, the Tifaouine association has been committed to social and rural development in the Al Haouz province. Our mission is to provide comprehensive support to local populations through opening up isolated areas, access to education, and support for sustainable agriculture. Through our projects and training programs, our teams work every day to restore citizens' fundamental rights and enable them to build a dignified future in the heart of their mountains."
+    },
+    "objectives": {
+        "desenclaver": "Open up isolated areas by developing rural tracks and facilitating access to drinking water.",
+        "eduquer": "Educate and train through the fight against illiteracy, academic support, and technical training for farmers.",
+        "promouvoir": "Promote self-sufficiency by supporting women and farmers towards sustainable and economic development projects."
+    },
+    "actions": {
+        "don": "MAKE A DONATION →",
+        "phone": "+212 522 75 69 65"
+    },
+    "stats": {
+        "title": "For over 30 years, our commitment has been reflected in concrete actions serving communities in Al Haouz-Morocco.",
+        "list": "Equipping the association's headquarters # Empowering women (sewing, weaving, crafts) # Fighting illiteracy # Training in administrative and financial management # Training farmers (beekeeping, organic farming, livestock) # Planting and distributing fruit trees # Environmental protection and erosion control # Opening rural tracks to open up villages # Access to drinking water and sanitation # Construction of social infrastructure # Creation of training centers and women's clubs # Support for preschool education and children # Construction of a public hammam # Development of income-generating activities # Health and environmental awareness campaigns # Hosting national and international delegations # Supporting farmers # Support for schools"
+    },
+    "team": {
+        "title": "TEAM",
+        "members": [
+            {
+                "title": "Real-Time Collaboration",
+                "desc": "Communicate seamlessly and keep everyone in sync."
+            },
+            {
+                "title": "Task & Project Tracking",
+                "desc": "Assign tasks, set deadlines, and visualize progress."
+            },
+            {
+                "title": "Performance Insights",
+                "desc": "Make smarter decisions with real-time analytics."
+            }
+        ]
+    },
+    "partners": {
+        "title": "Partnership for an Enriching Impact"
+    }
+}

@@ -1,0 +1,33 @@
+{
+  "nav": {
+    "about": "عن الجمعية",
+    "activities": "الأنشطة",
+    "getInvolved": "شاركوا",
+    "domains": "المجالات",
+    "resources": "الموارد",
+    "dropdown": {
+      "about": {
+        "us": "من نحن",
+        "contact": "اتصل بنا"
+      },
+      "activities": {
+        "projects": "المشاريع",
+        "events": "الأحداث",
+        "news": "الأخبار"
+      },
+      "getInvolved": {
+        "donate": "تقديم تبرع",
+        "becomeMember": "الانضمام كعضو"
+      },
+      "domains": {
+        "education": "التعليم",
+        "water": "الماء",
+        "agriculture": "الفلاحة"
+      },
+      "resources": {
+        "reports": "التقارير",
+        "partners": "الشركاء"
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "id": 2,
+  "title": "Initiative eau potable - Tifaouine",
+  "img": "https://picsum.photos/300/200",
+  "status": {
+    "peopleHelped": "800+ familles",
+    "targetRegion": "Douar Asni",
+    "projectStatus": "Terminé"
+  },
+  "description": "Cette initiative vise à fournir un accès durable à l’eau potable aux communautés rurales. Elle a permis d’améliorer significativement la vie quotidienne des habitants.",
+  "meta": {
+    "completion": 2023,
+    "partners": "Moroccan Water",
+    "domain": "Eau"
+  }
+}

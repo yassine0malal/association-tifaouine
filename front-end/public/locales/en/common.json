@@ -1,0 +1,15 @@
+{
+  "pagination": {
+    "next": "Next",
+    "prev": "Previous"
+  },
+  "projectCard": {
+    "see_more": "See more"
+  },
+  "gallery":{
+    "title":"Project Album"
+  },
+  "showMoreBtn":{
+    "end":"You have reached the end"
+  }
+}
