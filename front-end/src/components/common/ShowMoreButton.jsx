@@ -3,11 +3,11 @@ import styles from "./showMoreButton.module.css";
 
 function ShowMoreButton({ loading, currentPage, totalPages, onPageChange }) {
   console.log("iiii"+loading, currentPage, totalPages, onPageChange)
-  const {t} = useTranslation('common')
+  const { t } = useTranslation("common");
   if (!currentPage || !totalPages) return null;
 
   if (currentPage === totalPages) {
-    return <p className={styles.noMoreData}>{t('showMoreBtn.end')}</p>;
+    return <p className={styles.noMoreData}>{t("showMoreBtn.end")}</p>;
   }
 
   const handleClick = () => {
@@ -17,11 +17,12 @@ function ShowMoreButton({ loading, currentPage, totalPages, onPageChange }) {
   };
   return (
     <div className={styles.showMore}>
+      <div></div>
       <button
         className={`${loading ? styles.loading : ""}`}
         onClick={handleClick}
       >
-        <span>{t('projectCard.see_more')}</span>
+        <span>{t("projectCard.see_more")}</span>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -56,6 +57,7 @@ function ShowMoreButton({ loading, currentPage, totalPages, onPageChange }) {
           </g>
         </svg>
       </button>
+      <div></div>
     </div>
   );
 }

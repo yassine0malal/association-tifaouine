@@ -53,6 +53,7 @@ const projectImagesSlice = createSlice({
         const filteredImages = newImages.filter(
           (img) => !existingIds.has(img.id),
         );
+
         state.images.push(...filteredImages);
         state.totalPages = action.payload.totalPages;
         state.nextPage = action.payload.nextPage;
