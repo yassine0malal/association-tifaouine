@@ -1,103 +1,80 @@
 const domaineService = require('../services/domaine.service');
+const { Domaine } = require('../models');
 const { buildPaginatedResponse } = require('../utils/paginate');
+const { toDomaineListDTO } = require('../dto/domaine.dto');
 
 class DomaineController {
-    
-    // fonction pour creer un domaine depuis l'api
+
     async create(req, res) {
         try {
-            // si une image a ete uploadee par Multer, on construit le chemin public
             if (req.file) {
                 req.body.icone = '/data/domaines/' + req.file.filename;
             }
-
-            // donnees venant du frontend ou postman via req.body   
             const result = await domaineService.createDomaine(req.body);
-            return res.status(201).json({
-                success: true,
-                message: "domaine cree avec succes",
-                data: result
-            });
+            return res.status(201).json({ success: true, message: "domaine cree avec succes", data: result });
         } catch (error) {
-            console.error("erreur lors de la creation du domaine : ", error.message);
-            // renvoie 400 bad request 
-            return res.status(400).json({
-                success: false,
-                message: error.message
-            });
+            return res.status(400).json({ success: false, message: error.message });
         }
     }
 
-    // recuperer tous les domaines pour affichage dans la navigation 
     async getAll(req, res) {
         try {
             const { page, limit, offset } = req.pagination;
             const result = await domaineService.getAllDomaines({ limit, offset });
-            return res.status(200).json({
-                success: true,
-                ...buildPaginatedResponse(result, page, limit)
-            });
+            return res.status(200).json({ success: true, ...buildPaginatedResponse(result, page, limit) });
         } catch (error) {
             return res.status(500).json({ success: false, message: "erreur serveur" });
         }
     }
 
-    // recuperer un seul domaine
     async getById(req, res) {
         try {
-            // recuperation de l'id depuis les parametres de l'url
-            const { id } = req.params;
-            const unDomaine = await domaineService.getDomaineById(id);
-            return res.status(200).json({
-                success: true,
-                data: unDomaine
-            });
+            const unDomaine = await domaineService.getDomaineById(req.params.id);
+            return res.status(200).json({ success: true, data: unDomaine });
         } catch (error) {
-            return res.status(404).json({
-                success: false,
-                message: error.message
-            });
+            return res.status(404).json({ success: false, message: error.message });
         }
     }
 
-    // mise a jour via la methode put 
+    // ─── Méthodes avec langue (DTO frontend) ─────────────────────────────────
+
+    /**
+     * @route   GET /api/:lang/domaines
+     * @desc    Liste des domaines avec DTO selon la langue (filtre de navigation)
+     */
+    async getAllByLang(req, res) {
+        try {
+            const { lang } = req;
+            const domaines = await Domaine.findAll({ order: [['created_at', 'ASC']] });
+            return res.status(200).json({
+                success: true,
+                domains: domaines.map(d => toDomaineListDTO(d, lang))
+            });
+        } catch (error) {
+            return res.status(500).json({ success: false, message: error.message });
+        }
+    }
+
+    // ─── CRUD Admin ───────────────────────────────────────────────────────────
+
     async update(req, res) {
         try {
-            const { id } = req.params;
-
-            // si une nouvelle icone est uploadee, on construit le chemin public
             if (req.file) {
                 req.body.icone = '/data/domaines/' + req.file.filename;
             }
-
-            const theUpdate = await domaineService.updateDomaine(id, req.body);
-            return res.status(200).json({
-                success: true,
-                message: "le domaine a bien ete mis a jour",
-                data: theUpdate
-            });
+            const theUpdate = await domaineService.updateDomaine(req.params.id, req.body);
+            return res.status(200).json({ success: true, message: "le domaine a bien ete mis a jour", data: theUpdate });
         } catch (error) {
-            return res.status(400).json({
-                success: false,
-                message: error.message
-            });
+            return res.status(400).json({ success: false, message: error.message });
         }
     }
 
-    // suppression declenchee par le frontend
     async delete(req, res) {
         try {
-            const { id } = req.params;
-            await domaineService.deleteDomaine(id);
-            return res.status(200).json({
-                success: true,
-                message: "le domaine a bien ete supprime"
-            });
+            await domaineService.deleteDomaine(req.params.id);
+            return res.status(200).json({ success: true, message: "le domaine a bien ete supprime" });
         } catch (error) {
-            return res.status(400).json({
-                success: false,
-                message: error.message
-            });
+            return res.status(400).json({ success: false, message: error.message });
         }
     }
 }

@@ -4,6 +4,26 @@ const path = require('path');
 
 class RessourceController {
     /**
+     * @route   GET /api/projets/:id/ressources
+     * @desc    Récupérer les ressources d'un projet par son ID
+     * @access  Public
+     */
+    async getByProjetId(req, res) {
+        try {
+            const { type } = req.query;
+            const { page, limit, offset } = req.pagination;
+            const result = await ressourceService.getRessourcesByProjetId(req.params.id, { type, limit, offset });
+            return res.status(200).json({
+                success: true,
+                ...buildPaginatedResponse(result, page, limit)
+            });
+        } catch (error) {
+            const status = error.message.includes('introuvable') ? 404 : 500;
+            return res.status(status).json({ success: false, message: error.message });
+        }
+    }
+
+    /**
      * @route   GET /api/ressources
      * @desc    Récupérer toutes les ressources filtrables
      */

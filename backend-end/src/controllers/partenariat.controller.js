@@ -1,5 +1,7 @@
 const partenariatService = require('../services/partenariat.service');
+const { Partenariat } = require('../models');
 const { buildPaginatedResponse } = require('../utils/paginate');
+const { toPartenariatListDTO } = require('../dto/partenariat.dto');
 
 class PartenariatController {
     /**
@@ -40,6 +42,31 @@ class PartenariatController {
             });
         } catch (error) {
             return res.status(500).json({ success: false, message: "Erreur serveur lors de la récupération des partenariats" });
+        }
+    }
+
+    /**
+     * @route   GET /api/:lang/partenariats
+     * @desc    Liste des partenariats avec DTO selon la langue
+     */
+    async getAllByLang(req, res) {
+        try {
+            const { lang } = req;
+            const { page, limit, offset } = req.pagination;
+
+            const result = await Partenariat.findAndCountAll({
+                order: [['created_at', 'DESC']],
+                limit,
+                offset
+            });
+
+            const rows = result.rows.map(p => toPartenariatListDTO(p, lang));
+            return res.status(200).json({
+                success: true,
+                ...buildPaginatedResponse({ count: result.count, rows }, page, limit)
+            });
+        } catch (error) {
+            return res.status(500).json({ success: false, message: error.message });
         }
     }
 

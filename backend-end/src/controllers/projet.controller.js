@@ -1,5 +1,8 @@
 const projetService = require('../services/projet.service');
+const { Projet, Domaine, Ressource } = require('../models');
+const { Op } = require('sequelize');
 const { buildPaginatedResponse } = require('../utils/paginate');
+const { toProjetListDTO, toProjetDetailDTO } = require('../dto/projet.dto');
 
 class ProjetController {
     /**
@@ -39,6 +42,103 @@ class ProjetController {
             });
         }
     }
+
+    // ─── Méthodes avec langue (DTO frontend) ─────────────────────────────────
+
+    /**
+     * @route   GET /api/:lang/projets
+     * @desc    Liste paginée des projets avec DTO selon la langue
+     * @query   domaine_id, statut, page, limit
+     */
+    async getAllByLang(req, res) {
+        try {
+            const { lang } = req;
+            const { domaine_id, statut } = req.query;
+            const { page, limit, offset } = req.pagination;
+
+            const where = {};
+            if (domaine_id) where.domaine_id = domaine_id;
+            if (statut)     where.statut     = statut;
+
+            const result = await Projet.findAndCountAll({
+                where,
+                include: [{ model: Domaine, attributes: ['id', 'nom_fr', 'nom_ar', 'nom_en'] }],
+                order:   [['date_debut', 'DESC']],
+                limit,
+                offset
+            });
+
+            const rows = result.rows.map(p => toProjetListDTO(p, lang));
+            return res.status(200).json({
+                success: true,
+                ...buildPaginatedResponse({ count: result.count, rows }, page, limit)
+            });
+        } catch (error) {
+            return res.status(500).json({ success: false, message: error.message });
+        }
+    }
+
+    /**
+     * @route   GET /api/:lang/projets/:id
+     * @desc    Détail d'un projet avec DTO selon la langue
+     */
+    async getByIdAndLang(req, res) {
+        try {
+            const { lang } = req;
+            const projet = await Projet.findByPk(req.params.id, {
+                include: [{ model: Domaine, attributes: ['id', 'nom_fr', 'nom_ar', 'nom_en'] }]
+            });
+
+            if (!projet) {
+                return res.status(404).json({ success: false, message: 'Projet introuvable.' });
+            }
+
+            return res.status(200).json({
+                success: true,
+                data: toProjetDetailDTO(projet, lang, projet.Domaine)
+            });
+        } catch (error) {
+            return res.status(500).json({ success: false, message: error.message });
+        }
+    }
+
+    /**
+     * @route   GET /api/:lang/projets/:id/images
+     * @desc    Photos d'un projet paginées avec DTO selon la langue
+     */
+    async getImagesByLang(req, res) {
+        try {
+            const { lang } = req;
+            const { page, limit, offset } = req.pagination;
+
+            const projet = await Projet.findByPk(req.params.id);
+            if (!projet) {
+                return res.status(404).json({ success: false, message: 'Projet introuvable.' });
+            }
+
+            const result = await Ressource.findAndCountAll({
+                where:  { projet_id: req.params.id, type: 'photo' },
+                order:  [['created_at', 'DESC']],
+                limit,
+                offset
+            });
+
+            const rows = result.rows.map(img => ({
+                id:  img.id,
+                src: img.url,
+                alt: img[`titre_${lang}`] || img.titre_fr || ''
+            }));
+
+            return res.status(200).json({
+                success: true,
+                ...buildPaginatedResponse({ count: result.count, rows }, page, limit)
+            });
+        } catch (error) {
+            return res.status(500).json({ success: false, message: error.message });
+        }
+    }
+
+    // ─── CRUD Admin ───────────────────────────────────────────────────────────
 
     /**
      * @route   POST /api/projets
