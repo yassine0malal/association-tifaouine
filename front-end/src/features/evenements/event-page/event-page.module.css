@@ -522,9 +522,10 @@
 
 /* ── Contribute wrapper ── */
 .eventContentContainer .row2 .wrapper:last-child p {
-  font-size: 0.95rem;
+  font-size: 16px;
   margin-bottom: 1.5rem;
-  line-height: 1.7;
+  line-height: 1.8;
+  font-weight: 600;
   color: var(--text);
 }
 
