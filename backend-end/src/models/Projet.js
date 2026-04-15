@@ -12,6 +12,14 @@ const Projet = sequelize.define('Projet', {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
+    image_principale: {
+        type: DataTypes.STRING(500),
+        allowNull: true,
+    },
+    partenaires: {
+        type: DataTypes.TEXT,
+        allowNull: true, // NULL = projet réalisé par l'association seule
+    },
     titre_fr: {
         type: DataTypes.STRING(255),
         allowNull: false,

@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const ressourceController = require('../controllers/ressource.controller');
 const { verifyToken, isAdmin } = require('../middlewares/auth.middleware');
-const uploadMiddleware = require('../middlewares/upload.middleware');
+const { uploadRessources } = require('../middlewares/upload.middleware');
 const { validate } = require('../middlewares/validate.middleware');
 const { paginate } = require('../middlewares/pagination.middleware');
 const { createRessourceSchema, updateRessourceSchema } = require('../validations/ressource.validation');
@@ -21,7 +21,7 @@ router.use(isAdmin);
  */
 router.post(
     '/', 
-    uploadMiddleware('ressources', 'file'), 
+    uploadRessources, 
     validate(createRessourceSchema), 
     ressourceController.create.bind(ressourceController)
 );

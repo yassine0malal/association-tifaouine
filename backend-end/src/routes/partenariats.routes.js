@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const partenariatController = require('../controllers/partenariat.controller');
 const { verifyToken, isAdmin } = require('../middlewares/auth.middleware');
-const uploadMiddleware = require('../middlewares/upload.middleware');
+const { uploadSimple } = require('../middlewares/upload.middleware');
 const { validate } = require('../middlewares/validate.middleware');
 const { paginate } = require('../middlewares/pagination.middleware');
 const { createPartenariatSchema, updatePartenariatSchema } = require('../validations/partenariat.validation');
@@ -25,7 +25,7 @@ router.use(isAdmin);
  */
 router.post(
     '/', 
-    uploadMiddleware('partenariats', 'logo'), 
+    uploadSimple('partenariats', 'logo'), 
     validate(createPartenariatSchema), 
     partenariatController.create.bind(partenariatController)
 );
@@ -36,7 +36,7 @@ router.post(
  */
 router.put(
     '/:id', 
-    uploadMiddleware('partenariats', 'logo'), 
+    uploadSimple('partenariats', 'logo'), 
     validate(updatePartenariatSchema), 
     partenariatController.update.bind(partenariatController)
 );

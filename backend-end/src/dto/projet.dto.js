@@ -18,27 +18,29 @@ const toProjetListDTO = (projet, lang) => ({
     description: projet[`description_${lang}`] || null,
     state:       STATUT_LABELS[lang][projet.statut] || projet.statut,
     date:        projet.date_debut,
-    image:       projet.DonMateriel ? null : null, // sera remplacé par la 1ère photo du projet
-    localisation: projet.localisation
+    image:       projet.image_principale || null
 });
 
 /**
  * DTO détail projet — correspond à project.json
+ * projet est un objet plain (après .toJSON())
  */
-const toProjetDetailDTO = (projet, lang, domaine) => ({
+const toProjetDetailDTO = (projet, lang) => ({
     id:          projet.id,
     title:       projet[`titre_${lang}`],
+    img:         projet.image_principale || null,
     description: projet[`description_${lang}`] || null,
     status: {
-        peopleHelped:  projet.nb_beneficiaires ? `${projet.nb_beneficiaires}+ bénéficiaires` : null,
+        peopleHelped:  projet.nb_beneficiaires ? `${projet.nb_beneficiaires}+` : null,
         targetRegion:  projet.localisation,
         projectStatus: STATUT_LABELS[lang][projet.statut] || projet.statut
     },
     meta: {
         completion: projet.date_fin ? new Date(projet.date_fin).getFullYear() : null,
-        domain:     domaine ? domaine[`nom_${lang}`] : null,
-        budget:     projet.budget || null
-    }
+        domain:     projet.Domaine ? projet.Domaine[`nom_${lang}`] : null,
+        partners: projet.partenaires || null
+    },
+    
 });
 
 module.exports = { toProjetListDTO, toProjetDetailDTO };

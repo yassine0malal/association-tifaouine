@@ -1,6 +1,5 @@
 const ressourceService = require('../services/ressource.service');
 const { buildPaginatedResponse } = require('../utils/paginate');
-const path = require('path');
 
 class RessourceController {
     /**
@@ -68,39 +67,32 @@ class RessourceController {
 
     /**
      * @route   POST /api/ressources
-     * @desc    Upload et création d'une ressource (Admin)
+     * @desc    Upload et création d'une ou plusieurs ressources (Admin)
      */
     async create(req, res) {
         try {
-            if (!req.file) {
+            if (!req.files || req.files.length === 0) {
                 return res.status(400).json({
                     success: false,
                     message: "Aucun fichier n'a été fourni"
                 });
             }
 
-            // Calculer l'URL relative (utile pour le frontend et la suppression)
-            const ext = path.extname(req.file.originalname).toLowerCase();
-            const isImage = /jpeg|jpg|png|webp|gif/.test(ext);
-            const isVideo = /mp4|webm|mov|mkv|avi/.test(ext);
-            
-            let subType = 'documents';
-            if (isImage) subType = 'images';
-            else if (isVideo) subType = 'videos';
+            const created = [];
+            for (const file of req.files) {
+                const urlEntry = req.uploadedUrls[file._urlIndex];
+                const ressourceData = {
+                    ...req.body,
+                    url: `${urlEntry.relUrl}/${file.filename}`
+                };
+                const nvRessource = await ressourceService.createRessource(ressourceData);
+                created.push(nvRessource);
+            }
 
-            const relativePath = `/data/ressources/${subType}/${req.file.filename}`;
-
-            const ressourceData = {
-                ...req.body,
-                url: relativePath
-            };
-
-            const nvRessource = await ressourceService.createRessource(ressourceData);
-            
             return res.status(201).json({
                 success: true,
-                message: "Ressource ajoutée avec succès",
-                data: nvRessource
+                message: `${created.length} ressource(s) ajoutée(s) avec succès`,
+                data: created.length === 1 ? created[0] : created
             });
         } catch (error) {
             return res.status(400).json({

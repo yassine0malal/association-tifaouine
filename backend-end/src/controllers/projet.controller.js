@@ -68,7 +68,7 @@ class ProjetController {
                 offset
             });
 
-            const rows = result.rows.map(p => toProjetListDTO(p, lang));
+            const rows = result.rows.map(p => toProjetListDTO(p.toJSON(), lang));
             return res.status(200).json({
                 success: true,
                 ...buildPaginatedResponse({ count: result.count, rows }, page, limit)
@@ -95,7 +95,7 @@ class ProjetController {
 
             return res.status(200).json({
                 success: true,
-                data: toProjetDetailDTO(projet, lang, projet.Domaine)
+                data: toProjetDetailDTO(projet.toJSON(), lang)
             });
         } catch (error) {
             return res.status(500).json({ success: false, message: error.message });
@@ -123,15 +123,20 @@ class ProjetController {
                 offset
             });
 
-            const rows = result.rows.map(img => ({
-                id:  img.id,
-                src: img.url,
-                alt: img[`titre_${lang}`] || img.titre_fr || ''
-            }));
+            const totalPages = Math.ceil(result.count / limit);
 
             return res.status(200).json({
-                success: true,
-                ...buildPaginatedResponse({ count: result.count, rows }, page, limit)
+                success:     true,
+                images:      result.rows.map(img => ({
+                    id:  img.id,
+                    src: img.url,
+                    alt: img[`titre_${lang}`] || img.titre_fr || ''
+                })),
+                currentPage:  page,
+                totalPages,
+                nextPage:     page < totalPages ? page + 1 : null,
+                prevPage:     page > 1 ? page - 1 : 0,
+                itemsPerPage: limit
             });
         } catch (error) {
             return res.status(500).json({ success: false, message: error.message });
@@ -146,6 +151,11 @@ class ProjetController {
      */
     async create(req, res) {
         try {
+            // Si une image a été uploadée, construire le chemin complet
+            if (req.file && req.uploadedUrl) {
+                req.body.image_principale = `${req.uploadedUrl}/${req.file.filename}`;
+            }
+
             const nvProjet = await projetService.createProjet(req.body);
             return res.status(201).json({
                 success: true,
@@ -167,6 +177,11 @@ class ProjetController {
      */
     async update(req, res) {
         try {
+            // Si une nouvelle image est uploadée, construire le chemin complet
+            if (req.file && req.uploadedUrl) {
+                req.body.image_principale = `${req.uploadedUrl}/${req.file.filename}`;
+            }
+
             const misAjour = await projetService.updateProjet(req.params.id, req.body);
             return res.status(200).json({
                 success: true,

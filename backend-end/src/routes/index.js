@@ -34,9 +34,7 @@ router.use('/messages',     messagesRoutes);
 router.use('/stats',        statsRoutes);
 
 // Routes publiques avec langue : /api/fr/... | /api/ar/... | /api/en/...
-// validateLang valide le paramètre :lang et injecte req.lang
-router.use('/:lang', validateLang, publicRoutes);
 
-module.exports = router;
+router.use('/:lang', validateLang, publicRoutes);
 
 module.exports = router;
