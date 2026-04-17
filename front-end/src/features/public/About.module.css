@@ -8,7 +8,6 @@
 .AboutSection {
   width: 100%;
   max-width: 1450px;
-  
   margin-left: auto;
   margin-right: auto;
 }
@@ -28,10 +27,88 @@
 
 .carouselWrapper h2 {
   color: var(--accent);
-  padding: 0 30px;
+  padding: 20px 30px;
   text-align: center;
   font-size: 40px;
 }
+
+.AboutSection .impact >h1 {
+font-size: 49px;
+max-width: 600px;
+margin:0 20px 30px  30px;
+}
+.AboutSection .impact > p {
+  color: var(--accent-strong);
+  letter-spacing: 1.3px;
+  font-size: 12px;
+  margin: 40px;
+}
+.AboutSection .impact section {
+  margin: 100px 30px;
+  display: flex;
+  justify-content: cente;
+  gap: 30px;
+}
+
+.carouselWrapper+.impact section article {
+  border-radius: 10px;
+  padding: 40px 30px;
+  text-align: center;
+  background-color: var(--color-sec);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease-in-out;
+}
+
+section article .cercle {
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  width: 70px;
+  height: 70px;
+  background-color: var(--accent-light);
+  border-radius: 50%;
+}
+section article:hover {
+  transform: translateY(-10px);
+}
+section article:hover .cercle {
+  transition: all 0.3s ease-in-out;
+  background-color: var(--accent-strong);
+  
+}
+section article .cercle svg {
+transition: all 0.3S ease-in-out;
+}
+section article:hover .cercle svg {
+  stroke: var(--bg-cream);
+}
+section article div {
+  padding: 17px;
+}
+section article div h2 {
+  font-size: 40px;
+  font-weight: 800;
+}
+section article div p {
+  position: relative;
+}
+
+section article div p::before {
+  content: "";
+  width: 3em;
+  height: 3px;
+  right: 60%;
+  inset-inline-start: 30%;
+  border-radius: 2px;
+  position: absolute;
+  background-color: var(--accent);
+  bottom: -12px;
+
+}
+
 
 /* ----association defenition---- - */
 
@@ -79,12 +156,6 @@
   color: var(--accent);
 }
 
-.associationDescription .description p:last-child {
-  /* font-size: 15px; */
-  /* letter-spacing: 1px; */
-  /* text-align: justify; */
-
-}
 
 .associationDescription .description h2 {
   position: relative;
@@ -161,11 +232,13 @@
   cursor: pointer;
   transition: all 0.3s ease-in-out;
 }
+
 .interaction .phone:hover {
   background-color: var(--accent-border);
   border: none;
 }
-.interaction .phone:hover > * {
+
+.interaction .phone:hover>* {
   color: var(--bg-cream);
   font-weight: 600;
 }
@@ -188,15 +261,16 @@
   margin-inline: auto;
   display: flex;
   justify-content: center;
-  
+
 }
+
 [dir="rtl"] .associationDescription .imageWrapper::before {
-inset-inline-start: auto;
-inset-inline-end: 70px;
+  inset-inline-start: auto;
+  inset-inline-end: 70px;
 }
 
 
-/* -------hashed text section------- */
+/* -------Hashed text section------- */
 
 .hashtage {
   margin-left: auto;
@@ -389,18 +463,6 @@ inset-inline-end: 70px;
 
 }
 
-/* .carouselWrapper{
-  position: relative;
-  
-  
-}
-[dir="rtl"] .carouselWrapper > .carouselTrack{
- position: absolute;
- right:-111px;
- height: 300px;
- 
-} */
-
 .partenaires .partenairesImages {
   display: flex;
 }
@@ -452,14 +514,15 @@ inset-inline-end: 70px;
 /*------------- Responsive ------------------- */
 
 @media (max-width: 768px) {
-
+  
   .associationDescription {
     margin-top: 30%;
     padding: 1rem;
   }
-
-  .associationDescription .imageWrapper img {
-    /* height: auto; */
+  
+}
+@media (max-width: 900px) {
+  .AboutSection .impact section{
+    flex-direction: column;
   }
-
 }

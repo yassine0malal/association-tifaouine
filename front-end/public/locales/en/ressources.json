@@ -1,0 +1,17 @@
+{
+    "ressources": {
+        "heroTitle": "Our Resources",
+        "featuredInsights": "Featured Insights",
+        "ourBestProject": "Our best project",
+        "download": "Download",
+        "guide": "Guide",
+        "collaborationText": "Collaboration: Discover how we work",
+        "rightSideTitle": "The 2024 State of Heritage Preservation Report",
+        "rightSideDescription": "Discover how our association's grassroots initiatives are preserving cultural wisdom across generations and building stronger, more connected communities.",
+        "readFullReport": "Read Full Report",
+        "resourceLibrary": "Resource Library",
+        "showingItems": "Showing {{count}} of {{total}} items",
+        "loadingResources": "Loading resources...",
+        "errorMessage": "Error: {{error}}"
+    }
+}

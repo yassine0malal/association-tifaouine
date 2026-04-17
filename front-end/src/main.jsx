@@ -22,6 +22,7 @@ import RessourcesPage from "./features/ressources/Ressources.jsx";
 import EventList from "./features/evenements/event-list/EventList.jsx";
 import './styles/globals.css'
 import EventPage from "./features/evenements/event-page/EventPage.jsx";
+import Partner from "./features/partners/Partner.jsx";
 
 createRoot(document.getElementById("root")).render(
   <Provider store={store}>
@@ -63,7 +64,7 @@ createRoot(document.getElementById("root")).render(
             {/* Main Routes : Ressources */}
             <Route path="/:lang">
               <Route path="rapports" element={<RessourcesPage />} />
-              <Route path="partenaires" element={<Footer />} />
+              <Route path="partenaires" element={<Partner />} />
             </Route>
           </Route>
 

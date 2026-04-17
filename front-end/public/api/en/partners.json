@@ -1,0 +1,74 @@
+{
+  "partners": [
+    {
+      "id": 1,
+      "image": "../../assets/images/partenaires/agriculture.png",
+      "name": "Institute of Oriental Studies",
+      "description": "An institution dedicated to research and the dissemination of historical knowledge across the MENA region.",
+      "link": "https://www.google.com/"
+    },
+    {
+      "id": 2,
+      "image": "../../assets/images/partenaires/agriculture.png",
+      "name": "National Agency for the Promotion of Employment and Skills (ANAPEC)",
+      "description": "Public organization supporting professional integration and skills development.",
+      "link": "https://www.anapec.org/"
+    },
+    {
+      "id": 3,
+      "image": "../../assets/images/partenaires/agriculture.png",
+      "name": "Ministry of Agriculture",
+      "description": "Strategic partner in rural development and sustainable agricultural projects.",
+      "link": "https://www.agriculture.gov.ma/"
+    },
+    {
+      "id": 4,
+      "image": "../../assets/images/partenaires/agriculture.png",
+      "name": "National Mutual Aid",
+      "description": "Key player in social actions and support for vulnerable populations.",
+      "link": "https://www.entraide.ma/"
+    },
+    {
+      "id": 5,
+      "image": "../../assets/images/partenaires/agriculture.png",
+      "name": "Ministry of Equipment and Water",
+      "description": "Contributes to infrastructure development and sustainable management of water resources.",
+      "link": "https://www.equipement.gov.ma/"
+    },
+    {
+      "id": 6,
+      "image": "../../assets/images/partenaires/agriculture.png",
+      "name": "Ministry of Endowments and Islamic Affairs",
+      "description": "Partner in the enhancement of cultural and religious heritage.",
+      "link": "https://www.habous.gov.ma/"
+    },
+    {
+      "id": 7,
+      "image": "../../assets/images/partenaires/agriculture.png",
+      "name": "Al Haouz Province",
+      "description": "Supports local initiatives and sustainable territorial development.",
+      "link": "https://www.alhaouz.ma/"
+    },
+    {
+      "id": 8,
+      "image": "../../assets/images/partenaires/agriculture.png",
+      "name": "International Labour Organization (ILO)",
+      "description": "International organization promoting labor rights and economic opportunities.",
+      "link": "https://www.ilo.org/"
+    },
+    {
+      "id": 9,
+      "image": "../../assets/images/partenaires/agriculture.png",
+      "name": "UNESCO",
+      "description": "Global partner for the protection of cultural heritage and the promotion of education.",
+      "link": "https://www.unesco.org/"
+    },
+    {
+      "id": 10,
+      "image": "../../assets/images/partenaires/agriculture.png",
+      "name": "Social Development Agency (ADS)",
+      "description": "Supports human development and social inclusion projects in Morocco.",
+      "link": "https://www.ads.ma/"
+    }
+  ]
+}

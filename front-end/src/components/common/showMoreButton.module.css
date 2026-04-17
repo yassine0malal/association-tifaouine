@@ -25,37 +25,48 @@
 .showMore button {
   color: var(--accent);
   border: 2px solid var(--accent);
-  background-color: var(--bg);
   padding: 10px 20px;
   border-radius: 20px;
   cursor: pointer;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
   font-weight: 600;
   font-size: 12px;
-  transition: all 0.2s ease;
   position: relative;
   z-index: 1;
   min-width: 100px;
-  justify-content: center;
+
+  background: linear-gradient(135deg, var(--accent-src) 50%, var(--accent) 50%);
+  background-size: 250% 250%;
+  background-position: top left;
+  transition: background-position 0.4s ease, scale 0.3s ease-in-out;
 }
 
-.showMore button svg {
-  rotate: 90deg;
-  width: 13px;
-  height: 13px;
-  
-}
 .showMore button:hover {
-  background: var(--accent);
-  color: #fff;
-  transform: translateY(-1px);
+  color: var(--bg);
+  background-position: bottom right;
+  padding: 10px 21px;
 }
 
 .showMore button:active {
-  transform: translateY(0);
+  scale: 1.1;
 }
+
+/* -----end button style------ */
+
+.showMore button svg {
+  rotate: 90deg;
+  width: 10px;
+  height: 10px;
+  font-weight: 600;
+  scale: 1.2;
+
+}
+
+
+
 
 /* Arrow icon */
 .showMore .arrowIcon {
@@ -65,9 +76,6 @@
   color: white;
 }
 
-.showMore button:hover .arrowIcon {
-  transform: translateX(3px);
-}
 
 /* Loading state */
 .showMore button.loading {
@@ -110,5 +118,5 @@
 /* Focus state */
 .showMore button:focus {
   outline: none;
-  box-shadow: 0 0 0 2px var(--accent-light);
+  /* box-shadow: 0 0 0 2px var(--accent-light); */
 }

@@ -1,9 +1,10 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 import {
   motion,
   useMotionValue,
   useAnimationFrame
 } from 'framer-motion';
+
 import association from "../../assets/images/about-us.png"
 import checked from "../../assets/icons/checked.png"
 import HeroBg from "../../assets/images/projects_hero.jpg"
@@ -57,8 +58,26 @@ const About = () => {
   const { t } = useTranslation("about");
   const [isRTL, setIsRTL] = useState(i18n.language === "ar");
   const isRTLRef = useRef(i18n.language === "ar");
+  //Refferences
+  const tiltRefs = useRef(new Map())
 
 
+
+  const setTitlRef = useCallback((element, id) => {
+    if (element) {
+      VanillaTilt.init(element, {
+        max: 20,
+        speed: 300,
+        perspective: 1000,
+        glare: true,
+        "max-glare": 0.6,
+        scale: 1.05,
+        reverse: false,
+        "mouse-event-element": ".tilt-trigger"
+      });
+      tiltRefs.current.set(id, element);
+    }
+  }, []);
 
   const maxindex = partners.length - visibleItems;
   const next = () => {
@@ -77,7 +96,7 @@ const About = () => {
       setIndex(0);
 
       if (trackWidth > 0) {
-        x.set(0); // ← reset simple à zéro
+        x.set(0); //  reset simple à zéro
       } else {
       }
     };
@@ -115,8 +134,6 @@ const About = () => {
     x.set(currentX);
   };
 
-
-
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 768) {
@@ -134,10 +151,9 @@ const About = () => {
 
   useEffect(() => {
     if (trackWidth > 0) {
-      x.set(0); // ← toujours 0, quelle que soit la langue
+      x.set(0); // toujours 0, quelle que soit la langue
     }
   }, [trackWidth]);
-
 
   // Add a counter so it only logs every 120 frames (not every frame)
 
@@ -161,6 +177,7 @@ const About = () => {
 
     x.set(newX);
   });
+
   return (
     <>
       <PageHero title={t('hero.title')} heroImg={HeroBg} />
@@ -217,10 +234,6 @@ const About = () => {
           <p>{t('stats.list')}</p>
         </div>
 
-
-
-
-
         {/* Carousel Card */}
         <div className={styles.carouselWrapper}>
           <h2>{t('team.title')}</h2>
@@ -241,7 +254,67 @@ const About = () => {
 
         </div>
 
+        {/* ----- Numbers Section ---- */}
+        <div className={styles.impact}>
+          <p>{t('impact.label')}</p>
+          <h1>{t('impact.title')}</h1>
 
+          <section>
+            {t('impact.items', { returnObjects: true }).map((item, index) => (
+              <article key={index} ref={(el) => setTitlRef(el, index + 1)}>
+                <div className={styles.cercle}>
+                  {/* Les icônes SVG peuvent rester inchangées ou être aussi gérées dynamiquement */}
+                  {index === 0 && (
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" width="35" height="35">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
+                    </svg>
+                  )}
+                  {index === 1 && (
+                    <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+                      <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+                      <path d="M9 14h6" />
+                      <path d="M12 17v-6" />
+                    </svg>
+                  )}
+                  {index === 2 && (
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" width="35" height="35">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+                    </svg>
+                  )}
+                </div>
+                <div>
+                  <h2>{item.value}</h2>
+                  <p>{item.name}</p>
+                </div>
+                <p>{item.description}</p>
+              </article>
+            ))}
+          </section>
+        </div>
+
+        {/* ----- Gallery of association ---- */}
+        <section className={styles.gallery}>
+          
+          <h1>Gallery</h1>
+
+          <div className={styles.content}>
+            <article>
+              <img src={agriculture} alt="" />
+            </article>
+            <article>
+              <img src={agriculture} alt="" />
+            </article>
+            <article>
+              <img src={agriculture} alt="" />
+            </article>
+            <article>
+              <img src={agriculture} alt="" />
+            </article>
+          </div>
+
+        </section>
 
         <div className={styles.partenaires}>
           <h2>{t('partners.title')}</h2>

@@ -1,0 +1,17 @@
+{
+    "ressources": {
+        "heroTitle": "Nos ressources",
+        "featuredInsights": "À la une",
+        "ourBestProject": "Notre meilleur projet",
+        "download": "Télécharger",
+        "guide": "Guide",
+        "collaborationText": "Collaboration : Découvrez comment nous travaillons",
+        "rightSideTitle": "Rapport 2024 sur l'état de la préservation du patrimoine",
+        "rightSideDescription": "Découvrez comment les initiatives locales de notre association préservent la sagesse culturelle à travers les générations et construisent des communautés plus fortes et plus connectées.",
+        "readFullReport": "Lire le rapport complet",
+        "resourceLibrary": "Bibliothèque de ressources",
+        "showingItems": "Affichage de {{count}} sur {{total}} éléments",
+        "loadingResources": "Chargement des ressources...",
+        "errorMessage": "Erreur : {{error}}"
+    }
+}

@@ -25,7 +25,7 @@ const projectImagesSlice = createSlice({
     totalPages: 1,
     nextPage: 2,
     prevPage: 0,
-    itemsPerPage: 0,
+    itemsPerPage: 4,
   },
   reducers: {
     setImagesPage: (state, action) => {
