@@ -301,16 +301,16 @@ const About = () => {
 
           <div className={styles.content}>
             <article>
-              <img src={agriculture} alt="" />
+              <img src={association} alt="" />
             </article>
             <article>
-              <img src={agriculture} alt="" />
+              <img src={association} alt="" />
             </article>
             <article>
-              <img src={agriculture} alt="" />
+              <img src={association} alt="" />
             </article>
             <article>
-              <img src={agriculture} alt="" />
+              <img src={association} alt="" />
             </article>
           </div>
 
