@@ -56,17 +56,12 @@ class BenevoleService {
     /**
      * @desc    Récupérer tous les bénévoles
      */
-    async getAllBenevoles() {
-        const list = await benevoleRepository.findAll();
-        return list.map(b => ({
-            id: b.id,
-            nom: b.nom,
-            email: b.email,
-            mession: b.benevole.mession,
-            status: b.benevole.status,
-            disponibilite: b.benevole.disponibilite,
-            date_adhesion: b.benevole.date_adhesion
-        }));
+    async getAllBenevoles(filters = {}) {
+        const result = await benevoleRepository.findAll(filters);
+        return {
+            rows: result.rows.map(b => this._formatBenevole(b)),
+            count: result.count
+        };
     }
 
     /**

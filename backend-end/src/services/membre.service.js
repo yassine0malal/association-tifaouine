@@ -57,17 +57,12 @@ class MembreService {
     /**
      * @desc    Récupérer la liste complète des membres
      */
-    async getAllMembers() {
-        const members = await membreRepository.findAll();
-        return members.map(m => ({
-            id: m.id,
-            nom: m.nom,
-            email: m.email,
-            poste: m.membre.poste,
-            status: m.membre.status,
-            photo_profile: m.membre.photo_profile,
-            date_adhesion: m.membre.date_adhesion
-        }));
+    async getAllMembers(filters = {}) {
+        const result = await membreRepository.findAll(filters);
+        return {
+            rows: result.rows.map(m => this._formatMember(m)),
+            count: result.count
+        };
     }
 
     /**

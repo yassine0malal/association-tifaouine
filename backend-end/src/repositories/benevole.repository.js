@@ -4,13 +4,13 @@ class BenevoleRepository {
     /**
      * @desc    Récupérer tous les bénévoles avec leurs infos de base
      */
-    async findAll() {
-        return await Utilisateur.findAll({
-            where: { type: 'benevole' },
-            include: [{
-                model: benevole,
-                required: true
-            }]
+    async findAll(filters = {}) {
+        const { limit, offset } = filters;
+        return await Utilisateur.findAndCountAll({
+            where:   { type: 'benevole' },
+            include: [{ model: benevole, required: true }],
+            limit:   limit  || 9,
+            offset:  offset || 0
         });
     }
 

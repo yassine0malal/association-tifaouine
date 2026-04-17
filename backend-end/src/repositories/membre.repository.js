@@ -4,13 +4,13 @@ class MembreRepository {
     /**
      * @desc    Récupérer tous les membres avec leurs infos de base
      */
-    async findAll() {
-        return await Utilisateur.findAll({
-            where: { type: 'membre' },
-            include: [{
-                model: membre,
-                required: true
-            }]
+    async findAll(filters = {}) {
+        const { limit, offset } = filters;
+        return await Utilisateur.findAndCountAll({
+            where:   { type: 'membre' },
+            include: [{ model: membre, required: true }],
+            limit:   limit  || 9,
+            offset:  offset || 0
         });
     }
 
