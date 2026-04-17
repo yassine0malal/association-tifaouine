@@ -1,0 +1,155 @@
+{
+  "focusArea": {
+    "title": "Our Focus Areas",
+    "description": "Tifaouine is more than an association; it's a beacon of hope. We focus on three core pillars that transform lives and build sustainable futures.",
+    "education": {
+      "title": "Education",
+      "description": "Empowering the youth through literacy, modern workshops, and specialized mentorship programs."
+    },
+    "environment": {
+      "title": "Environment",
+      "description": "Preserving our natural heritage through reforestation and sustainable waste management initiatives."
+    },
+    "communitySupport": {
+      "title": "Community Support",
+      "description": "Building social safety nets and infrastructure that strengthen the bonds between our neighbors."
+    }
+  },
+  "whyJoinUs": {
+    "title": "Why Join Us?",
+    "cards": {
+      "handsOn": {
+        "title": "Hands-on Experience",
+        "description": "Gain practical experience on the field, working directly with community projects."
+      },
+      "amazingPeople": {
+        "title": "Amazing People",
+        "description": "Network with like-minded individuals and build lifelong friendships while doing good."
+      },
+      "realImpact": {
+        "title": "Real Impact",
+        "description": "See the tangible results of your hard work in the smiles of the local community."
+      },
+      "skillGrowth": {
+        "title": "Skill Growth",
+        "description": "Develop leadership, communication, and project management skills in real-world scenarios."
+      }
+    }
+  },
+  "lifeAtTifaouine": {
+    "title": "Life at Tifaouine",
+    "description": "Moments of connection, hard work, and pure joy captured from our latest volunteer missions across the region."
+  },
+  "journey": {
+    "title": "Your Journey to Join Us",
+    "steps": {
+      "fillForm": {
+        "title": "Fill the form",
+        "description": "Complete our online application with your basic details and motivation."
+      },
+      "review": {
+        "title": "Application review",
+        "description": "Our coordinators will review your skills and availability against our current needs."
+      },
+      "contact": {
+        "title": "Contact",
+        "description": "We'll schedule a brief interview to get to know you better and answer any questions."
+      },
+      "start": {
+        "title": "Start volunteering",
+        "description": "Join your team, attend an orientation, and start making an impact!"
+      }
+    }
+  },
+  "choosePath": {
+    "title": "Choose Your Path",
+    "description": "Two distinct ways to contribute, one shared vision. Find where your heart aligns with our mission.",
+    "member": {
+      "title": "The Members",
+      "description": "Strategic anchors of the association, providing long-term governance and stability.",
+      "duties": {
+        "title1": "Annual Commitment",
+        "title2": "Monthly Sessions",
+        "title3": "Financial Pillar",
+        "annual": "Sustainable governance and strategic support.",
+        "monthly": "Shaping the future through advisory board meetings.",
+        "financial": "A fixed annual fee to power the association's core."
+      },
+      "requirements": "Requirements: Professional background in education/social work, annual fee, and active strategic presence.",
+      "button": "Become a member"
+    },
+    "volunteer": {
+      "title": "The Volunteers",
+      "description": "The energetic heartbeat of our projects, bringing vision to life through direct action.",
+      "duties": {
+        "title1": "On-the-Ground",
+        "title2": "Project Based",
+        "title3": "Community Pulse",
+        "ground": "Physical presence at events and community workshops.",
+        "project": "Helping where the need is most immediate.",
+        "community": "Engaging directly with the families we serve."
+      },
+      "requirements": "Requirements: 5 hours/week, passion for community, and attendance at our orientation program.",
+      "button": "Become a volunteer"
+    }
+  },
+  "applicationForm": {
+    "title": "Application Form",
+    "subtitle": "We are excited to have you on board.",
+    "labels": {
+      "fullname": "FULL NAME",
+      "email": "EMAIL ADDRESS",
+      "phone": "PHONE NUMBER",
+      "skills": "SKILLS",
+      "address": "ADDRESS",
+      "motivation": "MOTIVATION",
+      "availability": "AVAILABILITY",
+      "photo": "FACE PHOTO",
+      "idCard": "ID CARD (RECTO/VERSO)",
+      "cv": "CV or Portfolio (Optional)"
+    },
+    "placeholders": {
+      "fullname": "John Doe",
+      "email": "john@example.com",
+      "phone": "+212 600 000 000",
+      "skills": "e.g. Teaching, Gardening, IT",
+      "address": "El houz Marrakech ...",
+      "motivation": "Tell us why you want to join Tifaouine..."
+    },
+    "availabilityOptions": {
+      "select": "Select your availability",
+      "weekdays": "Weekdays",
+      "weekends": "Weekends",
+      "evenings": "Evenings",
+      "fullTime": "Full Time",
+      "flexible": "Flexible"
+    },
+    "fileUpload": {
+      "photo": "Upload JPG/PNG (max 5MB)",
+      "idCard": "Upload PDF/Photos (max 10MB)",
+      "cv": "Upload PDF, JPG or PNG up to 10MB"
+    },
+    "button": {
+      "submit": "Submit Application",
+      "submitting": "Submitting..."
+    },
+    "response": {
+      "success": "Application submitted successfully! We'll contact you soon.",
+      "error": "Something went wrong. Please try again."
+    },
+    "validation": {
+      "required": "This field is required",
+      "fullname": "Full name must be 3-50 characters (letters and spaces only)",
+      "email": "Please enter a valid email address",
+      "phone": "Please enter a valid Moroccan phone number (+2126XXXXXXXX or 06XXXXXXXX)",
+      "address": "Address must be at least 5 characters",
+      "motivation": "Please tell us more about your motivation (min 20 characters)",
+      "skills": "Please enter your skills (min 2 characters)",
+      "availability": "Please select your availability",
+      "photo": "Please upload a face photo",
+      "idCard": "Please upload your ID card",
+      "fileType": "File type not allowed. Allowed: {{types}}",
+      "fileSize": "File too large. Max {{size}}MB"
+    }
+  }
+}

@@ -1,0 +1,155 @@
+{
+  "focusArea": {
+    "title": "Nos Domaines d'Action",
+    "description": "Tifaouine est plus qu'une association ; c'est un phare d'espoir. Nous nous concentrons sur trois piliers fondamentaux qui transforment des vies et construisent des avenirs durables.",
+    "education": {
+      "title": "Éducation",
+      "description": "Autonomiser les jeunes grâce à l'alphabétisation, des ateliers modernes et des programmes de mentorat spécialisés."
+    },
+    "environment": {
+      "title": "Environnement",
+      "description": "Préserver notre patrimoine naturel à travers le reboisement et des initiatives de gestion durable des déchets."
+    },
+    "communitySupport": {
+      "title": "Soutien Communautaire",
+      "description": "Construire des filets de sécurité sociale et des infrastructures qui renforcent les liens entre nos voisins."
+    }
+  },
+  "whyJoinUs": {
+    "title": "Pourquoi Nous Rejoindre ?",
+    "cards": {
+      "handsOn": {
+        "title": "Expérience Pratique",
+        "description": "Acquérez une expérience pratique sur le terrain, en travaillant directement avec des projets communautaires."
+      },
+      "amazingPeople": {
+        "title": "Personnes Formidables",
+        "description": "Réseauter avec des personnes partageant les mêmes idées et créer des amitiés durables tout en faisant le bien."
+      },
+      "realImpact": {
+        "title": "Impact Réel",
+        "description": "Voyez les résultats tangibles de votre travail acharné dans les sourires de la communauté locale."
+      },
+      "skillGrowth": {
+        "title": "Développement des Compétences",
+        "description": "Développez vos compétences en leadership, communication et gestion de projet dans des scénarios réels."
+      }
+    }
+  },
+  "lifeAtTifaouine": {
+    "title": "La Vie à Tifaouine",
+    "description": "Des moments de connexion, de travail acharné et de pure joie capturés lors de nos dernières missions de bénévolat à travers la région."
+  },
+  "journey": {
+    "title": "Votre Parcours pour Nous Rejoindre",
+    "steps": {
+      "fillForm": {
+        "title": "Remplir le formulaire",
+        "description": "Complétez notre candidature en ligne avec vos informations de base et votre motivation."
+      },
+      "review": {
+        "title": "Examen de la candidature",
+        "description": "Nos coordinateurs examineront vos compétences et votre disponibilité par rapport à nos besoins actuels."
+      },
+      "contact": {
+        "title": "Contact",
+        "description": "Nous planifierons un bref entretien pour mieux vous connaître et répondre à vos questions."
+      },
+      "start": {
+        "title": "Commencer le bénévolat",
+        "description": "Rejoignez votre équipe, participez à une orientation et commencez à faire la différence !"
+      }
+    }
+  },
+  "choosePath": {
+    "title": "Choisissez votre voie",
+    "description": "Deux façons différentes de contribuer, une vision commune. Découvrez où votre engagement rejoint notre mission.",
+    "member": {
+      "title": "Les membres",
+      "description": "Les piliers stratégiques de l'association, assurant stabilité et vision à long terme.",
+      "duties": {
+        "title1": "Engagement annuel",
+        "title2": "Réunions mensuelles",
+        "title3": "Soutien financier",
+        "annual": "Assurer une gouvernance durable et un soutien stratégique.",
+        "monthly": "Participer aux réunions consultatives régulières.",
+        "financial": "Contribuer financièrement au fonctionnement de l'association."
+      },
+      "requirements": "Conditions : Expérience en éducation ou travail social, contribution annuelle et engagement actif.",
+      "button": "Devenir membre"
+    },
+    "volunteer": {
+      "title": "Les bénévoles",
+      "description": "Le moteur de nos projets, transformant les idées en actions concrètes.",
+      "duties": {
+        "title1": "Engagement sur le terrain",
+        "title2": "Travail par projet",
+        "title3": "Interaction communautaire",
+        "ground": "Participation aux événements et activités locales.",
+        "project": "Soutien selon les besoins des projets.",
+        "community": "Interaction directe avec les communautés."
+      },
+      "requirements": "Conditions : 5 heures par semaine, motivation pour le travail communautaire et participation à la formation.",
+      "button": "Devenir bénévole"
+    }
+  },
+  "applicationForm": {
+    "title": "Formulaire de Candidature",
+    "subtitle": "Nous sommes ravis de vous accueillir à bord.",
+    "labels": {
+      "fullname": "NOM COMPLET",
+      "email": "ADRESSE E-MAIL",
+      "phone": "NUMÉRO DE TÉLÉPHONE",
+      "skills": "COMPÉTENCES",
+      "address": "ADRESSE",
+      "motivation": "MOTIVATION",
+      "availability": "DISPONIBILITÉ",
+      "photo": "PHOTO DE VISAGE",
+      "idCard": "CARTE D'IDENTITÉ (RECTO/VERSO)",
+      "cv": "CV ou Portfolio (Optionnel)"
+    },
+    "placeholders": {
+      "fullname": "Jean Dupont",
+      "email": "jean@exemple.com",
+      "phone": "+212 600 000 000",
+      "skills": "ex. Enseignement, Jardinage, Informatique",
+      "address": "El houz Marrakech ...",
+      "motivation": "Dites-nous pourquoi vous souhaitez rejoindre Tifaouine..."
+    },
+    "availabilityOptions": {
+      "select": "Sélectionnez votre disponibilité",
+      "weekdays": "Jours de semaine",
+      "weekends": "Week-ends",
+      "evenings": "Soirées",
+      "fullTime": "Temps plein",
+      "flexible": "Flexible"
+    },
+    "fileUpload": {
+      "photo": "Télécharger JPG/PNG (max 5MB)",
+      "idCard": "Télécharger PDF/Photos (max 10MB)",
+      "cv": "Télécharger PDF, JPG ou PNG jusqu'à 10MB"
+    },
+    "button": {
+      "submit": "Soumettre la Candidature",
+      "submitting": "Envoi en cours..."
+    },
+    "response": {
+      "success": "Candidature soumise avec succès ! Nous vous contacterons bientôt.",
+      "error": "Une erreur s'est produite. Veuillez réessayer."
+    },
+    "validation": {
+      "required": "Ce champ est requis",
+      "fullname": "Le nom complet doit contenir 3 à 50 caractères (lettres et espaces uniquement)",
+      "email": "Veuillez entrer une adresse e-mail valide",
+      "phone": "Veuillez entrer un numéro de téléphone marocain valide (+2126XXXXXXXX ou 06XXXXXXXX)",
+      "address": "L'adresse doit contenir au moins 5 caractères",
+      "motivation": "Parlez-nous plus de votre motivation (min 20 caractères)",
+      "skills": "Veuillez entrer vos compétences (min 2 caractères)",
+      "availability": "Veuillez sélectionner votre disponibilité",
+      "photo": "Veuillez télécharger une photo de visage",
+      "idCard": "Veuillez télécharger votre carte d'identité",
+      "fileType": "Type de fichier non autorisé. Autorisés : {{types}}",
+      "fileSize": "Fichier trop volumineux. Max {{size}}MB"
+    }
+  }
+}
