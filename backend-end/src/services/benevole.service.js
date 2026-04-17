@@ -58,10 +58,11 @@ class BenevoleService {
      */
     async getAllBenevoles(filters = {}) {
         const result = await benevoleRepository.findAll(filters);
-        return {
-            rows: result.rows.map(b => this._formatBenevole(b)),
-            count: result.count
-        };
+        return { rows: result.rows.map(b => this._formatBenevole(b)), count: result.count };
+    }
+
+    async getAllBenevolesWithProfile(filters = {}) {
+        return await benevoleRepository.findAll(filters);
     }
 
     /**

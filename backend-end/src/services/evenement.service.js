@@ -6,10 +6,30 @@ class EvenementService {
         return await evenementRepository.findAll(filters);
     }
 
+    async getAllEvenementsWithDomaine(filters = {}) {
+        return await evenementRepository.findAllWithDomaine(filters);
+    }
+
     async getEvenementById(id) {
         const eve = await evenementRepository.findById(id);
         if (!eve) throw new Error(`L'événement avec l'ID ${id} n'existe pas`);
         return eve;
+    }
+
+    /**
+     * Récupère toutes les données nécessaires pour le détail frontend d'un événement
+     */
+    async getEvenementDetail(id) {
+        const eve = await evenementRepository.findByIdWithDetails(id);
+        if (!eve) throw new Error(`L'événement avec l'ID ${id} n'existe pas`);
+
+        const [relatedEvents, lastedEvents, images] = await Promise.all([
+            evenementRepository.findByDomaine(eve.domaine_id, eve.id),
+            evenementRepository.findLasted(eve.id),
+            evenementRepository.findImages(eve.id)
+        ]);
+
+        return { eve, relatedEvents, lastedEvents, images };
     }
 
     /**

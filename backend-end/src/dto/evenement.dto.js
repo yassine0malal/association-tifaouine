@@ -2,21 +2,23 @@
  * DTOs pour les événements — retourne uniquement les champs nécessaires au frontend
  */
 
-/**
- * DTO liste événements — correspond à events.json
- */
 const toEvenementListDTO = (eve, lang) => ({
     id:     eve.id,
     title:  eve[`titre_${lang}`],
     domain: eve.Domaine ? eve.Domaine[`nom_${lang}`] : null,
     date:   eve.date_debut,
-    img:    null  // sera remplacé par la 1ère ressource photo liée
+    img:    null
 });
 
 /**
- * DTO détail événement — correspond à event.json
+ * DTO détail événement
+ * @param {Object}   eve           - instance Evenement avec Domaine et Partenariats
+ * @param {string}   lang          - fr | ar | en
+ * @param {Array}    relatedEvents - événements du même domaine
+ * @param {Array}    lastedEvents  - derniers événements ajoutés en DB
+ * @param {Array}    images        - ressources photo liées à cet événement
  */
-const toEvenementDetailDTO = (eve, lang, relatedEvents = [], commonEvents = [], images = []) => ({
+const toEvenementDetailDTO = (eve, lang, relatedEvents = [], lastedEvents = [], images = []) => ({
     id:          eve.id,
     title:       eve[`titre_${lang}`],
     category:    eve.Domaine ? eve.Domaine[`nom_${lang}`] : null,
@@ -24,30 +26,31 @@ const toEvenementDetailDTO = (eve, lang, relatedEvents = [], commonEvents = [], 
     location:    eve.lieu,
     date_start:  eve.date_debut,
     date_end:    eve.date_fin,
-    partners:    eve.Partenariats && eve.Partenariats.length > 0
-        ? eve.Partenariats.map(p => ({
-            id:          p.id,
-            nom:         p.nom,
-            logo:        p.logo || null,
-            description: p[`description_${lang}`] || p.description_fr || null,
-            site_web:    p.site_web || null
-        }))
+
+    // Noms des partenaires uniquement
+    partners: eve.Partenariats && eve.Partenariats.length > 0
+        ? eve.Partenariats.map(p => p.nom)
         : null,
+
+    // Événements du même domaine
     related_events: relatedEvents.map(r => ({
-        id:         r.id,
-        title:      r[`titre_${lang}`],
-        date_start: r.date_debut,
-        date_end:   r.date_fin,
-        img:        null
+        id:     r.id,
+        title:  r[`titre_${lang}`],
+        domain: r.Domaine ? r.Domaine[`nom_${lang}`] : null,
+        date:   r.date_debut,
+        img:    null
     })),
-    common_events: commonEvents.map(c => ({
-        id:         c.id,
-        title:      c[`titre_${lang}`],
-        domain:     c.Domaine ? c.Domaine[`nom_${lang}`] : null,
-        date_start: c.date_debut,
-        date_end:   c.date_fin,
-        img:        null
+
+    // Derniers événements ajoutés (triés par created_at DESC)
+    lasted_events: lastedEvents.map(l => ({
+        id:     l.id,
+        title:  l[`titre_${lang}`],
+        domain: l.Domaine ? l.Domaine[`nom_${lang}`] : null,
+        date:   l.date_debut,
+        img:    null
     })),
+
+    // Photos liées à cet événement
     images: images.map(img => ({
         id:  img.id,
         src: img.url,

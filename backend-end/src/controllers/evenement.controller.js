@@ -1,6 +1,4 @@
 const evenementService = require('../services/evenement.service');
-const { Evenement, Domaine, Ressource, Partenariat } = require('../models');
-const { Op } = require('sequelize');
 const { buildPaginatedResponse } = require('../utils/paginate');
 const { toEvenementListDTO, toEvenementDetailDTO } = require('../dto/evenement.dto');
 
@@ -47,18 +45,7 @@ class EvenementController {
             const { domaine_id, projet_id } = req.query;
             const { page, limit, offset } = req.pagination;
 
-            const where = {};
-            if (domaine_id) where.domaine_id = domaine_id;
-            if (projet_id)  where.projet_id  = projet_id;
-
-            const result = await Evenement.findAndCountAll({
-                where,
-                include: [{ model: Domaine, attributes: ['id', 'nom_fr', 'nom_ar', 'nom_en'] }],
-                order:   [['date_debut', 'DESC']],
-                limit,
-                offset
-            });
-
+            const result = await evenementService.getAllEvenementsWithDomaine({ domaine_id, projet_id, limit, offset });
             const rows = result.rows.map(e => toEvenementListDTO(e, lang));
             return res.status(200).json({
                 success: true,
@@ -76,50 +63,16 @@ class EvenementController {
     async getByIdAndLang(req, res) {
         try {
             const { lang } = req;
-            const eve = await Evenement.findByPk(req.params.id, {
-                include: [
-                    { model: Domaine, attributes: ['id', 'nom_fr', 'nom_ar', 'nom_en'] },
-                    {
-                        model: Partenariat,
-                        as: 'Partenariats',
-                        attributes: ['id', 'nom', 'logo', `description_${lang}`, 'site_web'],
-                        through: { attributes: [] }
-                    }
-                ]
-            });
-
-            if (!eve) {
-                return res.status(404).json({ success: false, message: 'Événement introuvable.' });
-            }
-
-            const relatedEvents = eve.projet_id
-                ? await Evenement.findAll({
-                    where: { projet_id: eve.projet_id, id: { [Op.ne]: eve.id } },
-                    limit: 3,
-                    order: [['date_debut', 'DESC']]
-                })
-                : [];
-
-            const commonEvents = await Evenement.findAll({
-                where:   { domaine_id: eve.domaine_id, id: { [Op.ne]: eve.id } },
-                include: [{ model: Domaine, attributes: ['id', 'nom_fr', 'nom_ar', 'nom_en'] }],
-                limit:   3,
-                order:   [['date_debut', 'DESC']]
-            });
-
-            const images = eve.projet_id
-                ? await Ressource.findAll({
-                    where: { projet_id: eve.projet_id, type: 'photo' },
-                    order: [['created_at', 'DESC']]
-                })
-                : [];
+            const { eve, relatedEvents, lastedEvents, images } =
+                await evenementService.getEvenementDetail(req.params.id);
 
             return res.status(200).json({
                 success: true,
-                data: toEvenementDetailDTO(eve, lang, relatedEvents, commonEvents, images)
+                data: toEvenementDetailDTO(eve, lang, relatedEvents, lastedEvents, images)
             });
         } catch (error) {
-            return res.status(500).json({ success: false, message: error.message });
+            const status = error.message.includes("n'existe pas") ? 404 : 500;
+            return res.status(status).json({ success: false, message: error.message });
         }
     }
 

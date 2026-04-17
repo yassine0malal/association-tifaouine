@@ -6,10 +6,25 @@ class ProjetService {
         return await projetRepository.findAll(filters);
     }
 
+    async getAllProjetsWithDomaine(filters = {}) {
+        return await projetRepository.findAllWithDomaine(filters);
+    }
+
     async getProjetById(id) {
         const projet = await projetRepository.findById(id);
         if (!projet) throw new Error(`Le projet avec l'ID ${id} n'existe pas`);
         return projet;
+    }
+
+    async getProjetByIdWithDetails(id) {
+        const projet = await projetRepository.findByIdWithDetails(id);
+        if (!projet) throw new Error(`Le projet avec l'ID ${id} n'existe pas`);
+        return projet;
+    }
+
+    async getProjetImages(id, filters = {}) {
+        await this.getProjetById(id); // vérifie existence
+        return await projetRepository.findImages(id, filters);
     }
 
     /**
