@@ -1,5 +1,6 @@
 const ressourceService = require('../services/ressource.service');
 const { buildPaginatedResponse } = require('../utils/paginate');
+const fs = require('fs');
 
 class RessourceController {
     /**
@@ -83,22 +84,31 @@ class RessourceController {
                 const urlEntry = req.uploadedUrls[file._urlIndex];
                 const ressourceData = {
                     ...req.body,
-                    url: `${urlEntry.relUrl}/${file.filename}`
+                    url:          `${urlEntry.relUrl}/${file.filename}`,
+                    nom_original: file.originalname
                 };
-                const nvRessource = await ressourceService.createRessource(ressourceData);
+                const nvRessource = await ressourceService.createRessource(ressourceData, file.path);
                 created.push(nvRessource);
             }
 
             return res.status(201).json({
                 success: true,
                 message: `${created.length} ressource(s) ajoutée(s) avec succès`,
-                data: created.length === 1 ? created[0] : created
+                data:    created.length === 1 ? created[0] : created
             });
         } catch (error) {
-            return res.status(400).json({
+            // Supprimer tous les fichiers déjà écrits sur disque si une erreur survient
+            if (req.files && req.files.length > 0) {
+                for (const file of req.files) {
+                    if (file.path && fs.existsSync(file.path)) {
+                        try { fs.unlinkSync(file.path); } catch (_) {}
+                    }
+                }
+            }
+            const status = error.status || 400;
+            return res.status(status).json({
                 success: false,
-                message: "Erreur lors de l'ajout de la ressource",
-                error: error.message
+                message: error.message
             });
         }
     }

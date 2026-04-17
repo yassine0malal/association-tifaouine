@@ -24,6 +24,15 @@ const toEvenementDetailDTO = (eve, lang, relatedEvents = [], commonEvents = [], 
     location:    eve.lieu,
     date_start:  eve.date_debut,
     date_end:    eve.date_fin,
+    partners:    eve.Partenariats && eve.Partenariats.length > 0
+        ? eve.Partenariats.map(p => ({
+            id:          p.id,
+            nom:         p.nom,
+            logo:        p.logo || null,
+            description: p[`description_${lang}`] || p.description_fr || null,
+            site_web:    p.site_web || null
+        }))
+        : null,
     related_events: relatedEvents.map(r => ({
         id:         r.id,
         title:      r[`titre_${lang}`],

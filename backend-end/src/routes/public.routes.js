@@ -20,6 +20,7 @@ router.get('/projets',paginate, projetController.getAllByLang.bind(projetControl
 router.get('/projets/:id/images',paginate, projetController.getImagesByLang.bind(projetController));
 router.get('/projets/:id',projetController.getByIdAndLang.bind(projetController));
 
+
 // ─── Événements 
 router.get('/evenements',paginate, evenementController.getAllByLang.bind(evenementController));
 router.get('/evenements/:id',evenementController.getByIdAndLang.bind(evenementController));
@@ -34,3 +35,5 @@ router.get('/benevoles',paginate, benevoleController.getAllByLang.bind(benevoleC
 router.get('/partenariats',paginate, partenariatController.getAllByLang.bind(partenariatController));
 
 module.exports = router;
+
+

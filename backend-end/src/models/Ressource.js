@@ -27,6 +27,10 @@ const Ressource = sequelize.define('Ressource', {
         type: DataTypes.STRING(500),
         allowNull: false,
     },
+    nom_original: {
+        type: DataTypes.STRING(255),
+        allowNull: true, // nom du fichier tel qu'envoyé par le client
+    },
     titre_fr: {
         type: DataTypes.STRING(255),
         allowNull: true,

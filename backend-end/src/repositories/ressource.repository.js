@@ -29,6 +29,19 @@ class RessourceRepository {
     }
 
     /**
+     * Vérifie si un fichier avec le même nom_original existe déjà
+     * pour le même projet ou événement.
+     */
+    async findDuplicate(nomOriginal, projetId, evenementId) {
+        const { Op } = require('sequelize');
+        const where = { nom_original: nomOriginal };
+        if (projetId)    where.projet_id    = projetId;
+        else if (evenementId) where.evenement_id = evenementId;
+        else where[Op.and] = [{ projet_id: null }, { evenement_id: null }];
+        return await Ressource.findOne({ where });
+    }
+
+    /**
      * Créer une ressource
      */
     async create(data, options = {}) {

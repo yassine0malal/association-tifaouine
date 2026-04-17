@@ -1,8 +1,10 @@
 const projetService = require('../services/projet.service');
-const { Projet, Domaine, Ressource } = require('../models');
+const { Projet, Domaine, Ressource, Partenariat } = require('../models');
 const { Op } = require('sequelize');
 const { buildPaginatedResponse } = require('../utils/paginate');
 const { toProjetListDTO, toProjetDetailDTO } = require('../dto/projet.dto');
+const fs = require('fs');
+const path = require('path');
 
 class ProjetController {
     /**
@@ -86,7 +88,15 @@ class ProjetController {
         try {
             const { lang } = req;
             const projet = await Projet.findByPk(req.params.id, {
-                include: [{ model: Domaine, attributes: ['id', 'nom_fr', 'nom_ar', 'nom_en'] }]
+                include: [
+                    { model: Domaine, attributes: ['id', 'nom_fr', 'nom_ar', 'nom_en'] },
+                    {
+                        model: Partenariat,
+                        as: 'Partenariats',
+                        attributes: ['nom'],
+                        through: { attributes: [] }
+                    }
+                ]
             });
 
             if (!projet) {
@@ -151,7 +161,6 @@ class ProjetController {
      */
     async create(req, res) {
         try {
-            // Si une image a été uploadée, construire le chemin complet
             if (req.file && req.uploadedUrl) {
                 req.body.image_principale = `${req.uploadedUrl}/${req.file.filename}`;
             }
@@ -163,6 +172,10 @@ class ProjetController {
                 data: nvProjet
             });
         } catch (error) {
+            // Supprimer le fichier uploadé si la création a échoué
+            if (req.file && req.file.path && fs.existsSync(req.file.path)) {
+                try { fs.unlinkSync(req.file.path); } catch (_) {}
+            }
             return res.status(400).json({
                 success: false,
                 message: "Erreur lors de la création du projet",
@@ -177,7 +190,6 @@ class ProjetController {
      */
     async update(req, res) {
         try {
-            // Si une nouvelle image est uploadée, construire le chemin complet
             if (req.file && req.uploadedUrl) {
                 req.body.image_principale = `${req.uploadedUrl}/${req.file.filename}`;
             }
@@ -189,6 +201,10 @@ class ProjetController {
                 data: misAjour
             });
         } catch (error) {
+            // Supprimer le fichier uploadé si la mise à jour a échoué
+            if (req.file && req.file.path && fs.existsSync(req.file.path)) {
+                try { fs.unlinkSync(req.file.path); } catch (_) {}
+            }
             return res.status(error.message.includes('introuvable') ? 404 : 400).json({
                 success: false,
                 message: "Erreur lors de la mise à jour du projet",

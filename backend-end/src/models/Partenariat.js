@@ -32,7 +32,8 @@ const Partenariat = sequelize.define('Partenariat', {
         type: DataTypes.STRING(255),
         allowNull: true,
     }
-}, {
+}, 
+{
     tableName: 'partenariat',
     timestamps: true,
     createdAt: 'created_at',

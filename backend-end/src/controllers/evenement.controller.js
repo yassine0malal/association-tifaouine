@@ -1,5 +1,5 @@
 const evenementService = require('../services/evenement.service');
-const { Evenement, Domaine, Ressource } = require('../models');
+const { Evenement, Domaine, Ressource, Partenariat } = require('../models');
 const { Op } = require('sequelize');
 const { buildPaginatedResponse } = require('../utils/paginate');
 const { toEvenementListDTO, toEvenementDetailDTO } = require('../dto/evenement.dto');
@@ -77,7 +77,15 @@ class EvenementController {
         try {
             const { lang } = req;
             const eve = await Evenement.findByPk(req.params.id, {
-                include: [{ model: Domaine, attributes: ['id', 'nom_fr', 'nom_ar', 'nom_en'] }]
+                include: [
+                    { model: Domaine, attributes: ['id', 'nom_fr', 'nom_ar', 'nom_en'] },
+                    {
+                        model: Partenariat,
+                        as: 'Partenariats',
+                        attributes: ['id', 'nom', 'logo', `description_${lang}`, 'site_web'],
+                        through: { attributes: [] }
+                    }
+                ]
             });
 
             if (!eve) {

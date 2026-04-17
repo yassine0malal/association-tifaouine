@@ -13,7 +13,8 @@ const createEvenementSchema = Joi.object({
     lieu: Joi.string().max(200).optional().allow('', null),
     description_fr: Joi.string().max(2000).optional().allow('', null),
     description_ar: Joi.string().max(2000).optional().allow('', null),
-    description_en: Joi.string().max(2000).optional().allow('', null)
+    description_en: Joi.string().max(2000).optional().allow('', null),
+    partenariat_ids: Joi.array().items(Joi.number().integer()).optional().default([])
 });
 
 const updateEvenementSchema = Joi.object({
@@ -29,7 +30,8 @@ const updateEvenementSchema = Joi.object({
     lieu: Joi.string().max(200).optional().allow('', null),
     description_fr: Joi.string().max(2000).optional().allow('', null),
     description_ar: Joi.string().max(2000).optional().allow('', null),
-    description_en: Joi.string().max(2000).optional().allow('', null)
+    description_en: Joi.string().max(2000).optional().allow('', null),
+    partenariat_ids: Joi.array().items(Joi.number().integer()).optional()
 }).min(1);
 
 module.exports = { createEvenementSchema, updateEvenementSchema };

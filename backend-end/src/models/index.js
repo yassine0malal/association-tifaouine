@@ -10,6 +10,8 @@ const Projet = require('./Projet');
 const Evenement = require('./Evenement');
 const Ressource = require('./Ressource');
 const Partenariat = require('./Partenariat');
+const ProjetPartenariat = require('./ProjetPartenariat');
+const EvenementPartenariat = require('./EvenementPartenariat');
 const MessageContact = require('./MessageContact');
 const Don = require('./Don');
 const DonFinancier = require('./DonFinancier');
@@ -62,6 +64,34 @@ DonFinancier.belongsTo(Don, { foreignKey: 'don_id' });
 Don.hasOne(DonMateriel, { foreignKey: 'don_id', onDelete: 'CASCADE' });
 DonMateriel.belongsTo(Don, { foreignKey: 'don_id' });
 
+// Associations Many-to-Many : Projet <-> Partenariat
+Projet.belongsToMany(Partenariat, {
+    through: ProjetPartenariat,
+    foreignKey: 'projet_id',
+    otherKey: 'partenariat_id',
+    as: 'Partenariats'
+});
+Partenariat.belongsToMany(Projet, {
+    through: ProjetPartenariat,
+    foreignKey: 'partenariat_id',
+    otherKey: 'projet_id',
+    as: 'Projets'
+});
+
+// Associations Many-to-Many : Evenement <-> Partenariat
+Evenement.belongsToMany(Partenariat, {
+    through: EvenementPartenariat,
+    foreignKey: 'evenement_id',
+    otherKey: 'partenariat_id',
+    as: 'Partenariats'
+});
+Partenariat.belongsToMany(Evenement, {
+    through: EvenementPartenariat,
+    foreignKey: 'partenariat_id',
+    otherKey: 'evenement_id',
+    as: 'Evenements'
+});
+
 module.exports = {
     sequelize,
     Utilisateur,
@@ -73,6 +103,8 @@ module.exports = {
     Evenement,
     Ressource,
     Partenariat,
+    ProjetPartenariat,
+    EvenementPartenariat,
     MessageContact,
     Don,
     DonFinancier,
