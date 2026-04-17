@@ -1,18 +1,21 @@
 {
   "focusArea": {
     "title": "Our Focus Areas",
-    "description": "Tifaouine is more than an association; it's a beacon of hope. We focus on three core pillars that transform lives and build sustainable futures.",
+    "description": "Tifaouine Asni supports rural communities in the High Atlas through education, health, and sustainable agriculture.",
+
     "education": {
-      "title": "Education",
-      "description": "Empowering the youth through literacy, modern workshops, and specialized mentorship programs."
+      "title": "Education & Literacy",
+      "description": "Supporting children and youth with school assistance, literacy programs, tutoring, and access to digital learning tools."
     },
-    "environment": {
-      "title": "Environment",
-      "description": "Preserving our natural heritage through reforestation and sustainable waste management initiatives."
+
+    "health": {
+      "title": "Health & Well-being",
+      "description": "Improving access to basic healthcare through awareness campaigns, medical support initiatives, and assistance for vulnerable families."
     },
-    "communitySupport": {
-      "title": "Community Support",
-      "description": "Building social safety nets and infrastructure that strengthen the bonds between our neighbors."
+
+    "agriculture": {
+      "title": "Agriculture & Rural Development",
+      "description": "Supporting local farmers with sustainable agriculture practices, water management, and initiatives that improve rural livelihoods."
     }
   },
   "whyJoinUs": {
@@ -95,6 +98,10 @@
   },
   "applicationForm": {
     "title": "Application Form",
+    "form_title": {
+      "member": "Member Form",
+      "volunteer": "Volunteer Form"
+    },
     "subtitle": "We are excited to have you on board.",
     "labels": {
       "fullname": "FULL NAME",
@@ -109,12 +116,12 @@
       "cv": "CV or Portfolio (Optional)"
     },
     "placeholders": {
-      "fullname": "John Doe",
-      "email": "john@example.com",
-      "phone": "+212 600 000 000",
-      "skills": "e.g. Teaching, Gardening, IT",
-      "address": "El houz Marrakech ...",
-      "motivation": "Tell us why you want to join Tifaouine..."
+      "fullname": "Mohamed Alami",
+      "email": "mohamed.alami@gmail.com",
+      "phone": "+212 612 345 678",
+      "skills": "e.g. teaching, gardening, IT",
+      "address": "Massira District, Marrakech",
+      "motivation": "Tell us why you want to join Tifaouine Association..."
     },
     "availabilityOptions": {
       "select": "Select your availability",

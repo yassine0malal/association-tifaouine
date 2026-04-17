@@ -1,18 +1,21 @@
 {
   "focusArea": {
-    "title": "Nos Domaines d'Action",
-    "description": "Tifaouine est plus qu'une association ; c'est un phare d'espoir. Nous nous concentrons sur trois piliers fondamentaux qui transforment des vies et construisent des avenirs durables.",
+    "title": "Nos Domaines d’Action",
+    "description": "Tifaouine Asni soutient les communautés rurales du Haut Atlas à travers l’éducation, la santé et l’agriculture durable.",
+
     "education": {
-      "title": "Éducation",
-      "description": "Autonomiser les jeunes grâce à l'alphabétisation, des ateliers modernes et des programmes de mentorat spécialisés."
+      "title": "Éducation & Alphabétisation",
+      "description": "Soutenir les enfants et les jeunes avec l’aide scolaire, des programmes d’alphabétisation, du tutorat et l’accès aux outils numériques."
     },
-    "environment": {
-      "title": "Environnement",
-      "description": "Préserver notre patrimoine naturel à travers le reboisement et des initiatives de gestion durable des déchets."
+
+    "health": {
+      "title": "Santé & Bien-être",
+      "description": "Améliorer l’accès aux soins de santé de base grâce à des campagnes de sensibilisation, des actions médicales et le soutien aux familles vulnérables."
     },
-    "communitySupport": {
-      "title": "Soutien Communautaire",
-      "description": "Construire des filets de sécurité sociale et des infrastructures qui renforcent les liens entre nos voisins."
+
+    "agriculture": {
+      "title": "Agriculture & Développement Rural",
+      "description": "Soutenir les agriculteurs locaux avec des pratiques agricoles durables, la gestion de l’eau et des initiatives pour améliorer les moyens de subsistance."
     }
   },
   "whyJoinUs": {
@@ -95,6 +98,10 @@
   },
   "applicationForm": {
     "title": "Formulaire de Candidature",
+    "form_title": {
+      "member": "Formulaire membre",
+      "volunteer": "Formulaire bénévole"
+    },
     "subtitle": "Nous sommes ravis de vous accueillir à bord.",
     "labels": {
       "fullname": "NOM COMPLET",
@@ -109,12 +116,12 @@
       "cv": "CV ou Portfolio (Optionnel)"
     },
     "placeholders": {
-      "fullname": "Jean Dupont",
-      "email": "jean@exemple.com",
-      "phone": "+212 600 000 000",
-      "skills": "ex. Enseignement, Jardinage, Informatique",
-      "address": "El houz Marrakech ...",
-      "motivation": "Dites-nous pourquoi vous souhaitez rejoindre Tifaouine..."
+      "fullname": "Mohamed Alami",
+      "email": "mohamed.alami@gmail.com",
+      "phone": "+212 612 345 678",
+      "skills": "Ex: enseignement, jardinage, informatique",
+      "address": "Quartier Massira, Marrakech",
+      "motivation": "Dites-nous pourquoi vous souhaitez rejoindre l'association Tifaouine..."
     },
     "availabilityOptions": {
       "select": "Sélectionnez votre disponibilité",
