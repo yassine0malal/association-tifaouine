@@ -51,7 +51,7 @@ createRoot(document.getElementById("root")).render(
             <Route path="/:lang">
               <Route path="Faire-un-don" element={<Footer />} />
               <Route path="Devenir-membre" element={<Footer />} />
-              <Route path="Benevolat" element={<VolunterPage />} />
+              <Route path="bénévoles" element={<VolunterPage />} />
             </Route>
 
             {/* Main Routes : Doamaines */}

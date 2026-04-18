@@ -8,6 +8,7 @@ import lifeAtTifaouineImg1 from "../../assets/images/volunteers/lifeAttifaouine1
 import lifeAtTifaouineImg2 from "../../assets/images/volunteers/lifeAttifaouine2.jpeg"
 import lifeAtTifaouineImg3 from "../../assets/images/volunteers/lifeAttifaouine3.jpg"
 import mainImage from "../../assets/images/volunteers/main_image.jpeg"
+import PageHero from "../../components/common/PageHero";
 
 function VolunterPage() {
   const [path, setPath] = useState("");
@@ -15,10 +16,14 @@ function VolunterPage() {
 
   return (
     <>
-        <div className={styles.bgFixed} style={ { backgroundImage:`url(${mountainImg})` } }></div>
       <div className={styles.volunterPage}>
         {/* <img src={mountainImg} className={styles.pageBg}/> */}
         {/* SECTION 1: FOCUS AREA */}
+        
+        <PageHero 
+          title={t('hero')}
+          heroImg={mountainImg}
+        />
         <section className={styles.focusArea}>
           <div className={styles.container}>
             <article className={styles.image}>

@@ -138,6 +138,16 @@
   animation: fadeInLeft 0.6s ease-out 0.1s both;
 }
 
+/* .volunterPage .image::after {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #00000010;
+} */
+
 .volunterPage .image::before {
   content: "";
   position: absolute;
@@ -1199,7 +1209,7 @@
 /* --------------------------------------------
    RESPONSIVE BREAKPOINTS
 ----------------------------------------------- */
-@media (min-width: 1025px) and  (max-width: 1100px) {
+@media (min-width: 1025px) and (max-width: 1100px) {
   .volunterPage .applicationForm form {
     padding: 28px;
   }

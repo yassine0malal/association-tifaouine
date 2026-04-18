@@ -422,7 +422,7 @@
 
 }
 /* ── Related Events ── */
-.eventContentContainer .relatedEvents .event {
+.eventContentContainer .lastEvents .event {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -434,11 +434,11 @@
   transition: background-color 0.2s ease;
 }
 
-.eventContentContainer .relatedEvents .event:hover {
+.eventContentContainer .lastEvents .event:hover {
   background-color: var(--code-bg);
 }
 
-.eventContentContainer .relatedEvents .event .image {
+.eventContentContainer .lastEvents .event .image {
   width: 80px;
   height: 60px;
   flex-shrink: 0;
@@ -446,24 +446,24 @@
   border-radius: 8px;
 }
 
-.eventContentContainer .relatedEvents .event .image img {
+.eventContentContainer .lastEvents .event .image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.3s ease;
 }
 
-.eventContentContainer .relatedEvents .event:hover .image img {
+.eventContentContainer .lastEvents .event:hover .image img {
   transform: scale(1.08);
 }
 
-.eventContentContainer .relatedEvents .event .details {
+.eventContentContainer .lastEvents .event .details {
   flex: 1;
   min-width: 0;
   width: auto;
 }
 
-.eventContentContainer .relatedEvents .event h3 {
+.eventContentContainer .lastEvents .event h3 {
   font-size: 0.9rem;
   font-weight: 600;
   margin-bottom: 4px;
@@ -473,7 +473,7 @@
   text-overflow: ellipsis;
 }
 
-.eventContentContainer .relatedEvents .event p {
+.eventContentContainer .lastEvents .event p {
   display: flex;
   align-items: center;
   gap: 4px;
@@ -481,12 +481,12 @@
   color: var(--paragraph-color);
 }
 
-.eventContentContainer .relatedEvents .event p img {
+.eventContentContainer .lastEvents .event p img {
   width: 13px;
   height: 13px;
 }
 
-.eventContentContainer .relatedEvents .event button {
+.eventContentContainer .lastEvents .event button {
   flex-shrink: 0;
   display: flex;
   align-items: center;
@@ -502,21 +502,21 @@
     transform 0.2s ease;
 }
 
-[dir="rtl"] .eventContentContainer .relatedEvents .event button svg {
+[dir="rtl"] .eventContentContainer .lastEvents .event button svg {
   rotate: 180deg;
 }
 
-[dir="rtl"] .eventContentContainer .relatedEvents .event:hover button{
+[dir="rtl"] .eventContentContainer .lastEvents .event:hover button{
   rotate: 45deg;
   transform: scale(1.1);
 }
 
-.eventContentContainer .relatedEvents .event:hover button {
+.eventContentContainer .lastEvents .event:hover button {
   rotate: -45deg;
   transform: scale(1.1);
 }
 
-.eventContentContainer .relatedEvents .event button path {
+.eventContentContainer .lastEvents .event button path {
   stroke: #fff;
 }
 
@@ -689,10 +689,10 @@
 }
 
 @media (max-width: 360px) {
-  .eventContentContainer .relatedEvents .event {
+  .eventContentContainer .lastEvents .event {
     flex-wrap: wrap;
   }
-  .eventContentContainer .relatedEvents .event .image {
+  .eventContentContainer .lastEvents .event .image {
     width: 100%;
     height: auto;
   }
