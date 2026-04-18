@@ -22,6 +22,7 @@ import RessourcesPage from "./features/ressources/Ressources.jsx";
 import EventList from "./features/evenements/event-list/EventList.jsx";
 import './styles/globals.css'
 import EventPage from "./features/evenements/event-page/EventPage.jsx";
+import VolunterPage from "./features/benevolat/VolunterPage.jsx";
 
 createRoot(document.getElementById("root")).render(
   <Provider store={store}>
@@ -50,7 +51,7 @@ createRoot(document.getElementById("root")).render(
             <Route path="/:lang">
               <Route path="Faire-un-don" element={<Footer />} />
               <Route path="Devenir-membre" element={<Footer />} />
-              <Route path="Benevolat" element={<Footer />} />
+              <Route path="Benevolat" element={<VolunterPage />} />
             </Route>
 
             {/* Main Routes : Doamaines */}

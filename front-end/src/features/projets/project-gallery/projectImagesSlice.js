@@ -44,7 +44,6 @@ const projectImagesSlice = createSlice({
 
         state.loading = false;
         const newImages = action.payload?.images || [];
-        console.log("new images--->",action.payload);
         
 
         // Remove duplicates based on id
