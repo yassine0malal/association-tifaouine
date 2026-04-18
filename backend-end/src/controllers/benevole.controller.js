@@ -1,4 +1,7 @@
 const benevoleService = require('../services/benevole.service');
+const { Utilisateur, benevole } = require('../models');
+const { buildPaginatedResponse } = require('../utils/paginate');
+const { toBenevoleListDTO } = require('../dto/benevole.dto');
 
 class BenevoleController {
     /**
@@ -33,18 +36,39 @@ class BenevoleController {
      */
     async getAll(req, res) {
         try {
-            const list = await benevoleService.getAllBenevoles();
+            const { page, limit, offset } = req.pagination;
+            const result = await benevoleService.getAllBenevoles({ limit, offset });
             return res.status(200).json({
                 success: true,
-                count: list.length,
-                data: list
+                ...buildPaginatedResponse(result, page, limit)
             });
         } catch (error) {
-            console.error("Erreur getAll benevoles controller : ", error.message);
-            return res.status(500).json({
-                success: false,
-                message: "Impossible de récupérer les bénévoles."
+            return res.status(500).json({ success: false, message: "Impossible de récupérer les bénévoles." });
+        }
+    }
+
+    /**
+     * @route   GET /api/:lang/benevoles
+     * @desc    Liste des bénévoles avec DTO (langue non discriminante ici)
+     */
+    async getAllByLang(req, res) {
+        try {
+            const { page, limit, offset } = req.pagination;
+
+            const result = await Utilisateur.findAndCountAll({
+                where:   { type: 'benevole' },
+                include: [{ model: benevole, required: true }],
+                limit,
+                offset
             });
+
+            const rows = result.rows.map(b => toBenevoleListDTO(b));
+            return res.status(200).json({
+                success: true,
+                ...buildPaginatedResponse({ count: result.count, rows }, page, limit)
+            });
+        } catch (error) {
+            return res.status(500).json({ success: false, message: error.message });
         }
     }
 

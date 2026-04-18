@@ -6,15 +6,19 @@ import ressourceReducer from '../features/ressources/ressourcesSlice'
 import eventsReducer from '../features/evenements/event-list/eventsSlice'
 import eventReducer from '../features/evenements/event-page/eventSlice'
 import domainsReducer from '../features/domains/domainsSlice'
+import domainsPageReducer from '../features/domains/domainsPage/domainsPageSlice'
+import partnersReducer from '../features/partners/partnersSlice'
 
 export const store = configureStore({
     reducer: {
-        projects:projectsReducer,
-        project:projectReducer,
-        projectImages:projectImagesReducer,
-        ressources:ressourceReducer,
-        events:eventsReducer,
-        event:eventReducer,
-        domains:domainsReducer
+        projects: projectsReducer,
+        project: projectReducer,
+        projectImages: projectImagesReducer,
+        ressources: ressourceReducer,
+        events: eventsReducer,
+        event: eventReducer,
+        domains: domainsReducer,
+        domainsPage: domainsPageReducer,
+        partners: partnersReducer,
     },
 })

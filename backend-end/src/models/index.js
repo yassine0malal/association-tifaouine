@@ -49,6 +49,9 @@ Evenement.belongsTo(Projet, { foreignKey: 'projet_id' });
 Projet.hasMany(Ressource, { foreignKey: 'projet_id', onDelete: 'CASCADE' });
 Ressource.belongsTo(Projet, { foreignKey: 'projet_id' });
 
+Evenement.hasMany(Ressource, { foreignKey: 'evenement_id', onDelete: 'CASCADE' });
+Ressource.belongsTo(Evenement, { foreignKey: 'evenement_id' });
+
 // Associations Dons
 Projet.hasMany(Don, { foreignKey: 'projet_id', onDelete: 'SET NULL' });
 Don.belongsTo(Projet, { foreignKey: 'projet_id' });

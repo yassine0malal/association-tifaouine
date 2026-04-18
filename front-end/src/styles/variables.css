@@ -22,6 +22,8 @@
     --accent-border: #F1904C;
     --second-buttons-bg: #2EB431;
     --icons-color: #4BAF47;
+    --dark-green-color: #006E0F;
+    --text-green-color: #CCE2CF;
     --upper-footer-bg: #061E22;
     --text-color: #20251E;
     --paragraph-color: #908F89;
@@ -32,6 +34,9 @@
     --color-border-v2: #837567;
     --color-background: #F9FAFB;
     --color-sec:#f6f3ec;
+    --color-partner:#F0EEE7;
+    --color-contact-btn:#4E2D00;
+  --color-title-btn:#1B1C18;
     /* fin me */
     --social-bg: rgba(244, 243, 236, 0.5);
     --shadow: rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;

@@ -1,0 +1,17 @@
+{
+    "heroTitle": "Domaines d'action",
+    "intro": {
+        "overline": "Collection Exclusive",
+        "title": "Nos Domaines",
+        "description": "Plongez dans l'histoire de nos terres ancestrales, à travers les piliers de notre action : agriculture vivrière, éducation pour tous, préservation de l'environnement. Ces domaines, étroitement liés, tissent la trame d'une communauté résiliente et solidaire."
+    },
+    "stats": {
+        "projects": "Projets",
+        "events": "Événements"
+    },
+    "cta": {
+        "title": "Devenez Gardien du Patrimoine",
+        "description": "Soutenez nos efforts de conservation en rejoignant notre programme de mécénat exclusif.",
+        "button": "Rejoindre le Cercle"
+    }
+}

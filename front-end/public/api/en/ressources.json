@@ -11,17 +11,17 @@
         "currentPage": 2,
         "nextPage": 3,
         "prevPage": 1,
-        "totalPages": 2,
+        "totalPages": 10,
         "itemsPerPage": 4,
         "showingItems": 4,
-        "totalItems":124,
+        "totalItems": 124,
         "resources": [
             {
                 "id": 1,
                 "imageUrl": "https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=300&h=400&fit=crop",
                 "title": "Digital Archiving Standards v2.0",
                 "description": "Global Digital Asset Management framework for heritage preservation.",
-                "fileSize": "14.2 MB",
+                "fileSize": "1  4.2 MB",
                 "fileType": "PDF",
                 "category": "Rapport",
                 "downloadUrl": "/resources/digital-archiving-standards.pdf"
@@ -68,6 +68,36 @@
             },
             {
                 "id": 6,
+                "imageUrl": "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=300&h=400&fit=crop",
+                "title": "Site Maintenance Guidelines",
+                "description": "Best practices for maintaining water and agricultural infrastructure.",
+                "fileSize": "9.1 MB",
+                "fileType": "PDF",
+                "category": "Document",
+                "downloadUrl": "/resources/site-maintenance-guidelines.pdf"
+            },
+            {
+                "id": 7,
+                "imageUrl": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=300&h=400&fit=crop",
+                "title": "Grain History Recording Masterclass",
+                "description": "Guide to documenting traditional farming knowledge and practices.",
+                "fileSize": "22.7 MB",
+                "fileType": "MP4",
+                "category": "Finance",
+                "downloadUrl": "/resources/grain-history-masterclass.mp4"
+            },
+            {
+                "id": 8,
+                "imageUrl": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=300&h=400&fit=crop",
+                "title": "Partnership Agreement Boilerplate",
+                "description": "Legal template for collaboration with NGOs and local authorities.",
+                "fileSize": "5.8 MB",
+                "fileType": "DOCX",
+                "category": "Rapport",
+                "downloadUrl": "/resources/partnership-agreement.docx"
+            },
+            {
+                "id": 9,
                 "imageUrl": "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=300&h=400&fit=crop",
                 "title": "Site Maintenance Guidelines",
                 "description": "Best practices for maintaining water and agricultural infrastructure.",

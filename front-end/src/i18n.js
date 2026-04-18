@@ -20,6 +20,7 @@ i18n
             escapeValue: false
         }
     });
+
 const applyLanguageSettings = (lng) => {
     document.body.classList.remove("ar");
 

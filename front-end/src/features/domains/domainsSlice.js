@@ -5,7 +5,6 @@ export const fetchDomains = createAsyncThunk(
     "domains/fetchDomains",
     async (lang) => {
         const data = await fetchDomainsApi(lang);
-        // console.log("slicer-->"+data)
         return data;
     },
 );

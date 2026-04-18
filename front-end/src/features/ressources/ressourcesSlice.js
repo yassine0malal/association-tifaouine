@@ -3,8 +3,8 @@ import { ressourcesAPI } from "./ressourcesService";
 
 export const fetchRessources = createAsyncThunk(
     "ressources/fetchRessources",
-    async ({ src, page, lang }) => {
-        const data = await ressourcesAPI(src, page, lang);
+    async ({page, lang }) => {
+        const data = await ressourcesAPI(page, lang);
         return data;
     }
 );
@@ -15,10 +15,10 @@ const ressourcesSlice = createSlice({
         resources: [],
         loading: false,
         error: null,
-        currentPage: 1,
-        totalPages: 1,
-        nextPage: 2,
-        prevPage: 0,
+        totalPages: 4,
+        currentPage: 2,
+        nextPage: 3,
+        prevPage: 1,
         itemsPerPage: 4,
         totalItems: 0,
         featuredInsight: null
@@ -27,6 +27,11 @@ const ressourcesSlice = createSlice({
         setRessourcesPage: (state, action) => {
             state.currentPage = action.payload.page;
         },
+        resetRessources:(state)=>{
+            state.resources=[];
+            state.currentPage=1;
+            state.featuredInsight=null;
+        }
     },
 
     extraReducers: (builder) => {
@@ -40,9 +45,7 @@ const ressourcesSlice = createSlice({
 
                 state.loading = false;
                 const newRessources = action.payload.resourceLibrary?.resources || [];
-                console.log("new data resources--->", action.payload.totalPages);
-                // console.log("*****new Ressources--->", newRessources);
-                console.log("****************--->");
+                console.log("new data resources--->", action.payload.resourceLibrary);
                 if (action.payload.featuredInsight) {
                     state.featuredInsight = action.payload.featuredInsight;
                 }
@@ -55,11 +58,11 @@ const ressourcesSlice = createSlice({
                 );
                 state.resources.push(...filteredRessources);
 
-                state.totalPages = action.payload.resourceLibrary?.totalPages || 1;
-                state.nextPage = action.payload.resourceLibrary?.nextPage || null;
-                state.prevPage = action.payload.resourceLibrary?.prevPage || null;
-                state.itemsPerPage = action.payload.resourceLibrary?.itemsPerPage || 6;
-                state.totalItems = action.payload.resourceLibrary?.totalItems || 0;
+                state.totalPages = action.payload.resourceLibrary?.totalPages;
+                state.nextPage = action.payload.resourceLibrary?.nextPage;
+                state.prevPage = action.payload.resourceLibrary?.prevPage;
+                state.itemsPerPage = action.payload.resourceLibrary?.itemsPerPage;
+                state.totalItems = action.payload.resourceLibrary?.totalItems;
             })
 
             .addCase(fetchRessources.rejected, (state, action) => {
@@ -69,5 +72,5 @@ const ressourcesSlice = createSlice({
     },
 });
 
-export const { setRessourcesPage } = ressourcesSlice.actions;
+export const { setRessourcesPage, resetRessources } = ressourcesSlice.actions;
 export default ressourcesSlice.reducer;

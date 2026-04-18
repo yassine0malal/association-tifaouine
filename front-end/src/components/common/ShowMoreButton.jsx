@@ -2,6 +2,9 @@ import { useTranslation } from "react-i18next";
 import styles from "./showMoreButton.module.css";
 
 function ShowMoreButton({ loading, currentPage, totalPages, onPageChange }) {
+
+  console.log("iiii" + loading, currentPage, totalPages)
+  
   const { t } = useTranslation("common");
   if (!currentPage || !totalPages) return null;
 
@@ -30,13 +33,18 @@ function ShowMoreButton({ loading, currentPage, totalPages, onPageChange }) {
           viewBox="-4.5 0 20 20"
           version="1.1"
           className="arrowIcon"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="3"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         >
           <title>arrow_right [#336]</title>
           <desc>Created with Sketch.</desc>
           <defs></defs>
           <g
             id="Page-1"
-            stroke="none" 
+            stroke="none"
             strokeWidth="1"
             fill="none"
             fillRule="evenodd"

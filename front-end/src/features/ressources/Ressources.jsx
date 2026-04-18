@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useTranslation } from "react-i18next"; // pour la langue (si i18n est utilisé)
+import { useTranslation } from "react-i18next";
+import { fetchRessources, setRessourcesPage, resetRessources } from "./ressourcesSlice";
 
 import styles from "./Ressources.module.css";
 import PageHero from "../../components/common/PageHero";
@@ -10,66 +11,67 @@ import document from "../../assets/icons/document.png";
 import download from "../../assets/icons/dawnload.png";
 import library from "../../assets/images/library.png";
 import ShowMoreButton from "../../components/common/ShowMoreButton";
-
-// Import des actions Redux
-import { fetchRessources, setRessourcesPage } from "./ressourcesSlice";
+import i18n from "../../i18n";
 
 export default function RessourcesPage() {
-    const dispatch = useDispatch();
-    const { i18n } = useTranslation(); // pour obtenir la langue active
-
-    // Récupération de l'état depuis Redux
+    const { t } = useTranslation("ressources");
+    const currentLang = i18n.language || "fr";
     const {
         resources,
         featuredInsight,
         loading,
         error,
+        itemsPerPage,
         currentPage,
         totalPages,
         nextPage,
         totalItems,
     } = useSelector((state) => state.ressources);
-
+    const dispatch = useDispatch();
     useEffect(() => {
-        const lang = i18n.language || "fr";
-        dispatch(fetchRessources({ project: null, page: currentPage, lang }));
-    }, [dispatch, currentPage, i18n.language]);
-
+        dispatch(resetRessources());
+    }, [currentLang]);
     
-    const handlePageChange = () => {
-        if (nextPage) {
-            dispatch(setRessourcesPage({ page: nextPage }));
+    useEffect(() => {
+        dispatch(fetchRessources({ page: currentPage, lang: currentLang }));
+    }, [dispatch, currentPage, currentLang]);
+    
+    const handlePageChange = (page) => {
+        if (!loading) {
+            dispatch(setRessourcesPage({ page }));
         }
     };
-// the place of the loader component
-    if (loading && !featuredInsight  && resources.length === 0) {
+    
+    // Affichage pendant le chargement initial
+    if (loading && !featuredInsight && resources.length === 0) {
         return (
             <div className={styles.ressourcesPage}>
-                <PageHero title={"Our Resources"} heroImg={heroImg} />
+                <PageHero title={t("ressources.heroTitle")} heroImg={heroImg} />
                 <div className={styles.ressourcesContainer}>
-                    <p>Loading resources...</p>
+                    <p>{t("ressources.loadingResources")}</p>
                 </div>
             </div>
         );
     }
-
+    
     if (error) {
         return (
             <div className={styles.ressourcesPage}>
-                <PageHero title={"Our Resources"} heroImg={heroImg} />
+                <PageHero title={t("ressources.heroTitle")} heroImg={heroImg} />
                 <div className={styles.ressourcesContainer}>
-                    <p>Error: {error}</p>
+                    <p>{t("ressources.errorMessage", { error })}</p>
                 </div>
             </div>
         );
     }
-
+    
+    // console.log(itemsPerPage * (currentPage-1) + resources.length, "item per page",itemsPerPage,"resources ,length",resources.length, "current one ",currentPage)
     return (
         <div className={styles.ressourcesPage}>
-            <PageHero title={"Our Resources"} heroImg={heroImg} />
+            <PageHero title={t("ressources.heroTitle")} heroImg={heroImg} />
             <div className={styles.ressourcesContainer}>
                 <div className={styles.title}>
-                    <h2>Featured Insights</h2>
+                    <h2>{t("ressources.featuredInsights")}</h2>
                 </div>
 
                 <div className={styles.bestRepportOrganigram}>
@@ -81,7 +83,7 @@ export default function RessourcesPage() {
                             <div className={styles.text}>
                                 <div className={styles.top}>
                                     <span>{featuredInsight?.category}</span>
-                                    <span>Our best project</span>
+                                    <span>{t("ressources.ourBestProject")}</span>
                                 </div>
                                 <h2>{featuredInsight?.title}</h2>
                                 <p>{featuredInsight?.description}</p>
@@ -89,16 +91,16 @@ export default function RessourcesPage() {
                             <div className={styles.bottomsDetails}>
                                 <div className={styles.imagMetaData}>
                                     <img src={document} alt="document" />
-                                    <p>{featuredInsight?.fileSize} {featuredInsight?.fileType}</p>
+                                    <p>
+                                        {featuredInsight?.fileSize} {featuredInsight?.fileType}
+                                    </p>
                                 </div>
                                 <div className={styles.downloadButtom}>
-                                    <button>Download</button>
+                                    <button>{t("ressources.download")}</button>
                                     <img src={download} alt="" />
                                 </div>
                             </div>
                         </div>
-
-
                     </div>
 
                     {/* ------Right----- */}
@@ -106,29 +108,27 @@ export default function RessourcesPage() {
                         <div className={styles.textContent}>
                             <img src={ai} alt="intelligent" />
                             <div className={styles.topLeft}>
-                                <span>Guide</span>
-                                <span>Collaboration: Discover how we work</span>
+                                <span>{t("ressources.guide")}</span>
+                                <span>{t("ressources.collaborationText")}</span>
                             </div>
-                            <h2>The 2024 State of Heritage Preservation Report</h2>
-                            <p>
-                                Discover how our association's grassroots initiatives are
-                                preserving cultural wisdom across generations and building
-                                stronger, more connected communities.
-                            </p>
+                            <h2>{t("ressources.rightSideTitle")}</h2>
+                            <p>{t("ressources.rightSideDescription")}</p>
                         </div>
-                        <button>Read Full Report</button>
+                        <button>{t("ressources.readFullReport")}</button>
                     </div>
                 </div>
 
                 {/* ------------------------Cards-------------------------- */}
                 <div className={styles.rapportCards}>
                     <div className={styles.header}>
-                        <h2>Resource Library</h2>
+                        <h2>{t("ressources.resourceLibrary")}</h2>
                         <div className={styles.content}>
                             <p>
-                                Showing {resources.length} of {totalItems} items
+                                {t("ressources.showingItems", {
+                                    count: itemsPerPage * (currentPage-1) + resources.length ,
+                                    total: totalItems,
+                                })}
                             </p>
-                           
                         </div>
                     </div>
 
@@ -136,7 +136,7 @@ export default function RessourcesPage() {
                     <div className={styles.cardsContent}>
                         {resources.map((item) => (
                             <div key={item.id} className={styles.card}>
-                                <div className={styles.imageWrapper} data-count={"Document"}>
+                                <div className={styles.imageWrapper} data-count={item.category}>
                                     <img src={item.imageUrl} alt={item.title} />
                                 </div>
                                 <div className={styles.footerCard}>
@@ -144,9 +144,11 @@ export default function RessourcesPage() {
                                         <h3>{item.title}</h3>
                                         <p>{item.description}</p>
                                     </div>
+                                    
                                     <div className={styles.bottomsDetailsCard}>
                                         <div className={styles.imagMetaDataCard}>
-                                            <span>{item.fileSize}</span> <span>{item.fileType}</span>
+                                            <span>{item.fileSize}</span>{" "}
+                                            <span>{item.fileType}</span>
                                         </div>
                                         <a href={item.downloadUrl} download>
                                             <button>
@@ -154,6 +156,7 @@ export default function RessourcesPage() {
                                             </button>
                                         </a>
                                     </div>
+
                                 </div>
                             </div>
                         ))}
