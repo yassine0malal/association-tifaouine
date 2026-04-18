@@ -8,6 +8,18 @@ const membre=sequelize.define('membre',{
         allowNull:true,
         defaultValue:'membre' 
     },
+    description_poste_fr: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+    },
+    description_poste_ar: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+    },
+    description_poste_en: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+    },
     photo_profile:{
         type:DataTypes.STRING(250),
         allowNull:true,
