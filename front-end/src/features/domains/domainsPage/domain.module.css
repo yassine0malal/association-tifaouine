@@ -1,0 +1,216 @@
+.fullContainer {
+    background-color: var(--accent-src);
+    margin-bottom: 170px;
+}
+
+.domainContainer {
+    margin: 100px 0;
+    max-width: 1500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.domainContainer .title p:first-child {
+    color: var(--accent);
+    font-size: 14px;
+    letter-spacing: 1.2px;
+
+}
+
+.domainContainer .title {
+    color: var(--color-title-btn);
+    text-align: center;
+    padding: 90px;
+    display: flex;
+    flex-direction: column;
+    gap: 17px;
+}
+
+
+.domainContainer+.title {
+    text-align: center;
+    margin: 100px 12px;
+    display: flex;
+    gap: 23px;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    padding: 100px 0px;
+    color: var(--color-title-btn);
+}
+
+.domainContainer+.title button {
+
+    all: unset;
+    cursor: pointer;
+    background-color: var(--second-buttons-bg);
+    padding: 20px;
+    max-width: 300px;
+    text-align: center;
+    border-radius: 8px;
+    font-weight: 600;
+    color: var(--accent-src);
+    transition: all 0.3s ease-in-out;
+    flex: 4;
+    margin-top: 10px;
+}
+
+
+.domainContainer+.title button:hover {
+    transform: translateY(-8px);
+    scale: 1.1;
+}
+
+.domainContainer+.title button:active {
+    scale: 1;
+    transform: translateY(8px);
+}
+
+/* ==================Cards section=========== */
+
+.domainContainer .domainCard {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: 600px;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    margin-bottom: 50px;
+}
+
+.domainContainer .domainCard::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: var(--bg-image);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: -2;
+    transition: transform 0.5s ease, filter 0.3s ease;
+    filter: blur(0);
+}
+
+.domainContainer .domainCard:hover::before {
+    transform: scale(1.08);
+    /* filter: blur(1px); */
+}
+
+.domainContainer .domainCard::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top right, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.02) 60%, transparent 100%);
+    /* background: linear-gradient(20deg, rgba(0, 0, 0, 0.85) 5%, rgba(0, 0, 0, 0.3) 40%, transparent 60%); */
+    z-index: -1;
+    backdrop-filter: blur(0.2px);
+}
+
+.domainCard .second {
+    color: white;
+    padding: 30px 20px;
+    position: relative;
+    z-index: 2;
+    /* text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); */
+    color: var(--bg);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+
+.domainCard .second p:nth-child(3) {
+    max-width: 360px;
+}
+
+
+.domainCard .second small {
+    color: #ddd;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.domainCard .second h2 {
+    font-size: 2rem;
+    margin: 10px 0;
+}
+
+
+.subDetails .nbrProject {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.subDetails .nbrProject .svgContainer {
+    background-color: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(8px);
+    border-start-start-radius: 8px;
+    border-end-start-radius: 8px;
+    padding: 8px 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: fit-content;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.subDetails .nbrProject .nbr {
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-left: none;
+    padding: 20px 20px;
+    color: white;
+    backdrop-filter: blur(4px);
+    width: 180px;
+}
+
+.second .dDetails {
+    display: flex;
+    gap: 20px;
+    padding: 40px 0;
+}
+
+.subDetails:hover .svgContainer {
+    transform: rotate(3deg) scale(1.05);
+}
+
+/* .subDetails:hover .snd{
+    transform: rotate(-3deg) scale(1.05);
+} */
+
+
+[dir="rtl"] .subDetails .nbrProject .svgContainer {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+[dir="rtl"] .subDetails .nbrProject .nbr {
+    border-left: 1px solid rgba(255, 255, 255, 0.4);
+    /* restaure la bordure gauche */
+    border-right: none;
+    /* supprime la bordure droite */
+}
+
+[dir="rtl"] .element {
+    box-shadow: -4px 4px 12px rgba(0, 0, 0, 0.2);
+    text-shadow: -2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+[dir="rtl"] .domainContainer .domainCard::after {
+    background: linear-gradient(225deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.02) 60%, transparent 100%);
+}
+
+[dir="rtl"] .domainContainer .domainCard::after {
+    background: linear-gradient(to top left, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.02) 60%, transparent 100%);
+}
+
+
+/* =====Responsive part=====  */
+@media (max-width:600px) {
+    .nbrProject .svgContainer {}
+
+    .second .dDetails {
+        flex-direction: column;
+    }
+}

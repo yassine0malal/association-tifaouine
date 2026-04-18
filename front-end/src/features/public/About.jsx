@@ -8,6 +8,7 @@ import {
 import association from "../../assets/images/about-us.png"
 import checked from "../../assets/icons/checked.png"
 import HeroBg from "../../assets/images/projects_hero.jpg"
+import bg from "../../assets/images/bg.png"
 import call from "../../assets/icons/call.png"
 import arrow from "../../assets/icons/arrow-right.png"
 //Partenairs
@@ -20,6 +21,13 @@ import habous from "../../assets/images/partenaires/habous.png"
 import province from "../../assets/images/partenaires/province-el-haouz.png"
 import travail from "../../assets/images/partenaires/travail.png"
 import bgImage from "../../assets/images/partenaires/bg-image.png"
+//Import gallery images
+import centre from "../../assets/images/about/centre.png"
+import energy from "../../assets/images/about/energy.jpeg"
+import science from "../../assets/images/about/science.png"
+import nature from "../../assets/images/about/nature.jpg"
+import children from "../../assets/images/about/children.jpg"
+
 // Import CSS Module
 import styles from './About.module.css';
 import PageHero from '../../components/common/PageHero';
@@ -67,7 +75,7 @@ const About = () => {
     if (element) {
       VanillaTilt.init(element, {
         max: 20,
-        speed: 300,
+        speed: 500,
         perspective: 1000,
         glare: true,
         "max-glare": 0.6,
@@ -180,7 +188,7 @@ const About = () => {
 
   return (
     <>
-      <PageHero title={t('hero.title')} heroImg={HeroBg} />
+      <PageHero title={t('hero.title')} heroImg={bg} />
       <div className={styles.AboutSection}>
 
         <div className={styles.associationDescription}>
@@ -296,21 +304,28 @@ const About = () => {
 
         {/* ----- Gallery of association ---- */}
         <section className={styles.gallery}>
-          
+
           <h1>Gallery</h1>
 
           <div className={styles.content}>
             <article>
-              <img src={association} alt="" />
+              <img src={centre} alt="" />
             </article>
+
             <article>
-              <img src={association} alt="" />
+              <img src={children} alt="" />
             </article>
+
             <article>
-              <img src={association} alt="" />
+              <img src={energy} alt="" />
             </article>
+
             <article>
-              <img src={association} alt="" />
+              <img src={nature} alt="" />
+            </article>
+            
+            <article>
+              <img src={science} alt="" />
             </article>
           </div>
 

@@ -6,6 +6,7 @@ import { fetchDomains } from "../../../features/domains/domainsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import i18n from "../../../i18n";
+import Loader from "../../common/Loader";
 
 
 export default function Links() {
@@ -15,13 +16,12 @@ export default function Links() {
 
 
     useEffect(() => {
-        // console.log("compo -----> "+status);
         const lang = i18n.resolvedLanguage || "fr";
         dispatch(fetchDomains(lang));
     }, [dispatch, i18n.language]);
 
 
-    if (status == "pending") return <h2>Loading Domains...</h2>
+    if (status == "pending") return <Loader/>
     const menuData = [
         {
             id: "a-propos",
@@ -53,11 +53,11 @@ export default function Links() {
         {
             id: "domaines",
             title: t("nav.domains"),
-            to: null,
+            to: `${i18n.language}/domains`,
             subItems: domains?.length
                 ? domains.map((domain) => ({
                     label: domain.label,
-                    path: `/${i18n.language}/${domain.id}`
+                    path: `/${i18n.language}/domains/${domain.id}`
                 }))
                 : []
 
@@ -78,7 +78,7 @@ export default function Links() {
             <ul>
                 {menuData.map((item) => (
                     <li key={item.id} className={`${styles.navItem} ${styles.hasDropDown}`}>
-                        <span>{item.title} </span>
+                        <Link to={item.to}><span>{item.title} </span></Link>
                         <ul className={styles.dropdownMenu}>
                             {item.subItems?.map((subItem) => (
                                 <li key={subItem.path}>
