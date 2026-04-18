@@ -63,7 +63,7 @@ createRoot(document.getElementById("root")).render(
             </Route>
 
             {/* Main Routes : Ressources */}
-            <Route path="/:lang/domains">
+            <Route path="/:lang">
               <Route path="rapports" element={<RessourcesPage />} />
               <Route path="partenaires" element={<Partner />} />
             </Route>
