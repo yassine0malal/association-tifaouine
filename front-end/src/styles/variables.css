@@ -75,3 +75,7 @@ body.ar{
   font-family: "El Messiri", sans-serif;
   direction: rtl;
 }
+::selection{
+  background-color: var(--accent);
+  color: var(--accent-src);
+}
