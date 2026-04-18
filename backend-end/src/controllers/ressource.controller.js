@@ -1,6 +1,7 @@
 const ressourceService = require('../services/ressource.service');
 const { buildPaginatedResponse } = require('../utils/paginate');
 const fs = require('fs');
+const path = require('path');
 
 class RessourceController {
     /**
@@ -69,23 +70,36 @@ class RessourceController {
     /**
      * @route   POST /api/ressources
      * @desc    Upload et création d'une ou plusieurs ressources (Admin)
+     *          fields: 'files' (documents/images, max 20) + 'image_couverture' (optionnel, max 1)
      */
     async create(req, res) {
+        // Avec multer.fields(), req.files est un objet { files: [...], image_couverture: [...] }
+        const mainFiles = (req.files && req.files['files']) ? req.files['files'] : [];
+        const couvertureFile = (req.files && req.files['image_couverture'])
+            ? req.files['image_couverture'][0]
+            : null;
+
         try {
-            if (!req.files || req.files.length === 0) {
+            if (mainFiles.length === 0) {
                 return res.status(400).json({
                     success: false,
                     message: "Aucun fichier n'a été fourni"
                 });
             }
 
+            // URL de la couverture si fournie
+            const image_couverture = couvertureFile
+                ? `${req._couvertureRelUrl}/${couvertureFile.filename}`
+                : null;
+
             const created = [];
-            for (const file of req.files) {
+            for (const file of mainFiles) {
                 const urlEntry = req.uploadedUrls[file._urlIndex];
                 const ressourceData = {
                     ...req.body,
-                    url:          `${urlEntry.relUrl}/${file.filename}`,
-                    nom_original: file.originalname
+                    url:              `${urlEntry.relUrl}/${file.filename}`,
+                    nom_original:     file.originalname,
+                    ...(image_couverture && { image_couverture })
                 };
                 const nvRessource = await ressourceService.createRessource(ressourceData, file.path);
                 created.push(nvRessource);
@@ -97,19 +111,15 @@ class RessourceController {
                 data:    created.length === 1 ? created[0] : created
             });
         } catch (error) {
-            // Supprimer tous les fichiers déjà écrits sur disque si une erreur survient
-            if (req.files && req.files.length > 0) {
-                for (const file of req.files) {
-                    if (file.path && fs.existsSync(file.path)) {
-                        try { fs.unlinkSync(file.path); } catch (_) {}
-                    }
+            // Nettoyer tous les fichiers écrits sur disque en cas d'erreur
+            const allFiles = [...mainFiles, ...(couvertureFile ? [couvertureFile] : [])];
+            for (const file of allFiles) {
+                if (file.path && fs.existsSync(file.path)) {
+                    try { fs.unlinkSync(file.path); } catch (_) {}
                 }
             }
             const status = error.status || 400;
-            return res.status(status).json({
-                success: false,
-                message: error.message
-            });
+            return res.status(status).json({ success: false, message: error.message });
         }
     }
 
@@ -149,6 +159,34 @@ class RessourceController {
                 success: false,
                 message: error.message
             });
+        }
+    }
+
+    /**
+     * @route   GET /api/:lang/ressources/documents
+     * @desc    Récupérer les documents de l'association (public, traduit)
+     * @access  Public
+     */
+    async getDocumentsAssociation(req, res) {
+        try {
+            const { page, limit, offset } = req.pagination;
+            const result = await ressourceService.getDocumentsAssociation(req.lang, { limit, offset });
+            const totalPages = Math.ceil(result.count / limit);
+            return res.status(200).json({
+                success:         true,
+                featuredInsight: result.featuredInsight,
+                resources:       result.rows,
+                pagination: {
+                    total:      result.count,
+                    page,
+                    limit,
+                    totalPages,
+                    hasNext:    page < totalPages,
+                    hasPrev:    page > 1
+                }
+            });
+        } catch (error) {
+            return res.status(500).json({ success: false, message: error.message });
         }
     }
 }

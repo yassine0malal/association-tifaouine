@@ -1,4 +1,5 @@
 const { Ressource, Projet } = require('../models');
+const { Op } = require('sequelize');
 
 class RessourceRepository {
     /**
@@ -65,6 +66,55 @@ class RessourceRepository {
         if (!ressource) return false;
         await ressource.destroy(options);
         return true;
+    }
+
+    /**
+     * Récupérer les documents de l'association (projet_id IS NULL, evenement_id IS NULL)
+     * types : document, rapport, guide — exclut le featured
+     */
+    async findDocumentsAssociation({ limit, offset } = {}) {
+        return await Ressource.findAndCountAll({
+            where: {
+                projet_id:    null,
+                evenement_id: null,
+                is_featured:  false,
+                type: { [Op.in]: ['document', 'rapport', 'guide'] }
+            },
+            order:  [['created_at', 'DESC']],
+            limit:  limit  || 9,
+            offset: offset || 0
+        });
+    }
+
+    /**
+     * Récupérer le document featured de l'association
+     */
+    async findFeaturedDocument() {
+        return await Ressource.findOne({
+            where: {
+                projet_id:    null,
+                evenement_id: null,
+                is_featured:  true,
+                type: { [Op.in]: ['document', 'rapport', 'guide'] }
+            }
+        });
+    }
+
+    /**
+     * Remettre tous les documents de l'association à is_featured = false
+     */
+    async unsetAllFeatured(options = {}) {
+        await Ressource.update(
+            { is_featured: false },
+            {
+                where: {
+                    projet_id:    null,
+                    evenement_id: null,
+                    is_featured:  true
+                },
+                ...options
+            }
+        );
     }
 }
 

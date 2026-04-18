@@ -89,15 +89,26 @@ const uploadEvenementPrincipal = multer({
     limits: { fileSize: 10 * 1024 * 1024 }
 }).single('image_principale');
 
-// ─── 4. Upload ressources (galerie) — single ou multiple ─────────────────────
-// Le nom du fichier stocké sur disque garde un timestamp pour éviter les conflits
-// physiques, mais on stocke aussi le nom_original en DB pour détecter les doublons.
+// ─── 4. Upload ressources — fichiers + couverture optionnelle en un seul appel
+// fields: 'files' (documents/images/vidéos, max 20) + 'image_couverture' (image, max 1)
+// La destination est déterminée par le fieldname :
+//   - 'image_couverture' → images/documents/couvertures/
+//   - 'files'            → logique habituelle selon mediaType + projet/événement
 
 const { Projet, Evenement } = require('../models');
 
 const ressourceStorage = multer.diskStorage({
     destination: async (req, file, cb) => {
         try {
+            // ── Couverture : destination fixe
+            if (file.fieldname === 'image_couverture') {
+                const dest = path.join(__dirname, '../data/ressources/images/documents/couvertures');
+                ensureDir(dest);
+                req._couvertureRelUrl = '/data/ressources/images/documents/couvertures';
+                return cb(null, dest);
+            }
+
+            // ── Fichiers principaux
             const mediaType   = getMediaType(file.originalname);
             const projetId    = req.body.projet_id;
             const evenementId = req.body.evenement_id;
@@ -114,6 +125,16 @@ const ressourceStorage = multer.diskStorage({
                 const folder = evt ? cleanFolderName(evt.titre_fr) : `evenement_${evenementId}`;
                 dest   = path.join(__dirname, `../data/ressources/images/evenements/${folder}/galerie`);
                 relUrl = `/data/ressources/images/evenements/${folder}/galerie`;
+            } else if (projetId && mediaType === 'documents') {
+                const projet = await Projet.findByPk(projetId, { attributes: ['titre_fr'] });
+                const folder = projet ? cleanFolderName(projet.titre_fr) : `projet_${projetId}`;
+                dest   = path.join(__dirname, `../data/ressources/documents/projets/${folder}`);
+                relUrl = `/data/ressources/documents/projets/${folder}`;
+            } else if (evenementId && mediaType === 'documents') {
+                const evt    = await Evenement.findByPk(evenementId, { attributes: ['titre_fr'] });
+                const folder = evt ? cleanFolderName(evt.titre_fr) : `evenement_${evenementId}`;
+                dest   = path.join(__dirname, `../data/ressources/documents/evenements/${folder}`);
+                relUrl = `/data/ressources/documents/evenements/${folder}`;
             } else {
                 dest   = path.join(__dirname, `../data/ressources/${mediaType}`);
                 relUrl = `/data/ressources/${mediaType}`;
@@ -131,7 +152,14 @@ const ressourceStorage = multer.diskStorage({
         }
     },
     filename: (req, file, cb) => {
-        const ext      = path.extname(file.originalname);
+        const ext = path.extname(file.originalname);
+
+        if (file.fieldname === 'image_couverture') {
+            const filename = `couverture-${Date.now()}-${Math.round(Math.random() * 1e6)}${ext}`;
+            req._couvertureFilename = filename;
+            return cb(null, filename);
+        }
+
         const filename = `r-${Date.now()}-${Math.round(Math.random() * 1e6)}${ext}`;
         if (req.uploadedUrls && file._urlIndex !== undefined) {
             req.uploadedUrls[file._urlIndex].filename = filename;
@@ -140,11 +168,19 @@ const ressourceStorage = multer.diskStorage({
     }
 });
 
+const combinedFilter = (req, file, cb) => {
+    if (file.fieldname === 'image_couverture') return imageFilter(req, file, cb);
+    return mediaFilter(req, file, cb);
+};
+
 const uploadRessources = multer({
     storage: ressourceStorage,
-    fileFilter: mediaFilter,
+    fileFilter: combinedFilter,
     limits: { fileSize: 50 * 1024 * 1024 }
-}).array('files', 20);
+}).fields([
+    { name: 'files',            maxCount: 20 },
+    { name: 'image_couverture', maxCount: 1  }
+]);
 
 module.exports = {
     uploadSimple,

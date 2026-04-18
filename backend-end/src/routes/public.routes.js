@@ -7,6 +7,7 @@ const domaineController     = require('../controllers/domaine.controller');
 const membreController      = require('../controllers/membre.controller');
 const benevoleController    = require('../controllers/benevole.controller');
 const partenariatController = require('../controllers/partenariat.controller');
+const ressourceController   = require('../controllers/ressource.controller');
 
 const { paginate } = require('../middlewares/pagination.middleware');
 
@@ -33,6 +34,9 @@ router.get('/benevoles',paginate, benevoleController.getAllByLang.bind(benevoleC
 
 // ─── Partenariats
 router.get('/partenariats',paginate, partenariatController.getAllByLang.bind(partenariatController));
+
+// ─── Ressources documents de l'association
+router.get('/ressources/documents', paginate, ressourceController.getDocumentsAssociation.bind(ressourceController));
 
 module.exports = router;
 
