@@ -13,8 +13,8 @@ const cleanFolderName = (name) =>
 
 const getMediaType = (filename) => {
     const ext = path.extname(filename).toLowerCase();
-    if (/jpeg|jpg|png|webp|gif/.test(ext))        return 'images';
-    if (/mp4|webm|mov|mkv|avi/.test(ext))         return 'videos';
+    if (/jpeg|jpg|png|webp|gif/.test(ext)) return 'images';
+    if (/mp4|webm|mov|mkv|avi/.test(ext))  return 'videos';
     return 'documents';
 };
 
@@ -41,8 +41,6 @@ const ensureDir = (dirPath) => {
 };
 
 // ─── 1. Upload simple — profils, logos, icônes ───────────────────────────────
-// Usage: uploadSimple('membres', 'photo_profile')
-// Résultat: /data/membres/[filename]
 
 const uploadSimple = (subfolder, fieldName) => multer({
     storage: multer.diskStorage({
@@ -58,9 +56,6 @@ const uploadSimple = (subfolder, fieldName) => multer({
 }).single(fieldName);
 
 // ─── 2. Upload image principale d'un projet ───────────────────────────────────
-// Usage: uploadProjetPrincipal
-// Résultat: /data/ressources/images/projets/[titre_fr]/principal/[filename]
-// Pose: req.uploadedUrl
 
 const uploadProjetPrincipal = multer({
     storage: multer.diskStorage({
@@ -78,9 +73,6 @@ const uploadProjetPrincipal = multer({
 }).single('image_principale');
 
 // ─── 3. Upload image principale d'un événement ───────────────────────────────
-// Usage: uploadEvenementPrincipal
-// Résultat: /data/ressources/images/evenements/[titre_fr]/principal/[filename]
-// Pose: req.uploadedUrl
 
 const uploadEvenementPrincipal = multer({
     storage: multer.diskStorage({
@@ -97,19 +89,26 @@ const uploadEvenementPrincipal = multer({
     limits: { fileSize: 10 * 1024 * 1024 }
 }).single('image_principale');
 
-// ─── 4. Upload ressources (galerie) — single ou multiple ─────────────────────
-// Usage: uploadRessources (dans la route POST /ressources)
-// Résultat selon contexte:
-//   - projet_id  → /data/ressources/images/projets/[titre_fr]/galerie/
-//   - evenement_id → /data/ressources/images/evenements/[titre_fr]/galerie/
-//   - aucun      → /data/ressources/[images|videos|documents]/
-// Pose: req.uploadedUrls (tableau)
+// ─── 4. Upload ressources — fichiers + couverture optionnelle en un seul appel
+// fields: 'files' (documents/images/vidéos, max 20) + 'image_couverture' (image, max 1)
+// La destination est déterminée par le fieldname :
+//   - 'image_couverture' → images/documents/couvertures/
+//   - 'files'            → logique habituelle selon mediaType + projet/événement
 
 const { Projet, Evenement } = require('../models');
 
 const ressourceStorage = multer.diskStorage({
     destination: async (req, file, cb) => {
         try {
+            // ── Couverture : destination fixe
+            if (file.fieldname === 'image_couverture') {
+                const dest = path.join(__dirname, '../data/ressources/images/documents/couvertures');
+                ensureDir(dest);
+                req._couvertureRelUrl = '/data/ressources/images/documents/couvertures';
+                return cb(null, dest);
+            }
+
+            // ── Fichiers principaux
             const mediaType   = getMediaType(file.originalname);
             const projetId    = req.body.projet_id;
             const evenementId = req.body.evenement_id;
@@ -121,13 +120,21 @@ const ressourceStorage = multer.diskStorage({
                 const folder = projet ? cleanFolderName(projet.titre_fr) : `projet_${projetId}`;
                 dest   = path.join(__dirname, `../data/ressources/images/projets/${folder}/galerie`);
                 relUrl = `/data/ressources/images/projets/${folder}/galerie`;
-
             } else if (evenementId && mediaType === 'images') {
                 const evt    = await Evenement.findByPk(evenementId, { attributes: ['titre_fr'] });
                 const folder = evt ? cleanFolderName(evt.titre_fr) : `evenement_${evenementId}`;
                 dest   = path.join(__dirname, `../data/ressources/images/evenements/${folder}/galerie`);
                 relUrl = `/data/ressources/images/evenements/${folder}/galerie`;
-
+            } else if (projetId && mediaType === 'documents') {
+                const projet = await Projet.findByPk(projetId, { attributes: ['titre_fr'] });
+                const folder = projet ? cleanFolderName(projet.titre_fr) : `projet_${projetId}`;
+                dest   = path.join(__dirname, `../data/ressources/documents/projets/${folder}`);
+                relUrl = `/data/ressources/documents/projets/${folder}`;
+            } else if (evenementId && mediaType === 'documents') {
+                const evt    = await Evenement.findByPk(evenementId, { attributes: ['titre_fr'] });
+                const folder = evt ? cleanFolderName(evt.titre_fr) : `evenement_${evenementId}`;
+                dest   = path.join(__dirname, `../data/ressources/documents/evenements/${folder}`);
+                relUrl = `/data/ressources/documents/evenements/${folder}`;
             } else {
                 dest   = path.join(__dirname, `../data/ressources/${mediaType}`);
                 relUrl = `/data/ressources/${mediaType}`;
@@ -135,13 +142,9 @@ const ressourceStorage = multer.diskStorage({
 
             ensureDir(dest);
 
-            // Accumuler les URLs pour le multi-upload
             if (!req.uploadedUrls) req.uploadedUrls = [];
-            req.uploadedUrls.push({ relUrl, filename: null }); // filename sera complété dans filename()
-
-            // Stocker l'index courant pour le lier au filename
-            file._urlIndex = req.uploadedUrls.length - 1;
-            file._relUrl   = relUrl;
+            file._urlIndex = req.uploadedUrls.length;
+            req.uploadedUrls.push({ relUrl });
 
             cb(null, dest);
         } catch (err) {
@@ -149,23 +152,35 @@ const ressourceStorage = multer.diskStorage({
         }
     },
     filename: (req, file, cb) => {
-        const ext      = path.extname(file.originalname);
-        const filename = `r-${Date.now()}-${Math.round(Math.random() * 1e6)}${ext}`;
+        const ext = path.extname(file.originalname);
 
-        // Mettre à jour le filename dans uploadedUrls
+        if (file.fieldname === 'image_couverture') {
+            const filename = `couverture-${Date.now()}-${Math.round(Math.random() * 1e6)}${ext}`;
+            req._couvertureFilename = filename;
+            return cb(null, filename);
+        }
+
+        const filename = `r-${Date.now()}-${Math.round(Math.random() * 1e6)}${ext}`;
         if (req.uploadedUrls && file._urlIndex !== undefined) {
             req.uploadedUrls[file._urlIndex].filename = filename;
         }
-
         cb(null, filename);
     }
 });
 
+const combinedFilter = (req, file, cb) => {
+    if (file.fieldname === 'image_couverture') return imageFilter(req, file, cb);
+    return mediaFilter(req, file, cb);
+};
+
 const uploadRessources = multer({
     storage: ressourceStorage,
-    fileFilter: mediaFilter,
+    fileFilter: combinedFilter,
     limits: { fileSize: 50 * 1024 * 1024 }
-}).array('files', 20); // max 20 fichiers à la fois
+}).fields([
+    { name: 'files',            maxCount: 20 },
+    { name: 'image_couverture', maxCount: 1  }
+]);
 
 module.exports = {
     uploadSimple,

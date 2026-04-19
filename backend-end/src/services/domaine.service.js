@@ -34,6 +34,10 @@ class DomaineService {
         return await domaineRepository.findAll(filters);
     }
 
+    async getAllDomainesOrdered() {
+        return await domaineRepository.findAllOrdered();
+    }
+
     /**
      * @desc    Recuperer avec un identifiant 
      */

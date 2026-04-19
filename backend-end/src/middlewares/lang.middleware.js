@@ -18,3 +18,4 @@ const validateLang = (req, res, next) => {
 };
 
 module.exports = { validateLang };
+

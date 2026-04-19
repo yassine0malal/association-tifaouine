@@ -10,6 +10,10 @@ class DomaineRepository {
         });
     }
 
+    async findAllOrdered() {
+        return await Domaine.findAll({ order: [['created_at', 'ASC']] });
+    }
+
     // trouve un domaine par id
     async findById(id) {
         return await Domaine.findByPk(id);
