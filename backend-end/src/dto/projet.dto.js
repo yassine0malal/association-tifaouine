@@ -22,8 +22,7 @@ const toProjetListDTO = (projet, lang) => ({
 });
 
 /**
- * DTO détail projet — correspond à project.json
- * projet est un objet plain (après .toJSON())
+ * 
  */
 const toProjetDetailDTO = (projet, lang) => ({
     id:          projet.id,
@@ -38,7 +37,9 @@ const toProjetDetailDTO = (projet, lang) => ({
     meta: {
         completion: projet.date_fin ? new Date(projet.date_fin).getFullYear() : null,
         domain:     projet.Domaine ? projet.Domaine[`nom_${lang}`] : null,
-        partners: projet.partenaires || null
+        partners:   projet.Partenariats && projet.Partenariats.length > 0
+            ? projet.Partenariats.map(p => p.nom)
+            : null
     },
     
 });
