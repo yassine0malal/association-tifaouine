@@ -208,7 +208,7 @@ module.exports = {
     ];
 
     await queryInterface.bulkInsert('projet',
-      projets.map(p => ({ ...p, created_at: now, updated_at: now }))
+      projets.map(({ partenaires, ...p }) => ({ ...p, created_at: now, updated_at: now }))
     );
   },
 
