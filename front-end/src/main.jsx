@@ -22,7 +22,7 @@ import RessourcesPage from "./features/ressources/Ressources.jsx";
 import EventList from "./features/evenements/event-list/EventList.jsx";
 import './styles/globals.css'
 import EventPage from "./features/evenements/event-page/EventPage.jsx";
-import VolunterPage from "./features/benevolat/VolunterPage.jsx";
+import JoinUsPage from "./features/benevolat/JoinUsPage.jsx";
 import Partner from "./features/partners/Partner.jsx";
 import Domain from "./features/domains/domainsPage/Domain.jsx";
 
@@ -50,10 +50,10 @@ createRoot(document.getElementById("root")).render(
             </Route>
 
             {/* Main Routes : Participez */}
-            <Route path="/:lang">
+            <Route path="/:lang/join-us">
               <Route path="Faire-un-don" element={<Footer />} />
-              <Route path="Devenir-membre" element={<Footer />} />
-              <Route path="benevoles" element={<VolunterPage />} />
+              <Route index element={<JoinUsPage />} />
+              <Route path=":contributor" element={<JoinUsPage />} />
             </Route>
 
             {/* Main Routes : Domaines */}

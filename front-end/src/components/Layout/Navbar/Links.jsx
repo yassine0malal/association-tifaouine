@@ -44,10 +44,11 @@ export default function Links() {
         {
             id: "participez",
             title: t("nav.getInvolved"),
-            to: null,
+            to: `/${i18n.language}/join-us`,
             subItems: [
                 { label: t("nav.dropdown.getInvolved.donate"), path: `/${i18n.language}/Faire-un-don` },
-                { label: t("nav.dropdown.getInvolved.becomeMember"), path: `/${i18n.language}/Devenir-membre` }
+                { label: t("nav.dropdown.getInvolved.becomeMember"), path: `/${i18n.language}/join-us/member` },
+                { label: t("nav.dropdown.getInvolved.becomeVolunteer"), path: `/${i18n.language}/join-us/volunteer` }
             ]
         },
         {

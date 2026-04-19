@@ -109,13 +109,13 @@
    SECTION 1: FOCUS AREA
 ----------------------------------------------- */
 
-.volunterPage .focusArea {
+.joinUsPage .focusArea {
   background: var(--bg);
   padding: clamp(2rem, 8vw, 5rem) clamp(1rem, 5vw, 2rem);
   animation: fadeInUp 0.6s ease-out;
 }
 
-.volunterPage .focusArea .container {
+.joinUsPage .focusArea .container {
   max-width: 1440px;
   margin: 0 auto;
   display: grid;
@@ -125,7 +125,7 @@
 }
 
 /* Image with hover zoom effect */
-.volunterPage .image {
+.joinUsPage .image {
   position: relative;
   border-radius: 6px;
   overflow: hidden;
@@ -148,7 +148,7 @@
   background-color: #00000010;
 } */
 
-.volunterPage .image::before {
+.joinUsPage .image::before {
   content: "";
   position: absolute;
   top: 0;
@@ -162,16 +162,16 @@
   pointer-events: none;
 }
 
-.volunterPage .image:hover::before {
+.joinUsPage .image:hover::before {
   opacity: 1;
 }
 
-.volunterPage .image:hover img {
+.joinUsPage .image:hover img {
   transform: scale(1.02);
   box-shadow: var(--shadow-hover);
 }
 
-.volunterPage .image img {
+.joinUsPage .image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -179,16 +179,16 @@
   transition: transform 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1);
 }
 
-.volunterPage .image:hover img {
+.joinUsPage .image:hover img {
   transform: scale(1.05);
 }
 
 /* Content typography */
-.volunterPage .content {
+.joinUsPage .content {
   animation: fadeInRight 0.6s ease-out 0.1s both;
 }
 
-.volunterPage .content h1 {
+.joinUsPage .content h1 {
   font-size: clamp(1.6rem, 5vw, 2.2rem);
   font-weight: 700;
   color: var(--text-color);
@@ -198,7 +198,7 @@
   transition: color 0.3s ease;
 }
 
-.volunterPage .content > p {
+.joinUsPage .content > p {
   font-size: clamp(0.88rem, 3vw, 1rem);
   color: var(--paragraph-color);
   line-height: 1.7;
@@ -207,7 +207,7 @@
 }
 
 /* Focus list items with hover animation */
-.volunterPage .focusList {
+.joinUsPage .focusList {
   list-style: none;
   display: flex;
   flex-direction: column;
@@ -215,7 +215,7 @@
   padding: 0;
 }
 
-.volunterPage .focusItem {
+.joinUsPage .focusItem {
   display: flex;
   align-items: flex-start;
   gap: 1.25rem;
@@ -226,22 +226,22 @@
   animation-delay: calc(0.1s * var(--item-index, 0));
 }
 
-.volunterPage .focusItem:nth-child(1) {
+.joinUsPage .focusItem:nth-child(1) {
   --item-index: 1;
 }
-.volunterPage .focusItem:nth-child(2) {
+.joinUsPage .focusItem:nth-child(2) {
   --item-index: 2;
 }
-.volunterPage .focusItem:nth-child(3) {
+.joinUsPage .focusItem:nth-child(3) {
   --item-index: 3;
 }
 
-.volunterPage .focusItem:hover {
+.joinUsPage .focusItem:hover {
   background: rgba(132, 84, 23, 0.04);
   transform: translateX(8px);
 }
 
-.volunterPage .focusItem .icon {
+.joinUsPage .focusItem .icon {
   flex-shrink: 0;
   width: 48px;
   height: 48px;
@@ -254,20 +254,20 @@
   transition: all 0.3s cubic-bezier(0.34, 1.2, 0.64, 1);
 }
 
-.volunterPage .focusItem:hover .icon {
+.joinUsPage .focusItem:hover .icon {
   background: var(--accent-light);
   transform: scale(1.08) rotate(5deg);
 }
 
-.volunterPage .focusItem .icon svg path {
+.joinUsPage .focusItem .icon svg path {
   transition: fill 0.25s ease;
 }
 
-.volunterPage .focusItem:hover .icon svg path {
+.joinUsPage .focusItem:hover .icon svg path {
   fill: var(--accent-strong);
 }
 
-.volunterPage .focusItem .details h3 {
+.joinUsPage .focusItem .details h3 {
   font-size: clamp(0.9rem, 3vw, 1rem);
   font-weight: 600;
   color: var(--text-color);
@@ -275,11 +275,11 @@
   transition: color 0.3s ease;
 }
 
-.volunterPage .focusItem:hover .details h3 {
+.joinUsPage .focusItem:hover .details h3 {
   color: var(--accent-strong);
 }
 
-.volunterPage .focusItem .details p {
+.joinUsPage .focusItem .details p {
   font-size: clamp(0.8rem, 2.5vw, 0.88rem);
   color: var(--paragraph-color);
   line-height: 1.6;
@@ -289,19 +289,19 @@
 /* --------------------------------------------
    SECTION 2: WHY JOIN US
 ----------------------------------------------- */
-.volunterPage .whyJoinUs {
+.joinUsPage .whyJoinUs {
   background: var(--section-bg);
   padding: clamp(3rem, 10vw, 5rem) clamp(1rem, 5vw, 2rem);
   width: 100%;
   animation: fadeInUp 0.6s ease-out;
 }
 
-.volunterPage .whyJoinUs .cardsContainer {
+.joinUsPage .whyJoinUs .cardsContainer {
   max-width: 1440px;
   margin: 0 auto;
 }
 
-.volunterPage .whyJoinUs .cardsContainer h1 {
+.joinUsPage .whyJoinUs .cardsContainer h1 {
   font-size: clamp(1.8rem, 6vw, 2.5rem);
   font-weight: 700;
   color: var(--text-h);
@@ -312,7 +312,7 @@
   animation: fadeInUp 0.5s ease-out;
 }
 
-.volunterPage .whyJoinUs .cardsContainer h1::after {
+.joinUsPage .whyJoinUs .cardsContainer h1::after {
   position: absolute;
   content: "";
   background-color: var(--accent);
@@ -325,19 +325,19 @@
   transition: width 0.4s ease;
 }
 
-.volunterPage .whyJoinUs .cardsContainer h1:hover::after {
+.joinUsPage .whyJoinUs .cardsContainer h1:hover::after {
   width: 100px;
 }
 
 /* Cards grid - responsive */
-.volunterPage .whyJoinUs .cards {
+.joinUsPage .whyJoinUs .cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 1.5rem;
 }
 
 /* Card styles with hover effects */
-.volunterPage .whyJoinUs .card {
+.joinUsPage .whyJoinUs .card {
   background: var(--bg-card);
   border-radius: 20px;
   padding: clamp(1.5rem, 4vw, 2rem);
@@ -350,36 +350,36 @@
   animation-delay: calc(0.1s * var(--card-index, 0));
 }
 
-.volunterPage .whyJoinUs .card:nth-child(1) {
+.joinUsPage .whyJoinUs .card:nth-child(1) {
   --card-index: 1;
 }
-.volunterPage .whyJoinUs .card:nth-child(2) {
+.joinUsPage .whyJoinUs .card:nth-child(2) {
   --card-index: 2;
 }
-.volunterPage .whyJoinUs .card:nth-child(3) {
+.joinUsPage .whyJoinUs .card:nth-child(3) {
   --card-index: 3;
 }
-.volunterPage .whyJoinUs .card:nth-child(4) {
+.joinUsPage .whyJoinUs .card:nth-child(4) {
   --card-index: 4;
 }
 
-.volunterPage .whyJoinUs .card:hover {
+.joinUsPage .whyJoinUs .card:hover {
   box-shadow: var(--shadow-hover);
   transform: translateY(-8px);
   border-color: var(--accent-light);
 }
 
-.volunterPage .whyJoinUs .card:hover .iconWrap {
+.joinUsPage .whyJoinUs .card:hover .iconWrap {
   background-color: var(--accent);
   transform: scale(1.08) rotate(8deg);
 }
 
-.volunterPage .whyJoinUs .card:hover .iconWrap svg path {
+.joinUsPage .whyJoinUs .card:hover .iconWrap svg path {
   fill: #fff;
   transition: fill 0.2s ease;
 }
 
-.volunterPage .whyJoinUs .iconWrap {
+.joinUsPage .whyJoinUs .iconWrap {
   width: 56px;
   height: 56px;
   background: var(--accent-very-light);
@@ -392,7 +392,7 @@
   transition: all 0.3s cubic-bezier(0.34, 1.2, 0.64, 1);
 }
 
-.volunterPage .whyJoinUs .card h3 {
+.joinUsPage .whyJoinUs .card h3 {
   font-size: clamp(1rem, 3vw, 1.125rem);
   font-weight: bold;
   color: var(--text-h);
@@ -400,11 +400,11 @@
   transition: color 0.3s ease;
 }
 
-.volunterPage .whyJoinUs .card:hover h3 {
+.joinUsPage .whyJoinUs .card:hover h3 {
   color: var(--accent-strong);
 }
 
-.volunterPage .whyJoinUs .card p {
+.joinUsPage .whyJoinUs .card p {
   font-size: clamp(0.8rem, 2.5vw, 0.875rem);
   color: var(--paragraph-color);
   line-height: 1.65;
@@ -414,19 +414,19 @@
 /* --------------------------------------------
    SECTION 3: LIFE AT TIFAOUINE
 ----------------------------------------------- */
-.volunterPage .lifeAtTifaouine {
+.joinUsPage .lifeAtTifaouine {
   background: var(--bg);
   padding: clamp(3rem, 10vw, 5rem) clamp(1rem, 5vw, 2rem);
   width: 100%;
   animation: fadeInUp 0.6s ease-out;
 }
 
-.volunterPage .lifeAtTifaouine .container {
+.joinUsPage .lifeAtTifaouine .container {
   margin: 0 auto;
   max-width: 1440px;
 }
 
-.volunterPage .lifeAtTifaouine .container h1 {
+.joinUsPage .lifeAtTifaouine .container h1 {
   font-size: clamp(1.8rem, 6vw, 2.25rem);
   font-weight: bold;
   margin-bottom: 1rem;
@@ -435,7 +435,7 @@
   animation: fadeInLeft 0.5s ease-out;
 }
 
-.volunterPage .lifeAtTifaouine .container > p {
+.joinUsPage .lifeAtTifaouine .container > p {
   width: 100%;
   max-width: 600px;
   margin-bottom: 3rem;
@@ -447,13 +447,13 @@
 }
 
 /* Images grid with staggered animation */
-.volunterPage .lifeAtTifaouine .container .images {
+.joinUsPage .lifeAtTifaouine .container .images {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 1.5rem;
 }
 
-.volunterPage .lifeAtTifaouine .container .images img {
+.joinUsPage .lifeAtTifaouine .container .images img {
   aspect-ratio: 1;
   width: 100%;
   height: 100%;
@@ -465,14 +465,14 @@
   animation-delay: calc(0.15s * var(--img-index, 0));
 }
 
-.volunterPage .lifeAtTifaouine .container .images img:hover {
+.joinUsPage .lifeAtTifaouine .container .images img:hover {
   scale: 1.02;
   box-shadow: var(--shadow-hover);
 }
 
 /* Staggered margin on desktop only */
 @media (min-width: 769px) {
-  .volunterPage .lifeAtTifaouine .container .images img:nth-child(2) {
+  .joinUsPage .lifeAtTifaouine .container .images img:nth-child(2) {
     margin-top: 2rem;
     transition:
       margin-top 0.3s ease,
@@ -483,20 +483,20 @@
 /* --------------------------------------------
    SECTION 5: CHOOSE YOUR PATH
 ----------------------------------------------- */
-.volunterPage .choseYourPath {
+.joinUsPage .choseYourPath {
   background-color: var(--section-bg);
   width: 100%;
   padding: clamp(3rem, 10vw, 4rem) clamp(1rem, 5vw, 2rem);
   animation: fadeInUp 0.6s ease-out;
 }
 
-.volunterPage .choseYourPath .container {
+.joinUsPage .choseYourPath .container {
   width: 100%;
   max-width: 1440px;
   margin: 0 auto;
 }
 
-.volunterPage .choseYourPath .container > h1 {
+.joinUsPage .choseYourPath .container > h1 {
   font-size: clamp(1.8rem, 6vw, 2.5rem);
   text-align: center;
   color: var(--text-color);
@@ -505,7 +505,7 @@
   animation: fadeInUp 0.5s ease-out;
 }
 
-.volunterPage .choseYourPath .container > p {
+.joinUsPage .choseYourPath .container > p {
   text-align: center;
   color: var(--paragraph-color);
   margin-bottom: clamp(2rem, 6vw, 3.6rem);
@@ -518,14 +518,14 @@
 }
 
 /* Paths grid - responsive */
-.volunterPage .choseYourPath .container .paths {
+.joinUsPage .choseYourPath .container .paths {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
 }
 
 /* Path cards */
-.volunterPage .choseYourPath .container .path {
+.joinUsPage .choseYourPath .container .path {
   background-color: var(--bg);
   border-radius: 28px;
   border-top: 4px solid var(--accent);
@@ -538,28 +538,28 @@
   animation-delay: calc(0.1s * var(--path-index, 0));
 }
 
-.volunterPage .choseYourPath .container .paths .path:first-child {
+.joinUsPage .choseYourPath .container .paths .path:first-child {
   --path-index: 1;
 }
-.volunterPage .choseYourPath .container .paths .path:last-child {
+.joinUsPage .choseYourPath .container .paths .path:last-child {
   --path-index: 2;
 }
 
-.volunterPage .choseYourPath .container .path:hover {
+.joinUsPage .choseYourPath .container .path:hover {
   transform: translateY(-10px);
   box-shadow: var(--shadow-hover);
 }
 
-.volunterPage .choseYourPath .container .path:last-child {
+.joinUsPage .choseYourPath .container .path:last-child {
   border-color: var(--icons-color);
 }
 
-.volunterPage .choseYourPath .container .path .icon {
+.joinUsPage .choseYourPath .container .path .icon {
   margin-bottom: 0.5rem;
   transition: all 0.3s cubic-bezier(0.34, 1.2, 0.64, 1);
 }
 
-.volunterPage .choseYourPath .container .path h2 {
+.joinUsPage .choseYourPath .container .path h2 {
   font-size: clamp(1.4rem, 4vw, 1.75rem);
   font-weight: bold;
   margin-bottom: 0.625rem;
@@ -567,15 +567,15 @@
   transition: color 0.3s ease;
 }
 
-.volunterPage .choseYourPath .container .path:hover h2 {
+.joinUsPage .choseYourPath .container .path:hover h2 {
   color: var(--accent-strong);
 }
 
-.volunterPage .choseYourPath .container .path:last-child:hover h2 {
+.joinUsPage .choseYourPath .container .path:last-child:hover h2 {
   color: var(--icons-color);
 }
 
-.volunterPage .choseYourPath .container .path > p {
+.joinUsPage .choseYourPath .container .path > p {
   font-size: clamp(0.88rem, 2.8vw, 1rem);
   color: var(--paragraph-color);
   line-height: 1.6;
@@ -584,7 +584,7 @@
 }
 
 /* Duties list */
-.volunterPage .choseYourPath .container .path ul {
+.joinUsPage .choseYourPath .container .path ul {
   list-style-type: none;
   display: flex;
   flex-direction: column;
@@ -592,7 +592,7 @@
   margin-bottom: 3rem;
 }
 
-.volunterPage .choseYourPath .container .path ul li {
+.joinUsPage .choseYourPath .container .path ul li {
   display: flex;
   align-items: flex-start;
   font-size: clamp(0.85rem, 2.5vw, 1rem);
@@ -601,39 +601,39 @@
   cursor: pointer;
 }
 
-.volunterPage .choseYourPath .container .path ul li:hover {
+.joinUsPage .choseYourPath .container .path ul li:hover {
   transform: translateX(8px);
   color: var(--text-color);
 }
 
-.volunterPage .choseYourPath .container .path ul li svg {
+.joinUsPage .choseYourPath .container .path ul li svg {
   margin-top: 3px;
   margin-right: 12px;
   flex-shrink: 0;
   transition: all 0.3s cubic-bezier(0.34, 1.2, 0.64, 1);
 }
 
-[dir="rtl"] .volunterPage .choseYourPath .container .path ul li svg {
+[dir="rtl"] .joinUsPage .choseYourPath .container .path ul li svg {
   margin-left: 12px;
   margin-right: 0;
 }
 
-.volunterPage .choseYourPath .container .path ul li:hover svg {
+.joinUsPage .choseYourPath .container .path ul li:hover svg {
   transform: scale(1.15);
 }
 
-.volunterPage .choseYourPath .container .path ul li strong {
+.joinUsPage .choseYourPath .container .path ul li strong {
   font-weight: 600;
   color: var(--text-color);
   transition: color 0.3s ease;
 }
 
-.volunterPage .choseYourPath .container .path ul li:hover strong {
+.joinUsPage .choseYourPath .container .path ul li:hover strong {
   color: var(--accent-strong);
 }
 
 /* Requirements box */
-.volunterPage .choseYourPath .container .path .requirements {
+.joinUsPage .choseYourPath .container .path .requirements {
   padding: 1.5rem;
   background-color: var(--section-bg);
   color: var(--paragraph-color);
@@ -644,13 +644,13 @@
   transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
 }
 
-.volunterPage .choseYourPath .container .path:hover .requirements {
+.joinUsPage .choseYourPath .container .path:hover .requirements {
   background-color: #f0ede5;
   transform: scale(1.01);
 }
 
 /* Buttons with hover effect */
-.volunterPage .choseYourPath .container .path a {
+.joinUsPage .choseYourPath .container .path a {
   all: unset;
   padding: 0.875rem 1.75rem;
   background: linear-gradient(135deg, var(--accent-strong), var(--accent));
@@ -667,35 +667,35 @@
   text-align: center;
 }
 
-.volunterPage .choseYourPath .container .path a:hover {
+.joinUsPage .choseYourPath .container .path a:hover {
   transform: translateY(-4px);
   box-shadow: 0 10px 25px rgba(132, 84, 23, 0.35);
   filter: brightness(1.05);
 }
 
-.volunterPage .choseYourPath .container .path a:active {
+.joinUsPage .choseYourPath .container .path a:active {
   transform: translateY(0);
 }
 
-.volunterPage .choseYourPath .container .path:last-child a {
+.joinUsPage .choseYourPath .container .path:last-child a {
   background: linear-gradient(135deg, var(--icons-color), #2d8a2a);
 }
 
-.volunterPage .choseYourPath .container .path:last-child a:hover {
+.joinUsPage .choseYourPath .container .path:last-child a:hover {
   box-shadow: 0 10px 25px rgba(75, 175, 71, 0.35);
 }
 
 /* --------------------------------------------
    SECTION 6: APPLICATION FORM
 ----------------------------------------------- */
-.volunterPage .applicationForm {
+.joinUsPage .applicationForm {
   width: 100%;
   background-color: var(--bg);
   padding: clamp(3rem, 10vw, 4rem) clamp(1rem, 5vw, 2rem);
   animation: fadeInUp 0.6s ease-out;
 }
 
-.volunterPage .applicationForm > h1 {
+.joinUsPage .applicationForm > h1 {
   font-size: clamp(1.8rem, 6vw, 2.5rem);
   text-align: center;
   color: var(--text-color);
@@ -704,7 +704,7 @@
   animation: fadeInUp 0.5s ease-out;
 }
 
-.volunterPage .applicationForm > p {
+.joinUsPage .applicationForm > p {
   text-align: center;
   color: var(--paragraph-color);
   margin-bottom: clamp(2rem, 6vw, 3.6rem);
@@ -716,7 +716,7 @@
   animation: fadeInUp 0.5s ease-out 0.1s both;
 }
 
-.volunterPage .applicationForm .container {
+.joinUsPage .applicationForm .container {
   display: grid;
   grid-template-columns: minmax(250px, 1fr) 1fr;
   max-width: 1280px;
@@ -728,7 +728,7 @@
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
-.volunterPage .applicationForm .container .banner {
+.joinUsPage .applicationForm .container .banner {
   width: 100%;
   background-color: var(--accent-very-light);
 }
@@ -737,7 +737,7 @@
    JOURNEY STEPS
 ----------------------------------------------- */
 
-.volunterPage .journey {
+.joinUsPage .journey {
   width: 100%;
   padding: clamp(1.5rem, 6vw, 4rem);
   transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
@@ -747,15 +747,15 @@
   flex-direction: column;
 }
 
-.volunterPage .journey img {
+.joinUsPage .journey img {
   width: 100%;
 }
-.volunterPage .journey h1 {
+.joinUsPage .journey h1 {
   margin-bottom: 24px;
 }
 
 /* Step items with numbered circles */
-.volunterPage .step {
+.joinUsPage .step {
   padding: 1.5rem 1.5rem 2rem 4rem;
   position: relative;
   transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
@@ -764,26 +764,26 @@
   animation-delay: calc(0.1s * var(--step-index, 0));
 }
 
-.volunterPage .step:nth-child(1) {
+.joinUsPage .step:nth-child(1) {
   --step-index: 1;
 }
-.volunterPage .step:nth-child(2) {
+.joinUsPage .step:nth-child(2) {
   --step-index: 2;
 }
-.volunterPage .step:nth-child(3) {
+.joinUsPage .step:nth-child(3) {
   --step-index: 3;
 }
-.volunterPage .step:nth-child(4) {
+.joinUsPage .step:nth-child(4) {
   --step-index: 4;
 }
 
-.volunterPage .step:hover {
+.joinUsPage .step:hover {
   background: rgba(203, 145, 79, 0.05);
   transform: translateX(8px);
 }
 
 /* Number circle */
-.volunterPage .step::before {
+.joinUsPage .step::before {
   content: "1";
   text-align: center;
   line-height: 2.2;
@@ -800,23 +800,23 @@
   box-shadow: 0 4px 10px rgba(132, 84, 23, 0.3);
 }
 
-.volunterPage .step:hover::before {
+.joinUsPage .step:hover::before {
   transform: scale(1.12);
   box-shadow: 0 6px 16px rgba(132, 84, 23, 0.4);
 }
 
-.volunterPage .step:nth-child(2)::before {
+.joinUsPage .step:nth-child(2)::before {
   content: "2";
 }
-.volunterPage .step:nth-child(3)::before {
+.joinUsPage .step:nth-child(3)::before {
   content: "3";
 }
-.volunterPage .step:nth-child(4)::before {
+.joinUsPage .step:nth-child(4)::before {
   content: "4";
 }
 
 /* Connecting line between steps */
-.volunterPage .step::after {
+.joinUsPage .step::after {
   content: "";
   position: absolute;
   left: 18px;
@@ -827,16 +827,16 @@
   transition: all 0.3s ease;
 }
 
-.volunterPage .step:hover::after {
+.joinUsPage .step:hover::after {
   background: linear-gradient(to bottom, var(--accent-strong), transparent);
   width: 3px;
 }
 
-.volunterPage .step:last-child:after {
+.joinUsPage .step:last-child:after {
   display: none;
 }
 
-.volunterPage .step h3 {
+.joinUsPage .step h3 {
   font-size: clamp(1.1rem, 3.5vw, 1.25rem);
   font-weight: bold;
   margin-bottom: 0.5rem;
@@ -844,11 +844,11 @@
   transition: color 0.3s ease;
 }
 
-.volunterPage .step:hover h3 {
+.joinUsPage .step:hover h3 {
   color: var(--accent-strong);
 }
 
-.volunterPage .step p {
+.joinUsPage .step p {
   font-size: clamp(0.8rem, 2.5vw, 0.875rem);
   color: var(--paragraph-color);
   line-height: 1.6;
@@ -856,19 +856,19 @@
 }
 
 /* RTL Support */
-[dir="rtl"] .volunterPage .step {
+[dir="rtl"] .joinUsPage .step {
   padding: 1.5rem 4rem 2rem 1.5rem;
 }
-[dir="rtl"] .volunterPage .step::before {
+[dir="rtl"] .joinUsPage .step::before {
   right: 0;
   left: auto;
 }
-[dir="rtl"] .volunterPage .step::after {
+[dir="rtl"] .joinUsPage .step::after {
   right: 18px;
   left: auto;
 }
 
-.volunterPage .applicationForm form {
+.joinUsPage .applicationForm form {
   width: 100%;
   margin: 0 auto;
   padding: clamp(1.5rem, 6vw, 4rem);
@@ -879,7 +879,7 @@
   animation: scaleIn 0.5s ease-out;
 }
 
-.volunterPage .applicationForm form h2 {
+.joinUsPage .applicationForm form h2 {
   font-size: 24px;
   font-weight: bold;
   width: max-content;
@@ -889,7 +889,7 @@
   transition: color 0.3s ease;
 }
 
-.volunterPage .applicationForm form > p {
+.joinUsPage .applicationForm form > p {
   text-align: center;
   font-size: clamp(0.88rem, 3vw, 1rem);
   margin-bottom: 3rem;
@@ -898,20 +898,20 @@
 }
 
 /* Form grid for two columns */
-.volunterPage .applicationForm form .twoInputs {
+.joinUsPage .applicationForm form .twoInputs {
   display: flex;
   width: 100%;
   gap: 1.5rem;
   flex-wrap: wrap;
 }
 
-.volunterPage .applicationForm form .twoInputs .wrapper {
+.joinUsPage .applicationForm form .twoInputs .wrapper {
   flex: 1;
   min-width: 180px;
 }
 
 /* Form wrapper */
-.volunterPage .applicationForm form .wrapper {
+.joinUsPage .applicationForm form .wrapper {
   display: flex;
   flex-direction: column;
   margin-bottom: 1.5rem;
@@ -920,26 +920,26 @@
   animation-delay: calc(0.05s * var(--field-index, 0));
 }
 
-.volunterPage .applicationForm form .wrapper:nth-child(1) {
+.joinUsPage .applicationForm form .wrapper:nth-child(1) {
   --field-index: 1;
 }
-.volunterPage .applicationForm form .wrapper:nth-child(2) {
+.joinUsPage .applicationForm form .wrapper:nth-child(2) {
   --field-index: 2;
 }
-.volunterPage .applicationForm form .wrapper:nth-child(3) {
+.joinUsPage .applicationForm form .wrapper:nth-child(3) {
   --field-index: 3;
 }
-.volunterPage .applicationForm form .wrapper:nth-child(4) {
+.joinUsPage .applicationForm form .wrapper:nth-child(4) {
   --field-index: 4;
 }
-.volunterPage .applicationForm form .wrapper:nth-child(5) {
+.joinUsPage .applicationForm form .wrapper:nth-child(5) {
   --field-index: 5;
 }
-.volunterPage .applicationForm form .wrapper:nth-child(6) {
+.joinUsPage .applicationForm form .wrapper:nth-child(6) {
   --field-index: 6;
 }
 
-.volunterPage .applicationForm form .wrapper label {
+.joinUsPage .applicationForm form .wrapper label {
   font-size: 0.75rem;
   letter-spacing: 1.2px;
   line-height: 1.6;
@@ -949,16 +949,16 @@
   transition: color 0.3s ease;
 }
 
-.volunterPage .applicationForm form .wrapper:hover label {
+.joinUsPage .applicationForm form .wrapper:hover label {
   color: var(--accent-strong);
 }
 
 /* Inputs with focus effect */
-.volunterPage .applicationForm form .wrapper input[type="text"],
-.volunterPage .applicationForm form .wrapper input[type="email"],
-.volunterPage .applicationForm form .wrapper input[type="tel"],
-.volunterPage .applicationForm form .wrapper select,
-.volunterPage .applicationForm form .wrapper textarea {
+.joinUsPage .applicationForm form .wrapper input[type="text"],
+.joinUsPage .applicationForm form .wrapper input[type="email"],
+.joinUsPage .applicationForm form .wrapper input[type="tel"],
+.joinUsPage .applicationForm form .wrapper select,
+.joinUsPage .applicationForm form .wrapper textarea {
   width: 100%;
   height: 55px;
   padding: 0 1rem;
@@ -970,46 +970,46 @@
   transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
 }
 
-.volunterPage .applicationForm form .wrapper select option {
+.joinUsPage .applicationForm form .wrapper select option {
   background-color: var(--section-bg);
 }
 
-.volunterPage .applicationForm form .wrapper textarea {
+.joinUsPage .applicationForm form .wrapper textarea {
   height: auto;
   padding: 1rem;
   min-height: 120px;
   resize: vertical;
 }
 
-.volunterPage .applicationForm form .wrapper input:focus,
-.volunterPage .applicationForm form .wrapper select:focus,
-.volunterPage .applicationForm form .wrapper textarea:focus {
+.joinUsPage .applicationForm form .wrapper input:focus,
+.joinUsPage .applicationForm form .wrapper select:focus,
+.joinUsPage .applicationForm form .wrapper textarea:focus {
   border-color: var(--accent);
   background-color: #fff;
   box-shadow: 0 0 0 4px rgba(203, 145, 79, 0.15);
   transform: scale(1.01);
 }
 
-.volunterPage .applicationForm form .wrapper input[type="text"]::placeholder,
-.volunterPage .applicationForm form .wrapper input[type="tel"]::placeholder,
-.volunterPage .applicationForm form .wrapper input[type="email"]::placeholder,
-.volunterPage .applicationForm form .wrapper textarea::placeholder {
+.joinUsPage .applicationForm form .wrapper input[type="text"]::placeholder,
+.joinUsPage .applicationForm form .wrapper input[type="tel"]::placeholder,
+.joinUsPage .applicationForm form .wrapper input[type="email"]::placeholder,
+.joinUsPage .applicationForm form .wrapper textarea::placeholder {
   color: #d5c3b4;
   font-weight: 300;
   transition: opacity 0.3s ease;
 }
 
-.volunterPage .applicationForm form .wrapper input:focus::placeholder,
-.volunterPage .applicationForm form .wrapper textarea:focus::placeholder {
+.joinUsPage .applicationForm form .wrapper input:focus::placeholder,
+.joinUsPage .applicationForm form .wrapper textarea:focus::placeholder {
   opacity: 0.5;
 }
 
 /* File upload styling */
-.volunterPage .applicationForm form .wrapper input[type="file"] {
+.joinUsPage .applicationForm form .wrapper input[type="file"] {
   display: none;
 }
 
-.volunterPage .applicationForm form .wrapper .fileLabel {
+.joinUsPage .applicationForm form .wrapper .fileLabel {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -1024,33 +1024,33 @@
   padding: 16px;
 }
 
-.volunterPage .applicationForm form .wrapper .fileLabel:hover {
+.joinUsPage .applicationForm form .wrapper .fileLabel:hover {
   border-color: var(--accent);
   background-color: #f5f4ed;
   transform: scale(0.98);
 }
 
-.volunterPage .applicationForm form .wrapper .fileLabel svg {
+.joinUsPage .applicationForm form .wrapper .fileLabel svg {
   margin-bottom: 0.5rem;
   transition: all 0.3s cubic-bezier(0.34, 1.2, 0.64, 1);
 }
 
-.volunterPage .applicationForm form .wrapper .fileLabel:hover svg {
+.joinUsPage .applicationForm form .wrapper .fileLabel:hover svg {
   transform: scale(1.08);
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
 }
 
-.volunterPage .applicationForm form .wrapper .fileLabel span {
+.joinUsPage .applicationForm form .wrapper .fileLabel span {
   transition: color 0.3s ease;
   text-align: center;
 }
 
-.volunterPage .applicationForm form .wrapper .fileLabel:hover span {
+.joinUsPage .applicationForm form .wrapper .fileLabel:hover span {
   color: var(--accent-strong);
 }
 
 /* Submit button */
-.volunterPage .applicationForm form button {
+.joinUsPage .applicationForm form button {
   padding: 1rem 0;
   font-weight: 600;
   font-size: clamp(1rem, 3vw, 1.125rem);
@@ -1066,7 +1066,7 @@
   overflow: hidden;
 }
 
-.volunterPage .applicationForm form button::before {
+.joinUsPage .applicationForm form button::before {
   content: "";
   position: absolute;
   top: 0;
@@ -1082,22 +1082,22 @@
   transition: left 0.5s ease;
 }
 
-.volunterPage .applicationForm form button:hover::before {
+.joinUsPage .applicationForm form button:hover::before {
   left: 100%;
 }
 
-.volunterPage .applicationForm form button:hover {
+.joinUsPage .applicationForm form button:hover {
   transform: translateY(-4px);
   box-shadow: 0 12px 28px rgba(132, 84, 23, 0.3);
   filter: brightness(1.03);
 }
 
-.volunterPage .applicationForm form button:active {
+.joinUsPage .applicationForm form button:active {
   transform: translateY(0);
 }
 
 /* Response message */
-.volunterPage .applicationForm form .responseMsg {
+.joinUsPage .applicationForm form .responseMsg {
   margin-bottom: 0;
   display: flex;
   align-items: center;
@@ -1109,16 +1109,16 @@
   animation: scaleIn 0.3s ease-out;
 }
 
-.volunterPage .applicationForm form .responseMsg:hover {
+.joinUsPage .applicationForm form .responseMsg:hover {
   color: var(--accent-strong);
 }
 
-.volunterPage .applicationForm form .responseMsg svg {
+.joinUsPage .applicationForm form .responseMsg svg {
   transition: transform 0.3s ease;
   animation: pulse 2s infinite;
 }
 
-.volunterPage .applicationForm form .responseMsg:hover svg {
+.joinUsPage .applicationForm form .responseMsg:hover svg {
   transform: scale(1.1);
 }
 
@@ -1137,7 +1137,7 @@
 /* --------------------------------------------
    FORM VALIDATION STYLES
 ----------------------------------------------- */
-.volunterPage .applicationForm form .wrapper.error label {
+.joinUsPage .applicationForm form .wrapper.error label {
   color: #d32f2f;
   animation: shake 0.3s ease-out;
 }
@@ -1155,13 +1155,13 @@
   }
 }
 
-.volunterPage .applicationForm form .wrapper .inputError {
+.joinUsPage .applicationForm form .wrapper .inputError {
   border-color: #d32f2f48 !important;
   background-color: #fff5f5 !important;
   animation: shake 0.3s ease-out;
 }
 
-.volunterPage .applicationForm form .wrapper .errorMessage {
+.joinUsPage .applicationForm form .wrapper .errorMessage {
   font-size: 0.7rem;
   color: #d32f2f;
   margin-top: 0.25rem;
@@ -1169,39 +1169,39 @@
   animation: fadeInUp 0.2s ease-out;
 }
 
-.volunterPage .applicationForm form .responseMsg.success {
+.joinUsPage .applicationForm form .responseMsg.success {
   color: #2e7d32;
 }
 
-.volunterPage .applicationForm form .responseMsg.error {
+.joinUsPage .applicationForm form .responseMsg.error {
   color: #d32f2f;
 }
 
-.volunterPage .applicationForm form button:disabled {
+.joinUsPage .applicationForm form button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
   transform: none;
 }
 
-.volunterPage .applicationForm form button:disabled:hover {
+.joinUsPage .applicationForm form button:disabled:hover {
   transform: none;
   box-shadow: none;
 }
 
-.volunterPage .applicationForm form button:disabled::before {
+.joinUsPage .applicationForm form button:disabled::before {
   display: none;
 }
 
 /* --------------------------------------------
    SCROLL REVEAL ANIMATIONS (Optional)
 ----------------------------------------------- */
-.volunterPage [data-scroll] {
+.joinUsPage [data-scroll] {
   opacity: 0;
   transform: translateY(30px);
   transition: all 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1);
 }
 
-.volunterPage [data-scroll].visible {
+.joinUsPage [data-scroll].visible {
   opacity: 1;
   transform: translateY(0);
 }
@@ -1210,108 +1210,108 @@
    RESPONSIVE BREAKPOINTS
 ----------------------------------------------- */
 @media (min-width: 1025px) and (max-width: 1100px) {
-  .volunterPage .applicationForm form {
+  .joinUsPage .applicationForm form {
     padding: 28px;
   }
 
-  .volunterPage .journey {
+  .joinUsPage .journey {
     padding: 24px;
   }
 }
 
 /* Tablet */
 @media (max-width: 1024px) {
-  .volunterPage .whyJoinUs .cards {
+  .joinUsPage .whyJoinUs .cards {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .volunterPage .image {
+  .joinUsPage .image {
     aspect-ratio: 3 / 4;
   }
 
-  .volunterPage .choseYourPath .container .paths {
+  .joinUsPage .choseYourPath .container .paths {
     gap: 1.5rem;
   }
-  .volunterPage .applicationForm .container {
+  .joinUsPage .applicationForm .container {
     display: flex;
     flex-direction: column;
   }
-  .volunterPage .applicationForm .container .banner img {
+  .joinUsPage .applicationForm .container .banner img {
     display: none;
   }
 }
 
 /* Mobile landscape */
 @media (max-width: 800px) {
-  .volunterPage .focusArea .container {
+  .joinUsPage .focusArea .container {
     grid-template-columns: 1fr;
     gap: 2rem;
   }
 
-  .volunterPage .focusArea .image {
+  .joinUsPage .focusArea .image {
     max-height: 340px;
     aspect-ratio: 4 / 3;
   }
 
-  .volunterPage .lifeAtTifaouine .container .images {
+  .joinUsPage .lifeAtTifaouine .container .images {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .volunterPage .lifeAtTifaouine .container .images img {
+  .joinUsPage .lifeAtTifaouine .container .images img {
     aspect-ratio: 4/3;
   }
 
-  .volunterPage .lifeAtTifaouine .container .images img:nth-child(2) {
+  .joinUsPage .lifeAtTifaouine .container .images img:nth-child(2) {
     margin-top: 0;
   }
 
-  .volunterPage .applicationForm form .twoInputs {
+  .joinUsPage .applicationForm form .twoInputs {
     flex-direction: column;
     gap: 0;
   }
 
   /* Disable some animations on mobile for performance */
-  .volunterPage .focusItem:hover {
+  .joinUsPage .focusItem:hover {
     transform: translateX(4px);
   }
 
-  .volunterPage .whyJoinUs .card:hover {
+  .joinUsPage .whyJoinUs .card:hover {
     transform: translateY(-4px);
   }
 
-  .volunterPage .applicationForm .container {
+  .joinUsPage .applicationForm .container {
     flex-direction: column;
   }
-  .volunterPage .applicationForm .container .banner {
+  .joinUsPage .applicationForm .container .banner {
     width: 100%;
   }
 }
 
 @media (max-width: 768px) {
-  .volunterPage .choseYourPath .container .paths {
+  .joinUsPage .choseYourPath .container .paths {
     grid-template-columns: 1fr;
   }
 }
 
 /* Mobile portrait */
 @media (max-width: 640px) {
-  .volunterPage .whyJoinUs .cards {
+  .joinUsPage .whyJoinUs .cards {
     grid-template-columns: 1fr;
   }
 
-  .volunterPage .whyJoinUs .cardsContainer h1 {
+  .joinUsPage .whyJoinUs .cardsContainer h1 {
     font-size: 1.75rem;
   }
 
-  .volunterPage .lifeAtTifaouine .container .images {
+  .joinUsPage .lifeAtTifaouine .container .images {
     grid-template-columns: 1fr;
   }
 
-  .volunterPage .step {
+  .joinUsPage .step {
     padding: 1rem 1rem 1.5rem 3.5rem;
   }
 
-  .volunterPage .step::before {
+  .joinUsPage .step::before {
     width: 32px;
     height: 32px;
     line-height: 1.9;
@@ -1319,69 +1319,69 @@
     top: 1rem;
   }
 
-  .volunterPage .step::after {
+  .joinUsPage .step::after {
     left: 14px;
     top: 55px;
   }
 
-  .volunterPage .applicationForm form {
+  .joinUsPage .applicationForm form {
     padding: 1.5rem;
   }
 
   /* Disable transform animations on very small screens */
-  .volunterPage .focusItem:hover {
+  .joinUsPage .focusItem:hover {
     transform: translateX(0);
   }
 
-  .volunterPage .whyJoinUs .card:hover {
+  .joinUsPage .whyJoinUs .card:hover {
     transform: translateY(-2px);
   }
 }
 
 /* Small mobile */
 @media (max-width: 480px) {
-  .volunterPage section {
+  .joinUsPage section {
     padding: 2rem 1rem;
   }
 
-  .volunterPage .focusArea .content h1 {
+  .joinUsPage .focusArea .content h1 {
     font-size: 1.35rem;
   }
 
-  .volunterPage .focusItem .icon {
+  .joinUsPage .focusItem .icon {
     width: 40px;
     height: 40px;
   }
 
-  .volunterPage .step h3 {
+  .joinUsPage .step h3 {
     font-size: 1rem;
   }
 
-  .volunterPage .step p {
+  .joinUsPage .step p {
     font-size: 0.8rem;
   }
 
-  .volunterPage .applicationForm {
+  .joinUsPage .applicationForm {
     padding: 1rem;
   }
 }
 
 /* Extra small */
 @media (max-width: 360px) {
-  .volunterPage section {
+  .joinUsPage section {
     padding: 1.5rem 0.75rem !important;
   }
 
-  .volunterPage .choseYourPath .container .path {
+  .joinUsPage .choseYourPath .container .path {
     padding: 1.25rem;
   }
 }
 
 /* Reduced motion preference */
 @media (prefers-reduced-motion: reduce) {
-  .volunterPage *,
-  .volunterPage *::before,
-  .volunterPage *::after {
+  .joinUsPage *,
+  .joinUsPage *::before,
+  .joinUsPage *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;

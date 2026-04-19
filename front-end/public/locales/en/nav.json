@@ -17,7 +17,8 @@
       },
       "getInvolved": {
         "donate": "Make a donation",
-        "becomeMember": "Become a member"
+        "becomeMember": "Become a member",
+        "becomeVolunteer": "Become a volunteer"
       },
       "domains": {
         "education": "Education",
