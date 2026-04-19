@@ -41,7 +41,7 @@ module.exports = {
         'Province du Haouz',
         'Association Afoulki Tahnaout',
         'Direction Régionale des Eaux et Forêts - Parc National de Toubkal',
-        'Alter Domus'
+        'ALTER DOMUS Belgique'
       ]),
 
       // Jardin d'enfants et école coranique
