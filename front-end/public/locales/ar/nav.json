@@ -16,8 +16,9 @@
         "news": "الأخبار"
       },
       "getInvolved": {
-        "donate": "تقديم تبرع",
-        "becomeMember": "الانضمام كعضو"
+        "donate": "تبرع الآن",
+        "becomeMember": "كن عضوًا",
+        "becomeVolunteer": "كن متطوعًا"
       },
       "domains": {
         "education": "التعليم",

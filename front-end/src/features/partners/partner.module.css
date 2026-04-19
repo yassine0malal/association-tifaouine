@@ -141,13 +141,16 @@
 }
 
 .bePartner p {
-    color: var(--text-green-color);
+    color: var(--bg);
+    max-width: 700px;
+    font-size: 16px;
+    
 
 }
 
 .bePartner h2 {
     padding: 30px 12px;
-    font-size: 32px;
+    font-size: 42px;
 }
 
 .bePartner a {
@@ -162,18 +165,20 @@
     align-items: center;
     background-color: var(--accent);
     border-radius: 6px;
-    padding: 12px 8px;
+    padding: 16px 20px;
     margin-top: 40px;
     gap: 10px;
     font-weight: 600;
     color: var(--color-contact-btn);
-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
 
 }
-.bePartner button:hover{
+
+.bePartner button:hover {
     scale: 1.1;
 }
-.bePartner button:active{
+
+.bePartner button:active {
     scale: 1.0;
 }
 
@@ -186,7 +191,7 @@ transition: all 0.3s ease-in-out;
     flex-direction: column;
     border: 1px solid var(--accent-strong);
     border-radius: 14px;
-    background-color: var(--dark-green-color);
+    background: linear-gradient(135deg, #006e0f , #4BAF47, #2EB431 ,#006e0f );
     padding: 50px;
     text-align: center;
     color: var(--accent-very-light);

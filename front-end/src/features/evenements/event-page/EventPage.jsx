@@ -17,7 +17,7 @@ import Loader from "../../../components/common/Loader";
 import { useTranslation } from "react-i18next";
 import i18n from "../../../i18n";
 
-function RelatedEvent({ id, img, title, date_start }) {
+function LastEvent({ id, img, title, date_start }) {
   return (
     <Link to={`/evenement/${id}`} className={styles.event}>
       <div className={styles.image}>
@@ -80,13 +80,13 @@ function EventPage() {
   }, [dispatch, currentLang]);
 
   const images = data?.images || [];
-  const relatedEvents = data?.related_events || [];
+  const LastEvents = data?.last_posts || [];
   const commonEvents = data?.common_events || [];
   
 
-  const renderRelatedEvents = () => {
-    return relatedEvents.map((event) => (
-      <RelatedEvent key={event.id} {...event} />
+  const renderLastEvents = () => {
+    return LastEvents.map((event) => (
+      <LastEvent key={event.id} {...event} />
     ));
   };
 
@@ -204,8 +204,8 @@ function EventPage() {
           <div className={styles.col2}>
             <div className={styles.wrapper}>
               <h3>{t("event.last_posts")}</h3>
-              <div className={styles.relatedEvents}>
-                {renderRelatedEvents()}
+              <div className={styles.lastEvents}>
+                {renderLastEvents()}
               </div>
             </div>
 

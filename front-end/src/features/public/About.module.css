@@ -65,7 +65,7 @@
   transition: all 0.3s ease-in-out;
 }
 
-section article .cercle {
+.AboutSection section article .cercle {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -79,34 +79,34 @@ section article .cercle {
   transform: translateY(-10px);
 }
 
-section article:hover .cercle {
+.AboutSection section article:hover .cercle {
   transition: all 0.3s ease-in-out;
   background-color: var(--accent-strong);
 
 }
 
-section article .cercle svg {
+.AboutSection section article .cercle svg {
   transition: all 0.3S ease-in-out;
 }
 
-section article:hover .cercle svg {
+.AboutSection section article:hover .cercle svg {
   stroke: var(--bg-cream);
 }
 
-section article div {
+.AboutSection section article div {
   padding: 17px;
 }
 
-section article div h2 {
+.AboutSection section article div h2 {
   font-size: 40px;
   font-weight: 800;
 }
 
-section article div p {
+.AboutSection section article div p {
   position: relative;
 }
 
-section article div p::before {
+.AboutSection section article div p::before {
   content: "";
   width: 3em;
   height: 3px;

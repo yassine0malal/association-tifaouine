@@ -22,8 +22,8 @@ import RessourcesPage from "./features/ressources/Ressources.jsx";
 import EventList from "./features/evenements/event-list/EventList.jsx";
 import './styles/globals.css'
 import EventPage from "./features/evenements/event-page/EventPage.jsx";
+import JoinUsPage from "./features/benevolat/JoinUsPage.jsx";
 import Partner from "./features/partners/Partner.jsx";
-// import Domaines from "./features/domains/Domain.jsx";
 import Domain from "./features/domains/domainsPage/Domain.jsx";
 
 createRoot(document.getElementById("root")).render(
@@ -50,10 +50,10 @@ createRoot(document.getElementById("root")).render(
             </Route>
 
             {/* Main Routes : Participez */}
-            <Route path="/:lang">
+            <Route path="/:lang/join-us">
               <Route path="Faire-un-don" element={<Footer />} />
-              <Route path="Devenir-membre" element={<Footer />} />
-              <Route path="Benevolat" element={<Footer />} />
+              <Route index element={<JoinUsPage />} />
+              <Route path=":contributor" element={<JoinUsPage />} />
             </Route>
 
             {/* Main Routes : Domaines */}
@@ -63,7 +63,7 @@ createRoot(document.getElementById("root")).render(
             </Route>
 
             {/* Main Routes : Ressources */}
-            <Route path="/:lang/domains">
+            <Route path="/:lang">
               <Route path="rapports" element={<RessourcesPage />} />
               <Route path="partenaires" element={<Partner />} />
             </Route>
