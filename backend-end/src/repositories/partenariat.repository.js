@@ -5,12 +5,13 @@ class PartenariatRepository {
      * Récupérer tous les partenariats
      */
     async findAll(filters = {}) {
-        // const { limit, offset } = filters;
-        return await Partenariat.findAndCountAll({
-            order:  [['created_at', 'DESC']],
-            // limit:  limit  || 9,
-            // offset: offset || 0
-        });
+        const { limit, offset } = filters;
+        const query = {
+            order: [['created_at', 'DESC']],
+            offset: offset || 0
+        };
+        if (limit) query.limit = limit;
+        return await Partenariat.findAndCountAll(query);
     }
 
     /**

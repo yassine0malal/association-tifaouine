@@ -1,6 +1,6 @@
 const domaineService = require('../services/domaine.service');
 const { buildPaginatedResponse } = require('../utils/paginate');
-const { toDomaineListDTO } = require('../dto/domaine.dto');
+const { toDomaineListDTO, toDomaineFullDTO } = require('../dto/domaine.dto');
 
 class DomaineController {
     async create(req, res) {
@@ -33,13 +33,26 @@ class DomaineController {
     }
 
     /**
-     * @route   GET /api/:lang/domaines
+     * @route   GET /api/:lang/domaines-navbar
      */
     async getAllByLang(req, res) {
         try {
             const { lang } = req;
             const domaines = await domaineService.getAllDomainesOrdered();
             return res.status(200).json({ success: true, domains: domaines.map(d => toDomaineListDTO(d, lang)) });
+        } catch (error) {
+            return res.status(500).json({ success: false, message: error.message });
+        }
+    }
+
+    /**
+     * @route   GET /api/:lang/domaines
+     */
+    async getAllFullByLang(req, res) {
+        try {
+            const { lang } = req;
+            const domaines = await domaineService.getAllDomainesOrdered();
+            return res.status(200).json({ success: true, domaines: domaines.map(d => toDomaineFullDTO(d, lang)) });
         } catch (error) {
             return res.status(500).json({ success: false, message: error.message });
         }
