@@ -77,10 +77,9 @@ class RessourceRepository {
             where: {
                 projet_id:    null,
                 evenement_id: null,
-                is_featured:  false,
                 type: { [Op.in]: ['document', 'rapport', 'guide'] }
             },
-            order:  [['created_at', 'DESC']],
+            order:  [['is_featured', 'DESC'], ['created_at', 'DESC']],
             limit:  limit  || 9,
             offset: offset || 0
         });
