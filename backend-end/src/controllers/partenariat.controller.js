@@ -29,10 +29,10 @@ class PartenariatController {
     async getAllByLang(req, res) {
         try {
             const { lang } = req;
-            const { page, limit, offset } = req.pagination;
-            const result = await partenariatService.getAllPartenariatsByLang({ limit, offset });
+            // const { page, limit, offset } = req.pagination;
+            const result = await partenariatService.getAllPartenariatsByLang();
             const rows = result.rows.map(p => toPartenariatListDTO(p, lang));
-            return res.status(200).json({ success: true, ...buildPaginatedResponse({ count: result.count, rows }, page, limit) });
+            return res.status(200).json({ success: true, rows });
         } catch (error) {
             return res.status(500).json({ success: false, message: error.message });
         }

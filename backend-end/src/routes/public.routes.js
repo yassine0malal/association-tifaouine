@@ -33,7 +33,7 @@ router.get('/membres',paginate, membreController.getAllByLang.bind(membreControl
 router.get('/benevoles',paginate, benevoleController.getAllByLang.bind(benevoleController));
 
 // ─── Partenariats
-router.get('/partenariats',paginate, partenariatController.getAllByLang.bind(partenariatController));
+router.get('/partenariats', partenariatController.getAllByLang.bind(partenariatController));
 
 // ─── Ressources documents de l'association
 router.get('/ressources/documents', paginate, ressourceController.getDocumentsAssociation.bind(ressourceController));

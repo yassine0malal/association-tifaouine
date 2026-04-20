@@ -37,4 +37,5 @@ router.use('/stats',        statsRoutes);
 
 router.use('/:lang', validateLang, publicRoutes);
 
+
 module.exports = router;

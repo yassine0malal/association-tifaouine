@@ -7,7 +7,7 @@ const { validate } = require('../middlewares/validate.middleware');
 const { paginate } = require('../middlewares/pagination.middleware');
 const { createDomaineSchema, updateDomaineSchema } = require('../validations/domaine.validation');
 
-router.get('/', paginate, domaineController.getAll.bind(domaineController));
+router.get('/', domaineController.getAll.bind(domaineController));
 router.get('/:id', domaineController.getById.bind(domaineController));
 
 // Routes privées (Admin seulement) protégées par authentification
