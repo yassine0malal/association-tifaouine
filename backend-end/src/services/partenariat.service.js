@@ -27,8 +27,8 @@ class PartenariatService {
         return await partenariatRepository.findAll(filters);
     }
 
-    async getAllPartenariatsByLang(filters = {}) {
-        return await partenariatRepository.findAll(filters);
+    async getAllPartenariatsByLang() {
+        return await partenariatRepository.findAll();
     }
 
     /**
