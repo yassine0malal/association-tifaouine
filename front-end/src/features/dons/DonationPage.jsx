@@ -1,6 +1,7 @@
 import styles from "./donation-page.module.css";
 import mountainImg from "../../assets/images/tob9al_mountain.jpg";
 import PageHero from "../../components/common/PageHero";
+<<<<<<< HEAD
 import contactImg from "../../assets/images/donation/contact_img.jpg";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -190,16 +191,53 @@ function CurrentNeeds({ t }) {
             <span className={styles.galleryLabel}>{item.label}</span>
           </div>
         ))}
+=======
+import { useState } from "react";
+
+function FirstSection() {
+  return (
+    <section className={styles.firstSection}>
+      <div className={styles.container}>
+        <div className={styles.msg}>
+          <h1>
+            Be the Change.
+            <br />
+            <span>
+              Support <br />
+              Tifaouine.
+            </span>
+          </h1>
+
+          <p>
+            Your support helps us improve education,
+            <br />
+            health, and agriculture in communities that <br />
+            need it most.
+          </p>
+        </div>
+
+        <div className={styles.image}>
+          <img
+            src="https://picsum.photos/900/600?random=3"
+            alt=""
+            aria-label="loading"
+          />
+        </div>
+>>>>>>> 268356d (add donation page)
       </div>
     </section>
   );
 }
 
+<<<<<<< HEAD
 function DonateInfosSection({ t }) {
   const PHONE_NUMBER = "+212636338100";
   const EMAIL = "chargaoui2001@gmail.com";
   const WHATSAPP = `https://wa.me/${PHONE_NUMBER}`;
 
+=======
+function DonateInfosSection() {
+>>>>>>> 268356d (add donation page)
   function Wrapper({ name, children, data }) {
     const [isCopied, setCopied] = useState(false);
     const copyToClipBoard = () => {
@@ -237,12 +275,20 @@ function DonateInfosSection({ t }) {
                 <path
                   d="M16.5163 8.93451L11.0597 14.7023L8.0959 11.8984"
                   stroke="#006e0f"
+<<<<<<< HEAD
                   strokeWidth="2"
+=======
+                  stroke-width="2"
+>>>>>>> 268356d (add donation page)
                 />
                 <path
                   d="M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21Z"
                   stroke="#006e0f"
+<<<<<<< HEAD
                   strokeWidth="2"
+=======
+                  stroke-width="2"
+>>>>>>> 268356d (add donation page)
                 />
               </svg>
             ) : (
@@ -265,11 +311,15 @@ function DonateInfosSection({ t }) {
       </div>
     );
   }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 268356d (add donation page)
   return (
     <section className={styles.donateInfos}>
       <div className={styles.container}>
         <div className={styles.bankInfos}>
+<<<<<<< HEAD
           <h3>{t("donateInfos.directSupport.title")}</h3>
           <h2>{t("donateInfos.directSupport.subtitle")}</h2>
           <p>{t("donateInfos.directSupport.description")}</p>
@@ -286,12 +336,31 @@ function DonateInfosSection({ t }) {
                 name={t("donateInfos.directSupport.bankName")}
                 data="Attijariwafa Bank"
               >
+=======
+          <h3>DIRECT SUPPORT</h3>
+          <h2>Bank Transfer (RIB)</h2>
+          <p>
+            The most direct way to fund our mission without platform <br />{" "}
+            fees.
+          </p>
+
+          <div className={styles.card}>
+            <div className={styles.doubleWrapper}>
+              <Wrapper name="ACCOUNT NAME" data="Association Tifaouine">
+                Association Tifaouine
+              </Wrapper>
+              <Wrapper name="BANK NAME" data="Attijariwafa Bank">
+>>>>>>> 268356d (add donation page)
                 Attijariwafa Bank
               </Wrapper>
             </div>
 
             <Wrapper
+<<<<<<< HEAD
               name={t("donateInfos.directSupport.rib")}
+=======
+              name="RIB (BANK ACCOUNT NUMBER)"
+>>>>>>> 268356d (add donation page)
               data="12345678901234567890"
             >
               <span>1234</span>
@@ -303,6 +372,7 @@ function DonateInfosSection({ t }) {
             </Wrapper>
 
             <div className={styles.doubleWrapper}>
+<<<<<<< HEAD
               <Wrapper
                 name={t("donateInfos.directSupport.iban")}
                 data="MA64 1234 5678 ... 12"
@@ -313,6 +383,12 @@ function DonateInfosSection({ t }) {
                 name={t("donateInfos.directSupport.swift")}
                 data="AWBAMAMC"
               >
+=======
+              <Wrapper name="IBAN" data="MA64 1234 5678 ... 12">
+                MA64 1234 5678 ... 12
+              </Wrapper>
+              <Wrapper name="SWIFT / BIC" data="AWBAMAMC">
+>>>>>>> 268356d (add donation page)
                 AWBAMAMC
               </Wrapper>
             </div>
@@ -332,19 +408,31 @@ function DonateInfosSection({ t }) {
                 </svg>
               </div>
 
+<<<<<<< HEAD
               <p>{t("donateInfos.directSupport.trustMessage")}</p>
+=======
+              <p>
+                This account is officially verified. All transactions are
+                securely handled by Attijariwafa Bank Morocco.
+              </p>
+>>>>>>> 268356d (add donation page)
             </div>
           </div>
         </div>
 
         <div className={styles.contacts}>
           <div className={styles.card}>
+<<<<<<< HEAD
             <h3>{t("donateInfos.contacts.title")}</h3>
             <a
               href={`tel:+${PHONE_NUMBER}`}
               target="_blank"
               className={styles.contactWrapper}
             >
+=======
+            <h3>Contact to Donate</h3>
+            <div className={styles.contactWrapper}>
+>>>>>>> 268356d (add donation page)
               <div className={styles.icon}>
                 <svg
                   width="18"
@@ -361,6 +449,7 @@ function DonateInfosSection({ t }) {
               </div>
 
               <div>
+<<<<<<< HEAD
                 <p className={styles.name}>{t("donateInfos.contacts.phone")}</p>
                 <p>{`${PHONE_NUMBER.substring(0, 4)} (0) ${PHONE_NUMBER.substring(4, 7)} ${PHONE_NUMBER.substring(7, 9)} ${PHONE_NUMBER.substring(9, 11)} ${PHONE_NUMBER.substring(11, 13)}`}</p>
               </div>
@@ -371,6 +460,14 @@ function DonateInfosSection({ t }) {
               target="_blank"
               className={styles.contactWrapper}
             >
+=======
+                <p className={styles.name}>PHONE</p>
+                <p>+212 (0) 522 00 00 00</p>
+              </div>
+            </div>
+
+            <div className={styles.contactWrapper}>
+>>>>>>> 268356d (add donation page)
               <div className={styles.icon}>
                 <svg
                   width="20"
@@ -386,12 +483,21 @@ function DonateInfosSection({ t }) {
                 </svg>
               </div>
               <div>
+<<<<<<< HEAD
                 <p className={styles.name}>{t("donateInfos.contacts.email")}</p>
                 <p>{EMAIL}</p>
               </div>
             </a>
             <div className={styles.devider}></div>
             <a href={WHATSAPP} target="_blank" className={styles.whatsapp}>
+=======
+                <p className={styles.name}>EMAIL</p>
+                <p>donations@tifaouine.org</p>
+              </div>
+            </div>
+            <div className={styles.devider}></div>
+            <button className={styles.whatsapp}>
+>>>>>>> 268356d (add donation page)
               <svg
                 width="20"
                 height="20"
@@ -400,6 +506,7 @@ function DonateInfosSection({ t }) {
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
+<<<<<<< HEAD
                   d="M4 12H12V10H4V12ZM4 9H16V7H4V9ZM4 6H16V4H4V6ZM0 20V2C0 1.45 0.195833 0.979167 0.5875 0.5875C0.979167 0.195833 1.45 0 2 0H18C18.55 0 19.0208 0.195833 19.4125 0.5875C19.8042 0.979167 20 1.45 20 2V14C20 14.55 19.8042 15.0208 19.4125 15.4125C19.8042 15.8042 18.55 16 18 16H4L0 20ZM3.15 14H18V8V2H2V15.125L3.15 14Z"
                   fill="white"
                 />
@@ -409,6 +516,17 @@ function DonateInfosSection({ t }) {
           </div>
           <div className={styles.image}>
             <img src={contactImg} alt="" />
+=======
+                  d="M4 12H12V10H4V12ZM4 9H16V7H4V9ZM4 6H16V4H4V6ZM0 20V2C0 1.45 0.195833 0.979167 0.5875 0.5875C0.979167 0.195833 1.45 0 2 0H18C18.55 0 19.0208 0.195833 19.4125 0.5875C19.8042 0.979167 20 1.45 20 2V14C20 14.55 19.8042 15.0208 19.4125 15.4125C19.0208 15.8042 18.55 16 18 16H4L0 20ZM3.15 14H18V8V2H2V15.125L3.15 14Z"
+                  fill="white"
+                />
+              </svg>
+              <span>Chat on WhatsApp</span>
+            </button>
+          </div>
+          <div className={styles.image}>
+            <img src="https://picsum.photos/900/600?random=3" alt="" />
+>>>>>>> 268356d (add donation page)
           </div>
         </div>
       </div>
@@ -416,7 +534,11 @@ function DonateInfosSection({ t }) {
   );
 }
 
+<<<<<<< HEAD
 function ImpactSection({ t }) {
+=======
+function ImpactSection() {
+>>>>>>> 268356d (add donation page)
   function ImpactCard({ amount, description, impactLabel, icon, impactIcon }) {
     return (
       <div className={styles.impactCard}>
@@ -424,14 +546,22 @@ function ImpactSection({ t }) {
 
         <div className={styles.amount}>
           <h2>{amount}</h2>
+<<<<<<< HEAD
           <span>{t("impactSection.cards.currency")}</span>
+=======
+          <span>MAD</span>
+>>>>>>> 268356d (add donation page)
         </div>
 
         <p className={styles.description}>{description}</p>
 
         <div className={styles.impact}>
           <div className={styles.icon}>{impactIcon}</div>
+<<<<<<< HEAD
           <p>{impactLabel} </p>
+=======
+          <p>{impactLabel} Impact</p>
+>>>>>>> 268356d (add donation page)
         </div>
       </div>
     );
@@ -440,6 +570,7 @@ function ImpactSection({ t }) {
   return (
     <section className={styles.yourImpact}>
       <div className={styles.container}>
+<<<<<<< HEAD
         <h1 className={styles.title}>{t("impactSection.title")}</h1>
         <p className={styles.subtitle}>{t("impactSection.subtitle")}</p>
 
@@ -448,6 +579,18 @@ function ImpactSection({ t }) {
             amount={t("impactSection.cards.education.amount")}
             description={t("impactSection.cards.education.description")}
             impactLabel={t("impactSection.cards.education.impactLabel")}
+=======
+        <h1 className={styles.title}>Every Dirham Matters</h1>
+        <p className={styles.subtitle}>
+          See how your contribution directly transforms lives.
+        </p>
+
+        <div className={styles.cards}>
+          <ImpactCard
+            amount={100}
+            description="Provides essential school supplies notebooks, pens, and bags for a child for an entire academic year."
+            impactLabel="Education"
+>>>>>>> 268356d (add donation page)
             icon={
               <svg
                 width="33"
@@ -479,9 +622,15 @@ function ImpactSection({ t }) {
           />
 
           <ImpactCard
+<<<<<<< HEAD
             amount={t("impactSection.cards.healthcare.amount")}
             description={t("impactSection.cards.healthcare.description")}
             impactLabel={t("impactSection.cards.healthcare.impactLabel")}
+=======
+            amount={500}
+            description="Supports local medical outreach programs, covering consultations and essential medicine for elders in remote villages."
+            impactLabel="Healthcare"
+>>>>>>> 268356d (add donation page)
             icon={
               <svg
                 width="30"
@@ -513,9 +662,15 @@ function ImpactSection({ t }) {
           />
 
           <ImpactCard
+<<<<<<< HEAD
             amount={t("impactSection.cards.agriculture.amount")}
             description={t("impactSection.cards.agriculture.description")}
             impactLabel={t("impactSection.cards.agriculture.impactLabel")}
+=======
+            amount={1000}
+            description="Funds critical agricultural tools and sustainable irrigation pipes for small-scale local farmers."
+            impactLabel="Agriculture"
+>>>>>>> 268356d (add donation page)
             icon={
               <svg
                 width="33"
@@ -551,7 +706,11 @@ function ImpactSection({ t }) {
   );
 }
 
+<<<<<<< HEAD
 function TransparencySection({ t }) {
+=======
+function TransparencySection() {
+>>>>>>> 268356d (add donation page)
   return (
     <section className={styles.transparency}>
       <div className={styles.container}>
@@ -588,6 +747,7 @@ function TransparencySection({ t }) {
 
         <div className={styles.details}>
           <h2>
+<<<<<<< HEAD
             {t("transparencySection.title")} <br />
             {t("transparencySection.titleLine2")}
           </h2>
@@ -600,22 +760,55 @@ function TransparencySection({ t }) {
               <div className={styles.description}>
                 <h3>{t("transparencySection.stats.schools.title")}</h3>
                 <p>{t("transparencySection.stats.schools.description")}</p>
+=======
+            Built on Trust. <br />
+            Driven by Transparency.
+          </h2>
+
+          <p>
+            At Association Tifaouine, we believe that impact is measured not
+            just in numbers, but in the sustainable growth of our heritage and
+            communities. Every dirham is accounted for in our annual
+            transparency reports.
+          </p>
+
+          <div className={styles.stats}>
+            <div className={styles.stat}>
+              <h1>50+</h1>
+              <div className={styles.description}>
+                <h3>Schools Supported</h3>
+                <p>Modernizing infrastructure and providing resources.</p>
+>>>>>>> 268356d (add donation page)
               </div>
             </div>
 
             <div className={styles.stat}>
+<<<<<<< HEAD
               <h1>{t("transparencySection.stats.patients.number")}</h1>
               <div className={styles.description}>
                 <h3>{t("transparencySection.stats.patients.title")}</h3>
                 <p>{t("transparencySection.stats.patients.description")}</p>
+=======
+              <h1>10k+</h1>
+              <div className={styles.description}>
+                <h3>Patients Treated</h3>
+                <p>Mobile clinics reaching the most remote valleys.</p>
+>>>>>>> 268356d (add donation page)
               </div>
             </div>
 
             <div className={styles.stat}>
+<<<<<<< HEAD
               <h1>{t("transparencySection.stats.farms.number")}</h1>
               <div className={styles.description}>
                 <h3>{t("transparencySection.stats.farms.title")}</h3>
                 <p>{t("transparencySection.stats.farms.description")}</p>
+=======
+              <h1>200+</h1>
+              <div className={styles.description}>
+                <h3>Farms Empowered</h3>
+                <p>Implementing sustainable irrigation and tools.</p>
+>>>>>>> 268356d (add donation page)
               </div>
             </div>
           </div>
@@ -624,6 +817,7 @@ function TransparencySection({ t }) {
     </section>
   );
 }
+<<<<<<< HEAD
 function DonationFromSection({ t, i18n }) {
   const dispatch = useDispatch();
   const dataForSelect = useSelector(
@@ -994,6 +1188,14 @@ function DonationFromSection({ t, i18n }) {
         </div>
       )}
 
+=======
+
+function DonationFromSection() {
+  return (
+    <section className={styles.donationForm}>
+      <h1>From Donation to Impact</h1>
+      <p>Every step ensures your support reaches those who need it most.</p>
+>>>>>>> 268356d (add donation page)
       <div className={styles.container}>
         <div className={styles.steps}>
           <div className={styles.step}>
@@ -1002,14 +1204,22 @@ function DonationFromSection({ t, i18n }) {
               <div className={styles.icon}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
+<<<<<<< HEAD
                   xmlnsXlink="http://www.w3.org/1999/xlink"
+=======
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+>>>>>>> 268356d (add donation page)
                   fill="#000000"
                   height="50px"
                   width="50px"
                   version="1.1"
                   id="Layer_1"
                   viewBox="0 0 300.346 300.346"
+<<<<<<< HEAD
                   xmlSpace="preserve"
+=======
+                  xml:space="preserve"
+>>>>>>> 268356d (add donation page)
                 >
                   <g>
                     <g>
@@ -1023,8 +1233,13 @@ function DonationFromSection({ t, i18n }) {
                 </svg>
               </div>
               <div className={styles.desc}>
+<<<<<<< HEAD
                 <h3>{t("donationForm.steps.step1.title")}</h3>
                 <p>{t("donationForm.steps.step1.description")}</p>
+=======
+                <h3>You give a gift</h3>
+                <p>You securely complete your donation.</p>
+>>>>>>> 268356d (add donation page)
               </div>
             </div>
           </div>
@@ -1035,14 +1250,22 @@ function DonationFromSection({ t, i18n }) {
               <div className={styles.icon}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
+<<<<<<< HEAD
                   xmlnsXlink="http://www.w3.org/1999/xlink"
+=======
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+>>>>>>> 268356d (add donation page)
                   fill="#000000"
                   width="50px"
                   height="50px"
                   viewBox="0 0 60 60"
                   id="Capa_1"
                   version="1.1"
+<<<<<<< HEAD
                   xmlSpace="preserve"
+=======
+                  xml:space="preserve"
+>>>>>>> 268356d (add donation page)
                 >
                   <g>
                     <path d="M58.057,6.083H47.298l-8.633-4.855c-0.345-0.193-0.77-0.19-1.112,0.009C37.212,1.435,37,1.804,37,2.2v0.883h-8v3H1.943   C0.872,6.083,0,6.955,0,8.026v44.113c0,1.071,0.872,1.943,1.943,1.943H2v4h10v-4h17v3h8v0.716c0,0.396,0.212,0.765,0.554,0.965   c0.173,0.102,0.368,0.152,0.563,0.152c0.189,0,0.379-0.048,0.548-0.143l8.339-4.69H48v4h10v-4h0.057   c1.071,0,1.943-0.872,1.943-1.943V8.026C60,6.955,59.128,6.083,58.057,6.083z M10,56.083H4v-2h6V56.083z M12,52.119v-0.036H2v0.057   L1.943,8.083H29v2H6.346C5.053,10.083,4,11.135,4,12.428v35.309c0,1.293,1.053,2.346,2.346,2.346H14h8h7v2.002L12,52.119z    M22,48.083v-1h4v1H22z M14,38.083v1h-4v-1H14z M14,42.083h-4v-1h4V42.083z M10,44.083h4v1h-4V44.083z M10,47.083h4v1h-4V47.083z    M16,38.083h4v10h-4V38.083z M26,42.083h-4v-1h4V42.083z M22,44.083h4v1h-4V44.083z M26,39.083h-4v-1h4V39.083z M28,37.083   c0-0.553-0.447-1-1-1h-5h-1h-6h-1H9c-0.553,0-1,0.447-1,1v11H6.346C6.155,48.083,6,47.927,6,47.737V31.083h8h8h7v17h-1V37.083z    M29,29.083h-1v-11c0-0.553-0.447-1-1-1h-5h-1h-6h-1H9c-0.553,0-1,0.447-1,1v11H6V12.428c0-0.19,0.155-0.346,0.346-0.346H29V29.083   z M22,29.083v-1h4v1H22z M14,19.083v1h-4v-1H14z M14,23.083h-4v-1h4V23.083z M10,25.083h4v1h-4V25.083z M10,28.083h4v1h-4V28.083z    M16,19.083h4v10h-4V19.083z M26,23.083h-4v-1h4V23.083z M22,25.083h4v1h-4V25.083z M26,20.083h-4v-1h4V20.083z M31,55.083v-1v-4   v-40v-4v-1h6v50H31z M39,3.71l4.219,2.373h-0.147L53,11.668v3.415c-0.553,0-1,0.447-1,1c0,0.553,0.447,1,1,1v1   c-0.553,0-1,0.447-1,1s0.447,1,1,1v20c-0.553,0-1,0.447-1,1s0.447,1,1,1v1c-0.553,0-1,0.447-1,1s0.447,1,1,1v3.332L39,56.29V3.71z    M56,56.083h-6v-2h6V56.083z M58,52.083h-7.294L55,49.668v-0.083v-4.502h1c0.553,0,1-0.447,1-1s-0.447-1-1-1h-1v-1h1   c0.553,0,1-0.447,1-1s-0.447-1-1-1h-1v-20h1c0.553,0,1-0.447,1-1s-0.447-1-1-1h-1v-1h1c0.553,0,1-0.447,1-1c0-0.553-0.447-1-1-1h-1   v-4.585v-0.083l-4.182-2.352L58,8.026l0.057,44.057H58z" />
@@ -1066,8 +1289,13 @@ function DonationFromSection({ t, i18n }) {
                 </svg>
               </div>
               <div className={styles.desc}>
+<<<<<<< HEAD
                 <h3>{t("donationForm.steps.step2.title")}</h3>
                 <p>{t("donationForm.steps.step2.description")}</p>
+=======
+                <h3>Funds are received</h3>
+                <p>Gifts are securely deposited and accounted for.</p>
+>>>>>>> 268356d (add donation page)
               </div>
             </div>
           </div>
@@ -1084,8 +1312,13 @@ function DonationFromSection({ t, i18n }) {
                   fill="none"
                 >
                   <path
+<<<<<<< HEAD
                     fillRule="evenodd"
                     clipRule="evenodd"
+=======
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+>>>>>>> 268356d (add donation page)
                     d="M31.5083 13.9475L34.9054 8.98148C31.7645 9.16855 27.9659 9.90622 24.3212 10.9606C21.8446 11.6771 19.0865 11.569 16.5223 11.0959C15.7147 10.9469 14.9191 10.7603 14.1488 10.5481L16.4562 13.945C21.1677 15.6842 26.796 15.685 31.5083 13.9475ZM15.2815 15.6365C20.7022 17.7885 27.275 17.7878 32.695 15.6345C34.8987 17.9207 37.175 20.7657 38.9289 23.7416C40.7625 26.8526 41.9199 29.9295 41.996 32.5723C42.068 35.0734 41.1893 37.2281 38.7141 38.8825C36.091 40.6357 31.5202 41.9244 24.024 41.9969C16.5257 42.0694 11.9479 40.868 9.31733 39.1673C6.84175 37.5668 5.946 35.4353 6.00245 32.9202C6.06213 30.2614 7.20619 27.1403 9.03585 23.9635C10.7825 20.9307 13.0594 18.0103 15.2815 15.6365ZM13.662 8.31949C14.6893 8.64286 15.7776 8.92471 16.8852 9.12906C19.2829 9.57147 21.6987 9.63727 23.7654 9.03939C26.3919 8.27955 29.1492 7.66384 31.733 7.2991C29.5282 6.57325 26.8626 6 24.0433 6C19.9743 6 16.1968 7.19394 13.662 8.31949ZM11.7469 7.01231C14.4518 5.65746 19.0249 4 24.0433 4C28.9687 4 33.4307 5.59663 36.1239 6.93673C36.1692 6.95924 36.2139 6.98167 36.2581 7.00403C36.9838 7.37078 37.5736 7.7157 38 8L33.8956 14C43.3574 23.6727 54.6501 43.701 24.0433 43.9968C-6.56356 44.2926 4.53174 24.0426 14.0758 14L10 8C10.2852 7.81256 10.642 7.59878 11.0622 7.36975C11.2746 7.25402 11.5031 7.13439 11.7469 7.01231Z"
                     fill="#333333"
                   />
@@ -1096,8 +1329,13 @@ function DonationFromSection({ t, i18n }) {
                 </svg>
               </div>
               <div className={styles.desc}>
+<<<<<<< HEAD
                 <h3>{t("donationForm.steps.step3.title")}</h3>
                 <p>{t("donationForm.steps.step3.description")}</p>
+=======
+                <h3>Funds are pooled</h3>
+                <p>Individual donations are combined to amplify impact.</p>
+>>>>>>> 268356d (add donation page)
               </div>
             </div>
           </div>
@@ -1112,7 +1350,11 @@ function DonationFromSection({ t, i18n }) {
                   height="50px"
                   viewBox="0 0 1024 1024"
                   fill="#000000"
+<<<<<<< HEAD
                   className="icon"
+=======
+                  class="icon"
+>>>>>>> 268356d (add donation page)
                   version="1.1"
                 >
                   <path
@@ -1210,8 +1452,13 @@ function DonationFromSection({ t, i18n }) {
                 </svg>
               </div>
               <div className={styles.desc}>
+<<<<<<< HEAD
                 <h3>{t("donationForm.steps.step4.title")}</h3>
                 <p>{t("donationForm.steps.step4.description")}</p>
+=======
+                <h3>Project allocation</h3>
+                <p>Our team selects the highest-priority rural initiatives.</p>
+>>>>>>> 268356d (add donation page)
               </div>
             </div>
           </div>
@@ -1231,8 +1478,15 @@ function DonationFromSection({ t, i18n }) {
                 </svg>
               </div>
               <div className={styles.desc}>
+<<<<<<< HEAD
                 <h3>{t("donationForm.steps.step5.title")}</h3>
                 <p>{t("donationForm.steps.step5.description")}</p>
+=======
+                <h3>Community impact</h3>
+                <p>
+                  Schools, healthcare, and sustainable agriculture are funded.
+                </p>
+>>>>>>> 268356d (add donation page)
               </div>
             </div>
           </div>
@@ -1243,14 +1497,22 @@ function DonationFromSection({ t, i18n }) {
               <div className={styles.icon}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
+<<<<<<< HEAD
                   xmlnsXlink="http://www.w3.org/1999/xlink"
+=======
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+>>>>>>> 268356d (add donation page)
                   fill="#000000"
                   height="50px"
                   width="50px"
                   version="1.1"
                   id="Layer_1"
                   viewBox="0 0 502 502"
+<<<<<<< HEAD
                   xmlSpace="preserve"
+=======
+                  xml:space="preserve"
+>>>>>>> 268356d (add donation page)
                 >
                   <g>
                     <g>
@@ -1266,13 +1528,19 @@ function DonationFromSection({ t, i18n }) {
                 </svg>
               </div>
               <div className={styles.desc}>
+<<<<<<< HEAD
                 <h3>{t("donationForm.steps.step6.title")}</h3>
                 <p>{t("donationForm.steps.step6.description")}</p>
+=======
+                <h3>Sustainable outcomes</h3>
+                <p>Long-term, life-changing results are achieved.</p>
+>>>>>>> 268356d (add donation page)
               </div>
             </div>
           </div>
         </div>
 
+<<<<<<< HEAD
         <form onSubmit={handleSubmit} noValidate>
           <h1>{t("donationForm.form.title")}</h1>
           <p>{t("donationForm.form.description")}</p>
@@ -1367,10 +1635,30 @@ function DonationFromSection({ t, i18n }) {
                     <span className={styles.errorText}>{errors.email}</span>
                   </div>
                 )}
+=======
+        <form>
+          <h1>Confirm Your Donation</h1>
+          <p>
+            After your transfer, please send us the receipt so we can confirm
+            your donation and send your acknowledgement.
+          </p>
+
+          <div className={styles.inputFields}>
+            <div className={styles.doubleWrapper}>
+              <div className={styles.wrapper}>
+                <input type="text" id="fullname" placeholder="" />
+                <label htmlFor="fullname">Fullname</label>
+              </div>
+
+              <div className={styles.wrapper}>
+                <input type="email" id="email" placeholder="" />
+                <label htmlFor="email">Email</label>
+>>>>>>> 268356d (add donation page)
               </div>
             </div>
 
             <div className={styles.doubleWrapper}>
+<<<<<<< HEAD
               <div
                 className={`${styles.wrapper} ${touched.amount && errors.amount ? styles.hasError : ""}`}
               >
@@ -1491,6 +1779,29 @@ function DonationFromSection({ t, i18n }) {
                 htmlFor="receipt"
                 className={errors.receipt ? styles.fileLabelError : ""}
               >
+=======
+              <div className={styles.wrapper}>
+                <input type="number" id="amount" placeholder="" />
+                <label htmlFor="amount">Amount (Optional)</label>
+              </div>
+              <div className={styles.wrapper}>
+                <select id="project" placeholder="">
+                  <option value="" disabled selected>
+                    Chose the project
+                  </option>
+                  <option value="1">1</option>
+                  <option value="1">1</option>
+                  <option value="1">1</option>
+                  <option value="1">1</option>
+                </select>{" "}
+              </div>
+            </div>
+
+            <div className={styles.fileWrapper}>
+              <label htmlFor="receipt">Upload receipt</label>
+              <input type="file" id="receipt" />
+              <label htmlFor="receipt">
+>>>>>>> 268356d (add donation page)
                 <svg
                   width="35"
                   height="35"
@@ -1500,6 +1811,7 @@ function DonationFromSection({ t, i18n }) {
                 >
                   <path
                     d="M8.25 24C5.975 24 4.03125 23.2125 2.41875 21.6375C0.80625 20.0625 0 18.1375 0 15.8625C0 13.9125 0.5875 12.175 1.7625 10.65C2.9375 9.125 4.475 8.15 6.375 7.725C7 5.425 8.25 3.5625 10.125 2.1375C12 0.7125 14.125 0 16.5 0C19.425 0 21.9062 1.01875 23.9438 3.05625C25.9813 5.09375 27 7.575 27 10.5C28.725 10.7 30.1562 11.4437 31.2938 12.7312C32.4313 14.0188 33 15.525 33 17.25C33 19.125 32.3438 20.7188 31.0312 22.0312C29.7188 23.3438 28.125 24 26.25 24H18C17.175 24 16.4688 23.7062 15.8813 23.1187C15.2938 22.5312 15 21.825 15 21V13.275L12.6 15.6L10.5 13.5L16.5 7.5L22.5 13.5L20.4 15.6L18 13.275V21H26.25C27.3 21 28.1875 20.6375 28.9125 19.9125C29.6375 19.1875 30 18.3 30 17.25C30 16.2 29.6375 15.3125 28.9125 14.5875C28.1875 13.8625 27.3 13.5 26.25 13.5H24V10.5C24 8.425 23.2687 6.65625 21.8062 5.19375C20.3438 3.73125 18.575 3 16.5 3C14.425 3 12.6562 3.73125 11.1938 5.19375C9.73125 6.65625 9 8.425 9 10.5H8.25C6.8 10.5 5.5625 11.0125 4.5375 12.0375C3.5125 13.0625 3 14.3 3 15.75C3 17.2 3.5125 18.4375 4.5375 19.4625C5.5625 20.4875 6.8 21 8.25 21H12V24H8.25Z"
+<<<<<<< HEAD
                     fill={errors.receipt ? "#dc3545" : "#D5C3B4"}
                   />
                 </svg>
@@ -1606,6 +1918,22 @@ function DonationFromSection({ t, i18n }) {
                 ? t("donationForm.form.submittingButton")
                 : t("donationForm.form.submitButton")}
             </button>
+=======
+                    fill="#D5C3B4"
+                  />
+                </svg>
+                <span>Upload your receipt</span>
+
+                <span>PDF, JPG or PNG up to 5MB</span>
+              </label>
+            </div>
+
+            <div className={styles.wrapper}>
+              <textarea id="message" placeholder=""></textarea>
+              <label htmlFor="message">Your Message (Optional)</label>
+            </div>
+            <button>Confirm & Send Receipt</button>
+>>>>>>> 268356d (add donation page)
           </div>
         </form>
       </div>
@@ -1614,6 +1942,7 @@ function DonationFromSection({ t, i18n }) {
 }
 
 function DonationPage() {
+<<<<<<< HEAD
   const { t, i18n } = useTranslation("donationPage");
   return (
     <div className={styles.donationPage}>
@@ -1635,6 +1964,27 @@ function DonationPage() {
       {/* donation form section  */}
 
       <DonationFromSection t={t} i18n={i18n} />
+=======
+  return (
+    <div className={styles.donationPage}>
+      {/* page hero section */}
+      <PageHero title={"donate to us"} heroImg={mountainImg} />
+      {/* first page section */}
+      <FirstSection />
+      {/* donate informations section */}
+      <DonateInfosSection />
+
+      {/* your impact section */}
+      <ImpactSection />
+
+      {/* Transparency section */}
+
+      <TransparencySection />
+
+      {/* donation form section  */}
+
+      <DonationFromSection />
+>>>>>>> 268356d (add donation page)
     </div>
   );
 }
