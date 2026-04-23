@@ -47,15 +47,13 @@ async function runDataQualityAudit() {
 
     // 2. CHASSE AUX DONNÉES ORPHELINES
     console.log('[INFO] Étape 2 : Détection des ressources orphelines');
-    // Dérogation : le dossier général 'association' est structurellement indépendant
-    const orphelines = ressources.filter(r => r.projet_id === null && r.evenement_id === null && !r.url.includes('/association/'));
+    const orphelines = ressources.filter(r => r.projet_id === null && r.evenement_id === null && !r.url.includes('/association/') && !['document', 'rapport', 'guide'].includes(r.type));
     
     if (orphelines.length > 0) {
         console.error(`[ERREUR] ${orphelines.length} ressources ne sont associées à aucune entité parente.`);
         anomaliesCount += orphelines.length;
     } else {
-        const globalAssets = ressources.filter(r => r.projet_id === null && r.evenement_id === null && r.url.includes('/association/'));
-        console.log(`[SUCCÈS] Aucune donnée orpheline détectée. Les assets globaux (${globalAssets.length}) sont conformes.\n`);
+        console.log(`[SUCCÈS] Aucune donnée orpheline détectée.\n`);
     }
 
     // 3. VÉRIFICATION DE L'UNICITÉ
@@ -97,6 +95,43 @@ async function runDataQualityAudit() {
         anomaliesCount += fkAnomalies;
     }
 
+    // 5. AUDIT SPÉCIFIQUE : MODULE DOCUMENTS & COUVERTURES
+    console.log('[INFO] Étape 5 : Audit du module Documents & Couvertures');
+    const [docs] = await sequelize.query(`
+        SELECT id, titre_fr, url, image_couverture, is_featured, type 
+        FROM ressource 
+        WHERE projet_id IS NULL AND evenement_id IS NULL AND type IN ('document', 'rapport', 'guide')
+    `);
+
+    let featuredCount = 0;
+    for (const d of docs) {
+        // Vérifier si la couverture est renseignée
+        if (!d.image_couverture) {
+            console.error(`[ERREUR] Couverture manquante pour le document ID: ${d.id} (${d.titre_fr})`);
+            anomaliesCount++;
+        } else {
+            // Vérifier si le fichier de couverture existe sur le disque
+            const physicalCoverPath = path.join(__dirname, '../../src', d.image_couverture);
+            if (!fs.existsSync(physicalCoverPath)) {
+                console.error(`[ERREUR] Image de couverture manquante sur le disque : ${d.image_couverture} (ID: ${d.id})`);
+                anomaliesCount++;
+            }
+        }
+
+        // Compter les documents "featured"
+        if (d.is_featured) featuredCount++;
+    }
+
+    if (featuredCount === 0) {
+        console.error(`[ERREUR] Aucun document "essentiel" (is_featured=true) n'a été détecté.`);
+        anomaliesCount++;
+    } else if (featuredCount > 1) {
+        console.error(`[ERREUR] Plusieurs documents (${featuredCount}) sont marqués comme "essentiel". Un seul est autorisé.`);
+        anomaliesCount++;
+    } else {
+        console.log(`[SUCCÈS] Structure du module Documents validée (Featured: OK, Couvertures: OK).\n`);
+    }
+
     // CONCLUSION STRATÉGIQUE
     console.log('---------------------------------------------------------');
     if (anomaliesCount === 0) {
@@ -106,6 +141,7 @@ async function runDataQualityAudit() {
         console.log(' - Validité physique stricte garantie (I/O OK)');
         console.log(' - Tolérance zéro sur les corruptions et doublons confirmée');
         console.log(' - Modèle relationnel intact');
+        console.log(' - Module Documents & Couvertures conforme');
         console.log('\nValidation technique accordée pour le déploiement.\n');
     } else {
         console.log(`[ALERTE] ÉCHEC DE L'AUDIT : ${anomaliesCount} anomalies nécessitent une intervention.\n`);
