@@ -1,0 +1,58 @@
+{
+  "address": {
+    "title": "Adresse",
+    "line": "douar asni lakdim 42150, Marrakech Al Haouz – Maroc"
+  },
+  "phone": {
+    "title": "Téléphone",
+    "number": "+212 6 96 23 94 38"
+  },
+  "email": {
+    "title": "Email",
+    "address": "contact@tifaouine-foundation.org"
+  },
+  "company": {
+    "description": "Tifaouine – Depuis 1998, nous agissons pour le développement rural dans le Haouz : eau, éducation, agriculture et autonomisation des femmes.",
+    "newsletterPlaceholder": "Entrer votre email"
+  },
+  "support": {
+    "title": "Support",
+    "associationName": "Association Tifaouine",
+    "phoneFax": {
+      "label": "Tél / Fax",
+      "value": "024 48 53 08"
+    },
+    "presidentGsm": {
+      "label": "GSM président",
+      "value": "066 01 46 48"
+    },
+    "bankAccount": {
+      "label": "Compte bancaire",
+      "wafa": {
+        "label": "Wafa banque",
+        "value": "098 B 001872"
+      },
+      "creditAgricole": {
+        "label": "Crédit agricole",
+        "value": "b906457X651"
+      }
+    }
+  },
+  "mainNavigation": {
+    "title": "Navigation principale",
+    "about": "À propos",
+    "activities": "Activités",
+    "participate": "Participez",
+    "domains": "Domaines",
+    "resources": "Ressources"
+  },
+  "quickLinks": {
+    "title": "Liens rapides",
+    "becomeMember": "Devenir membre",
+    "becomeVolunteer": "Devenir bénévole",
+    "seeEvents": "Voir événements",
+    "contact": "Nous contacter",
+    "partners": "Nos partenaires"
+  },
+  "copyright": "© Copyright Tifaouine {{year}}. Tous droits réservés"
+}

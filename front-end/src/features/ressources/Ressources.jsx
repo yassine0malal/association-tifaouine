@@ -31,17 +31,17 @@ export default function RessourcesPage() {
     useEffect(() => {
         dispatch(resetRessources());
     }, [currentLang]);
-    
+
     useEffect(() => {
         dispatch(fetchRessources({ page: currentPage, lang: currentLang }));
     }, [dispatch, currentPage, currentLang]);
-    
+
     const handlePageChange = (page) => {
         if (!loading) {
             dispatch(setRessourcesPage({ page }));
         }
     };
-    
+
     // Affichage pendant le chargement initial
     if (loading && !featuredInsight && resources.length === 0) {
         return (
@@ -53,7 +53,7 @@ export default function RessourcesPage() {
             </div>
         );
     }
-    
+
     if (error) {
         return (
             <div className={styles.ressourcesPage}>
@@ -64,7 +64,7 @@ export default function RessourcesPage() {
             </div>
         );
     }
-    
+
     // console.log(itemsPerPage * (currentPage-1) + resources.length, "item per page",itemsPerPage,"resources ,length",resources.length, "current one ",currentPage)
     return (
         <div className={styles.ressourcesPage}>
@@ -97,7 +97,11 @@ export default function RessourcesPage() {
                                 </div>
                                 <div className={styles.downloadButtom}>
                                     <button>{t("ressources.download")}</button>
-                                    <img src={download} alt="" />
+                                    {/* <img src={download} alt="" /> */}
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" viewBox="0 0 24 24" fill="none">
+                                        <path d="M12 3V16M12 16L16 11.625M12 16L8 11.625" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M15 21H9C6.17157 21 4.75736 21 3.87868 20.1213C3 19.2426 3 17.8284 3 15M21 15C21 17.8284 21 19.2426 20.1213 20.1213C19.8215 20.4211 19.4594 20.6186 19 20.7487" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="" />
+                                    </svg>
                                 </div>
                             </div>
                         </div>
@@ -125,7 +129,7 @@ export default function RessourcesPage() {
                         <div className={styles.content}>
                             <p>
                                 {t("ressources.showingItems", {
-                                    count: itemsPerPage * (currentPage-1) + resources.length ,
+                                    count: itemsPerPage * (currentPage - 1) + resources.length,
                                     total: totalItems,
                                 })}
                             </p>
@@ -144,7 +148,7 @@ export default function RessourcesPage() {
                                         <h3>{item.title}</h3>
                                         <p>{item.description}</p>
                                     </div>
-                                    
+
                                     <div className={styles.bottomsDetailsCard}>
                                         <div className={styles.imagMetaDataCard}>
                                             <span>{item.fileSize}</span>{" "}
@@ -152,7 +156,10 @@ export default function RessourcesPage() {
                                         </div>
                                         <a href={item.downloadUrl} download>
                                             <button>
-                                                <img src={download} alt="download" />
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" viewBox="0 0 24 24" fill="none">
+                                                    <path d="M12 3V16M12 16L16 11.625M12 16L8 11.625" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M15 21H9C6.17157 21 4.75736 21 3.87868 20.1213C3 19.2426 3 17.8284 3 15M21 15C21 17.8284 21 19.2426 20.1213 20.1213C19.8215 20.4211 19.4594 20.6186 19 20.7487" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="" />
+                                                </svg>
                                             </button>
                                         </a>
                                     </div>

@@ -5,7 +5,8 @@
         "title": "The 2024 State of Heritage Preservation Report",
         "description": "A comprehensive analysis of cultural preservation efforts across three continents, focusing on sustainable community integration and digital archiving.",
         "fileSize": "14.2 MB",
-        "fileType": "PDF"
+        "fileType": "PDF",
+        "downloadUrl": "/resources/digital-archiving-standards.pdf"
     },
     "resourceLibrary": {
         "currentPage": 2,
@@ -21,7 +22,7 @@
                 "imageUrl": "https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=300&h=400&fit=crop",
                 "title": "Digital Archiving Standards v2.0",
                 "description": "Global Digital Asset Management framework for heritage preservation.",
-                "fileSize": "1  4.2 MB",
+                "fileSize": "14.2 MB",
                 "fileType": "PDF",
                 "category": "Rapport",
                 "downloadUrl": "/resources/digital-archiving-standards.pdf"
