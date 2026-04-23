@@ -33,6 +33,16 @@
         "send": "إرسال",
         "send-what": "تواصل معنا عبر واتساب"
       }
+    },
+    "validation": {
+      "fullNameRequired": "الاسم الكامل مطلوب",
+      "emailRequired": "البريد الإلكتروني مطلوب",
+      "emailInvalid": "عنوان البريد الإلكتروني غير صالح",
+      "phoneRequired": "رقم الهاتف مطلوب",
+      "phoneInvalid": "رقم الهاتف غير صالح",
+      "subjectRequired": "الموضوع مطلوب",
+      "messageRequired": "الرسالة مطلوبة",
+      "submitError": "حدث خطأ ما. الرجاء معاودة المحاولة لاحقاً."
     }
   }
 }

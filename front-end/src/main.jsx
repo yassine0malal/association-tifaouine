@@ -14,7 +14,7 @@ import ProjectCardSkeleton from "./components/common/ProjectCardSkeleton.jsx";
 import { Provider } from "react-redux";
 import { store } from './app/store.js';
 import About from "./features/public/About.jsx";
-import Contact from "./features/public/Contact.jsx";
+import Contact from "./features/public/contact/Contact.jsx";
 import Home from "./features/public/Accueil.jsx";
 
 import "./i18n";

@@ -43,9 +43,10 @@ const ressourcesSlice = createSlice({
 
             .addCase(fetchRessources.fulfilled, (state, action) => {
 
+                console.log("----------------------------------new data resources--->", action.payload.resources);
                 state.loading = false;
-                const newRessources = action.payload.resourceLibrary?.resources || [];
-                console.log("new data resources--->", action.payload.resourceLibrary);
+                const newRessources = action.payload?.resources || [];
+                
                 if (action.payload.featuredInsight) {
                     state.featuredInsight = action.payload.featuredInsight;
                 }
@@ -58,16 +59,16 @@ const ressourcesSlice = createSlice({
                 );
                 state.resources.push(...filteredRessources);
 
-                state.totalPages = action.payload.resourceLibrary?.totalPages;
-                state.nextPage = action.payload.resourceLibrary?.nextPage;
-                state.prevPage = action.payload.resourceLibrary?.prevPage;
-                state.itemsPerPage = action.payload.resourceLibrary?.itemsPerPage;
-                state.totalItems = action.payload.resourceLibrary?.totalItems;
+                state.totalPages = action.payload.resources?.totalPages;
+                state.nextPage = action.payload.resources?.nextPage;
+                state.prevPage = action.payload.resources?.prevPage;
+                state.itemsPerPage = action.payload.resources?.itemsPerPage;
+                state.totalItems = action.payload.resources?.totalItems;
             })
 
             .addCase(fetchRessources.rejected, (state, action) => {
                 state.loading = false;
-                state.error = action.payload.error;
+                state.error = action.error.message;
             });
     },
 });

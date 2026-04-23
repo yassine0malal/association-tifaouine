@@ -85,7 +85,7 @@ export default function Partner() {
                             <div key={partner.id} ref={(el) => setTitlRef(el, partner.id)} className={styles.element}>
                                 <div className={styles.innerContainer}>
                                     <div className={styles.imageContainer}>
-                                        <img src={new URL(`${partner.image}`, import.meta.url).href} alt={partner.name} />
+                                        <img src={`http://localhost:5000${partner.logo}`} alt={partner.name} />
                                     </div>
 
                                     <div className={styles.contentText}>
@@ -95,7 +95,7 @@ export default function Partner() {
                                 </div>
 
                                 <div className={styles.linkDetails}>
-                                    <Link target="_blank" to={partner.link}>
+                                    <Link target="_blank" to={partner.site_web}>
                                         {t("visitWebsite")}
                                     </Link>
                                     <img src={lnk} alt="partner" />
