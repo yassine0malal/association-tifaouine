@@ -114,9 +114,11 @@
 .bottomsDetails .downloadButtom:active {
     scale: 0.9;
 }
+
 .bottomsDetails .downloadButtom svg {
     transition: all 0.3s ease-in-out;
 }
+
 .bottomsDetails .downloadButtom svg:hover {
     stroke: var(--accent-strong);
     rotate: 3deg;
@@ -129,6 +131,7 @@
     display: flex;
     cursor: pointer;
 }
+
 .bottomsDetails .downloadButtom {
     display: flex;
     transition: all 0.3s ease-in-out;
@@ -313,6 +316,7 @@
 .bottomsDetailsCard .downloadButtom {
     scale: 0.9;
 }
+
 .bottomsDetailsCard .downloadButtom {
     display: flex;
     justify-self: center;
@@ -376,20 +380,27 @@
     top: 0;
 }
 
-.cardsContent .bottomsDetailsCard button:active svg{
+.cardsContent .bottomsDetailsCard button:active svg {
     scale: 0.9;
 }
+
 .cardsContent .bottomsDetailsCard button:hover svg path {
     stroke: var(--accent-strong);
     rotate: 3deg;
     transform: translateY(-3px);
     scale: 1.1;
-        transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
 
 }
 
-.cardsContent .bottomsDetailsCard  button {
-    all: unset;
+.cardsContent .bottomsDetailsCard button {
+    /* all: unset; */
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
 }
 
 .cardsContent .footerCard {

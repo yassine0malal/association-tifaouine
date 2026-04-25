@@ -12,6 +12,8 @@
         "resourceLibrary": "مكتبة الموارد",
         "showingItems": "عرض {{count}} من أصل {{total}} عنصر",
         "loadingResources": "جاري تحميل الموارد...",
-        "errorMessage": "خطأ: {{error}}"
+        "errorMessage": "خطأ: {{error}}",
+        "report": "تقرير",
+        "document": "مستند"
     }
 }

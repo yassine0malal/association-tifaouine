@@ -3,9 +3,7 @@ import { ressourcesAPI } from "./ressourcesService";
 export const fetchRessources = createAsyncThunk(
     "ressources/fetchRessources",
     async ({page,lang, limit }) => {
-        console.log(")))))))))) dang", page)
         const data = await ressourcesAPI(page, lang, limit);
-        console.log(")))))))))) dang", page)
         return data;
     }
 );
@@ -27,7 +25,6 @@ const ressourcesSlice = createSlice({
     },
     reducers: {
         setRessourcesPage: (state, action) => {
-            console.log(")))))))))) ", action.payload.page)
             state.currentPage = action.payload.page;
         },
         resetRessources: (state, action) => {
@@ -40,7 +37,7 @@ const ressourcesSlice = createSlice({
             state.prevPage = false;
             state.itemsPerPage = 4;
             state.currentLang = action.payload;
-            console.log("----------------", state.resources, state.currentPage, state.currentLang, action.payload?.resources, "-------------")
+            // console.log("----------------", state.resources, state.currentPage, state.currentLang, action.payload?.resources, "-------------")
         }
     },
 
