@@ -20,7 +20,7 @@ requiredEnv.forEach(key => {
 });
 // Middleware de sécurité
 app.use(helmet({
-    crossOriginResourcePolicy: { policy: "cross-origin" }, // ✅ allows images across origins
+    crossOriginResourcePolicy: { policy: "cross-origin" }, 
 }));
 
 const corsOptions = {
