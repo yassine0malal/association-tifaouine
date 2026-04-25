@@ -80,7 +80,7 @@ class RessourceRepository {
                 type: { [Op.in]: ['document', 'rapport', 'guide'] }
             },
             order:  [['is_featured', 'DESC'], ['created_at', 'DESC']],
-            limit:  limit  || 9,
+            limit:  limit  || 12,
             offset: offset || 0
         });
     }

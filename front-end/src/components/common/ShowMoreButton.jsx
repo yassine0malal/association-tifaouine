@@ -3,7 +3,7 @@ import styles from "./showMoreButton.module.css";
 
 function ShowMoreButton({ loading, currentPage, totalPages, onPageChange }) {
 
-  console.log("iiii" + loading, currentPage, totalPages)
+  // console.log("iiii" , currentPage, totalPages)
   
   const { t } = useTranslation("common");
   if (!currentPage || !totalPages) return null;
