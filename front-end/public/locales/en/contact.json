@@ -33,6 +33,16 @@
         "send": "Send",
         "send-what": "Contact us on WhatsApp"
       }
+    },
+    "validation": {
+      "fullNameRequired": "Full name is required",
+      "emailRequired": "Email is required",
+      "emailInvalid": "Email address is invalid",
+      "phoneRequired": "Phone number is required",
+      "phoneInvalid": "Phone number is invalid",
+      "subjectRequired": "Subject is required",
+      "messageRequired": "Message is required",
+      "submitError": "Something went wrong. Please try again later."
     }
   }
 }

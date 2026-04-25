@@ -25,8 +25,9 @@ const domainsPageSlice = createSlice({
                 state.error = null;
             })
             .addCase(fetchDomainsPage.fulfilled, (state, action) => {
+                console.log("after getting the domains from the backend --> ",action.payload.domaines)
                 state.loading = false
-                state.data = action.payload?.domainsList || [];
+                state.data = action.payload?.domaines || [];
             })
             .addCase(fetchDomainsPage.rejected, (state, action) => {
                 state.loading = false;

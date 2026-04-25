@@ -27,7 +27,6 @@ const domainsSlice = createSlice({
             .addCase(fetchDomains.fulfilled, (state, action) => {
                 state.status = "succeeded";
                 state.data = action.payload?.domains || [];
-                // console.log("---data---",state.data )
             })
             .addCase(fetchDomains.rejected, (state, action) => {
                 state.status = "failed";

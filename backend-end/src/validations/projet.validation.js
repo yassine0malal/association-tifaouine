@@ -16,7 +16,10 @@ const createProjetSchema = Joi.object({
         'date.greater': 'La date de fin doit être après la date de début'
     }),
     budget: Joi.number().precision(2).required(),
-    partenaires: Joi.string().optional().allow('', null),
+    partenariat_ids: Joi.alternatives().try(
+        Joi.array().items(Joi.number().integer()),
+        Joi.number().integer()
+    ).optional().default([]),
     image_principale: Joi.string().max(500).optional().allow('', null)
 });
 
@@ -36,7 +39,10 @@ const updateProjetSchema = Joi.object({
         'date.greater': 'La date de fin doit être après la date de début'
     }),
     budget: Joi.number().precision(2).optional(),
-    partenaires: Joi.string().optional().allow('', null),
+    partenariat_ids: Joi.alternatives().try(
+        Joi.array().items(Joi.number().integer()),
+        Joi.number().integer()
+    ).optional(),
     image_principale: Joi.string().max(500).optional().allow('', null)
 }).min(1);
 

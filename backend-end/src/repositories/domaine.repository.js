@@ -2,12 +2,16 @@ const { Domaine, Projet } = require('../models');
 
 class DomaineRepository {
     async findAll(filters = {}) {
-        const { limit, offset } = filters;
+        // const { limit, offset } = filters;
         return await Domaine.findAndCountAll({
             order:  [['created_at', 'ASC']],
-            limit:  limit  || 9,
-            offset: offset || 0
+            // limit:  limit  || 9,
+            // offset: offset || 0
         });
+    }
+
+    async findAllOrdered() {
+        return await Domaine.findAll({ order: [['created_at', 'ASC']] });
     }
 
     // trouve un domaine par id

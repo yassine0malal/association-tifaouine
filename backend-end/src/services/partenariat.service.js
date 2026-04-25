@@ -27,6 +27,10 @@ class PartenariatService {
         return await partenariatRepository.findAll(filters);
     }
 
+    async getAllPartenariatsByLang() {
+        return await partenariatRepository.findAll();
+    }
+
     /**
      * Récupérer un partenariat par ID
      */

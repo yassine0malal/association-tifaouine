@@ -59,10 +59,11 @@ class MembreService {
      */
     async getAllMembers(filters = {}) {
         const result = await membreRepository.findAll(filters);
-        return {
-            rows: result.rows.map(m => this._formatMember(m)),
-            count: result.count
-        };
+        return { rows: result.rows.map(m => this._formatMember(m)), count: result.count };
+    }
+
+    async getAllMembresWithProfile(filters = {}) {
+        return await membreRepository.findAll(filters);
     }
 
     /**

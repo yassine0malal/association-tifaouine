@@ -124,6 +124,11 @@
     scale: 1.1;
 }
 
+.bottomsDetails .downloadButtom a {
+    all: unset;
+    display: flex;
+    cursor: pointer;
+}
 .bottomsDetails .downloadButtom {
     display: flex;
     transition: all 0.3s ease-in-out;
@@ -347,20 +352,20 @@
     justify-content: space-between;
     align-items: center;
     font-size: 14px;
-    padding: 10px 10px;
+    padding: 15px;
 
 }
 
-.cardsContent .bottomsDetailsCard a {
+.cardsContent .bottomsDetailsCard button {
     transition: all ease-in-out 0.3s;
     position: relative;
 }
 
-.cardsContent .bottomsDetailsCard a {
+.cardsContent .bottomsDetailsCard button {
     transition: all 0.3s ease-in-out;
 }
 
-.cardsContent .bottomsDetailsCard a button::before {
+.cardsContent .bottomsDetailsCard button::before {
     position: absolute;
     content: "";
     border-radius: 8px;
@@ -371,10 +376,10 @@
     top: 0;
 }
 
-.cardsContent .bottomsDetailsCard a:active svg{
+.cardsContent .bottomsDetailsCard button:active svg{
     scale: 0.9;
 }
-.cardsContent .bottomsDetailsCard a:hover svg path {
+.cardsContent .bottomsDetailsCard button:hover svg path {
     stroke: var(--accent-strong);
     rotate: 3deg;
     transform: translateY(-3px);
@@ -383,7 +388,7 @@
 
 }
 
-.cardsContent .bottomsDetailsCard a button {
+.cardsContent .bottomsDetailsCard  button {
     all: unset;
 }
 

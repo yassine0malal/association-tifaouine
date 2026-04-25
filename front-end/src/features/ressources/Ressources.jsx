@@ -7,14 +7,16 @@ import styles from "./Ressources.module.css";
 import PageHero from "../../components/common/PageHero";
 import heroImg from "../../assets/images/projects_hero.jpg";
 import ai from "../../assets/icons/ai.png";
-import document from "../../assets/icons/document.png";
+import documentIcon from "../../assets/icons/document.png";
 import download from "../../assets/icons/dawnload.png";
 import library from "../../assets/images/library.png";
 import ShowMoreButton from "../../components/common/ShowMoreButton";
-import i18n from "../../i18n";
+// import i18n from "../../i18n";
+const BASE_BACK_END_URL = import.meta.env.VITE_BASE_BACK_END_URL;
+
 
 export default function RessourcesPage() {
-    const { t } = useTranslation("ressources");
+    const { t, i18n } = useTranslation("ressources");
     const currentLang = i18n.language || "fr";
     const {
         resources,
@@ -27,15 +29,37 @@ export default function RessourcesPage() {
         nextPage,
         totalItems,
     } = useSelector((state) => state.ressources);
+
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(resetRessources());
+        console.warn("dddd")
+        dispatch(resetRessources(currentLang));
+        dispatch(fetchRessources({ page: 1, lang: currentLang }));
     }, [currentLang]);
 
     useEffect(() => {
-        dispatch(fetchRessources({ page: currentPage, lang: currentLang }));
-    }, [dispatch, currentPage, currentLang]);
+        if (currentPage > 1) {
+            dispatch(fetchRessources({ page: currentPage, lang: currentLang }));
+        }
+    }, [currentPage]);
 
+
+    const downloadFile = async (fileUrl, fileName) => {
+        try {
+            const response = await fetch(fileUrl);
+            const blob = await response.blob();
+            const blobUrl = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = blobUrl;
+            link.download = fileName || 'download';
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            window.URL.revokeObjectURL(blobUrl);
+        } catch (error) {
+            console.error('Download failed:', error);
+        }
+    };
     const handlePageChange = (page) => {
         if (!loading) {
             dispatch(setRessourcesPage({ page }));
@@ -64,6 +88,8 @@ export default function RessourcesPage() {
             </div>
         );
     }
+    // console.log("- totoale-->", resources.length)
+    // console.log("- totoale items DB-->", totalItems)
 
     // console.log(itemsPerPage * (currentPage-1) + resources.length, "item per page",itemsPerPage,"resources ,length",resources.length, "current one ",currentPage)
     return (
@@ -82,7 +108,7 @@ export default function RessourcesPage() {
                         <div className={styles.contentBestContainer}>
                             <div className={styles.text}>
                                 <div className={styles.top}>
-                                    <span>{featuredInsight?.category}</span>
+                                    <span>{featuredInsight?.type}</span>
                                     <span>{t("ressources.ourBestProject")}</span>
                                 </div>
                                 <h2>{featuredInsight?.title}</h2>
@@ -90,18 +116,25 @@ export default function RessourcesPage() {
                             </div>
                             <div className={styles.bottomsDetails}>
                                 <div className={styles.imagMetaData}>
-                                    <img src={document} alt="document" />
+                                    <img src={documentIcon} alt="document" />
                                     <p>
                                         {featuredInsight?.fileSize} {featuredInsight?.fileType}
                                     </p>
                                 </div>
                                 <div className={styles.downloadButtom}>
-                                    <button>{t("ressources.download")}</button>
-                                    {/* <img src={download} alt="" /> */}
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" viewBox="0 0 24 24" fill="none">
-                                        <path d="M12 3V16M12 16L16 11.625M12 16L8 11.625" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                        <path d="M15 21H9C6.17157 21 4.75736 21 3.87868 20.1213C3 19.2426 3 17.8284 3 15M21 15C21 17.8284 21 19.2426 20.1213 20.1213C19.8215 20.4211 19.4594 20.6186 19 20.7487" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="" />
-                                    </svg>
+                                    <a
+                                        href={`${BASE_BACK_END_URL}${featuredInsight?.downloadUrl}`}
+                                        download
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        <button>{t("ressources.download")}</button>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" viewBox="0 0 24 24" fill="none">
+                                            <path d="M12 3V16M12 16L16 11.625M12 16L8 11.625" stroke="var(--accent)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                            <path d="M15 21H9C6.17157 21 4.75736 21 3.87868 20.1213C3 19.2426 3 17.8284 3 15M21 15C21 17.8284 21 19.2426 20.1213 20.1213C19.8215 20.4211 19.4594 20.6186 19 20.7487" stroke="var(--accent)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="" />
+                                        </svg>
+
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -129,8 +162,8 @@ export default function RessourcesPage() {
                         <div className={styles.content}>
                             <p>
                                 {t("ressources.showingItems", {
-                                    count: itemsPerPage * (currentPage - 1) + resources.length,
-                                    total: totalItems,
+                                    count: currentPage != totalPages ? resources.length  + (resources.length % itemsPerPage):resources.length,
+                                    total: totalItems-1,
                                 })}
                             </p>
                         </div>
@@ -140,8 +173,15 @@ export default function RessourcesPage() {
                     <div className={styles.cardsContent}>
                         {resources.map((item) => (
                             <div key={item.id} className={styles.card}>
-                                <div className={styles.imageWrapper} data-count={item.category}>
-                                    <img src={item.imageUrl} alt={item.title} />
+                                <div className={styles.imageWrapper} data-count={item.type}>
+                                    {/* this the showwwing */}
+                                    <a
+                                        href={`${BASE_BACK_END_URL}${item?.downloadUrl}`}
+                                        download
+                                        target="_blank"
+                                        rel="noopener noreferrer">
+                                        <img src={`${BASE_BACK_END_URL}${item?.imageUrl}`} alt={item.title} />
+                                    </a>
                                 </div>
                                 <div className={styles.footerCard}>
                                     <div className={styles.titles}>
@@ -154,14 +194,14 @@ export default function RessourcesPage() {
                                             <span>{item.fileSize}</span>{" "}
                                             <span>{item.fileType}</span>
                                         </div>
-                                        <a href={item.downloadUrl} download>
-                                            <button>
+                                        {/* <a > */}
+                                            <button  onClick={() => downloadFile(`${BASE_BACK_END_URL}${item.downloadUrl}`, item.title)}>
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" viewBox="0 0 24 24" fill="none">
-                                                    <path d="M12 3V16M12 16L16 11.625M12 16L8 11.625" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                                    <path d="M15 21H9C6.17157 21 4.75736 21 3.87868 20.1213C3 19.2426 3 17.8284 3 15M21 15C21 17.8284 21 19.2426 20.1213 20.1213C19.8215 20.4211 19.4594 20.6186 19 20.7487" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="" />
+                                                    <path d="M12 3V16M12 16L16 11.625M12 16L8 11.625" stroke="var(--accent)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                                    <path d="M15 21H9C6.17157 21 4.75736 21 3.87868 20.1213C3 19.2426 3 17.8284 3 15M21 15C21 17.8284 21 19.2426 20.1213 20.1213C19.8215 20.4211 19.4594 20.6186 19 20.7487" stroke="var(--accent)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="" />
                                                 </svg>
                                             </button>
-                                        </a>
+                                        {/* </a>     */}
                                     </div>
 
                                 </div>

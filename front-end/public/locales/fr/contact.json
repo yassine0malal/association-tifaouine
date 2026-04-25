@@ -33,6 +33,16 @@
                 "send": "Envoyer",
                 "send-what": "Contactez-nous sur WhatsApp"
             }
+        },
+        "validation": {
+            "fullNameRequired": "Le nom complet est requis",
+            "emailRequired": "L'email est requis",
+            "emailInvalid": "L'adresse email est invalide",
+            "phoneRequired": "Le numéro de téléphone est requis",
+            "phoneInvalid": "Le numéro de téléphone est invalide",
+            "subjectRequired": "Le sujet est requis",
+            "messageRequired": "Le message est requis",
+            "submitError": "Une erreur est survenue. Veuillez réessayer plus tard."
         }
     }
 }

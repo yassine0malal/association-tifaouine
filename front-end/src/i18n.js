@@ -10,7 +10,7 @@ i18n
     .use(initReactI18next)
     .init({
         fallbackLng: "fr",
-        debug: true,
+        debug: false,
         ns: ["common", "home", "about", "contact"],
         defaultNs: "common",
         backend: {
