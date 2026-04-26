@@ -22,9 +22,16 @@ class AuthController {
             res.cookie('refreshToken', data.refreshToken, {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
-                sameSite: 'Strict', 
-                maxAge: 7 * 24 * 60 * 60 * 1000 
+                sameSite: process.env.NODE_ENV === 'production' ? 'Strict' : 'Lax',
+                maxAge: 7 * 24 * 60 * 60 * 1000
             });
+            // res.cookie('refreshToken', data.refreshToken, {
+            //     httpOnly: true,
+            //     secure: process.env.NODE_ENV === 'production',
+            //     sameSite: 'Strict',
+            //     maxAge: rememberMe ? 30 * 24 * 60 * 60 * 1000   // 30 days
+            //         : 7 * 24 * 60 * 60 * 1000    // 7 days
+            // });
 
             return res.status(200).json({
                 success: true,
