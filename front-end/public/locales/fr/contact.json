@@ -29,7 +29,9 @@
                 "email": "Email",
                 "phone": "Téléphone",
                 "subject": "Objet",
-                "message": "Message"
+                "message": "Message",
+                "send": "Envoyer",
+                "send-what": "Contactez-nous sur WhatsApp"
             }
         }
     }

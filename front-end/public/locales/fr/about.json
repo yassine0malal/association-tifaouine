@@ -39,5 +39,26 @@
     },
     "partners": {
         "title": "Partenariat pour un impact enrichissant"
+    },
+    "impact": {
+        "label": "NOTRE IMPACT",
+        "title": "Des chiffres qui racontent une histoire humaine",
+        "items": [
+            {
+                "value": "5000+",
+                "name": "Bénéficiaires",
+                "description": "Familles et artisans locaux soutenus par nos programmes de préservation et de formation."
+            },
+            {
+                "value": "120+",
+                "name": "Projets réalisés",
+                "description": "De la numérisation de manuscrits à la restauration de greniers collectifs ancestraux."
+            },
+            {
+                "value": "45+",
+                "name": "Villages touchés",
+                "description": "Une présence forte dans les zones rurales les plus reculées pour protéger le patrimoine local."
+            }
+        ]
     }
 }

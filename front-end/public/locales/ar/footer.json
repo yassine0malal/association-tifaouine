@@ -1,0 +1,58 @@
+{
+  "address": {
+    "title": "العنوان",
+    "line": "دوار أسني القديم 42150، مراكش الحوز – المغرب"
+  },
+  "phone": {
+    "title": "الهاتف",
+    "number": "+212 6 96 23 94 38"
+  },
+  "email": {
+    "title": "البريد الإلكتروني",
+    "address": "contact@tifaouine-foundation.org"
+  },
+  "company": {
+    "description": "تيفاوين – منذ 1998، نعمل من أجل التنمية القروية في الحوز: الماء، التعليم، الفلاحة وتمكين المرأة.",
+    "newsletterPlaceholder": "أدخل بريدك الإلكتروني"
+  },
+  "support": {
+    "title": "الدعم",
+    "associationName": "جمعية تيفاوين",
+    "phoneFax": {
+      "label": "الهاتف / الفاكس",
+      "value": "024 48 53 08"
+    },
+    "presidentGsm": {
+      "label": "هاتف الرئيس",
+      "value": "066 01 46 48"
+    },
+    "bankAccount": {
+      "label": "الحساب البنكي",
+      "wafa": {
+        "label": "وفا بنك",
+        "value": "098 B 001872"
+      },
+      "creditAgricole": {
+        "label": "القرض الفلاحي",
+        "value": "b906457X651"
+      }
+    }
+  },
+  "mainNavigation": {
+    "title": "التصفح الرئيسي",
+    "about": "عن الجمعية",
+    "activities": "الأنشطة",
+    "participate": "شاركوا",
+    "domains": "المجالات",
+    "resources": "الموارد"
+  },
+  "quickLinks": {
+    "title": "روابط سريعة",
+    "becomeMember": "كن عضواً",
+    "becomeVolunteer": "تطوع",
+    "seeEvents": "الأحداث",
+    "contact": "اتصل بنا",
+    "partners": "شركاؤنا"
+  },
+  "copyright": "© حقوق النشر تيفاوين {{year}}. جميع الحقوق محفوظة"
+}

@@ -48,7 +48,7 @@ export default function NavBar() {
                 </div>
 
                 <div className={styles.language}>
-                    <button className={currentLang == "fr" ? "isActive" : ""} onClick={() => changeLanguage("fr")}>Français</button>
+                    <button className={currentLang == "fr" ? "isActive" : ""} onClick={() => changeLanguage("fr")}> Français                                                                                                                                                                            </button>
                     <span>|</span>
                     <button className={currentLang == "en" ? "isActive" : ""} onClick={() => changeLanguage("en")}>English</button>
                     <span>|</span>
@@ -57,7 +57,7 @@ export default function NavBar() {
 
 
             </div>
-
+                            
             <div className={styles.navBarSection}>
 
                 <div>

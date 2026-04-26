@@ -1,0 +1,74 @@
+{
+    "partners": [
+        {
+            "id": 1,
+            "image": "../../assets/images/partenaires/agriculture.png",
+            "name": "Institut des Études Orientales",
+            "description": "Une institution dédiée à la recherche et à la diffusion des savoirs historiques de la région MENA.",
+            "link": "https://www.google.com/"
+        },
+        {
+            "id": 2,
+            "image": "../../assets/images/partenaires/agriculture.png",
+            "name": "Agence Nationale de Promotion de l'Emploi (ANAPEC)",
+            "description": "Organisation publique soutenant l’insertion professionnelle et le développement des compétences.",
+            "link": "https://www.anapec.org/"
+        },
+        {
+            "id": 3,
+            "image": "../../assets/images/partenaires/agriculture.png",
+            "name": "Ministère de l’Agriculture",
+            "description": "Partenaire stratégique dans le développement rural et les projets agricoles durables.",
+            "link": "https://www.agriculture.gov.ma/"
+        },
+        {
+            "id": 4,
+            "image": "../../assets/images/partenaires/agriculture.png",
+            "name": "Entraide Nationale",
+            "description": "Acteur clé dans les actions sociales et le soutien aux populations vulnérables.",
+            "link": "https://www.entraide.ma/"
+        },
+        {
+            "id": 5,
+            "image": "../../assets/images/partenaires/agriculture.png",
+            "name": "Ministère de l’Équipement et de l’Eau",
+            "description": "Contribue au développement des infrastructures et à la gestion durable des ressources hydriques.",
+            "link": "https://www.equipement.gov.ma/"
+        },
+        {
+            "id": 6,
+            "image": "../../assets/images/partenaires/agriculture.png",
+            "name": "Ministère des Habous et des Affaires Islamiques",
+            "description": "Partenaire dans la valorisation du patrimoine culturel et religieux.",
+            "link": "https://www.habous.gov.ma/"
+        },
+        {
+            "id": 7,
+            "image": "../../assets/images/partenaires/agriculture.png",
+            "name": "Province d’Al Haouz",
+            "description": "Soutient les initiatives locales et le développement territorial durable.",
+            "link": "https://www.alhaouz.ma/"
+        },
+        {
+            "id": 8,
+            "image": "../../assets/images/partenaires/agriculture.png",
+            "name": "Organisation Internationale du Travail (OIT)",
+            "description": "Organisation internationale promouvant les droits au travail et les opportunités économiques.",
+            "link": "https://www.ilo.org/"
+        },
+        {
+            "id": 9,
+            "image": "../../assets/images/partenaires/agriculture.png",
+            "name": "UNESCO",
+            "description": "Partenaire global pour la protection du patrimoine culturel et la promotion de l’éducation.",
+            "link": "https://www.unesco.org/"
+        },
+        {
+            "id": 10,
+            "image": "../../assets/images/partenaires/agriculture.png",
+            "name": "Agence de Développement Social (ADS)",
+            "description": "Soutient les projets de développement humain et d’inclusion sociale au Maroc.",
+            "link": "https://www.ads.ma/"
+        }
+    ]
+}

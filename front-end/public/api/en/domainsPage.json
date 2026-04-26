@@ -1,0 +1,49 @@
+{
+    "domainsList": [
+        {
+            "id": 1,
+            "category": "Domaine d'Exception",
+            "title": "Le Clos du Patrimoine",
+            "description": "Un terroir unique niché au cœur de la vallée, façonné par des générations de paysans qui ont su préserver les gestes ancestraux et la richesse du sol.",
+            "projets": 50,
+            "image":"../../../assets/images/domains/agriculture.png",
+            "evenements": 1200
+        },
+        {
+            "id": 2,
+            "category": "Ressource Vitale",
+            "title": "Les Sources de l'Atlas",
+            "description": "Un terroir unique niché au cœur de la vallée, où l'agriculture durable et le respect des cycles naturels donnent naissance à des produits d'une qualité exceptionnelle.",
+            "projets": 30,
+            "image":"../../../assets/images/domains/water.jpg",
+            "evenements": 8
+        },
+        {
+            "id": 3,
+            "category": "Savoir & Transmission",
+            "title": "L'École des Cimes",
+            "description": "Un terroir unique niché au cœur de la vallée, bénéficiant d'un microclimat idéal et d'un ensoleillement généreux qui confèrent aux récoltes toute leur typicité.",
+            "projets": 25,
+            "image":"../../../assets/images/domains/sante.jpg",
+            "evenements": 15
+        },
+        {
+            "id": 4,
+            "category": "Artisanat & Autonomisation",
+            "title": "L'Atelier des Femmes du Haut Atlas",
+            "description": "Un espace dédié à la création et à la transmission des savoir-faire ancestraux. Tissage, couture et valorisation des produits du terroir pour offrir aux femmes une indépendance économique durable.",
+            "projets": 18,
+            "image":"../../../assets/images/domains/sante.jpg",
+            "evenements": 22
+        },
+        {
+            "id": 5,
+            "category": "Environnement & Reforestation",
+            "title": "La Forêt des Générations Futures",
+            "description": "Un vaste programme de plantation d'arbres fruitiers et de protection des écosystèmes montagnards. Chaque arbre planté est un pas de plus vers la résilience climatique des douars et la préservation de la biodiversité.",
+            "projets": 40,
+            "image":"../../../assets/images/domains/water.jpg",
+            "evenements": 30
+        }
+    ]
+}

@@ -2,11 +2,14 @@ import { useTranslation } from "react-i18next";
 import styles from "./showMoreButton.module.css";
 
 function ShowMoreButton({ loading, currentPage, totalPages, onPageChange }) {
-  const {t} = useTranslation('common')
+
+  console.log("iiii" + loading, currentPage, totalPages)
+  
+  const { t } = useTranslation("common");
   if (!currentPage || !totalPages) return null;
 
   if (currentPage === totalPages) {
-    return <p className={styles.noMoreData}>{t('showMoreBtn.end')}</p>;
+    return <p className={styles.noMoreData}>{t("showMoreBtn.end")}</p>;
   }
 
   const handleClick = () => {
@@ -16,19 +19,25 @@ function ShowMoreButton({ loading, currentPage, totalPages, onPageChange }) {
   };
   return (
     <div className={styles.showMore}>
+      <div></div>
       <button
         className={`${loading ? styles.loading : ""}`}
         onClick={handleClick}
       >
-        <span>{t('projectCard.see_more')}</span>
+        <span>{t("projectCard.see_more")}</span>
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          xmlns:xlink="http://www.w3.org/1999/xlink"
+          xmlnsXlink="http://www.w3.org/1999/xlink"
           width="10px"
           height="10px"
           viewBox="-4.5 0 20 20"
           version="1.1"
           className="arrowIcon"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="3"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         >
           <title>arrow_right [#336]</title>
           <desc>Created with Sketch.</desc>
@@ -36,9 +45,9 @@ function ShowMoreButton({ loading, currentPage, totalPages, onPageChange }) {
           <g
             id="Page-1"
             stroke="none"
-            stroke-width="1"
+            strokeWidth="1"
             fill="none"
-            fill-rule="evenodd"
+            fillRule="evenodd"
           >
             <g
               id="Dribbble-Light-Preview"
@@ -55,6 +64,7 @@ function ShowMoreButton({ loading, currentPage, totalPages, onPageChange }) {
           </g>
         </svg>
       </button>
+      <div></div>
     </div>
   );
 }

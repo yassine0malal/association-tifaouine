@@ -1,0 +1,112 @@
+{
+    "featuredInsight": {
+        "imageUrl": "../../assets/images/library.png",
+        "category": "Rapport",
+        "title": "The 2024 State of Heritage Preservation Report",
+        "description": "A comprehensive analysis of cultural preservation efforts across three continents, focusing on sustainable community integration and digital archiving.",
+        "fileSize": "14.2 MB",
+        "fileType": "PDF",
+        "downloadUrl": "/resources/digital-archiving-standards.pdf"
+    },
+    "resourceLibrary": {
+        "currentPage": 2,
+        "nextPage": 3,
+        "prevPage": 1,
+        "totalPages": 10,
+        "itemsPerPage": 4,
+        "showingItems": 4,
+        "totalItems": 124,
+        "resources": [
+            {
+                "id": 1,
+                "imageUrl": "https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=300&h=400&fit=crop",
+                "title": "Digital Archiving Standards v2.0",
+                "description": "Global Digital Asset Management framework for heritage preservation.",
+                "fileSize": "14.2 MB",
+                "fileType": "PDF",
+                "category": "Rapport",
+                "downloadUrl": "/resources/digital-archiving-standards.pdf"
+            },
+            {
+                "id": 2,
+                "imageUrl": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=300&h=400&fit=crop",
+                "title": "Grant Proposal Template",
+                "description": "Ready-to-use template for funding applications in cultural projects.",
+                "fileSize": "8.5 MB",
+                "fileType": "DOCX",
+                "category": "Document",
+                "downloadUrl": "/resources/grant-proposal-template.docx"
+            },
+            {
+                "id": 3,
+                "imageUrl": "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=300&h=400&fit=crop",
+                "title": "Community Impact Analysis",
+                "description": "Methodology and tools to measure social impact of rural initiatives.",
+                "fileSize": "12.3 MB",
+                "fileType": "PDF",
+                "category": "Contrat",
+                "downloadUrl": "/resources/community-impact-analysis.pdf"
+            },
+            {
+                "id": 4,
+                "imageUrl": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=300&h=400&fit=crop",
+                "title": "Grain History Recording Masterclass",
+                "description": "Guide to documenting traditional farming knowledge and practices.",
+                "fileSize": "22.7 MB",
+                "fileType": "MP4",
+                "category": "Finance",
+                "downloadUrl": "/resources/grain-history-masterclass.mp4"
+            },
+            {
+                "id": 5,
+                "imageUrl": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=300&h=400&fit=crop",
+                "title": "Partnership Agreement Boilerplate",
+                "description": "Legal template for collaboration with NGOs and local authorities.",
+                "fileSize": "5.8 MB",
+                "fileType": "DOCX",
+                "category": "Rapport",
+                "downloadUrl": "/resources/partnership-agreement.docx"
+            },
+            {
+                "id": 6,
+                "imageUrl": "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=300&h=400&fit=crop",
+                "title": "Site Maintenance Guidelines",
+                "description": "Best practices for maintaining water and agricultural infrastructure.",
+                "fileSize": "9.1 MB",
+                "fileType": "PDF",
+                "category": "Document",
+                "downloadUrl": "/resources/site-maintenance-guidelines.pdf"
+            },
+            {
+                "id": 7,
+                "imageUrl": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=300&h=400&fit=crop",
+                "title": "Grain History Recording Masterclass",
+                "description": "Guide to documenting traditional farming knowledge and practices.",
+                "fileSize": "22.7 MB",
+                "fileType": "MP4",
+                "category": "Finance",
+                "downloadUrl": "/resources/grain-history-masterclass.mp4"
+            },
+            {
+                "id": 8,
+                "imageUrl": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=300&h=400&fit=crop",
+                "title": "Partnership Agreement Boilerplate",
+                "description": "Legal template for collaboration with NGOs and local authorities.",
+                "fileSize": "5.8 MB",
+                "fileType": "DOCX",
+                "category": "Rapport",
+                "downloadUrl": "/resources/partnership-agreement.docx"
+            },
+            {
+                "id": 9,
+                "imageUrl": "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=300&h=400&fit=crop",
+                "title": "Site Maintenance Guidelines",
+                "description": "Best practices for maintaining water and agricultural infrastructure.",
+                "fileSize": "9.1 MB",
+                "fileType": "PDF",
+                "category": "Document",
+                "downloadUrl": "/resources/site-maintenance-guidelines.pdf"
+            }
+        ]
+    }
+}
