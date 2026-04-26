@@ -11,8 +11,8 @@ const verifyToken = async (req, res, next) => {
 
         if (authHeader && authHeader.startsWith('Bearer ')) {
             token = authHeader.split(' ')[1];
-        } else if (req.cookies && req.cookies.accescToken) {
-            token = req.cookies.accescToken;
+        } else if (req.cookies && req.cookies.accessToken) {
+            token = req.cookies.accessToken;
         }
 
         if (!token) {
