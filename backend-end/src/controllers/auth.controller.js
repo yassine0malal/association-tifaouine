@@ -6,6 +6,7 @@ class AuthController {
      * @route   POST /api/auth/login
      * @desc    Connexion de l'administrateur
      */
+    
     async login(req, res) {
         try {
             const { email, password } = req.body;
@@ -33,10 +34,18 @@ class AuthController {
             //         : 7 * 24 * 60 * 60 * 1000    // 7 days
             // });
 
+            res.cookie('accessToken',data.accessToken,{
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                sameSite: 'Strict', 
+                maxAge:  60 * 60 * 1000 
+            });
+            
+
             return res.status(200).json({
                 success: true,
                 message: "Connexion réussie.",
-                accessToken: data.accessToken,
+              //  accessToken: data.accessToken,
                 user: data.user
             });
 
@@ -67,9 +76,16 @@ class AuthController {
 
             const data = await authService.refreshAdminToken(refreshToken);
 
+            res.cookie('accescToken', data.accessToken, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                sameSite: 'Strict',
+                maxAge: 60 * 60 * 1000
+            });
+
             return res.status(200).json({
                 success: true,
-                accessToken: data.accessToken
+                message: "Token rafraîchi avec succès."
             });
         } catch (error) {
             return res.status(401).json({
