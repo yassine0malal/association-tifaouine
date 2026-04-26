@@ -60,7 +60,7 @@ const startServer = async () => {
         app.listen(PORT, () => {
             console.log(`Serveur démarré sur http://localhost:${PORT}`);
         });
-    } catch (error) {
+    } catch (error) {d
         console.error(' Impossible de se connecter à la base de données :', error);
         process.exit(1);
     }
