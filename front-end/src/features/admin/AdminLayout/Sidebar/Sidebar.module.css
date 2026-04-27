@@ -1,0 +1,28 @@
+.adminSidebar {
+  width: 250px;
+  background: #1e1e2d;
+  color: white;
+  padding: 20px 0;
+}
+
+.logo {
+  padding: 0 20px 20px;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.adminNab .link {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  color: #a2a3b7;
+  text-decoration: none;
+  gap: 10px;
+  transition: 0.2s;
+}
+
+.adminNab .link:hover,
+.active {
+  background: #2a2a3c;
+  color: white;
+}

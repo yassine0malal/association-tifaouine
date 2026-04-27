@@ -6,7 +6,7 @@ class AuthController {
      * @route   POST /api/auth/login
      * @desc    Connexion de l'administrateur
      */
-    
+
     async login(req, res) {
         try {
             const { email, password } = req.body;
@@ -34,18 +34,18 @@ class AuthController {
             //         : 7 * 24 * 60 * 60 * 1000    // 7 days
             // });
 
-            res.cookie('accessToken',data.accessToken,{
+            res.cookie('accessToken', data.accessToken, {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
-                sameSite: 'Strict', 
-                maxAge:  60 * 60 * 1000 
+                sameSite: 'Strict',
+                maxAge: 60 * 60 * 1000
             });
-            
+
 
             return res.status(200).json({
                 success: true,
                 message: "Connexion réussie.",
-              //  accessToken: data.accessToken,
+                //  accessToken: data.accessToken,
                 user: data.user
             });
 
@@ -76,7 +76,7 @@ class AuthController {
 
             const data = await authService.refreshAdminToken(refreshToken);
 
-            res.cookie('accescToken', data.accessToken, {
+            res.cookie('accessToken', data.accessToken, {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
                 sameSite: 'Strict',
@@ -109,7 +109,13 @@ class AuthController {
             res.clearCookie('refreshToken', {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
-                sameSite: 'Strict'
+                sameSite: process.env.NODE_ENV === 'production' ? 'Strict' : 'Lax',
+            });
+
+            res.clearCookie('accessToken', {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                sameSite: process.env.NODE_ENV === 'production' ? 'Strict' : 'Lax',
             });
 
             return res.status(200).json({

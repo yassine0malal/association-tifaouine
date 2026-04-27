@@ -6,7 +6,7 @@ import App from "./App.jsx";
 import MemberForm from "./components/forms/MemberForm.jsx";
 import Footer from "./components/Layout/Footer/Footer.jsx";
 import Projets from "./features/projets/projects-list/ProjetList.jsx";
-import AdminLogin from "./features/admin/AdminLogin.jsx";
+import AdminLogin from "./features/admin/Login/AdminLogin.jsx";
 import ProjectCard from "./components/common/ProjectCard.jsx";
 import Pagination from "./components/common/Pagination.jsx";
 import ProjectPage from "./features/projets/project-page/ProjetDetail.jsx";
@@ -26,6 +26,10 @@ import JoinUsPage from "./features/benevolat/JoinUsPage.jsx";
 import Partner from "./features/partners/Partner.jsx";
 import Domain from "./features/domains/domainsPage/Domain.jsx";
 import DonationPage from "./features/dons/DonationPage.jsx";
+import { ProtectedRoute } from "./components/common/admin/ProtectedRoute.jsx";
+import AdminDashboard from "./features/admin/Dashboard/AdminDashboard.jsx";
+import { GuestRoute } from "./components/common/admin/GuestRoute.jsx";
+import AdminLayout from "./features/admin/AdminLayout/AdminLayout.jsx";
 
 createRoot(document.getElementById("root")).render(
   <Provider store={store}>
@@ -35,7 +39,7 @@ createRoot(document.getElementById("root")).render(
           {/* Main Route: Home */}
           <Route path="/" element={<App />}>
             {/* Default one  */}
-            <Route index element={<Home />} />
+            <Route path="fr" index element={<Home />} />
 
             {/* Main Route: A propos */}
             <Route path="/:lang">
@@ -52,14 +56,14 @@ createRoot(document.getElementById("root")).render(
 
             {/* Main Routes : Participez */}
             <Route path="/:lang">
-              <Route path="donate" element={ <DonationPage />} />
+              <Route path="donate" element={<DonationPage />} />
               <Route path="join-us" element={<JoinUsPage />} />
               <Route path="join-us/:contributor" element={<JoinUsPage />} />
             </Route>
 
             {/* Main Routes : Domaines */}
             <Route path="/:lang/domains">
-              <Route index  element={<Domain />} />
+              <Route index element={<Domain />} />
               <Route path=":id" element={<Domain />} />
             </Route>
 
@@ -70,8 +74,24 @@ createRoot(document.getElementById("root")).render(
             </Route>
           </Route>
 
+          {/* Admin Routes */}
+          <Route element={<GuestRoute />}>
+            <Route path="/adminLogin" element={<AdminLogin />} />
+          </Route>
+
+          <Route path="/admin" element={<ProtectedRoute />}>
+            {/* Route without path = layout, all children use it */}
+            <Route element={<AdminLayout />}>
+              <Route index element={<AdminDashboard />} />
+              {/* <Route path="projets" element={<AdminProjets />} />
+              <Route path="evenements" element={<AdminEvenements />} /> */}
+            </Route>
+          </Route>
+
+
+
+
           {/* test routes */}
-          <Route path="/AdminLogin" element={<AdminLogin />} />
           <Route path="/projectCard" element={<ProjectCard />} />
           <Route path="/projects" element={<Projets />} />
           <Route path="/pagination" element={<Pagination />} />

@@ -117,7 +117,7 @@ export default function RessourcesPage() {
                 <div className={styles.bestRepportOrganigram}>
                     {/* -----Left----- */}
                     <div className={styles.leftSide}>
-                        <img src={library} alt="library" />
+                        <img aria-label="loading" src={library} alt="library" />
 
                         <div className={styles.contentBestContainer}>
                             <div className={styles.text}>
@@ -131,7 +131,7 @@ export default function RessourcesPage() {
                             <div className={styles.bottomsDetails}>
                                 <div className={styles.imagMetaData}>
 
-                                    <img src={documentIcon} alt="document" />
+                                    <img aria-label="loading" src={documentIcon} alt="document" />
 
                                     <p>
                                         {featuredInsight?.fileSize} {featuredInsight?.fileType}
@@ -198,7 +198,7 @@ export default function RessourcesPage() {
                                         target="_blank"
                                         rel="noopener noreferrer"
                                     >
-                                        <img src={`${BASE_BACK_END_URL}${item?.imageUrl}`} alt={item.title} />
+                                        <img aria-label="loading" src={`${BASE_BACK_END_URL}${item?.imageUrl}`} alt={item.title} />
                                     </a>
                                 </div>
                                 <div className={styles.footerCard}>

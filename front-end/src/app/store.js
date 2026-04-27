@@ -8,6 +8,7 @@ import eventReducer from '../features/evenements/event-page/eventSlice'
 import domainsReducer from '../features/domains/domainsSlice'
 import domainsPageReducer from '../features/domains/domainsPage/domainsPageSlice'
 import partnersReducer from '../features/partners/partnersSlice'
+import authAdmin from '../features/admin/Login/authSlice'
 
 export const store = configureStore({
     reducer: {
@@ -20,5 +21,6 @@ export const store = configureStore({
         domains: domainsReducer,
         domainsPage: domainsPageReducer,
         partners: partnersReducer,
+        auth: authAdmin,
     },
 })
