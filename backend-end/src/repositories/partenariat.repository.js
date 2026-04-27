@@ -7,9 +7,8 @@ class PartenariatRepository {
     async findAll(filters = {}) {
         const { limit, offset } = filters;
         return await Partenariat.findAndCountAll({
-            order:  [['created_at', 'DESC']],
-            limit:  limit  || 9,
-            offset: offset || 0
+            order:  [['created_at', 'DESC']]
+            
         });
     }
 

@@ -8,17 +8,19 @@
     margin: 0 auto;
 }
 
-
 .contactUsSection {
     display: flex;
     flex-direction: row;
     gap: 30px;
-    padding: 40px 20px;
+    padding: 40px 10px;
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
     align-items: flex-start;
     align-items: stretch;
+    /* background-color: var(--accent-src); */
+    border-radius: 8px;
+
 }
 
 [dir="rtl"] .contactUsSection {
@@ -67,12 +69,14 @@
 .carte {
     flex: 1;
     width: 100%;
+    height: 100%;
 }
 
 .carte iframe {
     width: 100%;
     border-radius: 0px;
     display: block;
+    height: 640px;
 }
 
 /* Form Logic */
@@ -100,6 +104,10 @@
 [dir="rtl"] input[type="tel"] {
     direction: ltr;
     text-align: right;
+}
+::placeholder,textarea::placeholder{
+    font-weight: lighter;
+    font-size: 14px;
 }
 
 .inputs input,
@@ -160,6 +168,12 @@ textarea {
     text-align: center;
     align-self: center;
     transition: transform 0.3s ease;
+    background-color: var(--accent);
+    padding: 20px 30px;
+    color: var(--bg);
+    font-weight: 600;
+    border-radius: 8px;
+    width: 80%;
 }
 
 .form button:active {
@@ -172,12 +186,30 @@ textarea {
     animation: send 3s infinite;
 }
 
+.form .sendButton button a {
+    all: unset;
+}
+
+.form .sendButton button:last-child img{
+    width: 20px;
+}
+.form .sendButton button:last-child {
+    background-color: var(--second-buttons-bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+}
+
 .form .sendButton {
     margin-top: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+    gap: 20px;
 }
+
 [dir="rtl"] .carte {
     direction: ltr;
 }

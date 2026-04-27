@@ -14,8 +14,8 @@ const { paginate } = require('../middlewares/pagination.middleware');
 // Le middleware validateLang est appliqué dans index.js avant ce router
 
 // ─── Domaines 
-router.get('/domaines',domaineController.getAllByLang.bind(domaineController));
-
+router.get('/domaines-navbar', domaineController.getAllByLang.bind(domaineController));
+router.get('/domaines',        domaineController.getAllFullByLang.bind(domaineController));
 // ─── Projets 
 router.get('/projets',paginate, projetController.getAllByLang.bind(projetController));
 router.get('/projets/:id/images',paginate, projetController.getImagesByLang.bind(projetController));
@@ -33,7 +33,7 @@ router.get('/membres',paginate, membreController.getAllByLang.bind(membreControl
 router.get('/benevoles',paginate, benevoleController.getAllByLang.bind(benevoleController));
 
 // ─── Partenariats
-router.get('/partenariats',paginate, partenariatController.getAllByLang.bind(partenariatController));
+router.get('/partenariats', partenariatController.getAllByLang.bind(partenariatController));
 
 // ─── Ressources documents de l'association
 router.get('/ressources/documents', paginate, ressourceController.getDocumentsAssociation.bind(ressourceController));

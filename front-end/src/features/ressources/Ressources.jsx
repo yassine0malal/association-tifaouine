@@ -1,173 +1,148 @@
-import styles from "./Ressources.module.css";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
+import { fetchRessources, setRessourcesPage, resetRessources } from "./ressourcesSlice";
 
+import styles from "./Ressources.module.css";
 import PageHero from "../../components/common/PageHero";
 import heroImg from "../../assets/images/projects_hero.jpg";
 import ai from "../../assets/icons/ai.png";
 import document from "../../assets/icons/document.png";
 import download from "../../assets/icons/dawnload.png";
 import library from "../../assets/images/library.png";
+import ShowMoreButton from "../../components/common/ShowMoreButton";
+import i18n from "../../i18n";
 
-const resourcesData = [
-    {
-        id: 1,
-        image: "https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=300&h=400&fit=crop",
-        title: "Digital Archiving Standards v2.0",
-        description: "Global Digital Asset Management framework for heritage preservation.",
-        fileSize: "14.2 MB",
-        fileType: "PDF",
-        downloadUrl: "/resources/digital-archiving-standards.pdf"
-    },
-    {
-        id: 2,
-        image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=300&h=400&fit=crop",
-        title: "Grant Proposal Template",
-        description: "Ready-to-use template for funding applications in cultural projects.",
-        fileSize: "8.5 MB",
-        fileType: "DOCX",
-        downloadUrl: "/resources/grant-proposal-template.docx"
-    },
-    {
-        id: 3,
-        image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=300&h=400&fit=crop",
-        title: "Community Impact Analysis",
-        description: "Methodology and tools to measure social impact of rural initiatives.",
-        fileSize: "12.3 MB",
-        fileType: "PDF",
-        downloadUrl: "/resources/community-impact-analysis.pdf"
-    },
-    {
-        id: 4,
-        image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=300&h=400&fit=crop",
-        title: "Grain History Recording Masterclass",
-        description: "Guide to documenting traditional farming knowledge and practices.",
-        fileSize: "22.7 MB",
-        fileType: "MP4",
-        downloadUrl: "/resources/grain-history-masterclass.mp4"
-    },
-    {
-        id: 5,
-        image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=300&h=400&fit=crop",
-        title: "Partnership Agreement Boilerplate",
-        description: "Legal template for collaboration with NGOs and local authorities.",
-        fileSize: "5.8 MB",
-        fileType: "DOCX",
-        downloadUrl: "/resources/partnership-agreement.docx"
-    },
-    {
-        id: 6,
-        image: "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=300&h=400&fit=crop",
-        title: "Site Maintenance Guidelines",
-        description: "Best practices for maintaining water and agricultural infrastructure.",
-        fileSize: "9.1 MB",
-        fileType: "PDF",
-        downloadUrl: "/resources/site-maintenance-guidelines.pdf"
-    }
-];
 export default function RessourcesPage() {
+    const { t } = useTranslation("ressources");
+    const currentLang = i18n.language || "fr";
+    const {
+        resources,
+        featuredInsight,
+        loading,
+        error,
+        itemsPerPage,
+        currentPage,
+        totalPages,
+        nextPage,
+        totalItems,
+    } = useSelector((state) => state.ressources);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(resetRessources());
+    }, [currentLang]);
 
+    useEffect(() => {
+        dispatch(fetchRessources({ page: currentPage, lang: currentLang }));
+    }, [dispatch, currentPage, currentLang]);
+
+    const handlePageChange = (page) => {
+        if (!loading) {
+            dispatch(setRessourcesPage({ page }));
+        }
+    };
+
+    // Affichage pendant le chargement initial
+    if (loading && !featuredInsight && resources.length === 0) {
+        return (
+            <div className={styles.ressourcesPage}>
+                <PageHero title={t("ressources.heroTitle")} heroImg={heroImg} />
+                <div className={styles.ressourcesContainer}>
+                    <p>{t("ressources.loadingResources")}</p>
+                </div>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className={styles.ressourcesPage}>
+                <PageHero title={t("ressources.heroTitle")} heroImg={heroImg} />
+                <div className={styles.ressourcesContainer}>
+                    <p>{t("ressources.errorMessage", { error })}</p>
+                </div>
+            </div>
+        );
+    }
+
+    // console.log(itemsPerPage * (currentPage-1) + resources.length, "item per page",itemsPerPage,"resources ,length",resources.length, "current one ",currentPage)
     return (
         <div className={styles.ressourcesPage}>
-            <PageHero title={"Our Ressources"} heroImg={heroImg} />
+            <PageHero title={t("ressources.heroTitle")} heroImg={heroImg} />
             <div className={styles.ressourcesContainer}>
-
                 <div className={styles.title}>
-                    <h2>Featured Insights</h2>
+                    <h2>{t("ressources.featuredInsights")}</h2>
                 </div>
 
                 <div className={styles.bestRepportOrganigram}>
-
                     {/* -----Left----- */}
-
                     <div className={styles.leftSide}>
                         <img src={library} alt="library" />
 
                         <div className={styles.contentBestContainer}>
-
                             <div className={styles.text}>
-
                                 <div className={styles.top}>
-                                    <span>Rapport</span>
-                                    <span>Project ARCH-2024-EU</span>
+                                    <span>{featuredInsight?.category}</span>
+                                    <span>{t("ressources.ourBestProject")}</span>
                                 </div>
-
-                                <h2>The 2024 State of Heritage Preservation Report</h2>
-
-                                <p>
-                                    A comprehensive analysis of cultural preservation efforts
-                                    across three continents, focusing on sustainable community integration
-                                    and digital archiving.
-                                    across three continents, focusing on sustainable community integration
-                                    and digital archiving.
-                                </p>
-
+                                <h2>{featuredInsight?.title}</h2>
+                                <p>{featuredInsight?.description}</p>
                             </div>
-
                             <div className={styles.bottomsDetails}>
                                 <div className={styles.imagMetaData}>
                                     <img src={document} alt="document" />
-                                    <p>14.2 MB PDF</p>
+                                    <p>
+                                        {featuredInsight?.fileSize} {featuredInsight?.fileType}
+                                    </p>
                                 </div>
                                 <div className={styles.downloadButtom}>
-                                    <button>Download</button>
-                                    <img src={download} alt="" />
+                                    <button>{t("ressources.download")}</button>
+                                    {/* <img src={download} alt="" /> */}
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" viewBox="0 0 24 24" fill="none">
+                                        <path d="M12 3V16M12 16L16 11.625M12 16L8 11.625" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M15 21H9C6.17157 21 4.75736 21 3.87868 20.1213C3 19.2426 3 17.8284 3 15M21 15C21 17.8284 21 19.2426 20.1213 20.1213C19.8215 20.4211 19.4594 20.6186 19 20.7487" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="" />
+                                    </svg>
                                 </div>
                             </div>
-
                         </div>
-
                     </div>
 
                     {/* ------Right----- */}
-
                     <div className={styles.rightSide}>
                         <div className={styles.textContent}>
-                            <img src={ai} alt="intillegent" />
+                            <img src={ai} alt="intelligent" />
                             <div className={styles.topLeft}>
-                                <span>Guide</span>
-                                <span>Collaboration: Discover how we works</span>
+                                <span>{t("ressources.guide")}</span>
+                                <span>{t("ressources.collaborationText")}</span>
                             </div>
-                            <h2>The 2024 State of Heritage Preservation Report</h2>
-                            <p>Discover how our association's
-                                grassroots initiatives are preserving
-                                cultural wisdom across generations and
-                                building stronger, more connected
-                                communities.
-                            </p>
+                            <h2>{t("ressources.rightSideTitle")}</h2>
+                            <p>{t("ressources.rightSideDescription")}</p>
                         </div>
-                        <button>Read Full Report</button>
+                        <button>{t("ressources.readFullReport")}</button>
                     </div>
                 </div>
 
-                {/* ------------------------Cards--------------------------  */}
-
+                {/* ------------------------Cards-------------------------- */}
                 <div className={styles.rapportCards}>
-
                     <div className={styles.header}>
-                        <h2>Resource Library</h2>
+                        <h2>{t("ressources.resourceLibrary")}</h2>
                         <div className={styles.content}>
-                            <p>Showing 6 of 152 items</p>
-                            <div className={styles.filter}>
-                                <span>Sort by: </span>
-                                <select>
-                                    <option selected value="most-recent">Most Recent</option>
-                                    <option value="most-recent">Last Week</option>
-                                    <option value="most-recent">Yesterday</option>
-                                </select>
-                            </div>
+                            <p>
+                                {t("ressources.showingItems", {
+                                    count: itemsPerPage * (currentPage - 1) + resources.length,
+                                    total: totalItems,
+                                })}
+                            </p>
                         </div>
                     </div>
 
                     {/* ----Card---- */}
-
                     <div className={styles.cardsContent}>
-
-                        {resourcesData.map((item) => (
+                        {resources.map((item) => (
                             <div key={item.id} className={styles.card}>
-
-                                <div className={styles.imageWrapper} data-count={"Document"} >
-                                    <img src={item.image} alt={item.title} />
+                                <div className={styles.imageWrapper} data-count={item.category}>
+                                    <img src={item.imageUrl} alt={item.title} />
                                 </div>
-
                                 <div className={styles.footerCard}>
                                     <div className={styles.titles}>
                                         <h3>{item.title}</h3>
@@ -175,30 +150,34 @@ export default function RessourcesPage() {
                                     </div>
 
                                     <div className={styles.bottomsDetailsCard}>
-
                                         <div className={styles.imagMetaDataCard}>
-                                            <span >{item.fileSize}</span> <span> {item.fileType}</span>
+                                            <span>{item.fileSize}</span>{" "}
+                                            <span>{item.fileType}</span>
                                         </div>
-
                                         <a href={item.downloadUrl} download>
                                             <button>
-                                                <img src={download} alt="download" />
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" viewBox="0 0 24 24" fill="none">
+                                                    <path d="M12 3V16M12 16L16 11.625M12 16L8 11.625" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M15 21H9C6.17157 21 4.75736 21 3.87868 20.1213C3 19.2426 3 17.8284 3 15M21 15C21 17.8284 21 19.2426 20.1213 20.1213C19.8215 20.4211 19.4594 20.6186 19 20.7487" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="" />
+                                                </svg>
                                             </button>
                                         </a>
-
                                     </div>
-                                </div>
 
+                                </div>
                             </div>
                         ))}
                     </div>
+
                     <div className={styles.loadMore}>
-
-                    <button>Load More Resources</button>
+                        <ShowMoreButton
+                            loading={loading}
+                            currentPage={currentPage}
+                            totalPages={totalPages}
+                            onPageChange={handlePageChange}
+                        />
                     </div>
-
                 </div>
-
             </div>
         </div>
     );

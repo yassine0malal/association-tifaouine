@@ -22,6 +22,9 @@ import RessourcesPage from "./features/ressources/Ressources.jsx";
 import EventList from "./features/evenements/event-list/EventList.jsx";
 import './styles/globals.css'
 import EventPage from "./features/evenements/event-page/EventPage.jsx";
+import JoinUsPage from "./features/benevolat/JoinUsPage.jsx";
+import Partner from "./features/partners/Partner.jsx";
+import Domain from "./features/domains/domainsPage/Domain.jsx";
 
 createRoot(document.getElementById("root")).render(
   <Provider store={store}>
@@ -47,23 +50,22 @@ createRoot(document.getElementById("root")).render(
             </Route>
 
             {/* Main Routes : Participez */}
-            <Route path="/:lang">
+            <Route path="/:lang/join-us">
               <Route path="Faire-un-don" element={<Footer />} />
-              <Route path="Devenir-membre" element={<Footer />} />
-              <Route path="Benevolat" element={<Footer />} />
+              <Route index element={<JoinUsPage />} />
+              <Route path=":contributor" element={<JoinUsPage />} />
             </Route>
 
-            {/* Main Routes : Doamaines */}
-            <Route path="/:lang">
-              <Route path="education" element={<Footer />} />
-              <Route path="eau" element={<Footer />} />
-              <Route path="agriculture" element={<Footer />} />
+            {/* Main Routes : Domaines */}
+            <Route path="/:lang/domains">
+              <Route index  element={<Domain />} />
+              <Route path=":id" element={<Domain />} />
             </Route>
 
             {/* Main Routes : Ressources */}
             <Route path="/:lang">
               <Route path="rapports" element={<RessourcesPage />} />
-              <Route path="partenaires" element={<Footer />} />
+              <Route path="partenaires" element={<Partner />} />
             </Route>
           </Route>
 

@@ -39,5 +39,26 @@
     },
     "partners": {
         "title": "Partnership for an Enriching Impact"
+    },
+    "impact": {
+        "label": "OUR IMPACT",
+        "title": "Numbers that tell a human story",
+        "items": [
+            {
+                "value": "5000+",
+                "name": "Beneficiaries",
+                "description": "Local families and artisans supported by our preservation and training programs."
+            },
+            {
+                "value": "120+",
+                "name": "Projects completed",
+                "description": "From digitizing manuscripts to restoring ancestral collective granaries."
+            },
+            {
+                "value": "45+",
+                "name": "Villages reached",
+                "description": "A strong presence in the most remote rural areas to protect local heritage."
+            }
+        ]
     }
 }

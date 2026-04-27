@@ -25,7 +25,7 @@ const projectImagesSlice = createSlice({
     totalPages: 1,
     nextPage: 2,
     prevPage: 0,
-    itemsPerPage: 0,
+    itemsPerPage: 4,
   },
   reducers: {
     setImagesPage: (state, action) => {
@@ -44,7 +44,6 @@ const projectImagesSlice = createSlice({
 
         state.loading = false;
         const newImages = action.payload?.images || [];
-        console.log(action.payload);
         
 
         // Remove duplicates based on id
@@ -53,6 +52,7 @@ const projectImagesSlice = createSlice({
         const filteredImages = newImages.filter(
           (img) => !existingIds.has(img.id),
         );
+
         state.images.push(...filteredImages);
         state.totalPages = action.payload.totalPages;
         state.nextPage = action.payload.nextPage;
