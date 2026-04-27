@@ -1,4 +1,4 @@
-const { sequelize, Utilisateur, benevole } = require('../models');
+const { sequelize, Utilisateur, benevole, AdminNotification } = require('../models');
 const benevoleRepository = require('../repositories/benevole.repository');
 const fs = require('fs');
 const path = require('path');
@@ -37,6 +37,13 @@ class BenevoleService {
                     disponibilite: disponibilite || null,
                     status: status || 'actif',
                     date_adhesion: date_adhesion || new Date()
+                }, { transaction: t });
+
+                // 4. Notification Admin
+                await AdminNotification.create({
+                    type: 'NOUVEAU_BENEVOLE',
+                    entity_id: user.id,
+                    message: `Nouvelle inscription bénévole: ${nom} (${email})`
                 }, { transaction: t });
 
                 createdResults.push({

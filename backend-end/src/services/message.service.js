@@ -1,5 +1,5 @@
 const messageRepository = require('../repositories/message.repository');
-const { sequelize } = require('../models');
+const { sequelize, AdminNotification } = require('../models');
 
 class MessageService {
     /**
@@ -8,6 +8,14 @@ class MessageService {
     async createMessage(data) {
         return await sequelize.transaction(async (t) => {
             const message = await messageRepository.create(data, t);
+
+            // Notification pour Admin
+            await AdminNotification.create({
+                type: 'NOUVEAU_CONTACT',
+                entity_id: message.id,
+                message: `Nouveau message de contact de ${data.nom_complet || 'Anonyme'}`
+            }, { transaction: t });
+
             return message;
         });
     }
