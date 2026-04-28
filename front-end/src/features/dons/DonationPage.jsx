@@ -1,43 +1,207 @@
 import styles from "./donation-page.module.css";
 import mountainImg from "../../assets/images/tob9al_mountain.jpg";
 import PageHero from "../../components/common/PageHero";
-import { useState } from "react";
+import contactImg from "../../assets/images/donation/contact_img.jpg";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
+import { fetchProjectsForSelect } from "../projets/projects-list/projectsSlice";
 
-function FirstSection() {
+// ─── Validation helpers ───────────────────────────────────────────────────────
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const ALLOWED_TYPES = ["application/pdf", "image/jpeg", "image/png"];
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
+
+function validateField(name, value) {
+  switch (name) {
+    case "fullname":
+      if (!value.trim()) return "Full name is required.";
+      if (value.trim().length < 2) return "Must be at least 2 characters.";
+      return "";
+
+    case "email":
+      if (!value.trim()) return "Email is required.";
+      if (!emailRegex.test(value)) return "Enter a valid email address.";
+      return "";
+
+    case "amount":
+      if (value === "" || value === 0 || value === "0") return ""; // optional
+      if (Number(value) <= 0) return "Amount must be a positive number.";
+      return "";
+
+    case "project":
+      if (!value) return "Please select a project.";
+      return "";
+
+    case "receipt":
+      if (!value) return "Please upload your receipt.";
+      if (!ALLOWED_TYPES.includes(value.type))
+        return "Only PDF, JPG, or PNG files are allowed.";
+      if (value.size > MAX_FILE_SIZE) return "File size must not exceed 5 MB.";
+      return "";
+
+    default:
+      return "";
+  }
+}
+
+function validateAll(formData) {
+  const fields = ["fullname", "email", "amount", "project", "receipt"];
+  const errors = {};
+  fields.forEach((field) => {
+    const msg = validateField(field, formData[field]);
+    if (msg) errors[field] = msg;
+  });
+  return errors;
+}
+
+// ─── Sub-components ───────────────────────────────────────────────────────────
+function FieldWrapper({ children, error }) {
   return (
-    <section className={styles.firstSection}>
-      <div className={styles.container}>
-        <div className={styles.msg}>
-          <h1>
-            Be the Change.
-            <br />
-            <span>
-              Support <br />
-              Tifaouine.
-            </span>
-          </h1>
+    <div className={`${styles.wrapper} ${error ? styles.hasError : ""}`}>
+      {children}
+      {error && (
+        <span className={styles.errorMsg} role="alert">
+          {error}
+        </span>
+      )}
+    </div>
+  );
+}
 
-          <p>
-            Your support helps us improve education,
-            <br />
-            health, and agriculture in communities that <br />
-            need it most.
-          </p>
-        </div>
+function CurrentNeeds({ t }) {
+  const needsData = [
+    {
+      id: 1,
+      title: t("currentNeeds.needsData.0.title"),
+      description: t("currentNeeds.needsData.0.description"),
+      funded: 85,
+      raised: t("currentNeeds.needsData.0.raised"),
+      goal: t("currentNeeds.needsData.0.goal"),
+      urgent: true,
+      image:
+        "https://images.unsplash.com/photo-1610348725531-843dff563e2c?w=600&q=80&fit=crop",
+    },
+    {
+      id: 2,
+      title: t("currentNeeds.needsData.1.title"),
+      description: t("currentNeeds.needsData.1.description"),
+      funded: 42,
+      raised: t("currentNeeds.needsData.1.raised"),
+      goal: t("currentNeeds.needsData.1.goal"),
+      urgent: false,
+      image:
+        "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80&fit=crop",
+    },
+    {
+      id: 3,
+      title: t("currentNeeds.needsData.2.title"),
+      description: t("currentNeeds.needsData.2.description"),
+      funded: 70,
+      raised: t("currentNeeds.needsData.2.raised"),
+      goal: t("currentNeeds.needsData.2.goal"),
+      urgent: true,
+      image:
+        "https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?w=600&q=80&fit=crop",
+    },
+    {
+      id: 4,
+      title: t("currentNeeds.needsData.3.title"),
+      description: t("currentNeeds.needsData.3.description"),
+      funded: 15,
+      raised: t("currentNeeds.needsData.3.raised"),
+      goal: t("currentNeeds.needsData.3.goal"),
+      urgent: false,
+      image:
+        "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=600&q=80&fit=crop",
+    },
+  ];
 
-        <div className={styles.image}>
-          <img
-            src="https://picsum.photos/900/600?random=3"
-            alt=""
-            aria-label="loading"
-          />
-        </div>
+  const galleryData = [
+    {
+      id: 1,
+      label: t("currentNeeds.galleryData.0.label"),
+      image:
+        "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=600&q=80&fit=crop",
+    },
+    {
+      id: 2,
+      label: t("currentNeeds.galleryData.1.label"),
+      image:
+        "https://images.unsplash.com/photo-1556484687-30636164638b?w=600&q=80&fit=crop",
+    },
+    {
+      id: 3,
+      label: t("currentNeeds.galleryData.2.label"),
+      image:
+        "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=600&q=80&fit=crop",
+    },
+  ];
+
+  return (
+    <section className={styles.currentNeeds}>
+      {/* Section Header */}
+      <div className={styles.header}>
+        <h2 className={styles.title}>{t("currentNeeds.title")}</h2>
+        <p className={styles.subtitle}>{t("currentNeeds.subtitle")}</p>
+      </div>
+
+      {/* Need Cards */}
+      <div className={styles.cardsGrid}>
+        {needsData.map((need) => (
+          <div className={styles.card} key={need.id}>
+            <div className={styles.cardImageWrapper}>
+              <img src={need.image} alt={need.title} />
+              {need.urgent && (
+                <span className={styles.urgentBadge}>
+                  ! {t("currentNeeds.urgent")}
+                </span>
+              )}
+            </div>
+            <div className={styles.cardBody}>
+              <h3>{need.title}</h3>
+              <p>{need.description}</p>
+              <div className={styles.progress}>
+                <div className={styles.progressMeta}>
+                  <span className={styles.fundedLabel}>
+                    {need.funded}
+                    {t("currentNeeds.funded")}
+                  </span>
+                  <span className={styles.amountLabel}>
+                    {need.raised} / {need.goal}
+                  </span>
+                </div>
+                <div className={styles.progressTrack}>
+                  <div
+                    className={styles.progressFill}
+                    style={{ width: `${need.funded}%` }}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Impact Gallery */}
+      <div className={styles.gallery}>
+        {galleryData.map((item) => (
+          <div className={styles.galleryCard} key={item.id}>
+            <img src={item.image} alt={item.label} />
+            <div className={styles.galleryOverlay} />
+            <span className={styles.galleryLabel}>{item.label}</span>
+          </div>
+        ))}
       </div>
     </section>
   );
 }
 
-function DonateInfosSection() {
+function DonateInfosSection({ t }) {
+  const PHONE_NUMBER = "+212636338100";
+  const EMAIL = "chargaoui2001@gmail.com";
+  const WHATSAPP = `https://wa.me/${PHONE_NUMBER}`;
+
   function Wrapper({ name, children, data }) {
     const [isCopied, setCopied] = useState(false);
     const copyToClipBoard = () => {
@@ -75,12 +239,12 @@ function DonateInfosSection() {
                 <path
                   d="M16.5163 8.93451L11.0597 14.7023L8.0959 11.8984"
                   stroke="#006e0f"
-                  stroke-width="2"
+                  strokeWidth="2"
                 />
                 <path
                   d="M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21Z"
                   stroke="#006e0f"
-                  stroke-width="2"
+                  strokeWidth="2"
                 />
               </svg>
             ) : (
@@ -103,29 +267,33 @@ function DonateInfosSection() {
       </div>
     );
   }
+
   return (
     <section className={styles.donateInfos}>
       <div className={styles.container}>
         <div className={styles.bankInfos}>
-          <h3>DIRECT SUPPORT</h3>
-          <h2>Bank Transfer (RIB)</h2>
-          <p>
-            The most direct way to fund our mission without platform <br />{" "}
-            fees.
-          </p>
+          <h3>{t("donateInfos.directSupport.title")}</h3>
+          <h2>{t("donateInfos.directSupport.subtitle")}</h2>
+          <p>{t("donateInfos.directSupport.description")}</p>
 
           <div className={styles.card}>
             <div className={styles.doubleWrapper}>
-              <Wrapper name="ACCOUNT NAME" data="Association Tifaouine">
+              <Wrapper
+                name={t("donateInfos.directSupport.accountName")}
+                data="Association Tifaouine"
+              >
                 Association Tifaouine
               </Wrapper>
-              <Wrapper name="BANK NAME" data="Attijariwafa Bank">
+              <Wrapper
+                name={t("donateInfos.directSupport.bankName")}
+                data="Attijariwafa Bank"
+              >
                 Attijariwafa Bank
               </Wrapper>
             </div>
 
             <Wrapper
-              name="RIB (BANK ACCOUNT NUMBER)"
+              name={t("donateInfos.directSupport.rib")}
               data="12345678901234567890"
             >
               <span>1234</span>
@@ -137,10 +305,16 @@ function DonateInfosSection() {
             </Wrapper>
 
             <div className={styles.doubleWrapper}>
-              <Wrapper name="IBAN" data="MA64 1234 5678 ... 12">
+              <Wrapper
+                name={t("donateInfos.directSupport.iban")}
+                data="MA64 1234 5678 ... 12"
+              >
                 MA64 1234 5678 ... 12
               </Wrapper>
-              <Wrapper name="SWIFT / BIC" data="AWBAMAMC">
+              <Wrapper
+                name={t("donateInfos.directSupport.swift")}
+                data="AWBAMAMC"
+              >
                 AWBAMAMC
               </Wrapper>
             </div>
@@ -160,18 +334,19 @@ function DonateInfosSection() {
                 </svg>
               </div>
 
-              <p>
-                This account is officially verified. All transactions are
-                securely handled by Attijariwafa Bank Morocco.
-              </p>
+              <p>{t("donateInfos.directSupport.trustMessage")}</p>
             </div>
           </div>
         </div>
 
         <div className={styles.contacts}>
           <div className={styles.card}>
-            <h3>Contact to Donate</h3>
-            <div className={styles.contactWrapper}>
+            <h3>{t("donateInfos.contacts.title")}</h3>
+            <a
+              href={`tel:+${PHONE_NUMBER}`}
+              target="_blank"
+              className={styles.contactWrapper}
+            >
               <div className={styles.icon}>
                 <svg
                   width="18"
@@ -188,12 +363,16 @@ function DonateInfosSection() {
               </div>
 
               <div>
-                <p className={styles.name}>PHONE</p>
-                <p>+212 (0) 522 00 00 00</p>
+                <p className={styles.name}>{t("donateInfos.contacts.phone")}</p>
+                <p>{`${PHONE_NUMBER.substring(0, 4)} (0) ${PHONE_NUMBER.substring(4, 7)} ${PHONE_NUMBER.substring(7, 9)} ${PHONE_NUMBER.substring(9, 11)} ${PHONE_NUMBER.substring(11, 13)}`}</p>
               </div>
-            </div>
+            </a>
 
-            <div className={styles.contactWrapper}>
+            <a
+              href={`mailto:${EMAIL}`}
+              target="_blank"
+              className={styles.contactWrapper}
+            >
               <div className={styles.icon}>
                 <svg
                   width="20"
@@ -209,12 +388,12 @@ function DonateInfosSection() {
                 </svg>
               </div>
               <div>
-                <p className={styles.name}>EMAIL</p>
-                <p>donations@tifaouine.org</p>
+                <p className={styles.name}>{t("donateInfos.contacts.email")}</p>
+                <p>{EMAIL}</p>
               </div>
-            </div>
+            </a>
             <div className={styles.devider}></div>
-            <button className={styles.whatsapp}>
+            <a href={WHATSAPP} target="_blank" className={styles.whatsapp}>
               <svg
                 width="20"
                 height="20"
@@ -223,15 +402,15 @@ function DonateInfosSection() {
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  d="M4 12H12V10H4V12ZM4 9H16V7H4V9ZM4 6H16V4H4V6ZM0 20V2C0 1.45 0.195833 0.979167 0.5875 0.5875C0.979167 0.195833 1.45 0 2 0H18C18.55 0 19.0208 0.195833 19.4125 0.5875C19.8042 0.979167 20 1.45 20 2V14C20 14.55 19.8042 15.0208 19.4125 15.4125C19.0208 15.8042 18.55 16 18 16H4L0 20ZM3.15 14H18V8V2H2V15.125L3.15 14Z"
+                  d="M4 12H12V10H4V12ZM4 9H16V7H4V9ZM4 6H16V4H4V6ZM0 20V2C0 1.45 0.195833 0.979167 0.5875 0.5875C0.979167 0.195833 1.45 0 2 0H18C18.55 0 19.0208 0.195833 19.4125 0.5875C19.8042 0.979167 20 1.45 20 2V14C20 14.55 19.8042 15.0208 19.4125 15.4125C19.8042 15.8042 18.55 16 18 16H4L0 20ZM3.15 14H18V8V2H2V15.125L3.15 14Z"
                   fill="white"
                 />
               </svg>
-              <span>Chat on WhatsApp</span>
-            </button>
+              <span>{t("donateInfos.contacts.whatsapp")}</span>
+            </a>
           </div>
           <div className={styles.image}>
-            <img src="https://picsum.photos/900/600?random=3" alt="" />
+            <img src={contactImg} alt="" />
           </div>
         </div>
       </div>
@@ -239,7 +418,7 @@ function DonateInfosSection() {
   );
 }
 
-function ImpactSection() {
+function ImpactSection({ t }) {
   function ImpactCard({ amount, description, impactLabel, icon, impactIcon }) {
     return (
       <div className={styles.impactCard}>
@@ -247,14 +426,14 @@ function ImpactSection() {
 
         <div className={styles.amount}>
           <h2>{amount}</h2>
-          <span>MAD</span>
+          <span>{t("impactSection.cards.currency")}</span>
         </div>
 
         <p className={styles.description}>{description}</p>
 
         <div className={styles.impact}>
           <div className={styles.icon}>{impactIcon}</div>
-          <p>{impactLabel} Impact</p>
+          <p>{impactLabel} </p>
         </div>
       </div>
     );
@@ -263,16 +442,14 @@ function ImpactSection() {
   return (
     <section className={styles.yourImpact}>
       <div className={styles.container}>
-        <h1 className={styles.title}>Every Dirham Matters</h1>
-        <p className={styles.subtitle}>
-          See how your contribution directly transforms lives.
-        </p>
+        <h1 className={styles.title}>{t("impactSection.title")}</h1>
+        <p className={styles.subtitle}>{t("impactSection.subtitle")}</p>
 
         <div className={styles.cards}>
           <ImpactCard
-            amount={100}
-            description="Provides essential school supplies notebooks, pens, and bags for a child for an entire academic year."
-            impactLabel="Education"
+            amount={t("impactSection.cards.education.amount")}
+            description={t("impactSection.cards.education.description")}
+            impactLabel={t("impactSection.cards.education.impactLabel")}
             icon={
               <svg
                 width="33"
@@ -304,9 +481,9 @@ function ImpactSection() {
           />
 
           <ImpactCard
-            amount={500}
-            description="Supports local medical outreach programs, covering consultations and essential medicine for elders in remote villages."
-            impactLabel="Healthcare"
+            amount={t("impactSection.cards.healthcare.amount")}
+            description={t("impactSection.cards.healthcare.description")}
+            impactLabel={t("impactSection.cards.healthcare.impactLabel")}
             icon={
               <svg
                 width="30"
@@ -338,9 +515,9 @@ function ImpactSection() {
           />
 
           <ImpactCard
-            amount={1000}
-            description="Funds critical agricultural tools and sustainable irrigation pipes for small-scale local farmers."
-            impactLabel="Agriculture"
+            amount={t("impactSection.cards.agriculture.amount")}
+            description={t("impactSection.cards.agriculture.description")}
+            impactLabel={t("impactSection.cards.agriculture.impactLabel")}
             icon={
               <svg
                 width="33"
@@ -376,7 +553,7 @@ function ImpactSection() {
   );
 }
 
-function TransparencySection() {
+function TransparencySection({ t }) {
   return (
     <section className={styles.transparency}>
       <div className={styles.container}>
@@ -413,39 +590,34 @@ function TransparencySection() {
 
         <div className={styles.details}>
           <h2>
-            Built on Trust. <br />
-            Driven by Transparency.
+            {t("transparencySection.title")} <br />
+            {t("transparencySection.titleLine2")}
           </h2>
 
-          <p>
-            At Association Tifaouine, we believe that impact is measured not
-            just in numbers, but in the sustainable growth of our heritage and
-            communities. Every dirham is accounted for in our annual
-            transparency reports.
-          </p>
+          <p>{t("transparencySection.description")}</p>
 
           <div className={styles.stats}>
             <div className={styles.stat}>
-              <h1>50+</h1>
+              <h1>{t("transparencySection.stats.schools.number")}</h1>
               <div className={styles.description}>
-                <h3>Schools Supported</h3>
-                <p>Modernizing infrastructure and providing resources.</p>
+                <h3>{t("transparencySection.stats.schools.title")}</h3>
+                <p>{t("transparencySection.stats.schools.description")}</p>
               </div>
             </div>
 
             <div className={styles.stat}>
-              <h1>10k+</h1>
+              <h1>{t("transparencySection.stats.patients.number")}</h1>
               <div className={styles.description}>
-                <h3>Patients Treated</h3>
-                <p>Mobile clinics reaching the most remote valleys.</p>
+                <h3>{t("transparencySection.stats.patients.title")}</h3>
+                <p>{t("transparencySection.stats.patients.description")}</p>
               </div>
             </div>
 
             <div className={styles.stat}>
-              <h1>200+</h1>
+              <h1>{t("transparencySection.stats.farms.number")}</h1>
               <div className={styles.description}>
-                <h3>Farms Empowered</h3>
-                <p>Implementing sustainable irrigation and tools.</p>
+                <h3>{t("transparencySection.stats.farms.title")}</h3>
+                <p>{t("transparencySection.stats.farms.description")}</p>
               </div>
             </div>
           </div>
@@ -454,12 +626,375 @@ function TransparencySection() {
     </section>
   );
 }
+function DonationFromSection({ t, i18n }) {
+  const dispatch = useDispatch();
+  const dataForSelect = useSelector((state) => state.projects.projectsForSelect);
+  console.log(dataForSelect);
+  
+  const params = new URLSearchParams(window.location.search);
+  const project_id = params.get("project_id");
+  const lang = i18n.language;
 
-function DonationFromSection() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+
+  useEffect(() => {
+    dispatch(fetchProjectsForSelect({ lang }));
+  }, [dispatch, lang]);
+
+  const [formData, setFormData] = useState({
+    fullname: "",
+    email: "",
+    amount: "",
+    project: project_id || "",
+    receipt: null,
+    message: "",
+  });
+
+  const [errors, setErrors] = useState({
+    fullname: "",
+    email: "",
+    amount: "",
+    project: "",
+    receipt: "",
+    message: "",
+  });
+
+  const [touched, setTouched] = useState({
+    fullname: false,
+    email: false,
+    amount: false,
+    project: false,
+    receipt: false,
+    message: false,
+  });
+
+  useEffect(() => {
+    setErrors({
+      fullname: "",
+      email: "",
+      amount: "",
+      project: "",
+      receipt: "",
+      message: "",
+    });
+
+    setTouched({
+      fullname: false,
+      email: false,
+      amount: false,
+      project: false,
+      receipt: false,
+      message: false,
+    });
+  }, [lang]);
+
+  // Validation functions using translations
+  const validateFullname = (name) => {
+    if (!name || name.trim() === "") {
+      return t("donationForm.validation.fullname.required");
+    }
+    if (name.trim().length < 2) {
+      return t("donationForm.validation.fullname.minLength");
+    }
+    if (name.trim().length > 100) {
+      return t("donationForm.validation.fullname.maxLength");
+    }
+    if (
+      !/^[a-zA-Z\s\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]+$/.test(
+        name.trim(),
+      )
+    ) {
+      return t("donationForm.validation.fullname.invalid");
+    }
+    return "";
+  };
+
+  const validateEmail = (email) => {
+    if (!email || email.trim() === "") {
+      return t("donationForm.validation.email.required");
+    }
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(email)) {
+      return t("donationForm.validation.email.invalid");
+    }
+    if (email.length > 255) {
+      return t("donationForm.validation.email.maxLength");
+    }
+    return "";
+  };
+
+  const validateAmount = (amount) => {
+    if (!amount || amount === "") {
+      return "";
+    }
+    const amountNum = parseFloat(amount);
+    if (isNaN(amountNum)) {
+      return t("donationForm.validation.amount.invalidNumber");
+    }
+    if (amountNum <= 0) {
+      return t("donationForm.validation.amount.greaterThanZero");
+    }
+    if (amountNum > 1000000) {
+      return t("donationForm.validation.amount.maxValue");
+    }
+    if (!/^\d+(\.\d{1,2})?$/.test(amount)) {
+      return t("donationForm.validation.amount.maxDecimals");
+    }
+    return "";
+  };
+
+  const validateProject = (project) => {
+    if (!project || project === "") {
+      return t("donationForm.validation.project.required");
+    }
+    if (project === "none") {
+      return t("donationForm.validation.project.invalid");
+    }
+    return "";
+  };
+
+  const validateReceipt = (receipt) => {
+    if (!receipt) {
+      return t("donationForm.validation.receipt.required");
+    }
+    const allowedTypes = [
+      "image/jpeg",
+      "image/jpg",
+      "image/png",
+      "application/pdf",
+    ];
+    if (!allowedTypes.includes(receipt.type)) {
+      return t("donationForm.validation.receipt.invalidType");
+    }
+    const maxSize = 5 * 1024 * 1024;
+    if (receipt.size > maxSize) {
+      return t("donationForm.validation.receipt.maxSize");
+    }
+    return "";
+  };
+
+  const validateMessage = (message) => {
+    if (message && message.length > 1000) {
+      return t("donationForm.validation.message.maxLength");
+    }
+    return "";
+  };
+
+  const validateField = (name, value) => {
+    switch (name) {
+      case "fullname":
+        return validateFullname(value);
+      case "email":
+        return validateEmail(value);
+      case "amount":
+        return validateAmount(value);
+      case "project":
+        return validateProject(value);
+      case "receipt":
+        return validateReceipt(value);
+      case "message":
+        return validateMessage(value);
+      default:
+        return "";
+    }
+  };
+
+  const validateForm = () => {
+    const newErrors = {
+      fullname: validateFullname(formData.fullname),
+      email: validateEmail(formData.email),
+      amount: validateAmount(formData.amount),
+      project: validateProject(formData.project),
+      receipt: validateReceipt(formData.receipt),
+      message: validateMessage(formData.message),
+    };
+
+    setErrors(newErrors);
+
+    // Mark all fields as touched
+    const allTouched = {};
+    Object.keys(touched).forEach((key) => {
+      allTouched[key] = true;
+    });
+    setTouched(allTouched);
+
+    return Object.values(newErrors).every((error) => error === "");
+  };
+
+  const handleInputChange = (e) => {
+    const { value, name, type, files } = e.target;
+    const newValue = type === "file" ? files[0] : value;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: newValue,
+    }));
+
+    // Clear error for this field when user starts typing
+    if (errors[name]) {
+      setErrors((prev) => ({
+        ...prev,
+        [name]: "",
+      }));
+    }
+
+    // Clear submit error when user makes changes
+    if (submitError) {
+      setSubmitError("");
+    }
+
+    if (submitSuccess) {
+      setSubmitSuccess(false);
+    }
+  };
+
+  const handleBlur = (e) => {
+    const { name, value } = e.target;
+    setTouched((prev) => ({ ...prev, [name]: true }));
+    const error = validateField(name, value);
+    setErrors((prev) => ({
+      ...prev,
+      [name]: error,
+    }));
+  };
+
+  const handleReceiptBlur = () => {
+    setTouched((prev) => ({ ...prev, receipt: true }));
+    const error = validateReceipt(formData.receipt);
+    setErrors((prev) => ({
+      ...prev,
+      receipt: error,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    setSubmitError("");
+    setSubmitSuccess(false);
+
+    if (!validateForm()) {
+      const firstErrorField = Object.keys(errors).find((key) => errors[key]);
+      if (firstErrorField) {
+        const element = document.getElementById(firstErrorField);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth", block: "center" });
+          element.focus();
+        }
+      }
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const submitData = new FormData();
+      submitData.append("fullname", formData.fullname.trim());
+      submitData.append("email", formData.email.trim());
+      submitData.append(
+        "amount",
+        formData.amount ? parseFloat(formData.amount) : 0,
+      );
+      submitData.append("project", formData.project);
+      submitData.append("message", formData.message || "");
+
+      if (formData.receipt) {
+        submitData.append("receipt", formData.receipt);
+      }
+
+      const API_URL =
+        process.env.REACT_APP_API_URL || "https://your-api.com/api/donations";
+
+      const response = await fetch(`${API_URL}/submit-donation`, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+        },
+        body: submitData,
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(
+          errorData.message || `Server error: ${response.status}`,
+        );
+      }
+
+      const result = await response.json();
+
+      setSubmitSuccess(true);
+      setFormData({
+        fullname: "",
+        email: "",
+        amount: "",
+        project: project_id || "",
+        receipt: null,
+        message: "",
+      });
+
+      // Reset touched states
+      setTouched({
+        fullname: false,
+        email: false,
+        amount: false,
+        project: false,
+        receipt: false,
+        message: false,
+      });
+
+      const fileInput = document.getElementById("receipt");
+      if (fileInput) fileInput.value = "";
+
+      // Auto hide success message after 5 seconds
+      setTimeout(() => {
+        setSubmitSuccess(false);
+      }, 5000);
+    } catch (error) {
+      console.error("Submission error:", error);
+      setSubmitError(
+        error.message || t("donationForm.errors.submissionFailed"),
+      );
+
+      // Auto hide error message after 5 seconds
+      setTimeout(() => {
+        setSubmitError("");
+      }, 5000);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <section className={styles.donationForm}>
-      <h1>From Donation to Impact</h1>
-      <p>Every step ensures your support reaches those who need it most.</p>
+      <h1 className={styles.title}>{t("donationForm.title")}</h1>
+      <p className={styles.subtitle}>{t("donationForm.subtitle")}</p>
+
+      {submitSuccess && (
+        <div className={styles.successMessage}>
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path
+              d="M10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM8 15L3 10L4.41 8.59L8 12.17L15.59 4.58L17 6L8 15Z"
+              fill="white"
+            />
+          </svg>
+          <span>{t("donationForm.successMessage")}</span>
+        </div>
+      )}
+
+      {submitError && (
+        <div className={styles.errorMessage}>
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path
+              d="M10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM11 15H9V13H11V15ZM11 11H9V5H11V11Z"
+              fill="white"
+            />
+          </svg>
+          <span>{submitError}</span>
+        </div>
+      )}
+
       <div className={styles.container}>
         <div className={styles.steps}>
           <div className={styles.step}>
@@ -468,14 +1003,14 @@ function DonationFromSection() {
               <div className={styles.icon}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  xmlnsXlink="http://www.w3.org/1999/xlink"
                   fill="#000000"
                   height="50px"
                   width="50px"
                   version="1.1"
                   id="Layer_1"
                   viewBox="0 0 300.346 300.346"
-                  xml:space="preserve"
+                  xmlSpace="preserve"
                 >
                   <g>
                     <g>
@@ -489,8 +1024,8 @@ function DonationFromSection() {
                 </svg>
               </div>
               <div className={styles.desc}>
-                <h3>You give a gift</h3>
-                <p>You securely complete your donation.</p>
+                <h3>{t("donationForm.steps.step1.title")}</h3>
+                <p>{t("donationForm.steps.step1.description")}</p>
               </div>
             </div>
           </div>
@@ -501,14 +1036,14 @@ function DonationFromSection() {
               <div className={styles.icon}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  xmlnsXlink="http://www.w3.org/1999/xlink"
                   fill="#000000"
                   width="50px"
                   height="50px"
                   viewBox="0 0 60 60"
                   id="Capa_1"
                   version="1.1"
-                  xml:space="preserve"
+                  xmlSpace="preserve"
                 >
                   <g>
                     <path d="M58.057,6.083H47.298l-8.633-4.855c-0.345-0.193-0.77-0.19-1.112,0.009C37.212,1.435,37,1.804,37,2.2v0.883h-8v3H1.943   C0.872,6.083,0,6.955,0,8.026v44.113c0,1.071,0.872,1.943,1.943,1.943H2v4h10v-4h17v3h8v0.716c0,0.396,0.212,0.765,0.554,0.965   c0.173,0.102,0.368,0.152,0.563,0.152c0.189,0,0.379-0.048,0.548-0.143l8.339-4.69H48v4h10v-4h0.057   c1.071,0,1.943-0.872,1.943-1.943V8.026C60,6.955,59.128,6.083,58.057,6.083z M10,56.083H4v-2h6V56.083z M12,52.119v-0.036H2v0.057   L1.943,8.083H29v2H6.346C5.053,10.083,4,11.135,4,12.428v35.309c0,1.293,1.053,2.346,2.346,2.346H14h8h7v2.002L12,52.119z    M22,48.083v-1h4v1H22z M14,38.083v1h-4v-1H14z M14,42.083h-4v-1h4V42.083z M10,44.083h4v1h-4V44.083z M10,47.083h4v1h-4V47.083z    M16,38.083h4v10h-4V38.083z M26,42.083h-4v-1h4V42.083z M22,44.083h4v1h-4V44.083z M26,39.083h-4v-1h4V39.083z M28,37.083   c0-0.553-0.447-1-1-1h-5h-1h-6h-1H9c-0.553,0-1,0.447-1,1v11H6.346C6.155,48.083,6,47.927,6,47.737V31.083h8h8h7v17h-1V37.083z    M29,29.083h-1v-11c0-0.553-0.447-1-1-1h-5h-1h-6h-1H9c-0.553,0-1,0.447-1,1v11H6V12.428c0-0.19,0.155-0.346,0.346-0.346H29V29.083   z M22,29.083v-1h4v1H22z M14,19.083v1h-4v-1H14z M14,23.083h-4v-1h4V23.083z M10,25.083h4v1h-4V25.083z M10,28.083h4v1h-4V28.083z    M16,19.083h4v10h-4V19.083z M26,23.083h-4v-1h4V23.083z M22,25.083h4v1h-4V25.083z M26,20.083h-4v-1h4V20.083z M31,55.083v-1v-4   v-40v-4v-1h6v50H31z M39,3.71l4.219,2.373h-0.147L53,11.668v3.415c-0.553,0-1,0.447-1,1c0,0.553,0.447,1,1,1v1   c-0.553,0-1,0.447-1,1s0.447,1,1,1v20c-0.553,0-1,0.447-1,1s0.447,1,1,1v1c-0.553,0-1,0.447-1,1s0.447,1,1,1v3.332L39,56.29V3.71z    M56,56.083h-6v-2h6V56.083z M58,52.083h-7.294L55,49.668v-0.083v-4.502h1c0.553,0,1-0.447,1-1s-0.447-1-1-1h-1v-1h1   c0.553,0,1-0.447,1-1s-0.447-1-1-1h-1v-20h1c0.553,0,1-0.447,1-1s-0.447-1-1-1h-1v-1h1c0.553,0,1-0.447,1-1c0-0.553-0.447-1-1-1h-1   v-4.585v-0.083l-4.182-2.352L58,8.026l0.057,44.057H58z" />
@@ -532,8 +1067,8 @@ function DonationFromSection() {
                 </svg>
               </div>
               <div className={styles.desc}>
-                <h3>Funds are received</h3>
-                <p>Gifts are securely deposited and accounted for.</p>
+                <h3>{t("donationForm.steps.step2.title")}</h3>
+                <p>{t("donationForm.steps.step2.description")}</p>
               </div>
             </div>
           </div>
@@ -550,8 +1085,8 @@ function DonationFromSection() {
                   fill="none"
                 >
                   <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
+                    fillRule="evenodd"
+                    clipRule="evenodd"
                     d="M31.5083 13.9475L34.9054 8.98148C31.7645 9.16855 27.9659 9.90622 24.3212 10.9606C21.8446 11.6771 19.0865 11.569 16.5223 11.0959C15.7147 10.9469 14.9191 10.7603 14.1488 10.5481L16.4562 13.945C21.1677 15.6842 26.796 15.685 31.5083 13.9475ZM15.2815 15.6365C20.7022 17.7885 27.275 17.7878 32.695 15.6345C34.8987 17.9207 37.175 20.7657 38.9289 23.7416C40.7625 26.8526 41.9199 29.9295 41.996 32.5723C42.068 35.0734 41.1893 37.2281 38.7141 38.8825C36.091 40.6357 31.5202 41.9244 24.024 41.9969C16.5257 42.0694 11.9479 40.868 9.31733 39.1673C6.84175 37.5668 5.946 35.4353 6.00245 32.9202C6.06213 30.2614 7.20619 27.1403 9.03585 23.9635C10.7825 20.9307 13.0594 18.0103 15.2815 15.6365ZM13.662 8.31949C14.6893 8.64286 15.7776 8.92471 16.8852 9.12906C19.2829 9.57147 21.6987 9.63727 23.7654 9.03939C26.3919 8.27955 29.1492 7.66384 31.733 7.2991C29.5282 6.57325 26.8626 6 24.0433 6C19.9743 6 16.1968 7.19394 13.662 8.31949ZM11.7469 7.01231C14.4518 5.65746 19.0249 4 24.0433 4C28.9687 4 33.4307 5.59663 36.1239 6.93673C36.1692 6.95924 36.2139 6.98167 36.2581 7.00403C36.9838 7.37078 37.5736 7.7157 38 8L33.8956 14C43.3574 23.6727 54.6501 43.701 24.0433 43.9968C-6.56356 44.2926 4.53174 24.0426 14.0758 14L10 8C10.2852 7.81256 10.642 7.59878 11.0622 7.36975C11.2746 7.25402 11.5031 7.13439 11.7469 7.01231Z"
                     fill="#333333"
                   />
@@ -562,8 +1097,8 @@ function DonationFromSection() {
                 </svg>
               </div>
               <div className={styles.desc}>
-                <h3>Funds are pooled</h3>
-                <p>Individual donations are combined to amplify impact.</p>
+                <h3>{t("donationForm.steps.step3.title")}</h3>
+                <p>{t("donationForm.steps.step3.description")}</p>
               </div>
             </div>
           </div>
@@ -578,7 +1113,7 @@ function DonationFromSection() {
                   height="50px"
                   viewBox="0 0 1024 1024"
                   fill="#000000"
-                  class="icon"
+                  className="icon"
                   version="1.1"
                 >
                   <path
@@ -676,8 +1211,8 @@ function DonationFromSection() {
                 </svg>
               </div>
               <div className={styles.desc}>
-                <h3>Project allocation</h3>
-                <p>Our team selects the highest-priority rural initiatives.</p>
+                <h3>{t("donationForm.steps.step4.title")}</h3>
+                <p>{t("donationForm.steps.step4.description")}</p>
               </div>
             </div>
           </div>
@@ -697,10 +1232,8 @@ function DonationFromSection() {
                 </svg>
               </div>
               <div className={styles.desc}>
-                <h3>Community impact</h3>
-                <p>
-                  Schools, healthcare, and sustainable agriculture are funded.
-                </p>
+                <h3>{t("donationForm.steps.step5.title")}</h3>
+                <p>{t("donationForm.steps.step5.description")}</p>
               </div>
             </div>
           </div>
@@ -711,14 +1244,14 @@ function DonationFromSection() {
               <div className={styles.icon}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  xmlnsXlink="http://www.w3.org/1999/xlink"
                   fill="#000000"
                   height="50px"
                   width="50px"
                   version="1.1"
                   id="Layer_1"
                   viewBox="0 0 502 502"
-                  xml:space="preserve"
+                  xmlSpace="preserve"
                 >
                   <g>
                     <g>
@@ -734,55 +1267,231 @@ function DonationFromSection() {
                 </svg>
               </div>
               <div className={styles.desc}>
-                <h3>Sustainable outcomes</h3>
-                <p>Long-term, life-changing results are achieved.</p>
+                <h3>{t("donationForm.steps.step6.title")}</h3>
+                <p>{t("donationForm.steps.step6.description")}</p>
               </div>
             </div>
           </div>
         </div>
 
-        <form>
-          <h1>Confirm Your Donation</h1>
-          <p>
-            After your transfer, please send us the receipt so we can confirm
-            your donation and send your acknowledgement.
-          </p>
+        <form onSubmit={handleSubmit} noValidate>
+          <h1>{t("donationForm.form.title")}</h1>
+          <p>{t("donationForm.form.description")}</p>
 
           <div className={styles.inputFields}>
             <div className={styles.doubleWrapper}>
-              <div className={styles.wrapper}>
-                <input type="text" id="fullname" placeholder="" />
-                <label htmlFor="fullname">Fullname</label>
+              <div
+                className={`${styles.wrapper} ${touched.fullname && errors.fullname ? styles.hasError : ""}`}
+              >
+                <input
+                  onChange={handleInputChange}
+                  onBlur={handleBlur}
+                  type="text"
+                  id="fullname"
+                  name="fullname"
+                  value={formData.fullname}
+                  placeholder=" "
+                  disabled={isSubmitting}
+                />
+                <label htmlFor="fullname">
+                  {t("donationForm.form.labels.fullname")}
+                </label>
+                {touched.fullname && errors.fullname && (
+                  <div className={styles.errorContainer}>
+                    <svg
+                      className={styles.errorIcon}
+                      width="16"
+                      height="16"
+                      viewBox="0 0 16 16"
+                      fill="none"
+                    >
+                      <circle
+                        cx="8"
+                        cy="8"
+                        r="7"
+                        fill="#dc3545"
+                        stroke="white"
+                        strokeWidth="1"
+                      />
+                      <path
+                        d="M8 4V9M8 11V12"
+                        stroke="white"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                    <span className={styles.errorText}>{errors.fullname}</span>
+                  </div>
+                )}
               </div>
 
-              <div className={styles.wrapper}>
-                <input type="email" id="email" placeholder="" />
-                <label htmlFor="email">Email</label>
+              <div
+                className={`${styles.wrapper} ${touched.email && errors.email ? styles.hasError : ""}`}
+              >
+                <input
+                  onChange={handleInputChange}
+                  onBlur={handleBlur}
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  placeholder=" "
+                  disabled={isSubmitting}
+                />
+                <label htmlFor="email">
+                  {t("donationForm.form.labels.email")}
+                </label>
+                {touched.email && errors.email && (
+                  <div className={styles.errorContainer}>
+                    <svg
+                      className={styles.errorIcon}
+                      width="16"
+                      height="16"
+                      viewBox="0 0 16 16"
+                      fill="none"
+                    >
+                      <circle
+                        cx="8"
+                        cy="8"
+                        r="7"
+                        fill="#dc3545"
+                        stroke="white"
+                        strokeWidth="1"
+                      />
+                      <path
+                        d="M8 4V9M8 11V12"
+                        stroke="white"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                    <span className={styles.errorText}>{errors.email}</span>
+                  </div>
+                )}
               </div>
             </div>
 
             <div className={styles.doubleWrapper}>
-              <div className={styles.wrapper}>
-                <input type="number" id="amount" placeholder="" />
-                <label htmlFor="amount">Amount (Optional)</label>
+              <div
+                className={`${styles.wrapper} ${touched.amount && errors.amount ? styles.hasError : ""}`}
+              >
+                <input
+                  onChange={handleInputChange}
+                  onBlur={handleBlur}
+                  type="number"
+                  id="amount"
+                  name="amount"
+                  value={formData.amount}
+                  placeholder=" "
+                  step="0.01"
+                  min="0"
+                  disabled={isSubmitting}
+                />
+                <label htmlFor="amount">
+                  {t("donationForm.form.labels.amount")}
+                </label>
+                {touched.amount && errors.amount && (
+                  <div className={styles.errorContainer}>
+                    <svg
+                      className={styles.errorIcon}
+                      width="16"
+                      height="16"
+                      viewBox="0 0 16 16"
+                      fill="none"
+                    >
+                      <circle
+                        cx="8"
+                        cy="8"
+                        r="7"
+                        fill="#dc3545"
+                        stroke="white"
+                        strokeWidth="1"
+                      />
+                      <path
+                        d="M8 4V9M8 11V12"
+                        stroke="white"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                    <span className={styles.errorText}>{errors.amount}</span>
+                  </div>
+                )}
               </div>
-              <div className={styles.wrapper}>
-                <select id="project" placeholder="">
-                  <option value="" disabled selected>
-                    Chose the project
+
+              <div
+                className={`${styles.wrapper} ${touched.project && errors.project ? styles.hasError : ""}`}
+              >
+                <select
+                  onChange={handleInputChange}
+                  onBlur={handleBlur}
+                  id="project"
+                  name="project"
+                  value={formData.project}
+                  disabled={isSubmitting}
+                >
+                  <option value="" disabled>
+                    {t("donationForm.form.labels.project")}
                   </option>
-                  <option value="1">1</option>
-                  <option value="1">1</option>
-                  <option value="1">1</option>
-                  <option value="1">1</option>
-                </select>{" "}
+                  <option value="none">
+                    {t("donationForm.form.labels.projectNone")}
+                  </option>
+                  {!dataForSelect?.loading &&
+                    dataForSelect?.data.map((item) => (
+                      <option value={`${item.id}`} key={item.id}>
+                        {item.title}
+                      </option>
+                    ))}
+                </select>
+                {touched.project && errors.project && (
+                  <div className={styles.errorContainer}>
+                    <svg
+                      className={styles.errorIcon}
+                      width="16"
+                      height="16"
+                      viewBox="0 0 16 16"
+                      fill="none"
+                    >
+                      <circle
+                        cx="8"
+                        cy="8"
+                        r="7"
+                        fill="#dc3545"
+                        stroke="white"
+                        strokeWidth="1"
+                      />
+                      <path
+                        d="M8 4V9M8 11V12"
+                        stroke="white"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                    <span className={styles.errorText}>{errors.project}</span>
+                  </div>
+                )}
               </div>
             </div>
 
-            <div className={styles.fileWrapper}>
-              <label htmlFor="receipt">Upload receipt</label>
-              <input type="file" id="receipt" />
+            <div
+              className={`${styles.fileWrapper} ${touched.receipt && errors.receipt ? styles.hasError : ""}`}
+            >
               <label htmlFor="receipt">
+                {t("donationForm.form.labels.receipt")}
+              </label>
+              <input
+                onChange={handleInputChange}
+                onBlur={handleReceiptBlur}
+                type="file"
+                id="receipt"
+                name="receipt"
+                accept=".pdf,.jpg,.jpeg,.png"
+                disabled={isSubmitting}
+              />
+              <label
+                htmlFor="receipt"
+                className={errors.receipt ? styles.fileLabelError : ""}
+              >
                 <svg
                   width="35"
                   height="35"
@@ -792,20 +1501,112 @@ function DonationFromSection() {
                 >
                   <path
                     d="M8.25 24C5.975 24 4.03125 23.2125 2.41875 21.6375C0.80625 20.0625 0 18.1375 0 15.8625C0 13.9125 0.5875 12.175 1.7625 10.65C2.9375 9.125 4.475 8.15 6.375 7.725C7 5.425 8.25 3.5625 10.125 2.1375C12 0.7125 14.125 0 16.5 0C19.425 0 21.9062 1.01875 23.9438 3.05625C25.9813 5.09375 27 7.575 27 10.5C28.725 10.7 30.1562 11.4437 31.2938 12.7312C32.4313 14.0188 33 15.525 33 17.25C33 19.125 32.3438 20.7188 31.0312 22.0312C29.7188 23.3438 28.125 24 26.25 24H18C17.175 24 16.4688 23.7062 15.8813 23.1187C15.2938 22.5312 15 21.825 15 21V13.275L12.6 15.6L10.5 13.5L16.5 7.5L22.5 13.5L20.4 15.6L18 13.275V21H26.25C27.3 21 28.1875 20.6375 28.9125 19.9125C29.6375 19.1875 30 18.3 30 17.25C30 16.2 29.6375 15.3125 28.9125 14.5875C28.1875 13.8625 27.3 13.5 26.25 13.5H24V10.5C24 8.425 23.2687 6.65625 21.8062 5.19375C20.3438 3.73125 18.575 3 16.5 3C14.425 3 12.6562 3.73125 11.1938 5.19375C9.73125 6.65625 9 8.425 9 10.5H8.25C6.8 10.5 5.5625 11.0125 4.5375 12.0375C3.5125 13.0625 3 14.3 3 15.75C3 17.2 3.5125 18.4375 4.5375 19.4625C5.5625 20.4875 6.8 21 8.25 21H12V24H8.25Z"
-                    fill="#D5C3B4"
+                    fill={errors.receipt ? "#dc3545" : "#D5C3B4"}
                   />
                 </svg>
-                <span>Upload your receipt</span>
-
-                <span>PDF, JPG or PNG up to 5MB</span>
+                <span
+                  dangerouslySetInnerHTML={{
+                    __html: t("donationForm.form.receiptHint"),
+                  }}
+                />
               </label>
+              {formData.receipt && !errors.receipt && (
+                <div className={styles.fileInfo}>
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                    <circle cx="7" cy="7" r="6" fill="#28a745" />
+                    <path
+                      d="M4.5 7L6.5 9L10 5"
+                      stroke="white"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                  <span>
+                    {t("donationForm.form.fileSelected", {
+                      fileName: formData.receipt.name,
+                    })}
+                  </span>
+                </div>
+              )}
+              {touched.receipt && errors.receipt && (
+                <div className={styles.errorContainer}>
+                  <svg
+                    className={styles.errorIcon}
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                  >
+                    <circle
+                      cx="8"
+                      cy="8"
+                      r="7"
+                      fill="#dc3545"
+                      stroke="white"
+                      strokeWidth="1"
+                    />
+                    <path
+                      d="M8 4V9M8 11V12"
+                      stroke="white"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                  <span className={styles.errorText}>{errors.receipt}</span>
+                </div>
+              )}
             </div>
 
-            <div className={styles.wrapper}>
-              <textarea id="message" placeholder=""></textarea>
-              <label htmlFor="message">Your Message (Optional)</label>
+            <div
+              className={`${styles.wrapper} ${touched.message && errors.message ? styles.hasError : ""}`}
+            >
+              <textarea
+                onChange={handleInputChange}
+                onBlur={handleBlur}
+                id="message"
+                placeholder=" "
+                name="message"
+                value={formData.message}
+                disabled={isSubmitting}
+                rows="3"
+              ></textarea>
+              <label htmlFor="message">
+                {t("donationForm.form.labels.message")}
+              </label>
+              {touched.message && errors.message && (
+                <div className={styles.errorContainer}>
+                  <svg
+                    className={styles.errorIcon}
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                  >
+                    <circle
+                      cx="8"
+                      cy="8"
+                      r="7"
+                      fill="#dc3545"
+                      stroke="white"
+                      strokeWidth="1"
+                    />
+                    <path
+                      d="M8 4V9M8 11V12"
+                      stroke="white"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                  <span className={styles.errorText}>{errors.message}</span>
+                </div>
+              )}
             </div>
-            <button>Confirm & Send Receipt</button>
+
+            <button type="submit" disabled={isSubmitting}>
+              {isSubmitting
+                ? t("donationForm.form.submittingButton")
+                : t("donationForm.form.submitButton")}
+            </button>
           </div>
         </form>
       </div>
@@ -814,25 +1615,27 @@ function DonationFromSection() {
 }
 
 function DonationPage() {
+  const { t, i18n } = useTranslation("donationPage");
   return (
     <div className={styles.donationPage}>
       {/* page hero section */}
-      <PageHero title={"donate to us"} heroImg={mountainImg} />
-      {/* first page section */}
-      <FirstSection />
+      <PageHero title="Hope Starts With You" heroImg={mountainImg} />
+
+      {/* current needs section */}
+      <CurrentNeeds t={t} />
       {/* donate informations section */}
-      <DonateInfosSection />
+      <DonateInfosSection t={t} />
 
       {/* your impact section */}
-      <ImpactSection />
+      <ImpactSection t={t} />
 
       {/* Transparency section */}
 
-      <TransparencySection />
+      <TransparencySection t={t} />
 
       {/* donation form section  */}
 
-      <DonationFromSection />
+      <DonationFromSection t={t} i18n={i18n} />
     </div>
   );
 }

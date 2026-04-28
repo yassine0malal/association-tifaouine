@@ -1,0 +1,36 @@
+{
+  "projects": [
+    {
+      "id": 1,
+      "title": "Bill Walsh Leadership Lessons"
+    },
+    {
+      "id": 2,
+      "title": "Modern Web Architecture"
+    },
+    {
+      "id": 3,
+      "title": "AI Chatbot System"
+    },
+    {
+      "id": 4,
+      "title": "E-commerce Platform"
+    },
+    {
+      "id": 5,
+      "title": "Real-time Chat Application"
+    },
+    {
+      "id": 6,
+      "title": "Portfolio Website"
+    },
+    {
+      "id": 7,
+      "title": "Task Management System"
+    },
+    {
+      "id": 8,
+      "title": "Machine Learning Dashboard"
+    }
+  ]
+}

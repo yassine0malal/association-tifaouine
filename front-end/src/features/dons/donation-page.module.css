@@ -23,6 +23,242 @@
   --shadow-card: 0 2px 16px 0 rgba(132, 84, 23, 0.07);
 }
 
+[dir="rtl"] .donationPage * {
+  font-family: var(--ar-lang);
+}
+
+.donationPage section > .title,
+.donationPage section .container > .title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--on-surface);
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.donationPage section  > .subtitle,
+.donationPage section .container > .subtitle
+{
+  color: var(--on-surface-variant);
+  font-size: 1rem;
+  margin-bottom: 72px;
+  text-align: center;
+}
+
+/* ============================================================
+   CurrentNeeds Section Styles
+   ============================================================ */
+
+.donationPage .currentNeeds {
+  background-color: #fff;
+  padding: 60px 40px 80px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+/* Header */
+.donationPage .currentNeeds .header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+/* Need Cards Grid */
+.donationPage .currentNeeds .cardsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  max-width: 1440px;
+  margin: 0 auto 48px;
+}
+
+/* Individual Need Card */
+.donationPage .currentNeeds .card {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.donationPage .currentNeeds .card:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Card Image */
+.donationPage .currentNeeds .cardImageWrapper {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.donationPage .currentNeeds .cardImageWrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Urgent Badge */
+.donationPage .currentNeeds .urgentBadge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background-color: #e05252;
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 3px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+/* Card Body */
+.donationPage .currentNeeds .cardBody {
+  padding: 16px 18px 18px;
+}
+
+.donationPage .currentNeeds .cardBody h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 6px;
+}
+
+.donationPage .currentNeeds .cardBody p {
+  font-size: 0.82rem;
+  color: #777;
+  line-height: 1.55;
+  margin: 0 0 14px;
+}
+
+/* Progress */
+.donationPage .currentNeeds .progress {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.donationPage .currentNeeds .progressMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.donationPage .currentNeeds .fundedLabel {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #5a8a60;
+}
+
+.donationPage .currentNeeds .amountLabel {
+  font-size: 0.72rem;
+  color: #aaa;
+}
+
+.donationPage .currentNeeds .progressTrack {
+  width: 100%;
+  height: 5px;
+  background-color: #e8e8e3;
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.donationPage .currentNeeds .progressFill {
+  height: 100%;
+  background-color: #6aa670;
+  border-radius: 99px;
+  transition: width 0.6s ease;
+}
+
+/* Impact Gallery */
+.donationPage .currentNeeds .gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.donationPage .currentNeeds .galleryCard {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  height: 200px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.donationPage .currentNeeds .galleryCard:hover {
+  transform: scale(1.02);
+}
+
+.donationPage .currentNeeds .galleryCard img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.donationPage .currentNeeds .galleryOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.52) 0%,
+    rgba(0, 0, 0, 0.08) 60%,
+    transparent 100%
+  );
+}
+
+.donationPage .currentNeeds .galleryLabel {
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  .donationPage .currentNeeds {
+    padding: 40px 20px 60px;
+  }
+
+  .donationPage .currentNeeds .header h2 {
+    font-size: 1.8rem;
+  }
+
+  .donationPage .currentNeeds .cardsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .donationPage .currentNeeds .cardImageWrapper {
+    height: 200px;
+  }
+
+  .donationPage .currentNeeds .gallery {
+    grid-template-columns: 1fr;
+  }
+
+  .donationPage .currentNeeds .galleryCard {
+    height: 200px;
+  }
+}
+
+@media (min-width: 701px) and (max-width: 860px) {
+  .donationPage .currentNeeds {
+    padding: 50px 24px 70px;
+  }
+}
+
 /* ============================================================
    Page Wrapper
    ============================================================ */
@@ -34,69 +270,14 @@
 }
 
 /* ============================================================
-   1. First Section (Hero)
-   ============================================================ */
-.firstSection {
-  background-color: var(--surface-low);
-  padding: 5rem 0 3rem;
-}
-
-.firstSection .container {
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 0 3rem;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3rem;
-  align-items: center;
-}
-
-.firstSection .msg h1 {
-  font-family: "Manrope", sans-serif;
-  font-size: 3.5rem;
-  font-weight: 800;
-  line-height: 1.1;
-  letter-spacing: -0.03em;
-  color: var(--on-surface);
-  margin-bottom: 1.25rem;
-}
-
-.firstSection .msg h1 span {
-  color: var(--primary);
-}
-
-.firstSection .msg p {
-  color: var(--on-surface-variant);
-  font-size: 1.1rem;
-  line-height: 1.7;
-  margin-bottom: 2rem;
-}
-
-.firstSection .image {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.firstSection .image img {
-  width: 100%;
-  max-width: 420px;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
-  border-radius: 50%;
-  border: 8px solid var(--surface-lowest);
-  box-shadow: 0 8px 40px rgba(132, 84, 23, 0.15);
-}
-
-/* ============================================================
    2. Donate Infos Section
    ============================================================ */
-.donateInfos {
+.donationPage .donateInfos {
   background-color: var(--surface-low);
   padding: 4rem 0;
 }
 
-.donateInfos .container {
+.donationPage .donateInfos .container {
   max-width: 1440px;
   margin: 0 auto;
   padding: 0 3rem;
@@ -107,7 +288,7 @@
 }
 
 /* Bank Infos Left Column */
-.bankInfos h3 {
+.donationPage .bankInfos h3 {
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.15em;
@@ -116,14 +297,14 @@
   margin-bottom: 0.4rem;
 }
 
-.bankInfos h2 {
+.donationPage .bankInfos h2 {
   font-size: 2rem;
   font-weight: 700;
   color: var(--on-surface);
   margin-bottom: 0.5rem;
 }
 
-.bankInfos > p {
+.donationPage .bankInfos > p {
   color: var(--on-surface-variant);
   font-size: 0.95rem;
   margin-bottom: 1.75rem;
@@ -131,7 +312,8 @@
 }
 
 /* Bank Card */
-.bankInfos .card {
+.donationPage .bankInfos .card {
+  width: 100%;
   background: var(--surface-high);
   border-radius: var(--radius-card);
   padding: 2.5rem 2.5rem 2rem;
@@ -142,20 +324,21 @@
   gap: 2rem;
 }
 
-.doubleWrapper {
+.donationPage .doubleWrapper {
+  width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
 }
 
 /* Wrapper (field row) */
-.wrapper {
+.donationPage .wrapper {
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
 }
 
-.wrapper .title {
+.donationPage .wrapper .title {
   font-size: 0.65rem;
   font-weight: 700;
   letter-spacing: 0.14em;
@@ -164,11 +347,11 @@
   margin: 0;
 }
 
-.bankInfos .card > .wrapper .copybtn {
+.donationPage .bankInfos .card > .wrapper .copybtn {
   opacity: 1;
 }
 
-.wrapper .data {
+.donationPage .wrapper .data {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -179,11 +362,11 @@
   transition: border-color 0.2s;
 }
 
-.wrapper .data:hover {
+.donationPage .wrapper .data:hover {
   border-color: var(--primary);
 }
 
-.wrapper .data > div {
+.donationPage .wrapper .data > div {
   display: flex;
   align-items: center;
   gap: 0.6rem;
@@ -194,7 +377,7 @@
 }
 
 /* RIB spans styling */
-.wrapper .data span {
+.donationPage .wrapper .data span {
   font-family: "Courier New", Courier, monospace;
   font-size: 1.4rem;
   font-weight: 700;
@@ -202,16 +385,16 @@
   letter-spacing: -0.01em;
 }
 
-.wrapper:hover .copybtn {
+.donationPage .wrapper:hover .copybtn {
   opacity: 1;
 }
 
-.copybtn:hover {
-    background-color: #84551713;
-    color: #006e0f;
+.donationPage .copybtn:hover {
+  background-color: #84551713;
+  color: #006e0f;
 }
 
-.copybtn {
+.donationPage .copybtn {
   border-radius: 50%;
   background: none;
   border: none;
@@ -227,25 +410,25 @@
   transition: opacity 0.2s;
 }
 
-.copybtn:has(.checkedIcon):hover {
-    background-color: transparent;
+.donationPage .copybtn:has(.checkedIcon):hover {
+  background-color: transparent;
 }
 
-.copybtn .checkedIcon {
-    animation: fadeIn .3s ease forwards;
+.donationPage .copybtn .checkedIcon {
+  animation: fadeIn 0.3s ease forwards;
 }
 
 @keyframes fadeIn {
-    from {
-        transform: scale(.5);
-    }
-    to {
-        transform: scale(1);
-    }
+  from {
+    transform: scale(0.5);
+  }
+  to {
+    transform: scale(1);
+  }
 }
 
 /* Trust message */
-.trustMsg {
+.donationPage .trustMsg {
   display: flex;
   align-items: flex-start;
   gap: 0.75rem;
@@ -255,12 +438,12 @@
   margin-top: 0.5rem;
 }
 
-.trustMsg .icon {
+.donationPage .trustMsg .icon {
   flex-shrink: 0;
   margin-top: 0.1rem;
 }
 
-.trustMsg p {
+.donationPage .trustMsg p {
   font-size: 0.82rem;
   color: var(--on-surface-variant);
   line-height: 1.5;
@@ -268,13 +451,13 @@
 }
 
 /* Contacts Right Column */
-.contacts {
+.donationPage .contacts {
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
 }
 
-.contacts .card {
+.donationPage .contacts .card {
   display: flex;
   flex-direction: column;
   background: rgba(223, 228, 217, 0.35);
@@ -284,24 +467,26 @@
   gap: 24px;
 }
 
-.contacts .card h3 {
+.donationPage .contacts .card h3 {
   font-size: 1.2rem;
   font-weight: 700;
   color: var(--on-surface);
 }
 
-.contacts .devider {
+.donationPage .contacts .devider {
   height: 1px;
   background-color: #d5c3b439;
 }
 
-.contactWrapper {
+.donationPage .contactWrapper {
+  all: unset;
   display: flex;
   align-items: center;
   gap: 1rem;
+  cursor: pointer;
 }
 
-.contactWrapper .icon {
+.donationPage .contactWrapper .icon {
   width: 2.75rem;
   height: 2.75rem;
   border-radius: 8px;
@@ -313,15 +498,15 @@
   transition: background 0.2s;
 }
 
-.contactWrapper:hover .icon {
+.donationPage .contactWrapper:hover .icon {
   background: var(--primary);
 }
 
-.contactWrapper:hover .icon svg path {
+.donationPage .contactWrapper:hover .icon svg path {
   fill: white;
 }
 
-.contactWrapper .name {
+.donationPage .contactWrapper .name {
   font-size: 0.65rem;
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -330,25 +515,25 @@
   margin: 0 0 0.15rem;
 }
 
-.contactWrapper p:last-child {
+.donationPage .contactWrapper p:last-child {
   font-size: 0.92rem;
   font-weight: 600;
   color: var(--on-surface);
   margin: 0;
 }
 
-.contacts .card hr {
+.donationPage .contacts .card hr {
   border: none;
   border-top: 1px solid rgba(213, 195, 180, 0.3);
   margin: 0.75rem 0 1.25rem;
 }
 
-.whatsapp {
+.donationPage .whatsapp {
+  all: unset;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.6rem;
-  width: 100%;
   background: var(--whatsapp);
   color: #fff;
   font-weight: 700;
@@ -361,59 +546,46 @@
   margin-top: 0.25rem;
 }
 
-.whatsapp:hover {
+.donationPage .whatsapp:hover {
   opacity: 0.92;
 }
 
 /* Image in contacts column (hidden / optional) */
-.donateInfos .image {
+.donationPage .donateInfos .image {
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 4 / 2;
+  max-height: 300px;
   border-radius: 12px;
   overflow: hidden;
 }
 
-.donateInfos .image img {
+.donationPage .donateInfos .image img {
   height: 100%;
   width: 100%;
   object-fit: cover;
   transition: all 0.5s linear;
 }
 
-.donateInfos .image img:hover {
-  scale: 1.2;
+.donationPage .donateInfos .image img:hover {
+  scale: 1.1;
 }
 
 /* ============================================================
    3. Your Impact Section
    ============================================================ */
-.yourImpact {
+.donationPage .yourImpact {
   background: var(--surface-lowest);
   padding: 5rem 0;
 }
 
-.yourImpact .container {
+.donationPage .yourImpact .container {
   max-width: 1440px;
   margin: 0 auto;
   padding: 0 3rem;
   text-align: center;
 }
 
-.yourImpact .title {
-  font-size: 2.5rem;
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  color: var(--on-surface);
-  margin-bottom: 0.5rem;
-}
-
-.yourImpact .subtitle {
-  color: var(--on-surface-variant);
-  font-size: 1rem;
-  margin-bottom: 72px;
-}
-
-.cards {
+.donationPage .cards {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
@@ -421,7 +593,7 @@
 }
 
 /* Impact Card */
-.impactCard {
+.donationPage .impactCard {
   background: var(--surface-low);
   border-radius: 2rem;
   padding: 2rem;
@@ -435,17 +607,21 @@
   gap: 0;
 }
 
-.impactCard:hover {
+[dir="rtl"] .donationPage .impactCard {
+  text-align: right;
+}
+
+.donationPage .impactCard:hover {
   border-color: rgba(203, 145, 79, 0.25);
 }
 
 /* Middle card elevated */
-.cards .impactCard:nth-child(2) {
+.donationPage .cards .impactCard:nth-child(2) {
   background: var(--surface-high);
   transform: translateY(-2rem);
 }
 
-.impactCard .icon {
+.donationPage .impactCard .icon {
   width: 4rem;
   height: 4rem;
   background: var(--surface-lowest);
@@ -457,14 +633,14 @@
   margin-bottom: 1.75rem;
 }
 
-.impactCard .amount {
+.donationPage .impactCard .amount {
   display: flex;
   align-items: baseline;
   gap: 0.35rem;
   margin-bottom: 0.75rem;
 }
 
-.impactCard .amount h2 {
+.donationPage .impactCard .amount h2 {
   font-family: "Manrope", sans-serif;
   font-size: 2.4rem;
   font-weight: 900;
@@ -472,13 +648,13 @@
   margin: 0;
 }
 
-.impactCard .amount span {
+.donationPage .impactCard .amount span {
   font-size: 0.85rem;
   font-weight: 700;
   color: var(--on-surface);
 }
 
-.impactCard .description {
+.donationPage .impactCard .description {
   color: var(--on-surface-variant);
   font-size: 0.88rem;
   line-height: 1.65;
@@ -486,7 +662,7 @@
   flex: 1;
 }
 
-.impactCard .impact {
+.donationPage .impactCard .impact {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -497,7 +673,7 @@
   font-size: 0.88rem;
 }
 
-.impactCard .impact .icon {
+.donationPage .impactCard .impact .icon {
   width: auto;
   height: auto;
   background: none;
@@ -510,12 +686,12 @@
 /* ============================================================
    4. Transparency Section
    ============================================================ */
-.transparency {
+.donationPage .transparency {
   background: var(--surface-low);
   padding: 6rem 0;
 }
 
-.transparency .container {
+.donationPage .transparency .container {
   max-width: 1440px;
   margin: 0 auto;
   padding: 0 3rem;
@@ -526,51 +702,51 @@
 }
 
 /* Images Grid */
-.transparency .images {
+.donationPage .transparency .images {
   columns: 2;
   gap: 1rem;
 }
 
-.transparency .image {
+.donationPage .transparency .image {
   width: 100%;
   overflow: hidden;
   border-radius: 1rem;
   aspect-ratio: 1;
 }
 
-.transparency .image:nth-child(1) {
+.donationPage .transparency .image:nth-child(1) {
   margin-top: -3rem;
 }
 
-.transparency .image:nth-child(2) {
+.donationPage .transparency .image:nth-child(2) {
   margin-top: 1rem;
 }
 
-.transparency .image:nth-child(3) {
+.donationPage .transparency .image:nth-child(3) {
   margin-top: -3rem;
 }
-.transparency .image:nth-child(4) {
+.donationPage .transparency .image:nth-child(4) {
   margin-top: 1rem;
 }
 
-.transparency .image:nth-child(2),
-.transparency .image:nth-child(3) {
+.donationPage .transparency .image:nth-child(2),
+.donationPage .transparency .image:nth-child(3) {
   aspect-ratio: 4/3;
 }
 
-.transparency .image img {
+.donationPage .transparency .image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.6s ease;
 }
 
-.transparency .image:hover img {
+.donationPage .transparency .image:hover img {
   transform: scale(1.07);
 }
 
 /* Details */
-.transparency .details h2 {
+.donationPage .transparency .details h2 {
   font-family: "Manrope", sans-serif;
   font-size: 2.2rem;
   font-weight: 700;
@@ -579,7 +755,7 @@
   margin-bottom: 1.25rem;
 }
 
-.transparency .details > p {
+.donationPage .transparency .details > p {
   color: var(--on-surface-variant);
   font-size: 1rem;
   line-height: 1.75;
@@ -587,19 +763,19 @@
 }
 
 /* Stats */
-.stats {
+.donationPage .stats {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
 }
 
-.stat {
+.donationPage .stat {
   display: flex;
   align-items: flex-start;
   gap: 1rem;
 }
 
-.stat h1 {
+.donationPage .stat h1 {
   font-family: "Manrope", sans-serif;
   font-size: 2.5rem;
   font-weight: 900;
@@ -609,14 +785,14 @@
   white-space: nowrap;
 }
 
-.stat .description h3 {
+.donationPage .stat .description h3 {
   font-size: 1rem;
   font-weight: 700;
   color: var(--on-surface);
   margin: 0 0 0.2rem;
 }
 
-.stat .description p {
+.donationPage .stat .description p {
   font-size: 0.88rem;
   color: var(--on-surface-variant);
   margin: 0;
@@ -626,28 +802,12 @@
 /* ============================================================
    5. Donation form section
    ============================================================ */
-.donationForm {
+.donationPage .donationForm {
   background-color: #fff;
   padding: 6rem 0;
 }
 
-.donationForm > h1 {
-  font-size: 2.5rem;
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  color: var(--on-surface);
-  margin-bottom: 0.5rem;
-  text-align: center;
-}
-
-.donationForm > p {
-  text-align: center;
-  color: var(--on-surface-variant);
-  font-size: 1rem;
-  margin-bottom: 72px;
-}
-
-.donationForm .container {
+.donationPage .donationForm .container {
   max-width: 1440px;
   margin: 0 auto;
   display: grid;
@@ -658,7 +818,7 @@
   overflow: hidden;
 }
 
-.donationForm .steps {
+.donationPage .donationForm .steps {
   padding: 48px 0;
   width: 100%;
   display: flex;
@@ -667,9 +827,9 @@
   background-color: #d5c3b423;
 }
 
-.donationForm .step {
+.donationPage .donationForm .step {
   height: 100px;
-  --size: 50px; /*  */
+  --size: 50px;
   width: calc(100% - 4 * var(--size));
   border-bottom: 2px dashed var(--accent-strong);
   position: relative;
@@ -679,11 +839,11 @@
   gap: 6px;
 }
 
-.donationForm .step:nth-child(even) {
+.donationPage .donationForm .step:nth-child(even) {
   align-items: flex-end;
 }
 
-.donationForm .step .number {
+.donationPage .donationForm .step .number {
   position: absolute;
   width: calc(var(--size));
   height: calc(var(--size));
@@ -701,25 +861,25 @@
   z-index: 3;
 }
 
-.donationForm .step:last-child {
+.donationPage .donationForm .step:last-child {
   border-bottom: none;
 }
-.donationForm .step:last-child::after,
-.donationForm .step:last-child::before {
+.donationPage .donationForm .step:last-child::after,
+.donationPage .donationForm .step:last-child::before {
   display: none;
 }
 
-.donationForm .step:nth-child(odd) .number {
+.donationPage .donationForm .step:nth-child(odd) .number {
   left: calc(-1.5 * var(--size));
 }
 
-.donationForm .step:nth-child(even) .number {
+.donationPage .donationForm .step:nth-child(even) .number {
   right: calc(-1.5 * var(--size));
   background-color: #fff;
 }
 
-.donationForm .step::before,
-.donationForm .step::after {
+.donationPage .donationForm .step::before,
+.donationPage .donationForm .step::after {
   content: "";
   position: absolute;
   width: var(--size);
@@ -727,7 +887,7 @@
   border: 2px dashed var(--accent-strong);
 }
 
-.donationForm .step:nth-child(odd)::before {
+.donationPage .donationForm .step:nth-child(odd)::before {
   border-right: none;
   border-top: none;
   left: calc(-1 * var(--size) - 2px);
@@ -735,7 +895,7 @@
   border-bottom-left-radius: var(--size);
 }
 
-.donationForm .step:nth-child(odd)::after {
+.donationPage .donationForm .step:nth-child(odd)::after {
   border-left: none;
   border-bottom: none;
   right: calc(-1 * var(--size) - 4px);
@@ -743,7 +903,7 @@
   border-top-right-radius: var(--size);
 }
 
-.donationForm .step:nth-child(even)::before {
+.donationPage .donationForm .step:nth-child(even)::before {
   border-right: none;
   border-bottom: none;
   left: calc(-1 * var(--size) - 2px);
@@ -751,7 +911,7 @@
   border-top-left-radius: var(--size);
 }
 
-.donationForm .step:nth-child(even)::after {
+.donationPage .donationForm .step:nth-child(even)::after {
   border-left: none;
   border-top: none;
   right: calc(-1 * var(--size) - 4px);
@@ -759,7 +919,7 @@
   border-bottom-right-radius: var(--size);
 }
 
-.donationForm .step .content {
+.donationPage .donationForm .step .content {
   position: absolute;
   display: flex;
   left: -20px;
@@ -768,12 +928,19 @@
   gap: 8px;
 }
 
-.donationForm .step:nth-child(even) .content {
+[dir="rtl"] .donationPage .donationForm .step .content {
+  flex-direction: row-reverse;
+}
+
+.donationPage .donationForm .step:nth-child(even) .content {
   flex-direction: row-reverse;
   gap: 16px;
 }
+[dir="rtl"] .donationPage .donationForm .step:nth-child(even) .content {
+  flex-direction: row;
+}
 
-.donationForm .step .content .icon {
+.donationPage .donationForm .step .content .icon {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -781,35 +948,42 @@
   height: 60px;
 }
 
-.donationForm .step .content .icon svg,
-.donationForm .step:nth-child(3) .content .icon svg path {
+.donationPage .donationForm .step .content .icon svg,
+.donationPage .donationForm .step:nth-child(3) .content .icon svg path {
   fill: var(--accent);
 }
 
-.donationForm .step .content h3 {
+.donationPage .donationForm .step .content h3 {
   margin-bottom: 4px;
   font-size: 16px;
 }
 
-.donationForm .step .content p {
+.donationPage .donationForm .step .content p {
   font-size: 12px;
 }
 
-.donationForm .step:nth-child(even) .content h3 {
+.donationPage .donationForm .step:nth-child(even) .content h3 {
   text-align: right;
 }
-.donationForm .step:nth-child(even) .content p {
+.donationPage .donationForm .step:nth-child(even) .content p {
   text-align: right;
 }
 
-.donationForm form {
+[dir="rtl"] .donationPage .donationForm .step:nth-child(odd) .content h3 {
+  text-align: left;
+}
+[dir="rtl"] .donationPage .donationForm .step:nth-child(odd) .content p {
+  text-align: left;
+}
+
+.donationPage .donationForm form {
   padding: 48px 24px;
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
-.donationForm form .icon {
+.donationPage .donationForm form .icon {
   width: 50px;
   height: 50px;
   background-color: #006e0f2b;
@@ -819,33 +993,32 @@
   align-items: center;
 }
 
-.donationForm form > p {
+.donationPage .donationForm form > p {
   line-height: 1.6;
 }
 
-.donationForm form .inputFields {
+.donationPage .donationForm form .inputFields {
   padding: 32px 0;
   display: flex;
   flex-direction: column;
   gap: 48px;
 }
 
-.donationForm form .doubleWrapper {
+.donationPage .donationForm form .doubleWrapper {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 48px;
 }
 
-.donationForm form .wrapper {
+.donationPage .donationForm form .wrapper {
   width: 100%;
-  height: 100%;
   position: relative;
   border-bottom: 1px solid #d5c3b4;
 }
 
-.donationForm form .wrapper input,
-.donationForm form .wrapper textarea,
-.donationForm form .wrapper select {
+.donationPage .donationForm form .wrapper input,
+.donationPage .donationForm form .wrapper textarea,
+.donationPage .donationForm form .wrapper select {
   width: 100%;
   height: 100%;
   font-size: 16px;
@@ -865,37 +1038,42 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
-.donationForm form .wrapper select {
+.donationPage .donationForm form .wrapper select {
   background-color: #fff;
   font-size: 14px;
   font-weight: 400;
 }
 
-.donationForm form .wrapper textarea {
+.donationPage .donationForm form .wrapper textarea {
   width: 100%;
   resize: none;
   min-height: 100px;
   overflow: hidden;
 }
 
-.donationForm form .wrapper select:focus + label {
+.donationPage .donationForm form .wrapper select:focus + label {
   background-color: red;
 }
 
-.donationForm form .wrapper input:focus,
-.donationForm form .wrapper textarea:focus {
+.donationPage .donationForm form .wrapper input:focus,
+.donationPage .donationForm form .wrapper textarea:focus {
   border-bottom: 2px solid var(--accent-strong);
 }
 
-.donationForm form .wrapper textarea:not(:placeholder-shown) + label,
-.donationForm form .wrapper textarea:focus + label,
-.donationForm form .wrapper input:not(:placeholder-shown) + label,
-.donationForm form .wrapper input:focus + label {
+.donationPage
+  .donationForm
+  form
+  .wrapper
+  textarea:not(:placeholder-shown)
+  + label,
+.donationPage .donationForm form .wrapper textarea:focus + label,
+.donationPage .donationForm form .wrapper input:not(:placeholder-shown) + label,
+.donationPage .donationForm form .wrapper input:focus + label {
   bottom: 110%;
   font-size: 12px;
 }
 
-.donationForm form .wrapper label {
+.donationPage .donationForm form .wrapper label {
   position: absolute;
   font-size: 14px;
   bottom: 14px;
@@ -903,17 +1081,22 @@ input[type="number"] {
   font-weight: 400;
 }
 
-.donationForm form .wrapper:has(textarea) label {
+.donationPage .donationForm form .wrapper:has(textarea) label {
   bottom: 60%;
 }
 
-.donationForm .fileWrapper label:first-child {
+.donationPage .donationForm .fileWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.donationPage .donationForm .fileWrapper label:first-child {
   display: block;
   margin-bottom: 10px;
   font-size: 14px;
 }
 
-.donationForm .fileWrapper label:last-child {
+.donationPage .donationForm .fileWrapper label:last-child {
   display: block;
   height: 150px;
   border-radius: 12px;
@@ -927,19 +1110,21 @@ input[type="number"] {
   background-color: #d5c3b41f;
 }
 
-.donationForm .fileWrapper label:last-child:hover {
+.donationPage .donationForm .fileWrapper label:last-child:hover {
   color: #514539;
 }
 
-.donationForm .fileWrapper label:last-child span {
+.donationPage .donationForm .fileWrapper label:last-child span {
   font-size: 14px;
+  text-align: center;
+  line-height: 1.6;
 }
 
-.donationForm .fileWrapper input {
+.donationPage .donationForm .fileWrapper input {
   display: none;
 }
 
-.donationForm form button {
+.donationPage .donationForm form button {
   display: block;
   position: relative;
   background: linear-gradient(135deg, #845417, #cb914f);
@@ -951,10 +1136,213 @@ input[type="number"] {
   border-radius: 8px;
 }
 
-.donationForm form button:hover {
+.donationPage .donationForm form button:hover {
   transform: translateY(-4px);
   box-shadow: 0 12px 28px rgba(132, 84, 23, 0.3);
   filter: brightness(1.03);
+}
+
+/* Add these styles to your existing CSS */
+
+/* Error state for wrapper */
+.donationPage .donationForm form .wrapper.hasError {
+  border-bottom-color: #dc3545;
+}
+
+.donationPage .donationForm form .wrapper.hasError input,
+.donationPage .donationForm form .wrapper.hasError textarea,
+.donationPage .donationForm form .wrapper.hasError select {
+  border-bottom: 1px solid #dc3545;
+}
+
+/* Error container styling */
+.donationPage .errorContainer {
+  position: absolute;
+  bottom: -30px;
+  left: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #fff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  z-index: 10;
+  animation: slideDown 0.2s ease-out;
+}
+
+[dir="rtl"] .donationPage .errorContainer {
+  right: 0;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.donationPage .errorIcon {
+  flex-shrink: 0;
+  animation: shake 0.3s ease-out;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-2px);
+  }
+  75% {
+    transform: translateX(2px);
+  }
+}
+
+.donationPage .errorText {
+  color: #dc3545;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+/* File wrapper error state */
+.donationPage .donationForm .fileWrapper.hasError label:last-child {
+  border-color: #dc3545;
+  background-color: rgba(220, 53, 69, 0.05);
+}
+
+.donationPage .donationForm .fileWrapper label.fileLabelError {
+  display: block;
+  height: 150px;
+  border-radius: 12px;
+  border: 3px dashed #dc3545;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  background-color: rgba(220, 53, 69, 0.05) !important;
+}
+.donationPage .donationForm .fileWrapper label.fileLabelError span {
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* File info styling */
+.donationPage .fileInfo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 6px 10px;
+  background-color: rgba(40, 167, 69, 0.1);
+  border-radius: 4px;
+  font-size: 12px;
+  color: #28a745;
+}
+
+/* Success and error message banners */
+.donationPage .successMessage {
+  background: linear-gradient(135deg, #28a745, #20c997);
+  color: white;
+  padding: 14px 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  animation: slideDown 0.3s ease-out;
+  box-shadow: 0 4px 12px rgba(40, 167, 69, 0.2);
+}
+
+.donationPage .errorMessage {
+  background: linear-gradient(135deg, #dc3545, #c82333);
+  color: white;
+  padding: 14px 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  animation: slideDown 0.3s ease-out;
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.2);
+}
+
+/* Adjust wrapper position to accommodate error messages */
+.donationPage .donationForm form .wrapper {
+  position: relative;
+  margin-bottom: 40px;
+}
+
+/* Adjust textarea wrapper margin */
+.donationPage .donationForm form .wrapper:has(textarea) {
+  margin-bottom: 45px;
+}
+
+/* Select wrapper adjustment */
+.donationPage .donationForm form .wrapper select {
+  background-color: #fff;
+  font-size: 14px;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+/* File wrapper adjustment */
+.donationPage .donationForm .fileWrapper {
+  margin-bottom: 40px;
+}
+
+/* Button disabled state */
+.donationPage .donationForm form button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .donationPage .errorContainer {
+    bottom: -35px;
+    font-size: 10px;
+  }
+
+  .donationPage .errorText {
+    font-size: 10px;
+  }
+
+  .donationPage .donationForm form .wrapper {
+    margin-bottom: 45px;
+  }
+}
+
+/* Focus state for error fields */
+.donationPage .donationForm form .wrapper.hasError input:focus,
+.donationPage .donationForm form .wrapper.hasError textarea:focus {
+  border-bottom-color: #dc3545;
+}
+
+/* Optional: Add a subtle red glow on error */
+@keyframes errorGlow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(220, 53, 69, 0);
+  }
+}
+
+.donationPage .donationForm form .wrapper.hasError input:focus,
+.donationPage .donationForm form .wrapper.hasError textarea:focus {
+  animation: errorGlow 0.6s ease-out;
 }
 
 /* ============================================================
@@ -962,140 +1350,153 @@ input[type="number"] {
    ============================================================ */
 
 @media (max-width: 1024px) {
-  .firstSection .container,
-  .donateInfos .container,
-  .transparency .container {
+  .donationPage .donateInfos .container,
+  .donationPage .transparency .container {
     grid-template-columns: 1fr;
     padding: 0 2rem;
   }
 
-  .firstSection .image {
-    display: none;
-  }
-
-  .donateInfos .container {
+  .donationPage .donateInfos .container {
     grid-template-columns: 1fr;
   }
 
-  .copybtn {
+  .donationPage .copybtn {
     opacity: 1;
   }
 
-  .transparency .container {
+  .donationPage .transparency .container {
     grid-template-columns: 1fr;
   }
 
-  .transparency .images {
+  .donationPage .transparency .images {
     aspect-ratio: 4 / 3;
   }
 }
 
 @media (max-width: 900px) {
-  .donationForm .container {
+  .donationPage .donationForm .container {
     grid-template-columns: 1fr;
   }
 }
 
 @media (max-width: 768px) {
-  .firstSection {
-    padding: 3rem 0 2rem;
-  }
-
-  .firstSection .container {
+  .donationPage .donateInfos .container,
+  .donationPage .yourImpact .container,
+  .donationPage .transparency .container {
     padding: 0 1.25rem;
   }
 
-  .firstSection .msg h1 {
-    font-size: 2.2rem;
-  }
-
-  .donateInfos .container,
-  .yourImpact .container,
-  .transparency .container {
-    padding: 0 1.25rem;
-  }
-
-  .doubleWrapper {
+  .donationPage .doubleWrapper {
     grid-template-columns: 1fr;
     gap: 1rem;
   }
 
-  .bankInfos .card {
+  .donationPage .bankInfos .card {
     padding: 1.5rem;
   }
 
-  .cards {
+  .donationPage .cards {
     grid-template-columns: 1fr;
   }
 
-  .cards .impactCard:nth-child(2) {
+  .donationPage .cards .impactCard:nth-child(2) {
     transform: none;
   }
 
-  .yourImpact .title {
+  .donationPage section > .title,
+  .donationPage section .container > .title
+   {
     font-size: 1.8rem;
   }
 
-  .transparency .images {
+  .donationPage .transparency .images {
     grid-template-columns: 1fr 1fr;
   }
 
-  .transparency .details h2 {
+  .donationPage .transparency .details h2 {
     font-size: 1.75rem;
   }
 
-  .stat h1 {
+  .donationPage .stat h1 {
     font-size: 1.8rem;
   }
 }
 
 @media (max-width: 480px) {
-  .wrapper .data span {
+  .donationPage .wrapper .data span {
     font-size: 1rem;
   }
 
-  .transparency .images {
+  .donationPage .transparency .images {
     grid-template-columns: 1fr 1fr;
     gap: 0.6rem;
   }
 
-  .donationForm .step {
+  .donationPage .donationForm .step {
     height: 80px;
     --size: 40px;
   }
 
-  .donationForm .step .content h3 {
+  .donationPage .donationForm .step .content h3 {
     margin-bottom: 4px;
     font-size: 14px;
   }
 
-  .donationForm .step .content p {
+  .donationPage .donationForm .step .content p {
     font-size: 10px;
   }
 
-  .donationForm .step .content {
+  .donationPage .donationForm .step .content {
     gap: 4px;
   }
 
-  .donationForm .step:nth-child(even) .content {
+  .donationPage .donationForm .step:nth-child(even) .content {
     gap: 6px;
   }
 
-  .donationForm .step .icon,
-  .donationForm .step svg {
+  .donationPage .donationForm .step .icon,
+  .donationPage .donationForm .step svg {
     width: 30px;
     height: 30px;
   }
 }
 
 @media (max-width: 360px) {
-  .transparency .images {
+  .donationPage .transparency .images {
     columns: 1fr;
     gap: 0.6rem;
   }
+}
 
-  .donationForm .step {
-    height: 100px;
-    --size: 50px;
+@media (max-width: 340px) {
+  .donationPage .donationForm .step {
+    height: 70px;
+    --size: 35px;
+  }
+
+  .donationPage .donationForm .step .content h3 {
+    margin-bottom: 4px;
+    font-size: 12px;
+  }
+
+  .donationPage .donationForm .step .content p {
+    font-size: 8px;
+  }
+
+  .donationPage .donationForm .step .icon,
+  .donationPage .donationForm .step svg {
+    width: 30px;
+    height: 30px;
+  }
+
+  .donationPage .doubleWrapper {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 340px) {
+  .donationPage .donationForm .step {
+    height: 60px;
+    --size: 30px;
   }
 }
