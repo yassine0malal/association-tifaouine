@@ -14,7 +14,7 @@ import ProjectCardSkeleton from "./components/common/ProjectCardSkeleton.jsx";
 import { Provider } from "react-redux";
 import { store } from './app/store.js';
 import About from "./features/public/About.jsx";
-import Contact from "./features/public/Contact.jsx";
+import Contact from "./features/public/contact/Contact.jsx";
 import Home from "./features/public/Accueil.jsx";
 
 import "./i18n";
@@ -25,6 +25,7 @@ import EventPage from "./features/evenements/event-page/EventPage.jsx";
 import JoinUsPage from "./features/benevolat/JoinUsPage.jsx";
 import Partner from "./features/partners/Partner.jsx";
 import Domain from "./features/domains/domainsPage/Domain.jsx";
+import DonationPage from "./features/dons/DonationPage.jsx";
 
 createRoot(document.getElementById("root")).render(
   <Provider store={store}>
@@ -50,10 +51,10 @@ createRoot(document.getElementById("root")).render(
             </Route>
 
             {/* Main Routes : Participez */}
-            <Route path="/:lang/join-us">
-              <Route path="Faire-un-don" element={<Footer />} />
-              <Route index element={<JoinUsPage />} />
-              <Route path=":contributor" element={<JoinUsPage />} />
+            <Route path="/:lang">
+              <Route path="donate" element={ <DonationPage />} />
+              <Route path="join-us" element={<JoinUsPage />} />
+              <Route path="join-us/:contributor" element={<JoinUsPage />} />
             </Route>
 
             {/* Main Routes : Domaines */}

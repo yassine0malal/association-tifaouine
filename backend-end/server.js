@@ -18,22 +18,26 @@ requiredEnv.forEach(key => {
         process.exit(1);
     }
 });
-
-// Servir les fichiers statiques (Photos des membres, bénévoles, etc.)
-app.use('/data', express.static(path.join(__dirname, 'src', 'data')));
-const PORT = process.env.PORT || 5000;
-
 // Middleware de sécurité
-app.use(helmet());
+app.use(helmet({
+    crossOriginResourcePolicy: { policy: "cross-origin" }, 
+}));
 
-// Configuration CORS sécurisée
 const corsOptions = {
     origin: process.env.FRONTEND_URL, // Autorise uniquement l'URL de votre site
     credentials: true,               // Autorise l'envoi des cookies sécurisés (HttpOnly)
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    exposedHeaders: ['Content-Disposition']
 };
+// Servir les fichiers statiques (Photos des membres, bénévoles, etc.)
 app.use(cors(corsOptions));
+
+app.use('/data', express.static(path.join(__dirname, 'src', 'data')));
+const PORT = process.env.PORT || 5000;
+
+
+// Configuration CORS sécurisée
 
 app.use(express.json());
 app.use(cookieParser());

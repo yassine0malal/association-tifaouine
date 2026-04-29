@@ -12,6 +12,9 @@
         "resourceLibrary": "Resource Library",
         "showingItems": "Showing {{count}} of {{total}} items",
         "loadingResources": "Loading resources...",
-        "errorMessage": "Error: {{error}}"
+        "errorMessage": "Error: {{error}}",
+        "report":"Report",
+        "document":"Document",
+        "guide":"Guide"
     }
 }

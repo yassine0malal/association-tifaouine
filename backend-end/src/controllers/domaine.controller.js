@@ -15,9 +15,9 @@ class DomaineController {
 
     async getAll(req, res) {
         try {
-            const { page, limit, offset } = req.pagination;
-            const result = await domaineService.getAllDomaines({ limit, offset });
-            return res.status(200).json({ success: true, ...buildPaginatedResponse(result, page, limit) });
+            // const { page, limit, offset } = req.pagination;
+            const result = await domaineService.getAllDomaines();
+            return res.status(200).json({ success: true,result });
         } catch (error) {
             return res.status(500).json({ success: false, message: "erreur serveur" });
         }

@@ -27,12 +27,13 @@ const partnersSlice = createSlice({
                 state.error = null;
             })
             .addCase(fetchPartners.fulfilled, (state, action) => {
+                console.log("------",action.payload);
                 state.loading = false;
-                state.partners = action.payload.partners;
+                state.partners = action.payload.rows;
             })
             .addCase(fetchPartners.rejected, (state, action) => {
                 state.loading = false;
-                state.error = action.payload.error;
+                state.error = action.error.message;
             })
     },
 });

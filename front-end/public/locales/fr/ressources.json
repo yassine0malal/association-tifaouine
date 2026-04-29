@@ -12,6 +12,8 @@
         "resourceLibrary": "Bibliothèque de ressources",
         "showingItems": "Affichage de {{count}} sur {{total}} éléments",
         "loadingResources": "Chargement des ressources...",
-        "errorMessage": "Erreur : {{error}}"
+        "errorMessage": "Erreur : {{error}}",
+        "report": "Rapport",
+        "document": "Document"
     }
 }

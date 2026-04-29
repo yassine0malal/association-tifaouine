@@ -114,14 +114,22 @@
 .bottomsDetails .downloadButtom:active {
     scale: 0.9;
 }
+
 .bottomsDetails .downloadButtom svg {
     transition: all 0.3s ease-in-out;
 }
+
 .bottomsDetails .downloadButtom svg:hover {
     stroke: var(--accent-strong);
     rotate: 3deg;
     transform: translateY(-3px);
     scale: 1.1;
+}
+
+.bottomsDetails .downloadButtom a {
+    all: unset;
+    display: flex;
+    cursor: pointer;
 }
 
 .bottomsDetails .downloadButtom {
@@ -308,6 +316,7 @@
 .bottomsDetailsCard .downloadButtom {
     scale: 0.9;
 }
+
 .bottomsDetailsCard .downloadButtom {
     display: flex;
     justify-self: center;
@@ -347,20 +356,20 @@
     justify-content: space-between;
     align-items: center;
     font-size: 14px;
-    padding: 10px 10px;
+    padding: 15px;
 
 }
 
-.cardsContent .bottomsDetailsCard a {
+.cardsContent .bottomsDetailsCard button {
     transition: all ease-in-out 0.3s;
     position: relative;
 }
 
-.cardsContent .bottomsDetailsCard a {
+.cardsContent .bottomsDetailsCard button {
     transition: all 0.3s ease-in-out;
 }
 
-.cardsContent .bottomsDetailsCard a button::before {
+.cardsContent .bottomsDetailsCard button::before {
     position: absolute;
     content: "";
     border-radius: 8px;
@@ -371,20 +380,27 @@
     top: 0;
 }
 
-.cardsContent .bottomsDetailsCard a:active svg{
+.cardsContent .bottomsDetailsCard button:active svg {
     scale: 0.9;
 }
-.cardsContent .bottomsDetailsCard a:hover svg path {
+
+.cardsContent .bottomsDetailsCard button:hover svg path {
     stroke: var(--accent-strong);
     rotate: 3deg;
     transform: translateY(-3px);
     scale: 1.1;
-        transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
 
 }
 
-.cardsContent .bottomsDetailsCard a button {
-    all: unset;
+.cardsContent .bottomsDetailsCard button {
+    /* all: unset; */
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
 }
 
 .cardsContent .footerCard {

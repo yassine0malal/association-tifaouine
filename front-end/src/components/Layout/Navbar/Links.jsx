@@ -21,7 +21,7 @@ export default function Links() {
     }, [dispatch, i18n.language]);
 
 
-    if (status == "pending") return <Loader/>
+    if (status == "pending") return <Loader />
     const menuData = [
         {
             id: "a-propos",
@@ -55,13 +55,23 @@ export default function Links() {
             id: "domaines",
             title: t("nav.domains"),
             to: `${i18n.language}/domains`,
-            subItems: domains?.length
-                ? domains.map((domain) => ({
+            subItems: (() => {
+                if (!domains?.length) return [];
+
+                const limitedDomains = domains.slice(0, 3).map(domain => ({
                     label: domain.label,
                     path: `/${i18n.language}/domains/${domain.id}`
-                }))
-                : []
+                }));
 
+                if (domains.length > 3) {
+                    limitedDomains.push({
+                        label: t("nav.seeMore"),  
+                        path: `/${i18n.language}/domains`
+                    });
+                }
+
+                return limitedDomains;
+            })()
         },
         {
             id: "ressources",
