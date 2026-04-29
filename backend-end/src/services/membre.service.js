@@ -1,4 +1,4 @@
-const { sequelize, Utilisateur, membre } = require('../models');
+const { sequelize, Utilisateur, membre, AdminNotification } = require('../models');
 const membreRepository = require('../repositories/membre.repository');
 const fs = require('fs');
 const path = require('path');
@@ -38,6 +38,13 @@ class MembreService {
                     photo_profile: photo_profile || null,
                     status: status || 'actif',
                     date_adhesion: date_adhesion || new Date()
+                }, { transaction: t });
+
+                // 4. Créer la notification Admin
+                await AdminNotification.create({
+                    type: 'NOUVEAU_MEMBRE',
+                    entity_id: user.id,
+                    message: `Nouvelle inscription membre: ${nom} (${email})`
                 }, { transaction: t });
 
                 createdResults.push({
