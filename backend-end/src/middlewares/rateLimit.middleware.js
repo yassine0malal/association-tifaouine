@@ -24,7 +24,19 @@ const authLimiter = rateLimit({
     legacyHeaders: false,
 });
 
+const etreMembre = rateLimit({
+    windowMs: 60 * 60 * 1000, // 1 heure
+    max: 5,
+    message: {
+        success: false,
+        message: "Trop de demandes d'adhésion depuis cette adresse IP. Veuillez réessayer dans 1 heure."
+    },
+    standardHeaders: true,
+    legacyHeaders: false,
+});
+
 module.exports = {
     apiLimiter,
-    authLimiter
+    authLimiter,
+    etreMembre
 };

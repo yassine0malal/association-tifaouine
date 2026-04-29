@@ -14,6 +14,7 @@ const partenariatsRoutes = require('./partenariats.routes');
 const messagesRoutes    = require('./messages.routes');
 const statsRoutes       = require('./stats.routes');
 const publicRoutes      = require('./public.routes');
+const etreMembreRoutes  = require('./etreMembre.routes');
 const { apiLimiter }    = require('../middlewares/rateLimit.middleware');
 const { validateLang }  = require('../middlewares/lang.middleware');
 
@@ -32,6 +33,7 @@ router.use('/ressources',   ressourcesRoutes);
 router.use('/partenariats', partenariatsRoutes);
 router.use('/messages',     messagesRoutes);
 router.use('/stats',        statsRoutes);
+router.use('/etre-membre',  etreMembreRoutes);
 
 // Routes publiques avec langue : /api/fr/... | /api/ar/... | /api/en/...
 
