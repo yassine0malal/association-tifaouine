@@ -48,7 +48,6 @@ export default function AdminLogin() {
   };
 
   if (loading) return <Loader />;
-  // { redirecting && <p>Redirecting to dashboard…</p> }
 
 
 

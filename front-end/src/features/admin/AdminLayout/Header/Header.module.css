@@ -1,9 +1,170 @@
 .header {
-  background: white;
-  padding: 15px 20px;
+  /* padding: 15px 20px; */
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   gap: 20px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px #0000001a;
+
+  background: white;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  position: fixed;
+  z-index: 999;
+  width: calc(100% - 260px);
+}
+
+.header .responsiveLogoMenu svg {
+  transition: all ease-in-out 0.3s;
+  cursor: pointer;
+  /* display: none; */
+}
+
+.header .responsiveLogoMenu svg:active {
+  scale: 1.2;
+}
+
+.header .responsiveLogoMenu {
+  align-items: center;
+  display: flex;
+  position: relative;
+  top: -260px;
+  transition: top 0.3s ease-in-out;
+}
+
+.header .logo img {
+  width: 120px;
+  cursor: pointer;
+}
+
+.header .account {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.header .account .profileInfo {
+  display: flex;
+  gap: 12px;
+  padding-right: 12px;
+}
+
+.header .account .profileInfo .accountText {
+  display: flex;
+  flex-direction: column;
+  font-size: 13px;
+}
+
+.header .account .notification span {
+  color: var(--color-text-light);
+  font-size: 40px;
+  font-weight: 100;
+
+}
+
+.header .account .notification {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.header .account .notification svg {
+
+  transition: all ease-in-out 0.3s;
+}
+
+.header .account .notification svg:hover {
+  scale: 1.1;
+}
+
+.header .account .notification svg:active {
+  scale: 1.2;
+}
+
+.header .account img {
+  width: 40px;
+}
+
+.header .inputFieled {
+  display: flex;
+  gap: 12px;
+  border: 4px solid var(--bg);
+  background-color: transparent;
+  padding: 10px;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(55, 51, 51, 0.994);
+  background-color: rgba(255, 255, 255, 0.05);
+  align-items: center;
+  display: none;
+}
+
+.header .inputFieled input {
+  all: unset;
+  background-color: transparent;
+  border: none;
+}
+
+.header .inputFieled .cmd span {
+  font-weight: 600;
+}
+
+.header .inputFieled input:-webkit-autofill,
+.header .inputFieled input:-webkit-autofill:hover,
+.header .inputFieled input:-webkit-autofill:focus,
+.header .inputFieled input:-webkit-autofill:active {
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: #323232;
+  transition: background-color 5000s ease-in-out 0s;
+  box-shadow: inset 0 0 20px 20px transparent;
+}
+
+.cmd {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--accent-very-light);
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: bold;
+  color: #1C274C;
+}
+
+
+
+/* ============Responsive Design==========  */
+
+@media (max-width:900px) {
+  .header {
+    width: 100%;
+  }
+
+  .header .responsiveLogoMenu {
+    top: 0;
+  }
+}
+
+@media (max-width:600px) {
+  .header {
+    padding: 0px 15px 0px 0px;
+  }
+
+  .header .account .notification svg {
+    margin-right: 12px;
+  }
+
+  .header .account .notification span {
+    display: none;
+  }
+
+  .header .account .profileInfo .accountText {
+    display: none;
+  }
+.header .responsiveLogoMenu {
+    top: 0;
+  }
+
+
 }
