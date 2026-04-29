@@ -35,6 +35,8 @@ router.get('/benevoles',paginate, benevoleController.getAllByLang.bind(benevoleC
 // ─── Partenariats
 router.get('/partenariats', partenariatController.getAllByLang.bind(partenariatController));
 
+router.get('/partenariats-home', partenariatController.getAllByLangForHome.bind(partenariatController));
+
 // ─── Ressources documents de l'association
 router.get('/ressources/documents', paginate, ressourceController.getDocumentsAssociation.bind(ressourceController));
 
