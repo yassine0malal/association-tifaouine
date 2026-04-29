@@ -27,7 +27,7 @@ router.get('/evenements',paginate, evenementController.getAllByLang.bind(eveneme
 router.get('/evenements/:id',evenementController.getByIdAndLang.bind(evenementController));
 
 // ─── Membres 
-router.get('/membres',paginate, membreController.getAllByLang.bind(membreController));
+router.get('/membres', membreController.getAllByLang.bind(membreController));
 
 // ─── Bénévoles 
 router.get('/benevoles',paginate, benevoleController.getAllByLang.bind(benevoleController));
