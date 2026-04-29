@@ -19,6 +19,7 @@ const DonMateriel = require('./DonMateriel');
 const Stat = require('./Stat');
 const RefreshToken = require('./RefreshToken');
 const TokenBlacklist = require('./TokenBlacklist');
+const AdminNotification = require('./AdminNotification');
 
 // --- Associations ---
 
@@ -111,5 +112,6 @@ module.exports = {
     DonMateriel,
     Stat,
     RefreshToken,
-    TokenBlacklist
+    TokenBlacklist,
+    AdminNotification
 };

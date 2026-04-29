@@ -1,4 +1,5 @@
 ﻿const { sequelize } = require('../config/database');
+const { AdminNotification } = require('../models');
 const donRepository = require('../repositories/don.repository');
 
 const STATUTS_VALIDES    = ['recu', 'en_attente', 'traite'];
@@ -43,6 +44,13 @@ class DonService {
                 montant:         Number(montant),
                 devise:          devise || 'MAD',
                 ref_transaction: ref_transaction || null
+            }, { transaction: t });
+
+            // Notification pour Admin
+            await AdminNotification.create({
+                type: 'NOUVEAU_DON',
+                entity_id: don.id,
+                message: `Nouveau don financier de ${nom_complet} (${montant} ${devise || 'MAD'})`
             }, { transaction: t });
 
             return await donRepository.findById(don.id);
