@@ -35,8 +35,20 @@ const etreMembre = rateLimit({
     legacyHeaders: false,
 });
 
+const etreBenevole = rateLimit({
+    windowMs: 60 * 60 * 1000,
+    max: 5,
+    message: {
+        success: false,
+        message: "Trop de demandes de bénévolat depuis cette adresse IP. Veuillez réessayer dans 1 heure."
+    },
+    standardHeaders: true,
+    legacyHeaders: false,
+});
+
 module.exports = {
     apiLimiter,
     authLimiter,
-    etreMembre
+    etreMembre,
+    etreBenevole
 };
