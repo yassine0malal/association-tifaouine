@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import styles from "./AdminProjetCreate.module.css";
+import { useDispatch, useSelector } from "react-redux";
 
 const DOMAINES_DISPO = [
     { id: "education", nom: "Éducation" },
@@ -8,11 +9,17 @@ const DOMAINES_DISPO = [
     { id: "culture", nom: "Culture" },
     { id: "sport", nom: "Sport" },
 ];
+const PARTENAIRES_DISPO = [
+    { id: 1, nom: "INDH" },
+    { id: 2, nom: "Ministère de l'Éducation" },
+    { id: 3, nom: "OCP Foundation" },
+    { id: 4, nom: "Région Casablanca-Settat" },
+    { id: 5, nom: "Agence du Nord" },
+];
 
 export default function AdminProjetCreate() {
-    // 1. États du formulaire
     const [formData, setFormData] = useState({
-        domaine: "",
+        domaine_id: "",
         titre_fr: "",
         titre_ar: "",
         titre_en: "",
@@ -21,17 +28,30 @@ export default function AdminProjetCreate() {
         description_en: "",
         statut: "Planifié",
         localisation: "",
-        beneficiaires: 0,
+        nb_beneficiaires: 0,
         budget: "",
         date_debut: "",
         date_fin: "",
+        partenariat_ids: [],
     });
 
-    // 2. États pour les images
-    const [mainImage, setMainImage] = useState(null);       // { file, url }
+    const [imagePrincipale, setMainImage] = useState(null);       // { file, url }
     const [extraImages, setExtraImages] = useState([]);      // [{ file, url }, ...]
     const [isImageValid, setIsImageValid] = useState(true);
     const [sizeWarning, setSizeWarning] = useState(null);
+    const [isPartnerOpen, setIsPartnerOpen] = useState(false);
+    //get the data
+    const dispatch = useDispatch();
+    const {
+        partners,
+        loading,
+        error,
+    } = useSelector((state) => state.partners);
+
+    const { data: domains, status } = useSelector((state) => state.domains);
+
+
+
 
     // 3. Références
     const mainFileRef = useRef();
@@ -42,6 +62,31 @@ export default function AdminProjetCreate() {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
     };
+
+    // Multiple Partners
+    const handlePartnerChange = (e) => {
+        const value = parseInt(e.target.value);
+        if (!value) return;
+
+        setFormData(prev => {
+            // Si déjà sélectionné, on ne l'ajoute pas en double
+            if (prev.partenariat_ids.includes(value)) return prev;
+            return {
+                ...prev,
+                partenariat_ids: [...prev.partenariat_ids, value]
+            };
+        });
+        e.target.value = ""; // Reset du select visuel
+    };
+
+    const removePartner = (id) => {
+        setFormData(prev => ({
+            ...prev,
+            partenariat_ids: prev.partenariat_ids.filter(pId => pId !== id)
+        }));
+    };
+
+
 
     // --- Logique Image Principale ---
     const processMainImage = (file) => {
@@ -88,7 +133,7 @@ export default function AdminProjetCreate() {
     // --- Soumission ---
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("Données envoyées :", { ...formData, mainImage, extraImages });
+        console.log("Données envoyées :", { ...formData, imagePrincipale, extraImages });
     };
 
     return (
@@ -108,12 +153,12 @@ export default function AdminProjetCreate() {
                     <div className={styles.selectWrap}>
                         <select
                             className={styles.select}
-                            name="domaine"
-                            value={formData.domaine}
+                            name="domaine_id"
+                            value={formData.domaine_id}
                             onChange={handleChange}
                             required
                         >
-                            <option value="">Sélectionner un domaine</option>
+                            <option value="">Sélectionner un domaine_id</option>
                             {DOMAINES_DISPO.map((dom) => (
                                 <option key={dom.id} value={dom.id}>{dom.nom}</option>
                             ))}
@@ -124,6 +169,50 @@ export default function AdminProjetCreate() {
                     </div>
                 </div>
 
+                <div className={styles.fieldGroup}>
+                    <label className={styles.label}>Partenaires du projet</label>
+                    <div className={styles.selectWrap}>
+                        <select
+                            className={styles.select}
+                            onChange={handlePartnerChange}
+                            value=""
+                        >
+                            <option value="">Ajouter un partenaire...</option>
+                            {/* 1. On filtre pour ne garder que ceux qui ne sont PAS dans partenariat_ids */}
+                            {PARTENAIRES_DISPO.filter(p => !formData.partenariat_ids.includes(p.id)).map((p) => (
+                                <option key={p.id} value={p.id}>
+                                    {p.nom}
+                                </option>
+                            ))}
+                        </select>
+                        <span className={styles.chevron}>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <path d="m6 9 6 6 6-6" />
+                            </svg>
+                        </span>
+                    </div>
+
+                    {/* Tags (Le bouton 'x' appelle déjà removePartner qui remettra l'item dans la liste) */}
+                    {formData.partenariat_ids.length > 0 && (
+                        <div className={styles.tagContainer}>
+                            {formData.partenariat_ids.map(pId => {
+                                const partenaire = PARTENAIRES_DISPO.find(p => p.id === pId);
+                                return (
+                                    <div key={pId} className={styles.tag}>
+                                        <span>{partenaire?.nom}</span>
+                                        <button
+                                            type="button"
+                                            onClick={() => removePartner(pId)}
+                                            className={styles.removeTag}
+                                        >
+                                            ×
+                                        </button>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    )}
+                </div>
                 {/* Section : Upload Image Principale */}
                 <div className={styles.fieldGroup}>
                     <label className={styles.label}>Image principale</label>
@@ -133,17 +222,17 @@ export default function AdminProjetCreate() {
                     </p>
 
                     <div
-                        className={`${styles.uploadZone} ${mainImage ? styles.uploadZoneCompact : ""} ${!isImageValid ? styles.uploadZoneError : ""}`}
+                        className={`${styles.uploadZone} ${imagePrincipale ? styles.uploadZoneCompact : ""} ${!isImageValid ? styles.uploadZoneError : ""}`}
                         onDrop={handleMainDrop}
                         onDragOver={(e) => e.preventDefault()}
                         onClick={() => mainFileRef.current.click()}
                     >
-                        {mainImage ? (
+                        {imagePrincipale ? (
                             <div className={styles.mainImageWrapper}>
-                                <img src={mainImage.url} alt="principale" className={styles.mainPreviewInside} />
+                                <img src={imagePrincipale.url} alt="principale" className={styles.mainPreviewInside} />
                                 <div className={styles.changeOverlay}>
                                     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" /><circle cx="12" cy="13" r="4" /></svg>
-                                    <span>Changer l'image</span>
+                                    <span>Changer l'image principale</span>
                                 </div>
                             </div>
                         ) : (
@@ -168,11 +257,11 @@ export default function AdminProjetCreate() {
                     )}
 
                     {/* Galerie photo */}
-                    {(mainImage || extraImages.length > 0) && (
+                    {(imagePrincipale || extraImages.length > 0) && (
                         <div className={styles.galleryGrid}>
-                            {mainImage && (
+                            {imagePrincipale && (
                                 <div className={styles.galleryItem}>
-                                    <img src={mainImage.url} alt="miniature-principale" />
+                                    <img src={imagePrincipale.url} alt="miniature-principale" />
                                     <span className={styles.mainBadge}>Principale</span>
                                 </div>
                             )}
@@ -267,7 +356,7 @@ export default function AdminProjetCreate() {
                         <label className={styles.label}>Bénéficiaires</label>
                         <div className={styles.iconInput}>
                             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#c4a050" strokeWidth="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" /></svg>
-                            <input type="number" className={styles.input} name="beneficiaires" placeholder="0" value={formData.beneficiaires} onChange={handleChange} />
+                            <input type="number" className={styles.input} name="nb_beneficiaires" placeholder="0" value={formData.nb_beneficiaires} onChange={handleChange} />
                         </div>
                     </div>
 

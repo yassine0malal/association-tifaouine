@@ -2,10 +2,12 @@
 .adminContainer {
   --sidebar-width: 260px;
   display: flex;
-  height: 100vh; /* Changed from min-height to fixed height */
+  height: 100vh;
+  /* Changed from min-height to fixed height */
   background: #f0f2f5;
   position: relative;
-  overflow: hidden; /* Lock the outer screen - NO outer scrollbar */
+  overflow: hidden;
+  /* Lock the outer screen - NO outer scrollbar */
 }
 
 /* Background Orbs */
@@ -36,7 +38,8 @@
 .mainArea {
   margin-left: var(--sidebar-width);
   width: calc(100% - var(--sidebar-width));
-  height: 100vh; /* Force it to stay within the screen height */
+  height: 100vh;
+  /* Force it to stay within the screen height */
   display: flex;
   flex-direction: column;
   position: relative;
@@ -45,16 +48,17 @@
 .content {
   flex: 1;
   /* Calculate height: Full screen minus the Header (80px) */
-  height: calc(100vh - 80px); 
-  margin-top: 80px; 
-  
+  height: calc(100vh - 80px);
+  margin-top: 80px;
+
   /* Internal Scrolling ONLY */
-  overflow-y: auto; 
-  
+  overflow-y: auto;
+
   /* Keeps the scrollbars hidden as you requested */
-  scrollbar-width: none; 
+  scrollbar-width: none;
   -ms-overflow-style: none;
 }
+
 .content::-webkit-scrollbar {
   display: none;
 }
@@ -71,6 +75,12 @@
   z-index: 1000;
 }
 
+* {
+  direction: ltr;
+  font-family: "Manrope", sans-serif;
+
+}
+
 /* ============ Responsive Design ========== */
 
 @media (max-width: 900px) {
@@ -78,6 +88,7 @@
     margin-left: 0;
     width: 100%;
   }
+
   .content {
     height: calc(100vh - 70px);
     margin-top: 70px;
