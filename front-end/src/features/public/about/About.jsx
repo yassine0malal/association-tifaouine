@@ -28,7 +28,7 @@ import energy from "../../../assets/images/about/energy.jpeg"
 import science from "../../../assets/images/about/science.png"
 import nature from "../../../assets/images/about/nature.jpg"
 import children from "../../../assets/images/about/children.jpg"
-import notFound from "../../../assets/images/not-found.png"
+import defaultPartner from "../../../assets/images/default-partner.png"
 
 // Import CSS Module
 import styles from './About.module.css';
@@ -40,25 +40,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchMembres } from './membresSlice';
 
 
-
-// const teamData = [
-//   { id: 1, src: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80", title: "Real-Time Collaboration", desc: "Communicate seamlessly and keep everyone in sync." },
-//   { id: 2, src: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80", title: "Task & Project Tracking", desc: "Assign tasks, set deadlines, and visualize progress." },
-//   { id: 3, src: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80", title: "Performance Insights", desc: "Make smarter decisions with real-time analytics." },
-//   { id: 4, src: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80", title: "Real-Time Collaboration", desc: "Communicate seamlessly and keep everyone in sync." },
-//   { id: 5, src: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80", title: "Task & Project Tracking", desc: "Assign tasks, set deadlines, and visualize progress." },
-//   { id: 6, src: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80", title: "Performance Insights", desc: "Make smarter decisions with real-time analytics." },
-// ];
-// const partners = [
-//   { id: 1, title: "Project 1", image: agriculture },
-//   { id: 2, title: "Project 2", image: analphabetisme },
-//   { id: 3, title: "Project 3", image: anapec },
-//   { id: 4, title: "Project 4", image: entraide },
-//   { id: 5, title: "Project 5", image: equipement },
-//   { id: 6, title: "Project 6", image: habous },
-//   { id: 7, title: "Project 7", image: province },
-//   { id: 8, title: "Project 8", image: travail },
-// ]
 const BASE_BACK_END_URL = import.meta.env.VITE_BASE_BACK_END_URL;
 
 
@@ -373,7 +354,7 @@ const About = () => {
                   style={{ minWidth: `${100 / visibleItems}%` }}
                 >
 
-                  <img src={p.image ? `${BASE_BACK_END_URL}${p.image}` : notFound} alt={p.name} />
+                  <img src={p.image ? `${BASE_BACK_END_URL}${p.image}` : defaultPartner} alt={p.name} />
                 </div>
               ))}
 
