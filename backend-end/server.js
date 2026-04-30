@@ -27,7 +27,7 @@ const corsOptions = {
     origin: process.env.FRONTEND_URL, // Autorise uniquement l'URL de votre site
     credentials: true,               // Autorise l'envoi des cookies sécurisés (HttpOnly)
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    allowedHeaders: ['Content-Type'],
     exposedHeaders: ['Content-Disposition']
 };
 // Servir les fichiers statiques (Photos des membres, bénévoles, etc.)
@@ -64,7 +64,7 @@ const startServer = async () => {
         app.listen(PORT, () => {
             console.log(`Serveur démarré sur http://localhost:${PORT}`);
         });
-    } catch (error) {d
+    } catch (error) {
         console.error(' Impossible de se connecter à la base de données :', error);
         process.exit(1);
     }

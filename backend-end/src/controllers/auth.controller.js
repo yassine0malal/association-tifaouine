@@ -27,11 +27,11 @@ class AuthController {
                 maxAge: 7 * 24 * 60 * 60 * 1000 
             });
 
-            res.cookie('accessToken',data.accessToken,{
+            res.cookie('accessToken', data.accessToken, {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
-                sameSite: 'Strict', 
-                maxAge:  60 * 60 * 1000 
+                sameSite: 'Strict',
+                maxAge: 60 * 60 * 1000  // si yassine a changer selon votre besoin — aligné avec JWT_ACCESS_EXPIRATION
             });
             
 
@@ -69,11 +69,11 @@ class AuthController {
 
             const data = await authService.refreshAdminToken(refreshToken);
 
-            res.cookie('accescToken', data.accessToken, {
+            res.cookie('accessToken', data.accessToken, {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
                 sameSite: 'Strict',
-                maxAge: 60 * 60 * 1000
+                maxAge: 60 * 60 * 1000  // 1h — aligné avec JWT_ACCESS_EXPIRATION
             });
 
             return res.status(200).json({
@@ -100,6 +100,12 @@ class AuthController {
             await authService.logoutAdmin(accessToken, refreshToken);
 
             res.clearCookie('refreshToken', {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                sameSite: 'Strict'
+            });
+
+            res.clearCookie('accessToken', {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
                 sameSite: 'Strict'

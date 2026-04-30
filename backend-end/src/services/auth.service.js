@@ -12,7 +12,7 @@ class AuthService {
         return jwt.sign(
             { id: user.id, email: user.email, type: user.type },
             process.env.JWT_SECRET,
-            { expiresIn: process.env.JWT_ACCESS_EXPIRATION || '15m' }
+            { expiresIn: process.env.JWT_ACCESS_EXPIRATION || '1h' }
         );
     }
 
