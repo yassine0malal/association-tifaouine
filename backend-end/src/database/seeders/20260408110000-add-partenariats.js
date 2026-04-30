@@ -265,7 +265,7 @@ module.exports = {
       const filePath = path.join(__dirname, '../../data/partenariats', fileName);
       
       // Vérifier si le fichier existe
-      const finalLogoPath = fs.existsSync(filePath) ? p.logo : '/data/partenariats/default.png';
+      const finalLogoPath = fs.existsSync(filePath) ? p.logo : null;
 
       return {
         ...p,
