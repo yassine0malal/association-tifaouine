@@ -1,6 +1,6 @@
 const projetService = require('../services/projet.service');
 const { buildPaginatedResponse } = require('../utils/paginate');
-const { toProjetListDTO, toProjetDetailDTO } = require('../dto/projet.dto');
+const { toProjetListDTO, toProjetDetailDTO ,toProjetForDonListDTO} = require('../dto/projet.dto');
 const fs = require('fs');
 
 class ProjetController {
@@ -40,6 +40,18 @@ class ProjetController {
         } catch (error) {
             return res.status(500).json({ success: false, message: error.message });
         }
+    }
+    async getAllByLangForDon(req,res){
+        try {
+            const { lang } = req;
+            const result = await projetService.getAllProjetsWithDomaineForDon({});
+            const rows = result.rows.map(p => toProjetForDonListDTO(p.toJSON(), lang));
+            return res.status(200).json({ success: true, rows});
+        }
+            catch (error){
+            return res.status(500).json({ success: false, message: error.message });
+        }
+
     }
 
     /**

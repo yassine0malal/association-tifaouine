@@ -3,11 +3,14 @@ const { Utilisateur, membre } = require('../models');
 class MembreRepository {
     /**
      * @desc    Récupérer tous les membres avec leurs infos de base
+     * @param   {Object} filters - { status, limit, offset }
      */
     async findAll(filters = {}) {
+        const membreWhere = filters.status ? { status: filters.status } : {};
+
         return await Utilisateur.findAndCountAll({
             where:   { type: 'membre' },
-            include: [{ model: membre, required: true }],
+            include: [{ model: membre, required: true, where: membreWhere }],
         });
     }
 

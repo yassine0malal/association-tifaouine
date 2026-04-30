@@ -64,7 +64,7 @@ class MembreService {
     /**
      * @desc    Récupérer la liste complète des membres
      */
-    async getAllMembers(filters = {}) {
+    async getAllMembers(filters ={}) {
         const result = await membreRepository.findAll(filters);
         return { rows: result.rows.map(m => this._formatMember(m)), count: result.count };
     }
@@ -72,7 +72,6 @@ class MembreService {
     async getAllMembresWithProfile(filters = {}) {
         return await membreRepository.findAll(filters);
     }
-
     /**
      * @desc    Récupérer un membre par son Email
      */

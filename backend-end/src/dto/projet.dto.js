@@ -21,6 +21,13 @@ const toProjetListDTO = (projet, lang) => ({
     image:       projet.image_principale || null
 });
 
+
+const toProjetForDonListDTO = (project, lang)=> ({
+    id : project.id,
+    titre : project[`titre_${lang}`] || null
+});
+
+
 /**
  * 
  */
@@ -44,4 +51,4 @@ const toProjetDetailDTO = (projet, lang) => ({
     
 });
 
-module.exports = { toProjetListDTO, toProjetDetailDTO };
+module.exports = { toProjetListDTO, toProjetDetailDTO,toProjetForDonListDTO };

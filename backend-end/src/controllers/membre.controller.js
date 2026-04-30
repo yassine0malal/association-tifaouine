@@ -33,7 +33,8 @@ class MembreController {
     async getAllByLang(req, res) {
         try {
             const { lang } = req;
-            const result = await membreService.getAllMembresWithProfile();
+            const { status } = req.query;
+            const result = await membreService.getAllMembresWithProfile({ status });
             const data = result.rows.map(m => toMembreListDTO(m, lang));
             return res.status(200).json({ success: true, data });
         } catch (error) {
