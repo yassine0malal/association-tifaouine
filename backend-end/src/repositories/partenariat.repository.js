@@ -28,7 +28,7 @@ class PartenariatRepository {
         const { Op } = require('sequelize');
         return await Partenariat.findOne({
             where: {
-                nom: { [Op.like]: `%${nom}%` }
+                nom_fr: { [Op.like]: `%${nom}%` }
             }
         });
     }

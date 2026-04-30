@@ -46,7 +46,7 @@ class ProjetRepository {
         return await Projet.findByPk(id, {
             include: [
                 { model: Domaine, attributes: ['id', 'nom_fr', 'nom_ar', 'nom_en'] },
-                { model: Partenariat, as: 'Partenariats', attributes: ['nom'], through: { attributes: [] } }
+                { model: Partenariat, as: 'Partenariats', attributes: ['id', 'nom_fr', 'nom_ar', 'nom_en', 'logo'], through: { attributes: [] } }
             ]
         });
     }

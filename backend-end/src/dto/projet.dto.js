@@ -45,7 +45,7 @@ const toProjetDetailDTO = (projet, lang) => ({
         completion: projet.date_fin ? new Date(projet.date_fin).getFullYear() : null,
         domain:     projet.Domaine ? projet.Domaine[`nom_${lang}`] : null,
         partners:   projet.Partenariats && projet.Partenariats.length > 0
-            ? projet.Partenariats.map(p => p.nom)
+            ? projet.Partenariats.map(p => p[`nom_${lang}`] || p.nom_fr || null)
             : null
     },
     
