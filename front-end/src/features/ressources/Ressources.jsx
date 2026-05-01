@@ -131,7 +131,7 @@ export default function RessourcesPage() {
                             <div className={styles.bottomsDetails}>
                                 <div className={styles.imagMetaData}>
 
-                                    <img aria-label="loading" src={documentIcon} alt="document" />
+                                    <img src={documentIcon} alt="document" />
 
                                     <p>
                                         {featuredInsight?.fileSize} {featuredInsight?.fileType}

@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import styles from "./AdminProjetCreate.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchDomains } from "../../domains/domainsSlice";
-import { fetchPartners } from "../../partners/partnersSlice";
+import { fetchPartenaires } from "../../public/about/partnerSlice";
 
 export default function AdminProjetCreate() {
     const [formData, setFormData] = useState({
@@ -30,12 +30,12 @@ export default function AdminProjetCreate() {
     
     // Récupération des données depuis Redux
     const dispatch = useDispatch();
-    const { partners, loading: partnersLoading } = useSelector((state) => state.partners);
+    const {partenaires: partners, loading: partnersLoading } = useSelector((state) => state.partenaires);
     const { data: domains, status: domainsStatus } = useSelector((state) => state.domains);
 
     useEffect(() => {
         dispatch(fetchDomains());
-        dispatch(fetchPartners({lang:"fr"}));
+        dispatch(fetchPartenaires({lang:"fr"}));
     }, [dispatch]);
 // console.warn(domains)
     // 3. Références

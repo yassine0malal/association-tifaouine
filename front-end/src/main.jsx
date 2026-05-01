@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import "./i18n";
 import './styles/globals.css'
 import "./styles/variables.css";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import App from "./App.jsx";
 import MemberForm from "./components/forms/MemberForm.jsx";
 import Footer from "./components/Layout/Footer/Footer.jsx";
@@ -17,7 +17,7 @@ import { Provider } from "react-redux";
 import { store } from './app/store.js';
 import About from "./features/public/about/About.jsx";
 import Contact from "./features/public/contact/Contact.jsx";
-import Home from "./features/public/Accueil.jsx";
+import Home from "./features/public/home/Home.jsx";
 import EventPage from "./features/evenements/event-page/EventPage.jsx";
 import JoinUsPage from "./features/benevolat/JoinUsPage.jsx";
 import Partner from "./features/partners/Partner.jsx";
@@ -61,7 +61,10 @@ createRoot(document.getElementById("root")).render(
           {/* Main Route: Home */}
           <Route path="/" element={<App />}>
             {/* Default one  */}
-            <Route path="fr" index element={<Home />} />
+            <Route path="/:lang" index element={<Home />} />
+
+            {/* Redirect / vers /fr par défaut */}
+            <Route index element={<Navigate to="/fr" replace />} />
 
             {/* Main Route: A propos */}
             <Route path="/:lang">
@@ -137,7 +140,7 @@ createRoot(document.getElementById("root")).render(
               {/* Benevolat / Join Us */}
               <Route path="benevoles" element={<AdminBenevolesList />} />
               <Route path="benevoles/:id" element={<AdminBenevoleDetail />} />
-             
+
               {/* Members*/}
               <Route path="membre" element={<AdminMembersList />} />
               {/* <Route path="membre/:id" element={<AdminBenevoleDetail />} /> */}
