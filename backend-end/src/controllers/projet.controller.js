@@ -196,7 +196,7 @@ class ProjetController {
             const status = error.message.includes("n'existe pas") ? 404 : 400;
             return res.status(status).json({ success: false, message: "Erreur lors de la suppression du projet", error: error.message });
         }
-    }
+    
         try {
             if (req.file && req.uploadedUrl) {
                 req.body.image_principale = `${req.uploadedUrl}/${req.file.filename}`;

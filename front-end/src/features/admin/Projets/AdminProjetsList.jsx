@@ -171,7 +171,7 @@ import Pagination from "../../../components/common/Pagination";
 const BASE_BACK_END_URL = import.meta.env.VITE_BASE_BACK_END_URL;
 
 // Import your Redux actions
-import { fetchProjects, setPage, setFilter } from "../../projets/projects-list/projectsSlice";
+import { fetchProjects, setPage, setFilter } from "./projectsSlice"
 
 export default function AdminProjetsList() {
     const navigate = useNavigate();
