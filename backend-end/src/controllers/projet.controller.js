@@ -109,6 +109,41 @@ class ProjetController {
         }
     }
 
+    /**
+     * @route   POST /api/projets/complet
+     * @desc    Créer un projet avec image principale + galerie d'images en une seule requête
+     * @access  Private (Admin)
+     */
+    async createComplet(req, res) {
+        const principalFiles = req.files?.['imagePrincipale'] || [];
+        const extraFiles     = req.files?.['extraImages']     || [];
+        const principalFile  = principalFiles[0] || null;
+
+        try {
+            const nvProjet = await projetService.createProjetComplet(
+                req.body,
+                principalFile,
+                req._principalRelUrl || null,
+                extraFiles,
+                req._galerieRelUrl   || null
+            );
+            return res.status(201).json({
+                success: true,
+                message: `Projet créé avec succès${extraFiles.length > 0 ? ` (${extraFiles.length} image(s) ajoutée(s))` : ''}`,
+                data:    nvProjet
+            });
+        } catch (error) {
+            // Nettoyage des fichiers uploadés en cas d'erreur
+            const allFiles = [...principalFiles, ...extraFiles];
+            for (const file of allFiles) {
+                if (file.path && fs.existsSync(file.path)) {
+                    try { fs.unlinkSync(file.path); } catch (_) {}
+                }
+            }
+            return res.status(400).json({ success: false, message: "Erreur lors de la création du projet", error: error.message });
+        }
+    }
+
     async update(req, res) {
         try {
             if (req.file && req.uploadedUrl) {

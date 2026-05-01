@@ -182,7 +182,41 @@ const uploadRessources = multer({
     { name: 'image_couverture', maxCount: 1  }
 ]);
 
-// ─── 5. Upload formulaire "Être membre" ──────────────────────────────────────
+// ─── 5. Upload projet complet (image principale + galerie extra) ─────────────
+// fields: 'imagePrincipale' (image, max 1) + 'extraImages' (images, max 20)
+
+const uploadProjetComplet = multer({
+    storage: multer.diskStorage({
+        destination: (req, file, cb) => {
+            const folder = cleanFolderName(req.body.titre_fr || 'projet_sans_titre');
+
+            if (file.fieldname === 'imagePrincipale') {
+                const dest = path.join(__dirname, `../data/ressources/images/projets/${folder}/principal`);
+                ensureDir(dest);
+                req._principalRelUrl = `/data/ressources/images/projets/${folder}/principal`;
+                return cb(null, dest);
+            }
+
+            // extraImages → galerie
+            const dest = path.join(__dirname, `../data/ressources/images/projets/${folder}/galerie`);
+            ensureDir(dest);
+            if (!req._galerieRelUrl) req._galerieRelUrl = `/data/ressources/images/projets/${folder}/galerie`;
+            cb(null, dest);
+        },
+        filename: (req, file, cb) => {
+            const ext      = path.extname(file.originalname);
+            const prefix   = file.fieldname === 'imagePrincipale' ? 'principal' : 'galerie';
+            cb(null, `${prefix}-${Date.now()}-${Math.round(Math.random() * 1e6)}${ext}`);
+        }
+    }),
+    fileFilter: imageFilter,
+    limits: { fileSize: 10 * 1024 * 1024 }
+}).fields([
+    { name: 'imagePrincipale', maxCount: 1  },
+    { name: 'extraImages',     maxCount: 20 }
+]);
+
+// ─── 6. Upload formulaire "Être membre" ──────────────────────────────────────
 // fields: photo (image), identity_card (doc), cv_doc (doc)
 
 const uploadEtreMembre = multer({
@@ -241,6 +275,7 @@ const uploadEtreBenevole = multer({
 module.exports = {
     uploadSimple,
     uploadProjetPrincipal,
+    uploadProjetComplet,
     uploadEvenementPrincipal,
     uploadRessources,
     uploadEtreMembre,

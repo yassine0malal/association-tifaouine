@@ -54,13 +54,14 @@ const projectsSlice = createSlice({
       // success
       .addCase(fetchProjects.fulfilled, (state, action) => {
         state.loading = false;
-        state.data = action.payload?.projects || [];
-
+        state.data = action.payload?.data || [];
+console.log(action.payload)
+// debugger;
         // state.currentPage = action.payload.currentPage;
-        state.totalPages = action.payload.totalPages;
-        state.nextPage = action.payload.nextPage;
-        state.prevPage = action.payload.prevPage;
-        state.itemsPerPage = action.payload.itemsPerPage;
+        state.totalPages = action.payload.pagination.totalPages;
+        state.nextPage = action.payload.pagination.nextPage;
+        state.prevPage = action.payload.pagination.prevPage;
+        state.itemsPerPage = action.payload.pagination.itemsPerPage;
       })
 
       // error

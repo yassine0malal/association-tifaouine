@@ -14,12 +14,13 @@
 }
 
 .title {
-    font-size: 26px;
+    font-size: 38px;
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 3px;
     color: var(--accent);
     margin: 0 0 8px;
+    text-align: start;
 }
 
 .subtitle {
@@ -28,6 +29,7 @@
     max-width: 340px;
     line-height: 1.6;
     margin: 0;
+    text-align: start;
 }
 
 .viewAll {
@@ -45,6 +47,7 @@
     transition: all 0.2s;
     white-space: nowrap;
 }
+
 .viewAll:hover {
     background: #c4a050;
     border-color: #c4a050;
@@ -54,7 +57,8 @@
 /* ── Grid ── */
 .grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1.2fr 1fr;
+    /* On donne un peu plus de place à la featured */
     gap: 16px;
     align-items: start;
 }
@@ -83,6 +87,7 @@
 .card:hover .arrowBtn {
     background: #c4a050;
     color: #fff;
+    min-width: 30px;
 }
 
 /* Grande carte */
@@ -108,12 +113,10 @@
 .overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-        to top,
-        rgba(20, 14, 4, 0.85) 0%,
-        rgba(20, 14, 4, 0.3) 50%,
-        transparent 100%
-    );
+    background: linear-gradient(to top,
+            rgba(20, 14, 4, 0.85) 0%,
+            rgba(20, 14, 4, 0.3) 50%,
+            transparent 100%);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -122,17 +125,30 @@
 
 /* ── Tag statut ── */
 .tag {
-    align-self: flex-start;
+    margin-inline-start: 0;
     font-size: 10px;
     font-weight: 700;
     letter-spacing: 1px;
     text-transform: uppercase;
     padding: 5px 12px;
     border-radius: 20px;
+    width: fit-content;
 }
-.tagUpcoming { background: rgba(196,160,80,0.9);  color: #fff; }
-.tagOngoing  { background: rgba(45,90,27,0.9);    color: #fff; }
-.tagDone     { background: rgba(80,80,80,0.75);   color: #eee; }
+
+.tagUpcoming {
+    background: rgba(196, 160, 80, 0.9);
+    color: #fff;
+}
+
+.tagOngoing {
+    background: rgba(45, 90, 27, 0.9);
+    color: #fff;
+}
+
+.tagDone {
+    background: rgba(80, 80, 80, 0.75);
+    color: #eee;
+}
 
 /* ── Card body (bas de la carte) ── */
 .cardBody {
@@ -143,12 +159,13 @@
 
 .cardDate {
     font-size: 11px;
-    color: rgba(255,255,255,0.7);
+    color: rgba(255, 255, 255, 0.7);
     margin: 0;
     letter-spacing: 0.3px;
     display: flex;
-    /* align-items: center; */
-    gap: 10px;
+    align-items: center;
+    gap: 8px;
+    flex-direction: row;
 }
 
 
@@ -170,7 +187,7 @@
 
 .cardDesc {
     font-size: 12px;
-    color: rgba(255,255,255,0.75);
+    color: rgba(255, 255, 255, 0.75);
     margin: 0;
     line-height: 1.5;
     display: -webkit-box;
@@ -181,19 +198,17 @@
 
 /* ── Bouton flèche ── */
 .arrowBtn {
-    align-self: flex-end;
+    margin-inline-start: 10px;
+    /* Espace logique à la fin du texte */
     width: 34px;
     height: 34px;
     border-radius: 50%;
-    background: rgba(255,255,255,0.2);
-    backdrop-filter: blur(6px);
-    border: 1px solid rgba(255,255,255,0.3);
+    background: rgba(255, 255, 255, 0.2);
     display: flex;
     align-items: center;
     justify-content: center;
     color: #fff;
-    transition: background 0.2s, color 0.2s;
-    margin-top: 8px;
+    flex-shrink: 0;
 }
 
 /* ── Right grid — colonne de droite ── */
@@ -220,16 +235,59 @@
     height: 200px;
 }
 
+.warperFooterEvent {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+:global([dir="rtl"]) .title,
+:global([dir="rtl"]) .subtitle {
+    letter-spacing: 0;
+    /* On retire le letter-spacing qui rend l'arabe illisible */
+}
+
+:global([dir="rtl"]) .viewAll svg {
+    margin-right: 8px;
+    /* On ajuste l'espace de l'icône */
+    margin-left: 0;
+}
+
+[dir="rtl"] .arrowBtn{
+    transform: rotate(180deg);
+}
 /* ── Responsive ── */
 @media (max-width: 900px) {
-    .section { padding: 40px 20px; }
-    .grid { grid-template-columns: 1fr; }
-    .cardFeatured { height: 340px; }
-    .rightGrid { grid-template-columns: 1fr 1fr; }
-    .rightGrid .card { height: 180px; }
+    .section {
+        padding: 40px 20px;
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .cardFeatured {
+        height: 340px;
+    }
+
+    .rightGrid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .rightGrid .card {
+        height: 180px;
+    }
 }
 
 @media (max-width: 560px) {
-    .rightGrid { grid-template-columns: 1fr; }
-    .header { flex-direction: column; align-items: flex-start; gap: 16px; }
+    .rightGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
 }

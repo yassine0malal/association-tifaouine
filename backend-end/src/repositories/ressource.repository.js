@@ -43,6 +43,13 @@ class RessourceRepository {
     }
 
     /**
+     * Créer plusieurs ressources en une seule opération (bulk)
+     */
+    async bulkCreate(dataArray, options = {}) {
+        return await Ressource.bulkCreate(dataArray, { returning: true, ...options });
+    }
+
+    /**
      * Créer une ressource
      */
     async create(data, options = {}) {

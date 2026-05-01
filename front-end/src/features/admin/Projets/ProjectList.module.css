@@ -157,6 +157,10 @@
     overflow: hidden;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
     transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0;
 }
 
 .card:hover {
@@ -206,6 +210,10 @@
 
 .cardContent {
     padding: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 2;
 }
 
 .cardHeader {

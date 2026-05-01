@@ -4,16 +4,92 @@
 
   "event": {
     "title": "Nos Événements",
-    "subtitle": "Découvrez nos derniers événements"
+    "subtitle": "Découvrez nos derniers événements",
+    "viewAll": "VOIR TOUS",
+    "status": {
+      "upcoming": "À venir",
+      "ongoing": "En cours",
+      "done": "Terminé"
+    }
   },
 
   "partner": {
     "title": "Nos Partenaires",
-    "subtitle": "Ils nous font confiance"
+    "subtitle": "Ils nous font confiance",
+    "label": "Partenaires"
   },
 
   "testimonial": {
     "title": "Témoignages",
     "subtitle": "Ce que disent nos bénévoles"
+  },
+
+  "testimonials": [
+    {
+      "rating": 5,
+      "text": "Grâce à ce projet, notre village bénéficie enfin d’un accès fiable à l’eau potable. Cela a changé notre quotidien de manière remarquable.",
+      "author": "Ahmed B., Zagora"
+    },
+    {
+      "rating": 5,
+      "text": "Le soutien scolaire apporté aux enfants est vraiment inspirant. Leur progression et leur motivation sont visibles au quotidien.",
+      "author": "Fatima Z., Ouarzazate"
+    },
+    {
+      "rating": 5,
+      "text": "Une initiative exemplaire qui répond à de vrais besoins sur le terrain. L’engagement de l’association est admirable.",
+      "author": "Youssef M., Errachidia"
+    },
+    {
+      "rating": 5,
+      "text": "Les actions menées ont un impact concret sur la vie des familles. C’est un travail sérieux et profondément humain.",
+      "author": "Khadija L., Tinghir"
+    }
+  ],
+
+  "events": [
+    {
+      "id": 1,
+      "titre": "Festival de la Culture Amazighe",
+      "description": "Une célébration vivante du patrimoine, de la musique et des traditions berbères au cœur du Haut Atlas.",
+      "image": "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=800&q=80",
+      "date": "2025-06-14",
+      "lieu": "Marrakech",
+      "statut": "upcoming"
+    },
+    {
+      "id": 2,
+      "titre": "Journée de l'Environnement",
+      "description": "Plantation d'arbres, nettoyage des oueds et sensibilisation des jeunes aux enjeux climatiques locaux.",
+      "image": "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=800&q=80",
+      "date": "2025-05-20",
+      "lieu": "Ouarzazate",
+      "statut": "ongoing"
+    },
+    {
+      "id": 3,
+      "titre": "Formation en Agriculture Durable",
+      "description": "Atelier pratique pour les agriculteurs locaux sur les techniques d'irrigation et de compostage.",
+      "image": "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=800&q=80",
+      "date": "2025-04-10",
+      "lieu": "Tahannaout",
+      "statut": "done"
+    },
+    {
+      "id": 4,
+      "titre": "Soirée de Collecte de Fonds",
+      "description": "Gala annuel réunissant partenaires et donateurs pour financer nos projets communautaires.",
+      "image": "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80",
+      "date": "2025-07-05",
+      "lieu": "Casablanca",
+      "statut": "upcoming"
+    }
+  ],
+
+  "workProcess": {
+    "title": "LE CYCLE DE VIE DE NOTRE PROJET",
+    "step1": "Être à l’écoute des besoins des communautés sur le terrain",
+    "step2": "Co-construire des actions solidaires porteuses de changement",
+    "step3": "Assurer la réussite du projet grâce à l’engagement de nos équipes"
   }
 }

@@ -37,8 +37,8 @@ class AuthController {
             res.cookie('accessToken', data.accessToken, {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
-                sameSite: 'Strict',
-                maxAge: 60 * 60 * 1000  // si yassine a changer selon votre besoin — aligné avec JWT_ACCESS_EXPIRATION
+                sameSite: 'Strict', 
+                maxAge:  60 * 60 * 1000 
             });
 
 
