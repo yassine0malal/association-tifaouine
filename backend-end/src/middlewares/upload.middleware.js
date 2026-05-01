@@ -1,15 +1,9 @@
 const multer = require('multer');
 const path   = require('path');
 const fs     = require('fs');
+const { cleanFolderName } = require('../utils/fileHelpers');
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
-
-const cleanFolderName = (name) =>
-    name.toLowerCase()
-        .replace(/[àáâãäå]/g, 'a').replace(/[èéêë]/g, 'e')
-        .replace(/[ìíîï]/g, 'i').replace(/[òóôõö]/g, 'o')
-        .replace(/[ùúûü]/g, 'u').replace(/[ç]/g, 'c')
-        .replace(/[^a-z0-9]/g, '_').replace(/_+/g, '_').replace(/^_|_$/g, '');
 
 const getMediaType = (filename) => {
     const ext = path.extname(filename).toLowerCase();
@@ -29,6 +23,12 @@ const imageFilter = (req, file, cb) => {
     const ext = path.extname(file.originalname).toLowerCase();
     if (/jpeg|jpg|png|webp|gif/.test(ext)) return cb(null, true);
     cb(new Error("Format non supporté. Accepté : JPG, PNG, WEBP, GIF"), false);
+};
+
+const videoFilter = (req, file, cb) => {
+    const ext = path.extname(file.originalname).toLowerCase();
+    if (/mp4|webm|mov|mkv|avi/.test(ext)) return cb(null, true);
+    cb(new Error("Format non supporté. Accepté : MP4, WEBM, MOV, MKV, AVI"), false);
 };
 
 const makeFilename = (prefix) => (req, file, cb) => {
@@ -182,38 +182,58 @@ const uploadRessources = multer({
     { name: 'image_couverture', maxCount: 1  }
 ]);
 
-// ─── 5. Upload projet complet (image principale + galerie extra) ─────────────
-// fields: 'imagePrincipale' (image, max 1) + 'extraImages' (images, max 20)
+// ─── 5. Upload projet complet (image principale + galerie images + vidéos) ────
+// fields:
+//   'imagePrincipale' (image, max 1)   → /images/projets/{folder}/principal/
+//   'extraImages'     (images, max 20) → /images/projets/{folder}/galerie/
+//   'extraVideos'     (vidéos, max 10) → /videos/projets/{folder}/
 
-const uploadProjetComplet = multer({
-    storage: multer.diskStorage({
-        destination: (req, file, cb) => {
-            const folder = cleanFolderName(req.body.titre_fr || 'projet_sans_titre');
+const projetCompletStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        const folder = cleanFolderName(req.body.titre_fr || 'projet_sans_titre');
 
-            if (file.fieldname === 'imagePrincipale') {
-                const dest = path.join(__dirname, `../data/ressources/images/projets/${folder}/principal`);
-                ensureDir(dest);
-                req._principalRelUrl = `/data/ressources/images/projets/${folder}/principal`;
-                return cb(null, dest);
-            }
+        if (file.fieldname === 'imagePrincipale') {
+            const dest = path.join(__dirname, `../data/ressources/images/projets/${folder}/principal`);
+            ensureDir(dest);
+            req._principalRelUrl = `/data/ressources/images/projets/${folder}/principal`;
+            return cb(null, dest);
+        }
 
-            // extraImages → galerie
+        if (file.fieldname === 'extraImages') {
             const dest = path.join(__dirname, `../data/ressources/images/projets/${folder}/galerie`);
             ensureDir(dest);
             if (!req._galerieRelUrl) req._galerieRelUrl = `/data/ressources/images/projets/${folder}/galerie`;
-            cb(null, dest);
-        },
-        filename: (req, file, cb) => {
-            const ext      = path.extname(file.originalname);
-            const prefix   = file.fieldname === 'imagePrincipale' ? 'principal' : 'galerie';
-            cb(null, `${prefix}-${Date.now()}-${Math.round(Math.random() * 1e6)}${ext}`);
+            return cb(null, dest);
         }
-    }),
-    fileFilter: imageFilter,
-    limits: { fileSize: 10 * 1024 * 1024 }
+
+        // extraVideos
+        const dest = path.join(__dirname, `../data/ressources/videos/projets/${folder}`);
+        ensureDir(dest);
+        if (!req._videosRelUrl) req._videosRelUrl = `/data/ressources/videos/projets/${folder}`;
+        cb(null, dest);
+    },
+    filename: (req, file, cb) => {
+        const ext    = path.extname(file.originalname);
+        const prefix = file.fieldname === 'imagePrincipale' ? 'principal'
+                     : file.fieldname === 'extraImages'     ? 'galerie'
+                     : 'video';
+        cb(null, `${prefix}-${Date.now()}-${Math.round(Math.random() * 1e6)}${ext}`);
+    }
+});
+
+const projetCompletFilter = (req, file, cb) => {
+    if (file.fieldname === 'extraVideos') return videoFilter(req, file, cb);
+    return imageFilter(req, file, cb);
+};
+
+const uploadProjetComplet = multer({
+    storage: projetCompletStorage,
+    fileFilter: projetCompletFilter,
+    limits: { fileSize: 200 * 1024 * 1024 } // 200MB pour supporter les vidéos
 }).fields([
     { name: 'imagePrincipale', maxCount: 1  },
-    { name: 'extraImages',     maxCount: 20 }
+    { name: 'extraImages',     maxCount: 20 },
+    { name: 'extraVideos',     maxCount: 10 }
 ]);
 
 // ─── 6. Upload formulaire "Être membre" ──────────────────────────────────────

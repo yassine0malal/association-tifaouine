@@ -144,7 +144,59 @@ class ProjetController {
         }
     }
 
-    async update(req, res) {
+    /**
+     * @route   PUT /api/projets/complet/:id
+     * @desc    Mettre à jour un projet complet (champs + fichiers optionnels)
+     * @access  Private (Admin)
+     */
+    async updateComplet(req, res) {
+        const principalFiles = req.files?.['imagePrincipale'] || [];
+        const extraFiles     = req.files?.['extraImages']     || [];
+        const videoFiles     = req.files?.['extraVideos']     || [];
+        const principalFile  = principalFiles[0] || null;
+
+        try {
+            const misAjour = await projetService.updateProjetComplet(
+                req.params.id,
+                req.body,
+                principalFile,
+                req._principalRelUrl || null,
+                extraFiles,
+                req._galerieRelUrl   || null,
+                videoFiles,
+                req._videosRelUrl    || null
+            );
+            return res.status(200).json({
+                success: true,
+                message: "Projet mis à jour avec succès",
+                data:    misAjour
+            });
+        } catch (error) {
+            const allFiles = [...principalFiles, ...extraFiles, ...videoFiles];
+            for (const file of allFiles) {
+                if (file.path && fs.existsSync(file.path)) {
+                    try { fs.unlinkSync(file.path); } catch (_) {}
+                }
+            }
+            const status = error.message.includes('introuvable') ? 404 : 400;
+            return res.status(status).json({ success: false, message: "Erreur lors de la mise à jour du projet", error: error.message });
+        }
+    }
+
+    /**
+     * @route   DELETE /api/projets/complet/:id
+     * @desc    Supprimer un projet et toutes ses ressources (fichiers + DB)
+     * @access  Private (Admin)
+     */
+    async deleteComplet(req, res) {
+        try {
+            await projetService.deleteProjetComplet(req.params.id);
+            return res.status(200).json({ success: true, message: "Projet et toutes ses ressources supprimés avec succès" });
+        } catch (error) {
+            const status = error.message.includes("n'existe pas") ? 404 : 400;
+            return res.status(status).json({ success: false, message: "Erreur lors de la suppression du projet", error: error.message });
+        }
+    }
         try {
             if (req.file && req.uploadedUrl) {
                 req.body.image_principale = `${req.uploadedUrl}/${req.file.filename}`;

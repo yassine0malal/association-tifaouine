@@ -32,8 +32,8 @@ router.post(
 
 /**
  * @route   POST /api/projets/complet
- * @desc    Créer un projet avec image principale + galerie en une seule requête (multipart)
- * @body    FormData: champs projet + imagePrincipale (file) + extraImages[] (files)
+ * @desc    Créer un projet avec image principale + galerie + vidéos en une seule requête
+ * @body    FormData: champs projet + imagePrincipale (file) + extraImages[] + extraVideos[]
  */
 router.post(
     '/complet',
@@ -41,6 +41,23 @@ router.post(
     validate(createProjetCompletSchema),
     projetController.createComplet.bind(projetController)
 );
+
+/**
+ * @route   PUT /api/projets/complet/:id
+ * @desc    Mettre à jour un projet complet (champs + fichiers optionnels)
+ */
+router.put(
+    '/complet/:id',
+    uploadProjetComplet,
+    validate(updateProjetSchema),
+    projetController.updateComplet.bind(projetController)
+);
+
+/**
+ * @route   DELETE /api/projets/complet/:id
+ * @desc    Supprimer un projet et toutes ses ressources (fichiers physiques + DB)
+ */
+router.delete('/complet/:id', projetController.deleteComplet.bind(projetController));
 
 /**
  * @route   PUT /api/projets/:id
