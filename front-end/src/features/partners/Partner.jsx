@@ -49,7 +49,7 @@ export default function Partner() {
                 reverse: true
             })
         }
-    })
+    },[])
 
     if (loading && partners.length === 0) {
         return (
