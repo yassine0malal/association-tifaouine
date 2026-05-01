@@ -1,9 +1,10 @@
 const projetService = require('../services/projet.service');
 const { buildPaginatedResponse } = require('../utils/paginate');
-const { toProjetListDTO, toProjetDetailDTO, toProjetForDonListDTO, toProjetAdminListDTO } = require('../dto/projet.dto');
+const { toProjetListDTO, toProjetDetailDTO, toProjetForDonListDTO, toProjetAdminListDTO, toProjetCompletDTO } = require('../dto/projet.dto');
 const fs = require('fs');
 
 class ProjetController {
+
     async getAll(req, res) {
         try {
             const { domaine_id, annee } = req.query;
@@ -41,10 +42,10 @@ class ProjetController {
             return res.status(500).json({ success: false, message: error.message });
         }
     }
+
     /**
      * @route   GET /api/:lang/projet-admin
      * @desc    Récupérer tous les projets pour le tableau de bord admin (public, traduit)
-     * @access  Public
      */
     async getAllByLangForAdmin(req, res) {
         try {
@@ -54,7 +55,7 @@ class ProjetController {
             const result = await projetService.getAllProjetsForAdmin({ domaine_id, statut, limit, offset });
             const rows = result.rows.map(p => toProjetAdminListDTO(p.toJSON(), lang));
             return res.status(200).json({
-                success: true,
+                success:      true,
                 total_budget: result.total_budget,
                 ...buildPaginatedResponse({ count: result.count, rows }, page, limit)
             });
@@ -62,17 +63,16 @@ class ProjetController {
             return res.status(500).json({ success: false, message: error.message });
         }
     }
-    async getAllByLangForDon(req,res){
+
+    async getAllByLangForDon(req, res) {
         try {
             const { lang } = req;
             const result = await projetService.getAllProjetsWithDomaineForDon({});
             const rows = result.rows.map(p => toProjetForDonListDTO(p.toJSON(), lang));
-            return res.status(200).json({ success: true, rows});
-        }
-            catch (error){
+            return res.status(200).json({ success: true, rows });
+        } catch (error) {
             return res.status(500).json({ success: false, message: error.message });
         }
-
     }
 
     /**
@@ -99,8 +99,8 @@ class ProjetController {
             const result = await projetService.getProjetImages(req.params.id, { limit, offset });
             const totalPages = Math.ceil(result.count / limit);
             return res.status(200).json({
-                success:     true,
-                images:      result.rows.map(img => ({ id: img.id, src: img.url, alt: img[`titre_${lang}`] || img.titre_fr || '' })),
+                success:      true,
+                images:       result.rows.map(img => ({ id: img.id, src: img.url, alt: img[`titre_${lang}`] || img.titre_fr || '' })),
                 currentPage:  page,
                 totalPages,
                 nextPage:     page < totalPages ? page + 1 : null,
@@ -115,6 +115,24 @@ class ProjetController {
 
     // ─── CRUD Admin ───────────────────────────────────────────────────────────
 
+    /**
+     * @route   GET /api/projets/complet/:id
+     * @desc    Récupérer un projet complet avec images et vidéos (pour formulaire d'édition admin)
+     * @access  Private (Admin)
+     */
+    async getByIdComplet(req, res) {
+        try {
+            const result = await projetService.getProjetByIdComplet(req.params.id);
+            return res.status(200).json({ success: true, data: toProjetCompletDTO(result) });
+        } catch (error) {
+            const status = error.message.includes("n'existe pas") ? 404 : 500;
+            return res.status(status).json({ success: false, message: error.message });
+        }
+    }
+
+    /**
+     * @route   POST /api/projets
+     */
     async create(req, res) {
         try {
             if (req.file && req.uploadedUrl) {
@@ -169,6 +187,24 @@ class ProjetController {
     }
 
     /**
+     * @route   PUT /api/projets/:id
+     */
+    async update(req, res) {
+        try {
+            if (req.file && req.uploadedUrl) {
+                req.body.image_principale = `${req.uploadedUrl}/${req.file.filename}`;
+            }
+            const misAjour = await projetService.updateProjet(req.params.id, req.body);
+            return res.status(200).json({ success: true, message: "Projet mis à jour avec succès", data: misAjour });
+        } catch (error) {
+            if (req.file && req.file.path && fs.existsSync(req.file.path)) {
+                try { fs.unlinkSync(req.file.path); } catch (_) {}
+            }
+            return res.status(error.message.includes('introuvable') ? 404 : 400).json({ success: false, message: "Erreur lors de la mise à jour du projet", error: error.message });
+        }
+    }
+
+    /**
      * @route   PUT /api/projets/complet/:id
      * @desc    Mettre à jour un projet complet (champs + fichiers optionnels)
      * @access  Private (Admin)
@@ -190,11 +226,7 @@ class ProjetController {
                 videoFiles,
                 req._videosRelUrl    || null
             );
-            return res.status(200).json({
-                success: true,
-                message: "Projet mis à jour avec succès",
-                data:    misAjour
-            });
+            return res.status(200).json({ success: true, message: "Projet mis à jour avec succès", data: misAjour });
         } catch (error) {
             const allFiles = [...principalFiles, ...extraFiles, ...videoFiles];
             for (const file of allFiles) {
@@ -204,6 +236,18 @@ class ProjetController {
             }
             const status = error.message.includes('introuvable') ? 404 : 400;
             return res.status(status).json({ success: false, message: "Erreur lors de la mise à jour du projet", error: error.message });
+        }
+    }
+
+    /**
+     * @route   DELETE /api/projets/:id
+     */
+    async delete(req, res) {
+        try {
+            await projetService.deleteProjet(req.params.id);
+            return res.status(200).json({ success: true, message: "Projet supprimé avec succès" });
+        } catch (error) {
+            return res.status(404).json({ success: false, message: "Erreur lors de la suppression du projet", error: error.message });
         }
     }
 
@@ -221,30 +265,6 @@ class ProjetController {
             return res.status(status).json({ success: false, message: "Erreur lors de la suppression du projet", error: error.message });
         }
     }
-
-    async delete(req, res) {
-        try {
-            await projetService.deleteProjet(req.params.id);
-            return res.status(200).json({ success: true, message: "Projet supprimé avec succès" });
-        } catch (error) {
-            return res.status(404).json({ success: false, message: "Erreur lors de la suppression du projet", error: error.message });
-        }
-    }
-
-    async update(req, res) {
-        try {
-            if (req.file && req.uploadedUrl) {
-                req.body.image_principale = `${req.uploadedUrl}/${req.file.filename}`;
-            }
-            const misAjour = await projetService.updateProjet(req.params.id, req.body);
-            return res.status(200).json({ success: true, message: "Projet mis à jour avec succès", data: misAjour });
-        } catch (error) {
-            if (req.file && req.file.path && fs.existsSync(req.file.path)) {
-                try { fs.unlinkSync(req.file.path); } catch (_) {}
-            }
-            return res.status(error.message.includes('introuvable') ? 404 : 400).json({ success: false, message: "Erreur lors de la mise à jour du projet", error: error.message });
-        }
-    }
-
 }
+
 module.exports = new ProjetController();
