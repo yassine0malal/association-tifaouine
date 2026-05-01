@@ -27,7 +27,7 @@ const partnersSlice = createSlice({
                 state.error = null;
             })
             .addCase(fetchPartners.fulfilled, (state, action) => {
-                console.log("------",action.payload);
+                console.log("------", action.payload);
                 state.loading = false;
                 state.partners = action.payload.rows;
             })

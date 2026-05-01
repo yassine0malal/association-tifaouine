@@ -1,21 +1,8 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import styles from "./AdminProjetCreate.module.css";
 import { useDispatch, useSelector } from "react-redux";
-
-const DOMAINES_DISPO = [
-    { id: "education", nom: "Éducation" },
-    { id: "sante", nom: "Santé" },
-    { id: "environnement", nom: "Environnement" },
-    { id: "culture", nom: "Culture" },
-    { id: "sport", nom: "Sport" },
-];
-const PARTENAIRES_DISPO = [
-    { id: 1, nom: "INDH" },
-    { id: 2, nom: "Ministère de l'Éducation" },
-    { id: 3, nom: "OCP Foundation" },
-    { id: 4, nom: "Région Casablanca-Settat" },
-    { id: 5, nom: "Agence du Nord" },
-];
+import { fetchDomains } from "../../domains/domainsSlice";
+import { fetchPartners } from "../../partners/partnersSlice";
 
 export default function AdminProjetCreate() {
     const [formData, setFormData] = useState({
@@ -35,24 +22,22 @@ export default function AdminProjetCreate() {
         partenariat_ids: [],
     });
 
-    const [imagePrincipale, setMainImage] = useState(null);       // { file, url }
-    const [extraImages, setExtraImages] = useState([]);      // [{ file, url }, ...]
+    const [imagePrincipale, setMainImage] = useState(null);
+    const [extraImages, setExtraImages] = useState([]);
     const [isImageValid, setIsImageValid] = useState(true);
     const [sizeWarning, setSizeWarning] = useState(null);
     const [isPartnerOpen, setIsPartnerOpen] = useState(false);
-    //get the data
+    
+    // Récupération des données depuis Redux
     const dispatch = useDispatch();
-    const {
-        partners,
-        loading,
-        error,
-    } = useSelector((state) => state.partners);
+    const { partners, loading: partnersLoading } = useSelector((state) => state.partners);
+    const { data: domains, status: domainsStatus } = useSelector((state) => state.domains);
 
-    const { data: domains, status } = useSelector((state) => state.domains);
-
-
-
-
+    useEffect(() => {
+        dispatch(fetchDomains());
+        dispatch(fetchPartners({lang:"fr"}));
+    }, [dispatch]);
+// console.warn(domains)
     // 3. Références
     const mainFileRef = useRef();
     const extraFileRef = useRef();
@@ -69,14 +54,13 @@ export default function AdminProjetCreate() {
         if (!value) return;
 
         setFormData(prev => {
-            // Si déjà sélectionné, on ne l'ajoute pas en double
             if (prev.partenariat_ids.includes(value)) return prev;
             return {
                 ...prev,
                 partenariat_ids: [...prev.partenariat_ids, value]
             };
         });
-        e.target.value = ""; // Reset du select visuel
+        e.target.value = ""; 
     };
 
     const removePartner = (id) => {
@@ -86,8 +70,6 @@ export default function AdminProjetCreate() {
         }));
     };
 
-
-
     // --- Logique Image Principale ---
     const processMainImage = (file) => {
         if (!file) return;
@@ -95,7 +77,6 @@ export default function AdminProjetCreate() {
         const img = new Image();
 
         img.onload = () => {
-            // Validation des dimensions (300x200 min)
             if (img.width < 300 || img.height < 200) {
                 setSizeWarning(`Image trop petite (${img.width}×${img.height}px). Minimum : 300×200px`);
                 setIsImageValid(false);
@@ -110,7 +91,7 @@ export default function AdminProjetCreate() {
 
     const handleMainFileSelect = (e) => {
         processMainImage(e.target.files[0]);
-        e.target.value = ''; // Reset pour permettre de remettre la même image si besoin
+        e.target.value = ''; 
     };
 
     const handleMainDrop = (e) => {
@@ -141,7 +122,7 @@ export default function AdminProjetCreate() {
             <div className={styles.pageHeader}>
                 <h1 className={styles.pageTitle}>Ajouter un Projet</h1>
                 <p className={styles.pageSub}>
-                    Complétez les informations pour archiver une nouvelle initiative humanitaire.
+                    Complétez les informations pour archiver une nouvelle initiative pour l'association Tifaouine.
                 </p>
             </div>
 
@@ -158,9 +139,13 @@ export default function AdminProjetCreate() {
                             onChange={handleChange}
                             required
                         >
-                            <option value="">Sélectionner un domaine_id</option>
-                            {DOMAINES_DISPO.map((dom) => (
-                                <option key={dom.id} value={dom.id}>{dom.nom}</option>
+                            <option value="">Sélectionner un domaine</option>
+                            {/* Remplacement par les domaines de l'API */}
+                            {domains?.map((dom) => (
+                                <option key={dom.id} value={dom.id}>
+                                    {/* Remarque: Si votre API renvoie 'name' au lieu de 'nom', changez ici */}
+                                    {dom.label } 
+                                </option>
                             ))}
                         </select>
                         <span className={styles.chevron}>
@@ -178,10 +163,10 @@ export default function AdminProjetCreate() {
                             value=""
                         >
                             <option value="">Ajouter un partenaire...</option>
-                            {/* 1. On filtre pour ne garder que ceux qui ne sont PAS dans partenariat_ids */}
-                            {PARTENAIRES_DISPO.filter(p => !formData.partenariat_ids.includes(p.id)).map((p) => (
+                            {/* Remplacement par les partenaires de l'API */}
+                            {partners?.filter(p => !formData.partenariat_ids.includes(p.id)).map((p) => (
                                 <option key={p.id} value={p.id}>
-                                    {p.nom}
+                                    {p.nom || p.name}
                                 </option>
                             ))}
                         </select>
@@ -192,14 +177,15 @@ export default function AdminProjetCreate() {
                         </span>
                     </div>
 
-                    {/* Tags (Le bouton 'x' appelle déjà removePartner qui remettra l'item dans la liste) */}
+                    {/* Tags dynamiques des partenaires sélectionnés */}
                     {formData.partenariat_ids.length > 0 && (
                         <div className={styles.tagContainer}>
                             {formData.partenariat_ids.map(pId => {
-                                const partenaire = PARTENAIRES_DISPO.find(p => p.id === pId);
+                                // Recherche dans la liste dynamique
+                                const partenaire = partners?.find(p => p.id === pId);
                                 return (
                                     <div key={pId} className={styles.tag}>
-                                        <span>{partenaire?.nom}</span>
+                                        <span>{partenaire?.nom || partenaire?.name || "Partenaire inconnu"}</span>
                                         <button
                                             type="button"
                                             onClick={() => removePartner(pId)}
@@ -213,6 +199,7 @@ export default function AdminProjetCreate() {
                         </div>
                     )}
                 </div>
+
                 {/* Section : Upload Image Principale */}
                 <div className={styles.fieldGroup}>
                     <label className={styles.label}>Image principale</label>
