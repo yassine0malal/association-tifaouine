@@ -34,6 +34,12 @@ class ProjetService {
         return projet;
     }
 
+    async getProjetByIdComplet(id) {
+        const result = await projetRepository.findByIdComplet(id);
+        if (!result) throw new Error(`Le projet avec l'ID ${id} n'existe pas`);
+        return result;
+    }
+
     async getProjetImages(id, filters = {}) {
         await this.getProjetById(id); // vérifie existence
         return await projetRepository.findImages(id, filters);

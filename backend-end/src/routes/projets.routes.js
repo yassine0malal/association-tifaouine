@@ -11,6 +11,13 @@ router.get('/', paginate, projetController.getAll.bind(projetController));
 
 
 /**
+ * @route   GET /api/projets/complet/:id
+ * @desc    Récupérer un projet complet avec images et vidéos (pour formulaire d'édition admin)
+ * @access  Private (Admin)
+ */
+router.get('/complet/:id', projetController.getByIdComplet.bind(projetController));
+
+/**
  * @route   GET /api/projets/:id
  * @desc    Récupérer un projet par ID (Public)
  */
