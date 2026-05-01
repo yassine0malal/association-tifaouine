@@ -12,6 +12,20 @@ class ProjetRepository {
         });
     }
 
+    async findAllForAdmin(filters = {}) {
+        const { domaine_id, statut, limit, offset } = filters;
+        const where = {};
+        if (domaine_id) where.domaine_id = domaine_id;
+        if (statut)     where.statut     = statut;
+        return await Projet.findAndCountAll({
+            where,
+            attributes: ['id', 'titre_fr', 'titre_ar', 'titre_en', 'image_principale', 'statut', 'budget', 'localisation'],
+            order:  [['created_at', 'DESC']],
+            limit:  limit  || 9,
+            offset: offset || 0
+        });
+    }
+
     async findAllWithDomaine(filters = {}) {
         const { domaine_id, statut, limit, offset } = filters;
         const where = {};

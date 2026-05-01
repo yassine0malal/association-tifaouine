@@ -1,6 +1,6 @@
 const projetService = require('../services/projet.service');
 const { buildPaginatedResponse } = require('../utils/paginate');
-const { toProjetListDTO, toProjetDetailDTO ,toProjetForDonListDTO} = require('../dto/projet.dto');
+const { toProjetListDTO, toProjetDetailDTO, toProjetForDonListDTO, toProjetAdminListDTO } = require('../dto/projet.dto');
 const fs = require('fs');
 
 class ProjetController {
@@ -36,6 +36,23 @@ class ProjetController {
             const { page, limit, offset } = req.pagination;
             const result = await projetService.getAllProjetsWithDomaine({ domaine_id, statut, limit, offset });
             const rows = result.rows.map(p => toProjetListDTO(p.toJSON(), lang));
+            return res.status(200).json({ success: true, ...buildPaginatedResponse({ count: result.count, rows }, page, limit) });
+        } catch (error) {
+            return res.status(500).json({ success: false, message: error.message });
+        }
+    }
+    /**
+     * @route   GET /api/:lang/projet-admin
+     * @desc    Récupérer tous les projets pour le tableau de bord admin (public, traduit)
+     * @access  Public
+     */
+    async getAllByLangForAdmin(req, res) {
+        try {
+            const { lang } = req;
+            const { domaine_id, statut } = req.query;
+            const { page, limit, offset } = req.pagination;
+            const result = await projetService.getAllProjetsForAdmin({ domaine_id, statut, limit, offset });
+            const rows = result.rows.map(p => toProjetAdminListDTO(p.toJSON(), lang));
             return res.status(200).json({ success: true, ...buildPaginatedResponse({ count: result.count, rows }, page, limit) });
         } catch (error) {
             return res.status(500).json({ success: false, message: error.message });
@@ -111,12 +128,13 @@ class ProjetController {
 
     /**
      * @route   POST /api/projets/complet
-     * @desc    Créer un projet avec image principale + galerie d'images en une seule requête
+     * @desc    Créer un projet avec image principale + galerie + vidéos en une seule requête
      * @access  Private (Admin)
      */
     async createComplet(req, res) {
         const principalFiles = req.files?.['imagePrincipale'] || [];
         const extraFiles     = req.files?.['extraImages']     || [];
+        const videoFiles     = req.files?.['extraVideos']     || [];
         const principalFile  = principalFiles[0] || null;
 
         try {
@@ -125,16 +143,18 @@ class ProjetController {
                 principalFile,
                 req._principalRelUrl || null,
                 extraFiles,
-                req._galerieRelUrl   || null
+                req._galerieRelUrl   || null,
+                videoFiles,
+                req._videosRelUrl    || null
             );
+            const nbFichiers = extraFiles.length + videoFiles.length;
             return res.status(201).json({
                 success: true,
-                message: `Projet créé avec succès${extraFiles.length > 0 ? ` (${extraFiles.length} image(s) ajoutée(s))` : ''}`,
+                message: `Projet créé avec succès${nbFichiers > 0 ? ` (${nbFichiers} fichier(s) ajouté(s))` : ''}`,
                 data:    nvProjet
             });
         } catch (error) {
-            // Nettoyage des fichiers uploadés en cas d'erreur
-            const allFiles = [...principalFiles, ...extraFiles];
+            const allFiles = [...principalFiles, ...extraFiles, ...videoFiles];
             for (const file of allFiles) {
                 if (file.path && fs.existsSync(file.path)) {
                     try { fs.unlinkSync(file.path); } catch (_) {}
@@ -197,6 +217,17 @@ class ProjetController {
             return res.status(status).json({ success: false, message: "Erreur lors de la suppression du projet", error: error.message });
         }
     }
+
+    async delete(req, res) {
+        try {
+            await projetService.deleteProjet(req.params.id);
+            return res.status(200).json({ success: true, message: "Projet supprimé avec succès" });
+        } catch (error) {
+            return res.status(404).json({ success: false, message: "Erreur lors de la suppression du projet", error: error.message });
+        }
+    }
+
+    async update(req, res) {
         try {
             if (req.file && req.uploadedUrl) {
                 req.body.image_principale = `${req.uploadedUrl}/${req.file.filename}`;
@@ -211,14 +242,5 @@ class ProjetController {
         }
     }
 
-    async delete(req, res) {
-        try {
-            await projetService.deleteProjet(req.params.id);
-            return res.status(200).json({ success: true, message: "Projet supprimé avec succès" });
-        } catch (error) {
-            return res.status(404).json({ success: false, message: "Erreur lors de la suppression du projet", error: error.message });
-        }
-    }
 }
-
 module.exports = new ProjetController();

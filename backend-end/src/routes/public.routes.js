@@ -20,6 +20,8 @@ router.get('/projets',paginate, projetController.getAllByLang.bind(projetControl
 router.get('/projets/:id/images',paginate, projetController.getImagesByLang.bind(projetController));
 router.get('/projets/:id',projetController.getByIdAndLang.bind(projetController));
 router.get('/project-for-don',projetController.getAllByLangForDon.bind(projetController));
+router.get('/projet-admin',paginate, projetController.getAllByLangForAdmin.bind(projetController));
+
 
 // add autre api qui contient seulement le id de projet et son nom 
 // ─── Événements 
