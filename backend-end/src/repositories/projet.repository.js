@@ -17,13 +17,28 @@ class ProjetRepository {
         const where = {};
         if (domaine_id) where.domaine_id = domaine_id;
         if (statut)     where.statut     = statut;
-        return await Projet.findAndCountAll({
-            where,
-            attributes: ['id', 'titre_fr', 'titre_ar', 'titre_en', 'image_principale', 'statut', 'budget', 'localisation'],
-            order:  [['created_at', 'DESC']],
-            limit:  limit  || 9,
-            offset: offset || 0
-        });
+
+        const [result, totalBudget] = await Promise.all([
+            Projet.findAndCountAll({
+                where,
+                attributes: ['id', 'titre_fr', 'titre_ar', 'titre_en', 'image_principale', 'statut', 'budget', 'localisation'],
+                order:  [['created_at', 'DESC']],
+                limit:  limit  || 9,
+                offset: offset || 0
+            }),
+            // Somme sur TOUS les projets filtrés (pas seulement la page courante)
+            Projet.findOne({
+                where,
+                attributes: [[require('sequelize').fn('SUM', require('sequelize').col('budget')), 'total']],
+                raw: true
+            })
+        ]);
+
+        return {
+            count:        result.count,
+            rows:         result.rows,
+            total_budget: parseFloat(totalBudget?.total) || 0
+        };
     }
 
     async findAllWithDomaine(filters = {}) {
