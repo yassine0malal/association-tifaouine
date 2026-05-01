@@ -4,8 +4,8 @@ const projetController = require('../controllers/projet.controller');
 const { verifyToken, isAdmin } = require('../middlewares/auth.middleware');
 const { validate } = require('../middlewares/validate.middleware');
 const { paginate } = require('../middlewares/pagination.middleware');
-const { uploadProjetPrincipal } = require('../middlewares/upload.middleware');
-const { createProjetSchema, updateProjetSchema } = require('../validations/projet.validation');
+const { uploadProjetPrincipal, uploadProjetComplet } = require('../middlewares/upload.middleware');
+const { createProjetSchema, createProjetCompletSchema, updateProjetSchema } = require('../validations/projet.validation');
 
 router.get('/', paginate, projetController.getAll.bind(projetController));
 
@@ -28,6 +28,18 @@ router.post(
     uploadProjetPrincipal, 
     validate(createProjetSchema), 
     projetController.create.bind(projetController)
+);
+
+/**
+ * @route   POST /api/projets/complet
+ * @desc    Créer un projet avec image principale + galerie en une seule requête (multipart)
+ * @body    FormData: champs projet + imagePrincipale (file) + extraImages[] (files)
+ */
+router.post(
+    '/complet',
+    uploadProjetComplet,
+    validate(createProjetCompletSchema),
+    projetController.createComplet.bind(projetController)
 );
 
 /**
