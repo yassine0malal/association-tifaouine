@@ -6,14 +6,7 @@ const { Utilisateur, admin, TokenBlacklist } = require('../models');
  */
 const verifyToken = async (req, res, next) => {
     try {
-        const authHeader = req.headers.authorization;
-        let token;
-
-        if (authHeader && authHeader.startsWith('Bearer ')) {
-            token = authHeader.split(' ')[1];
-        } else if (req.cookies && req.cookies.accessToken) {
-            token = req.cookies.accessToken;
-        }
+        const token = req.cookies?.accessToken;
 
         if (!token) {
             return res.status(401).json({

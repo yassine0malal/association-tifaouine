@@ -1,7 +1,9 @@
 const Joi = require('joi');
 
 const createPartenariatSchema = Joi.object({
-    nom: Joi.string().min(2).max(200).required(),
+    nom_fr: Joi.string().min(2).max(200).required(),
+    nom_ar: Joi.string().min(2).max(200).required(),
+    nom_en: Joi.string().min(2).max(200).required(),
     logo: Joi.string().max(500).optional().allow('', null),
     description_fr: Joi.string().min(2).max(200).required(),
     description_ar: Joi.string().min(2).max(200).required(),
@@ -10,7 +12,9 @@ const createPartenariatSchema = Joi.object({
 });
 
 const updatePartenariatSchema = Joi.object({
-    nom: Joi.string().min(2).max(200).optional(),
+    nom_fr: Joi.string().min(2).max(200).optional(),
+    nom_ar: Joi.string().min(2).max(200).optional(),
+    nom_en: Joi.string().min(2).max(200).optional(),
     logo: Joi.string().max(500).optional().allow('', null),
     description_fr: Joi.string().min(2).max(200).optional(),
     description_ar: Joi.string().min(2).max(200).optional(),

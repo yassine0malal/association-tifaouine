@@ -38,7 +38,7 @@ class AuthController {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
                 sameSite: 'Strict',
-                maxAge: 60 * 60 * 1000
+                maxAge: 60 * 60 * 1000  // si yassine a changer selon votre besoin — aligné avec JWT_ACCESS_EXPIRATION
             });
 
 
@@ -80,7 +80,7 @@ class AuthController {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
                 sameSite: 'Strict',
-                maxAge: 60 * 60 * 1000
+                maxAge: 60 * 60 * 1000  // 1h — aligné avec JWT_ACCESS_EXPIRATION
             });
 
             return res.status(200).json({
@@ -116,6 +116,12 @@ class AuthController {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
                 sameSite: process.env.NODE_ENV === 'production' ? 'Strict' : 'Lax',
+            });
+
+            res.clearCookie('accessToken', {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                sameSite: 'Strict'
             });
 
             return res.status(200).json({

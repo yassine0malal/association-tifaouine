@@ -9,7 +9,7 @@ class PartenariatService {
      */
     async createPartenariat(data) {
         // Vérifier si le même partenariat existe déjà 
-        const exist = await partenariatRepository.findByName(data.nom);
+        const exist = await partenariatRepository.findByName(data.nom_fr);
         if (exist) {
             throw new Error("Ce partenaire existe déjà dans la base de données");
         }

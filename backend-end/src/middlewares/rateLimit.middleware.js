@@ -24,6 +24,17 @@ const authLimiter = rateLimit({
     legacyHeaders: false,
 });
 
+const refreshLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 10, // 10 refresh max par IP par 15 min
+    message: {
+        success: false,
+        message: "Trop de tentatives de rafraîchissement. Veuillez réessayer dans 15 minutes."
+    },
+    standardHeaders: true,
+    legacyHeaders: false,
+});
+
 const etreMembre = rateLimit({
     windowMs: 60 * 60 * 1000, // 1 heure
     max: 5,
@@ -49,6 +60,7 @@ const etreBenevole = rateLimit({
 module.exports = {
     apiLimiter,
     authLimiter,
+    refreshLimiter,
     etreMembre,
     etreBenevole
 };

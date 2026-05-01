@@ -28,7 +28,9 @@ describe('--- Test de PartenariatService ---', () => {
             partenariatRepository.create = async (data) => ({ id: 1, ...data });
 
             const data = { 
-                nom: 'Partenaire Test', 
+                nom_fr: 'Partenaire Test', 
+                nom_ar: 'شريك اختبار',
+                nom_en: 'Test Partner',
                 description_fr: 'Description FR', 
                 description_ar: 'وصف بالعربية',
                 description_en: 'Description EN'
@@ -36,7 +38,7 @@ describe('--- Test de PartenariatService ---', () => {
             const result = await partenariatService.createPartenariat(data);
 
             assert.strictEqual(result.id, 1);
-            assert.strictEqual(result.nom, 'Partenaire Test');
+            assert.strictEqual(result.nom_fr, 'Partenaire Test');
 
             // Restaurer les mocks
             partenariatRepository.findByName = originalFindByName;
@@ -46,9 +48,9 @@ describe('--- Test de PartenariatService ---', () => {
         it('devrait lever une erreur si le partenaire existe déjà', async () => {
              // Mock findByName pour dire qu'il existe déjà
              const originalFindByName = partenariatRepository.findByName;
-             partenariatRepository.findByName = async () => ({ id: 1, nom: 'Partenaire Existant' });
+             partenariatRepository.findByName = async () => ({ id: 1, nom_fr: 'Partenaire Existant' });
 
-             const data = { nom: 'Partenaire Existant' };
+             const data = { nom_fr: 'Partenaire Existant' };
 
              await assert.rejects(
                 async () => await partenariatService.createPartenariat(data),
@@ -63,11 +65,11 @@ describe('--- Test de PartenariatService ---', () => {
         
         it('devrait retourner le partenaire si l\'ID existe', async () => {
             const originalFindById = partenariatRepository.findById;
-            partenariatRepository.findById = async (id) => ({ id, nom: 'Partenaire 10' });
+            partenariatRepository.findById = async (id) => ({ id, nom_fr: 'Partenaire 10' });
 
             const result = await partenariatService.getPartenariatById(10);
             assert.strictEqual(result.id, 10);
-            assert.strictEqual(result.nom, 'Partenaire 10');
+            assert.strictEqual(result.nom_fr, 'Partenaire 10');
 
             partenariatRepository.findById = originalFindById;
         });

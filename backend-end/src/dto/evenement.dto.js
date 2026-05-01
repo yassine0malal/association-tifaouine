@@ -29,7 +29,7 @@ const toEvenementDetailDTO = (eve, lang, relatedEvents = [], lastedEvents = [], 
 
     // Noms des partenaires uniquement
     partners: eve.Partenariats && eve.Partenariats.length > 0
-        ? eve.Partenariats.map(p => p.nom)
+        ? eve.Partenariats.map(p => p[`nom_${lang}`] || p.nom_fr || null)
         : null,
 
     // Événements du même domaine

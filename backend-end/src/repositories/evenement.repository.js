@@ -61,7 +61,7 @@ class EvenementRepository {
                 {
                     model: Partenariat,
                     as: 'Partenariats',
-                    attributes: ['nom'],
+                    attributes: ['id', 'nom_fr', 'nom_ar', 'nom_en'],
                     through: { attributes: [] }
                 }
             ]
