@@ -4,7 +4,7 @@ import animationButton from "../../../assets/animations/contact-button.json";
 import sendAnimation from "../../../assets/animations/ok.json";
 import { useState } from "react";
 import PageHero from "../../../components/common/PageHero";
-import heroImg from "../../../assets/images/projects_hero.jpg";
+import ImgHero from "../../../assets/images/contact-hero.jpg";
 import location from "../../../assets/icons/location.png";
 import email from "../../../assets/icons/email.png";
 import phone from "../../../assets/icons/phone-call.png";
@@ -103,7 +103,7 @@ export default function Contact() {
 
     return (
         <>
-            <PageHero title={t('contact.hero.title')} heroImg={heroImg} />
+            <PageHero title={t('contact.hero.title')} heroImg={ImgHero} />
 
             <div className={styles.contactUs}>
                 <div className={styles.info}>

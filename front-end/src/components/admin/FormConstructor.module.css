@@ -1,0 +1,185 @@
+/* FormConstructor.module.css */
+.formContainer {
+  width: 100%;
+  padding: 0;
+  background: transparent;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.formGroup.fullWidth {
+  grid-column: span 2;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #7a6a4a;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.input,
+.textarea,
+.select {
+  padding: 11px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(196, 160, 80, 0.25);
+  font-size: 14px;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(6px);
+  color: #3a3020;
+  transition: all 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.input:focus,
+.textarea:focus,
+.select:focus {
+  outline: none;
+  border-color: #c4a050;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 0 3px rgba(196, 160, 80, 0.15);
+}
+
+.textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+.select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23c4a050' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
+}
+
+/* File upload */
+.fileInput {
+  position: relative;
+  border: 2px dashed rgba(196, 160, 80, 0.35);
+  border-radius: 12px;
+  padding: 28px 20px;
+  text-align: center;
+  background: rgba(250, 249, 246, 0.5);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.fileInput:hover {
+  border-color: #c4a050;
+  background: rgba(196, 160, 80, 0.05);
+}
+
+.fileInput input[type="file"] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+
+.fileLabel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: #9a8a6a;
+  font-size: 13px;
+  pointer-events: none;
+}
+
+.fileIcon {
+  font-size: 26px;
+  margin-bottom: 4px;
+}
+
+/* Checkbox & radio */
+.checkbox,
+.radio {
+  margin-right: 6px;
+  accent-color: #c4a050;
+}
+
+.radioGroup {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.radioGroup label {
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  color: #5a5040;
+  cursor: pointer;
+}
+
+.error {
+  font-size: 11px;
+  color: #c0392b;
+  margin-top: 2px;
+}
+
+.formActions {
+  grid-column: span 2;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 10px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(196, 160, 80, 0.15);
+}
+
+.submitBtn {
+  padding: 11px 28px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #c4a050, #a8872d);
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(196, 160, 80, 0.25);
+}
+
+.submitBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(196, 160, 80, 0.35);
+}
+
+.cancelBtn {
+  padding: 11px 22px;
+  border: 1px solid rgba(196, 160, 80, 0.3);
+  border-radius: 10px;
+  background: transparent;
+  color: #7a6a4a;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cancelBtn:hover {
+  background: rgba(196, 160, 80, 0.08);
+}
+
+@media (max-width: 700px) {
+  .formGrid { grid-template-columns: 1fr; }
+  .formGroup.fullWidth,
+  .formActions { grid-column: span 1; }
+}

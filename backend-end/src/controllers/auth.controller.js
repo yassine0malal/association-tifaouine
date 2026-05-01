@@ -6,7 +6,7 @@ class AuthController {
      * @route   POST /api/auth/login
      * @desc    Connexion de l'administrateur
      */
-    
+
     async login(req, res) {
         try {
             const { email, password } = req.body;
@@ -23,22 +23,29 @@ class AuthController {
             res.cookie('refreshToken', data.refreshToken, {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
-                sameSite: 'Strict', 
-                maxAge: 7 * 24 * 60 * 60 * 1000 
+                sameSite: process.env.NODE_ENV === 'production' ? 'Strict' : 'Lax',
+                maxAge: 7 * 24 * 60 * 60 * 1000
             });
+            // res.cookie('refreshToken', data.refreshToken, {
+            //     httpOnly: true,
+            //     secure: process.env.NODE_ENV === 'production',
+            //     sameSite: 'Strict',
+            //     maxAge: rememberMe ? 30 * 24 * 60 * 60 * 1000   // 30 days
+            //         : 7 * 24 * 60 * 60 * 1000    // 7 days
+            // });
 
             res.cookie('accessToken', data.accessToken, {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
-                sameSite: 'Strict',
-                maxAge: 60 * 60 * 1000  // si yassine a changer selon votre besoin — aligné avec JWT_ACCESS_EXPIRATION
+                sameSite: 'Strict', 
+                maxAge:  60 * 60 * 1000 
             });
-            
+
 
             return res.status(200).json({
                 success: true,
                 message: "Connexion réussie.",
-              //  accessToken: data.accessToken,
+                //  accessToken: data.accessToken,
                 user: data.user
             });
 
@@ -102,7 +109,13 @@ class AuthController {
             res.clearCookie('refreshToken', {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
-                sameSite: 'Strict'
+                sameSite: process.env.NODE_ENV === 'production' ? 'Strict' : 'Lax',
+            });
+
+            res.clearCookie('accessToken', {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                sameSite: process.env.NODE_ENV === 'production' ? 'Strict' : 'Lax',
             });
 
             res.clearCookie('accessToken', {

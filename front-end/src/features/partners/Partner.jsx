@@ -1,6 +1,7 @@
 import PageHero from "../../components/common/PageHero";
 import styles from "./partner.module.css";
-import herImg from "../../assets/images/projects_hero.jpg";
+import herImg from "../../assets/images/partners.jpg";
+import defaultPartner from "../../assets/images/default-partner.png";
 import lnk from "../../assets/icons/link.png";
 import partner from "../../assets/icons/partner.png";
 import agr from "../../assets/images/partenaires/agriculture.png";
@@ -10,6 +11,8 @@ import { useCallback, useEffect, useRef } from "react";
 import i18n from "../../i18n";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPartners } from "./partnersSlice";
+
+const BASE_BACK_END_URL = import.meta.env.VITE_BASE_BACK_END_URL;
 
 import VanillaTilt from "vanilla-tilt"
 
@@ -34,7 +37,7 @@ export default function Partner() {
     useEffect(() => {
         cleanupAll();
     }, [partners, cleanupAll]);
-    
+
     useEffect(() => {
         const element = buttonRef.current;
         if (element) {
@@ -43,7 +46,7 @@ export default function Partner() {
                 speed: 400,
                 glare: false,
                 'max-glare': 0.2,
-                reverse:true
+                reverse: true
             })
         }
     })
@@ -85,7 +88,10 @@ export default function Partner() {
                             <div key={partner.id} ref={(el) => setTitlRef(el, partner.id)} className={styles.element}>
                                 <div className={styles.innerContainer}>
                                     <div className={styles.imageContainer}>
-                                        <img src={`http://localhost:5000${partner.logo}`} alt={partner.name} />
+                                        <img
+                                            src={partner.image ? `${BASE_BACK_END_URL}${partner.image}` : defaultPartner}
+                                            alt={partner.name}
+                                        />
                                     </div>
 
                                     <div className={styles.contentText}>

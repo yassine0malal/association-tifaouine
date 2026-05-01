@@ -3,11 +3,15 @@ import projectsReducer from '../features/projets/projects-list/projectsSlice'
 import projectReducer from '../features/projets/project-page/projectSlice'
 import projectImagesReducer from '../features/projets/project-gallery/projectImagesSlice'
 import ressourceReducer from '../features/ressources/ressourcesSlice'
+import membres from '../features/public/about/membresSlice'
+import partenaires from '../features/public/about/partnerSlice'
+
 import eventsReducer from '../features/evenements/event-list/eventsSlice'
 import eventReducer from '../features/evenements/event-page/eventSlice'
 import domainsReducer from '../features/domains/domainsSlice'
 import domainsPageReducer from '../features/domains/domainsPage/domainsPageSlice'
 import partnersReducer from '../features/partners/partnersSlice'
+import authAdmin from '../features/admin/Login/authSlice'
 
 export const store = configureStore({
     reducer: {
@@ -20,5 +24,8 @@ export const store = configureStore({
         domains: domainsReducer,
         domainsPage: domainsPageReducer,
         partners: partnersReducer,
+        auth: authAdmin,
+        membres:membres,
+        partenaires:partenaires,
     },
 })

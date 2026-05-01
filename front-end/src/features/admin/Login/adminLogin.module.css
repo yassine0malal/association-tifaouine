@@ -33,8 +33,8 @@
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
-.loginContainer > .loginTitle {
-    display: none;
+.loginContainer>.loginTitle {
+  display: none;
 }
 
 /* LEFT IMAGE */
@@ -44,7 +44,7 @@
   align-items: center;
   justify-content: center;
   padding: 40px;
-background: linear-gradient(to left , var(--accent) , var(--accent-light));
+  background: linear-gradient(to left, var(--accent), var(--accent-light));
 }
 
 .imageContainer img {
@@ -56,13 +56,15 @@ background: linear-gradient(to left , var(--accent) , var(--accent-light));
 
 
 @keyframes float {
-    0%, 100% {
-        transform: translateY(0px);
-    }
 
-    50% {
-        transform: translateY(-20px);
-    }
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-20px);
+  }
 
 }
 
@@ -100,9 +102,9 @@ background: linear-gradient(to left , var(--accent) , var(--accent-light));
 
 /* small underline */
 .loginTitle::after {
-    position: absolute;
-    bottom: -5px;
-    left: 15px;
+  position: absolute;
+  bottom: -5px;
+  left: 15px;
   content: "";
   display: block;
   width: 60px;
@@ -112,14 +114,14 @@ background: linear-gradient(to left , var(--accent) , var(--accent-light));
 }
 
 .loginTitle::before {
-    position: absolute;
-    left: 0;
-    bottom: -5px;
+  position: absolute;
+  left: 0;
+  bottom: -5px;
   content: "";
   display: block;
   width: 10px;
   height: 4px;
-    background-color: var(--accent);
+  background-color: var(--accent);
 }
 
 /* INPUT WRAPPER */
@@ -146,6 +148,7 @@ background: linear-gradient(to left , var(--accent) , var(--accent-light));
   width: 100%;
   font-size: 14px;
   color: var(--text-dark);
+  background: var(--input-bg) !important;
 }
 
 /* REMEMBER ME */
@@ -184,12 +187,12 @@ background: linear-gradient(to left , var(--accent) , var(--accent-light));
   transition: all 0.3s ease;
 }
 
-.customCheckbox input:checked ~ span {
+.customCheckbox input:checked~span {
   background: var(--accent, #CB914F);
   border-color: var(--accent, #CB914F);
 }
 
-.customCheckbox input:checked ~ span::after {
+.customCheckbox input:checked~span::after {
   content: '';
   position: absolute;
   left: 6px;
@@ -204,7 +207,7 @@ background: linear-gradient(to left , var(--accent) , var(--accent-light));
 
 /* BUTTON */
 .btn {
-  background: linear-gradient(to left , var(--accent) , var(--accent-light));
+  background: linear-gradient(to left, var(--accent), var(--accent-light));
   color: var(--white);
   border: none;
   padding: 14px;
@@ -224,10 +227,30 @@ background: linear-gradient(to left , var(--accent) , var(--accent-light));
   transform: scale(1);
 }
 
+/* error handling  */
+.error {
+  color: #e74c3c;
+  background: #fdecea;
+  padding: 0.75rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px var(--input-bg) inset !important;
+  box-shadow: 0 0 0 1000px var(--input-bg) inset !important;
+  -webkit-text-fill-color: var(--text-dark) !important;
+  transition: background-color 9999s ease-in-out 0s;
+}
+
 @media (max-width: 900px) {
-    .loginContainer {
-        width: 95%;
-    }
+  .loginContainer {
+    width: 95%;
+  }
 }
 
 @media (max-width: 768px) {
@@ -235,6 +258,7 @@ background: linear-gradient(to left , var(--accent) , var(--accent-light));
     flex-direction: column;
     box-shadow: none;
   }
+
   /* FORM FIRST (better UX) */
   .loginForm {
     padding: 40px 25px;
@@ -245,11 +269,12 @@ background: linear-gradient(to left , var(--accent) , var(--accent-light));
     display: none;
   }
 
-  .loginContainer > .loginTitle {
+  .loginContainer>.loginTitle {
     display: block;
   }
+
   .imageContainer {
-    border-radius: 8px ;
+    border-radius: 8px;
     padding: 0 30px;
     background: transparent;
   }
@@ -273,9 +298,10 @@ background: linear-gradient(to left , var(--accent) , var(--accent-light));
   .loginTitle::after {
     left: 40px;
   }
+
   .loginTitle::before {
     left: 25px;
-  } 
+  }
 
   /* FULL WIDTH BUTTON */
   .btn {
@@ -300,4 +326,3 @@ background: linear-gradient(to left , var(--accent) , var(--accent-light));
     font-size: 13px;
   }
 }
-
