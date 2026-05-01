@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import projectsReducer from '../features/projets/projects-list/projectsSlice'
 import projectsAdminReducer from '../features/admin/Projets/projectsSlice'
+import projectSliceSingleAdminReducer from '../features/admin/Projets/SingleProject/projectSliceAdmin'
 import projectReducer from '../features/projets/project-page/projectSlice'
 import projectImagesReducer from '../features/projets/project-gallery/projectImagesSlice'
 import ressourceReducer from '../features/ressources/ressourcesSlice'
@@ -29,6 +30,6 @@ export const store = configureStore({
         auth: authAdmin,
         membres:membres,
         partenaires:partenaires,
-        projectsAdmin:projectsAdmin
+        singleProject:projectSliceSingleAdminReducer,
     },
 })

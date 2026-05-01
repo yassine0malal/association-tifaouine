@@ -55,8 +55,7 @@ const projectsSlice = createSlice({
       .addCase(fetchProjects.fulfilled, (state, action) => {
         state.loading = false;
         state.data = action.payload?.data || [];
-console.log(action.payload)
-// debugger;
+// console.log()
         // state.currentPage = action.payload.currentPage;
         state.totalPages = action.payload.pagination.totalPages;
         state.nextPage = action.payload.pagination.nextPage;

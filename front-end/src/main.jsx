@@ -31,7 +31,7 @@ import AdminDashboard from "./features/admin/Dashboard/AdminDashboard.jsx";
 import { GuestRoute } from "./components/common/admin/GuestRoute.jsx";
 import AdminLayout from "./features/admin/AdminLayout/AdminLayout.jsx";
 import AdminProjetsList from "./features/admin/Projets/AdminProjetsList.jsx";
-import AdminProjetEdit from "./features/admin/Projets/AdminProjetEdit.jsx";
+import AdminProjetEdit from "./features/admin/Projets/SingleProject/AdminProjetEdit.jsx";
 import AdminProjetCreate from "./features/admin/Projets/AdminProjetCreate.jsx";
 import AdminMessagesList from "./features/admin/Contact/AdminContactsList.jsx";
 import AdminMessageDetail from "./features/admin/Contact/AdminMessagesDetail.jsx";

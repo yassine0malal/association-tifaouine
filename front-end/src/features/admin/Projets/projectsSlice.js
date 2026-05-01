@@ -22,7 +22,7 @@ export const fetchProjectsAdmin = createAsyncThunk(
   },
 );
 
-const projectsSlice = createSlice({
+const projectsAdminSlice = createSlice({
   name: "projectsAdmin",
   initialState: {
     data: [],
@@ -31,6 +31,7 @@ const projectsSlice = createSlice({
     currentFilter: "all",
     currentPage: 1,
     totalPages: null,
+    total: null,
     itemsPerPage: 8,
   },
   reducers: {
@@ -55,10 +56,10 @@ const projectsSlice = createSlice({
       .addCase(fetchProjectsAdmin.fulfilled, (state, action) => {
         state.loading = false;
         state.data = action.payload?.data || [];
-console.log(action.payload)
-// debugger;
+        // console.log("slice admin",action.payload)
         // state.currentPage = action.payload.currentPage;
         state.totalPages = action.payload.pagination.totalPages;
+        state.total = action.payload.pagination.total;
         state.nextPage = action.payload.pagination.nextPage;
         state.prevPage = action.payload.pagination.prevPage;
         state.itemsPerPage = action.payload.pagination.itemsPerPage;
@@ -72,5 +73,5 @@ console.log(action.payload)
   },
 });
 
-export const { setPage, setFilter } = projectsSlice.actions;
-export default projectsSlice.reducer;
+export const { setPage, setFilter } = projectsAdminSlice.actions;
+export default projectsAdminSlice.reducer;
