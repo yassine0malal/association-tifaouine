@@ -9,6 +9,7 @@ const { createProjetSchema, createProjetCompletSchema, updateProjetSchema } = re
 
 router.get('/', paginate, projetController.getAll.bind(projetController));
 
+
 /**
  * @route   GET /api/projets/:id
  * @desc    Récupérer un projet par ID (Public)

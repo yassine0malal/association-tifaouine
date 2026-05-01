@@ -7,6 +7,10 @@ const fs = require('fs');
 const path = require('path');
 
 class ProjetService {
+    async getAllProjetsForAdmin(filters = {}) {
+        return await projetRepository.findAllForAdmin(filters);
+    }
+
     async getAllProjets(filters = {}) {
         return await projetRepository.findAll(filters);
     }
