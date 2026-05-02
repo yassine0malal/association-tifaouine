@@ -206,8 +206,8 @@ class ProjetService {
     }
 
     /**
-     * Mise à jour complète d'un projet avec remplacement optionnel des fichiers
-     * Les nouvelles images/vidéos sont ajoutées, l'image principale est remplacée si fournie.
+     * Mise à jour complète d'un projet avec gestion des ressources existantes
+     * Garde seulement les ressources présentes dans les tableaux "existing" et ajoute les nouvelles
      */
     async updateProjetComplet(id, projetData, principalFile, principalRelUrl, extraFiles, galerieRelUrl, videoFiles, videosRelUrl) {
         const projet = await projetRepository.findById(id);
@@ -217,22 +217,44 @@ class ProjetService {
             projetData.statut = STATUT_MAP[projetData.statut] || projetData.statut;
         }
 
-        // Remplacer l'image principale si un nouveau fichier est fourni
+        // Extraire les données des ressources existantes
+        const { 
+            existingImagePrincipale, 
+            existingExtraImages = [], 
+            existingVideos = [],
+            partenariat_ids,
+            ...champProjet 
+        } = projetData;
+
+        // Gestion de l'image principale
         if (principalFile && principalRelUrl) {
-            // Supprimer l'ancienne image principale du disque
+            // Nouvelle image principale uploadée
+            if (projet.image_principale && projet.image_principale !== existingImagePrincipale) {
+                try {
+                    const oldPath = path.join(__dirname, '..', projet.image_principale);
+                    if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
+                } catch (_) {}
+            }
+            champProjet.image_principale = `${principalRelUrl}/${principalFile.filename}`;
+        } else if (existingImagePrincipale) {
+            // Garder l'image principale existante
+            champProjet.image_principale = existingImagePrincipale;
+        } else {
+            // Supprimer l'image principale si elle n'est pas dans existing
             if (projet.image_principale) {
                 try {
                     const oldPath = path.join(__dirname, '..', projet.image_principale);
                     if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
                 } catch (_) {}
             }
-            projetData.image_principale = `${principalRelUrl}/${principalFile.filename}`;
+            champProjet.image_principale = null;
         }
 
-        let { partenariat_ids, ...champProjet } = projetData;
-        if (partenariat_ids !== undefined) {
-            if (!Array.isArray(partenariat_ids)) partenariat_ids = [partenariat_ids];
-            partenariat_ids = partenariat_ids.map(Number).filter(n => !isNaN(n));
+        // Normaliser partenariat_ids
+        let normalizedPartenariatIds = partenariat_ids;
+        if (normalizedPartenariatIds !== undefined) {
+            if (!Array.isArray(normalizedPartenariatIds)) normalizedPartenariatIds = [normalizedPartenariatIds];
+            normalizedPartenariatIds = normalizedPartenariatIds.map(Number).filter(n => !isNaN(n));
         }
 
         return await sequelize.transaction(async (t) => {
@@ -240,11 +262,14 @@ class ProjetService {
             const misAjour = await projetRepository.update(id, champProjet, { transaction: t });
 
             // 2. Mettre à jour les partenariats si fournis
-            if (partenariat_ids !== undefined) {
-                await misAjour.setPartenariats(partenariat_ids, { transaction: t });
+            if (normalizedPartenariatIds !== undefined) {
+                await misAjour.setPartenariats(normalizedPartenariatIds, { transaction: t });
             }
 
-            // 3. Ajouter les nouvelles images (s'ajoutent à la galerie existante)
+            // 3. Gérer les ressources existantes (images et vidéos)
+            await this._manageExistingResources(id, existingExtraImages, existingVideos, { transaction: t });
+
+            // 4. Ajouter les nouvelles images
             if (extraFiles && extraFiles.length > 0) {
                 const folder = cleanFolderName(projet.titre_fr);
                 const relUrl = galerieRelUrl || `/data/ressources/images/projets/${folder}/galerie`;
@@ -264,7 +289,7 @@ class ProjetService {
                 await ressourceRepository.bulkCreate(imagesData, { transaction: t });
             }
 
-            // 4. Ajouter les nouvelles vidéos
+            // 5. Ajouter les nouvelles vidéos
             if (videoFiles && videoFiles.length > 0) {
                 const folder = cleanFolderName(projet.titre_fr);
                 const relUrl = videosRelUrl || `/data/ressources/videos/projets/${folder}`;
@@ -286,6 +311,48 @@ class ProjetService {
 
             return misAjour;
         });
+    }
+
+    /**
+     * Méthode privée pour gérer les ressources existantes
+     * Supprime les ressources qui ne sont pas dans les tableaux "existing"
+     */
+    async _manageExistingResources(projetId, existingImages = [], existingVideos = [], options = {}) {
+        // Récupérer toutes les ressources actuelles du projet
+        const currentResources = await ressourceRepository.findAll({ 
+            projet_id: projetId, 
+            limit: 9999, 
+            offset: 0 
+        });
+
+        const resourcesToKeep = [...existingImages, ...existingVideos];
+        
+        // Filtrer pour ne garder que les ressources qui appartiennent vraiment au projet
+        const validResourcesToKeep = resourcesToKeep.filter(url => 
+            currentResources.rows.some(resource => resource.url === url)
+        );
+
+        const resourcesToDelete = currentResources.rows.filter(resource => 
+            !validResourcesToKeep.includes(resource.url)
+        );
+
+        // Supprimer les fichiers physiques et les entrées DB
+        for (const resource of resourcesToDelete) {
+            // Supprimer le fichier physique
+            if (resource.url) {
+                try {
+                    const filePath = path.join(__dirname, '..', resource.url);
+                    if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
+                } catch (_) {}
+            }
+            // Supprimer l'entrée en base
+            await ressourceRepository.delete(resource.id, options);
+        }
+
+        return {
+            kept: validResourcesToKeep.length,
+            deleted: resourcesToDelete.length
+        };
     }
 }
 
