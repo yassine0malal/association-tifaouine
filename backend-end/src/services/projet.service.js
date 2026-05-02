@@ -283,14 +283,15 @@ class ProjetService {
         }
 
         // Extraire les données des ressources existantes
+        // IMPORTANT: on garde undefined si le champ n'est pas envoyé par le frontend
+        // pour distinguer "garder tout" (undefined) de "supprimer tout" ([])
         const {
             existingImagePrincipale,
-            existingExtraImages = [],
-            existingVideos = [],
+            existingExtraImages,   // undefined = non envoyé → ne pas toucher la galerie
+            existingVideos,        // undefined = non envoyé → ne pas toucher les vidéos
             partenariat_ids,
             ...champProjet
         } = projetData;
-        console.warn("proj------------>", projetData)
 
         // --- Bug #3 : Gestion du renommage de dossier si titre_fr change ---
         const ancienFolder  = cleanFolderName(projet.titre_fr);
@@ -396,7 +397,16 @@ class ProjetService {
             }
 
             // 4. Gérer les ressources existantes (images et vidéos)
-            await this._manageExistingResources(id, existingExtraImages, existingVideos, { transaction: t });
+            // Seulement si le frontend a explicitement envoyé les champs existing
+            // (undefined = non envoyé = ne pas toucher les ressources existantes)
+            if (existingExtraImages !== undefined || existingVideos !== undefined) {
+                await this._manageExistingResources(
+                    id,
+                    existingExtraImages ?? [],
+                    existingVideos      ?? [],
+                    { transaction: t }
+                );
+            }
 
             // 5. Ajouter les nouvelles images
             if (extraFiles && extraFiles.length > 0) {
