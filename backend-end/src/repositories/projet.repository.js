@@ -3,7 +3,7 @@ const { Op } = require('sequelize');
 
 class ProjetRepository {
     async findAll(filters = {}) {
-        const { domaine_id, annee, limit, offset } = filters;
+        const { domaine_id, annee, limit, offset ,statut } = filters;
         const where = {};
         if (domaine_id) where.domaine_id = domaine_id;
         if (annee) where.date_debut = { [Op.between]: [`${annee}-01-01`, `${annee}-12-31`] };
