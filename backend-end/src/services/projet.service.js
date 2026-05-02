@@ -226,19 +226,66 @@ class ProjetService {
             ...champProjet 
         } = projetData;
 
+        // --- Bug #3 : Gestion du renommage de dossier si titre_fr change ---
+        const ancienFolder  = cleanFolderName(projet.titre_fr);
+        const nouveauFolder = cleanFolderName(champProjet.titre_fr || projet.titre_fr);
+        let folderRenomme   = false;
+
+        if (champProjet.titre_fr && ancienFolder !== nouveauFolder) {
+            const baseDir = path.join(__dirname, '../data/ressources');
+            const pairesRenommage = [
+                [
+                    path.join(baseDir, 'images', 'projets', ancienFolder),
+                    path.join(baseDir, 'images', 'projets', nouveauFolder)
+                ],
+                [
+                    path.join(baseDir, 'videos', 'projets', ancienFolder),
+                    path.join(baseDir, 'videos', 'projets', nouveauFolder)
+                ]
+            ];
+            for (const [oldPath, newPath] of pairesRenommage) {
+                if (fs.existsSync(oldPath)) {
+                    try {
+                        // Copier d'abord, puis supprimer (contourne EPERM OneDrive/Windows)
+                        fs.cpSync(oldPath, newPath, { recursive: true });
+                        fs.rmSync(oldPath, { recursive: true, force: true });
+                        console.log(`[Renommage] OK: ${oldPath} → ${newPath}`);
+                    } catch (err) {
+                        console.error(`[Renommage] ECHEC: ${oldPath} → ${newPath}`, err.message);
+                    }
+                } else {
+                    console.warn(`[Renommage] Dossier source introuvable: ${oldPath}`);
+                }
+            }
+            // Mettre à jour image_principale si elle référence l'ancien folder
+            if (champProjet.image_principale && champProjet.image_principale.includes(ancienFolder)) {
+                champProjet.image_principale = champProjet.image_principale.replace(ancienFolder, nouveauFolder);
+            } else if (projet.image_principale && projet.image_principale.includes(ancienFolder)) {
+                champProjet.image_principale = projet.image_principale.replace(ancienFolder, nouveauFolder);
+            }
+            folderRenomme = true;
+        }
+
+        // Si le folder a été renommé, mettre à jour existingImagePrincipale aussi
+        // pour éviter qu'elle écrase la valeur déjà corrigée
+        let existingImagePrincipaleNormalisee = existingImagePrincipale;
+        if (folderRenomme && existingImagePrincipale && existingImagePrincipale.includes(ancienFolder)) {
+            existingImagePrincipaleNormalisee = existingImagePrincipale.replace(ancienFolder, nouveauFolder);
+        }
+
         // Gestion de l'image principale
         if (principalFile && principalRelUrl) {
             // Nouvelle image principale uploadée
-            if (projet.image_principale && projet.image_principale !== existingImagePrincipale) {
+            if (projet.image_principale && projet.image_principale !== existingImagePrincipaleNormalisee) {
                 try {
                     const oldPath = path.join(__dirname, '..', projet.image_principale);
                     if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
                 } catch (_) {}
             }
             champProjet.image_principale = `${principalRelUrl}/${principalFile.filename}`;
-        } else if (existingImagePrincipale) {
-            // Garder l'image principale existante
-            champProjet.image_principale = existingImagePrincipale;
+        } else if (existingImagePrincipaleNormalisee) {
+            // Garder l'image principale existante (avec URL corrigée si renommage)
+            champProjet.image_principale = existingImagePrincipaleNormalisee;
         } else {
             // Supprimer l'image principale si elle n'est pas dans existing
             if (projet.image_principale) {
@@ -266,10 +313,23 @@ class ProjetService {
                 await misAjour.setPartenariats(normalizedPartenariatIds, { transaction: t });
             }
 
-            // 3. Gérer les ressources existantes (images et vidéos)
+            // 3. Mettre à jour les URLs des ressources en DB si le folder a changé (Bug #3)
+            if (folderRenomme) {
+                const { QueryTypes } = require('sequelize');
+                await sequelize.query(
+                    `UPDATE ressource SET url = REPLACE(url, :ancien, :nouveau) WHERE projet_id = :id`,
+                    {
+                        replacements: { ancien: ancienFolder, nouveau: nouveauFolder, id },
+                        type: QueryTypes.UPDATE,
+                        transaction: t
+                    }
+                );
+            }
+
+            // 4. Gérer les ressources existantes (images et vidéos)
             await this._manageExistingResources(id, existingExtraImages, existingVideos, { transaction: t });
 
-            // 4. Ajouter les nouvelles images
+            // 5. Ajouter les nouvelles images
             if (extraFiles && extraFiles.length > 0) {
                 const folder = cleanFolderName(projet.titre_fr);
                 const relUrl = galerieRelUrl || `/data/ressources/images/projets/${folder}/galerie`;
@@ -326,31 +386,32 @@ class ProjetService {
         });
 
         const resourcesToKeep = [...existingImages, ...existingVideos];
-        
-        // Filtrer pour ne garder que les ressources qui appartiennent vraiment au projet
-        const validResourcesToKeep = resourcesToKeep.filter(url => 
-            currentResources.rows.some(resource => resource.url === url)
+
+        // Bug #4 : normaliser les URLs avant comparaison (slashes, espaces, encodage)
+        const normalizeUrl = (url) => url?.trim().replace(/\\/g, '/').replace(/\/+/g, '/') || '';
+        const resourcesToKeepNormalized = resourcesToKeep.map(normalizeUrl);
+
+        const validResourcesToKeep = currentResources.rows.filter(resource =>
+            resourcesToKeepNormalized.includes(normalizeUrl(resource.url))
         );
 
-        const resourcesToDelete = currentResources.rows.filter(resource => 
-            !validResourcesToKeep.includes(resource.url)
+        const resourcesToDelete = currentResources.rows.filter(resource =>
+            !resourcesToKeepNormalized.includes(normalizeUrl(resource.url))
         );
 
         // Supprimer les fichiers physiques et les entrées DB
         for (const resource of resourcesToDelete) {
-            // Supprimer le fichier physique
             if (resource.url) {
                 try {
                     const filePath = path.join(__dirname, '..', resource.url);
                     if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
                 } catch (_) {}
             }
-            // Supprimer l'entrée en base
             await ressourceRepository.delete(resource.id, options);
         }
 
         return {
-            kept: validResourcesToKeep.length,
+            kept:    validResourcesToKeep.length,
             deleted: resourcesToDelete.length
         };
     }

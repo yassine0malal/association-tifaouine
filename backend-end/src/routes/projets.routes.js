@@ -4,8 +4,8 @@ const projetController = require('../controllers/projet.controller');
 const { verifyToken, isAdmin } = require('../middlewares/auth.middleware');
 const { validate } = require('../middlewares/validate.middleware');
 const { paginate } = require('../middlewares/pagination.middleware');
-const { uploadProjetPrincipal, uploadProjetComplet } = require('../middlewares/upload.middleware');
-const { createProjetSchema, createProjetCompletSchema, updateProjetSchema } = require('../validations/projet.validation');
+const { uploadProjetPrincipal, uploadProjetComplet, uploadProjetCompletUpdate } = require('../middlewares/upload.middleware');
+const { createProjetSchema, createProjetCompletSchema, updateProjetSchema, updateProjetCompletSchema } = require('../validations/projet.validation');
 
 router.get('/', paginate, projetController.getAll.bind(projetController));
 
@@ -56,8 +56,8 @@ router.post(
  */
 router.put(
     '/complet/:id',
-    uploadProjetComplet,
-    validate(updateProjetSchema),
+    uploadProjetCompletUpdate,
+    validate(updateProjetCompletSchema),
     projetController.updateComplet.bind(projetController)
 );
 
