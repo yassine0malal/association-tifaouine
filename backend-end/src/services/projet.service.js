@@ -100,6 +100,29 @@ class ProjetService {
      * Suppression complète d'un projet : supprime les fichiers physiques de toutes
      * ses ressources (images + vidéos) puis supprime le projet en DB (cascade sur ressources)
      */
+    // ─── Helpers fichiers ────────────────────────────────────────────────────
+
+    /** Convertit une URL relative (ex: /data/...) en chemin absolu Windows-safe */
+    _toAbsPath(relUrl) {
+        return path.join(__dirname, '..', relUrl.replace(/^\//, ''));
+    }
+
+    /** Supprime les dossiers vides après unlinkSync (remonte jusqu'à 3 niveaux) */
+    _removeEmptyDirs(filePath) {
+        try {
+            let dir = path.dirname(filePath);
+            for (let i = 0; i < 3; i++) {
+                const entries = fs.readdirSync(dir);
+                if (entries.length === 0) {
+                    fs.rmdirSync(dir);
+                    dir = path.dirname(dir);
+                } else break;
+            }
+        } catch (_) {}
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+
     async deleteProjetComplet(id) {
         const projet = await projetRepository.findById(id);
         if (!projet) throw new Error("Suppression impossible, ce projet n'existe pas");
@@ -108,20 +131,26 @@ class ProjetService {
         const ressources = await ressourceRepository.findAll({ projet_id: id, limit: 9999, offset: 0 });
 
         return await sequelize.transaction(async (t) => {
-            // Supprimer les fichiers physiques
+            // Supprimer les fichiers physiques des ressources
             for (const ressource of ressources.rows) {
                 if (ressource.url) {
                     try {
-                        const filePath = path.join(__dirname, '..', ressource.url);
-                        if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
+                        const filePath = this._toAbsPath(ressource.url);
+                        if (fs.existsSync(filePath)) {
+                            fs.unlinkSync(filePath);
+                            this._removeEmptyDirs(filePath);
+                        }
                     } catch (_) {}
                 }
             }
             // Supprimer l'image principale
             if (projet.image_principale) {
                 try {
-                    const filePath = path.join(__dirname, '..', projet.image_principale);
-                    if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
+                    const filePath = this._toAbsPath(projet.image_principale);
+                    if (fs.existsSync(filePath)) {
+                        fs.unlinkSync(filePath);
+                        this._removeEmptyDirs(filePath);
+                    }
                 } catch (_) {}
             }
             await projetRepository.delete(id, { transaction: t });
@@ -273,12 +302,15 @@ class ProjetService {
             existingImagePrincipaleNormalisee = existingImagePrincipale.replace(ancienFolder, nouveauFolder);
         }
 
+        // Helper local: strip leading slash for correct path resolution on Windows
+        const toAbsPath = (relUrl) => this._toAbsPath(relUrl);
+
         // Gestion de l'image principale
         if (principalFile && principalRelUrl) {
             // Nouvelle image principale uploadée
             if (projet.image_principale && projet.image_principale !== existingImagePrincipaleNormalisee) {
                 try {
-                    const oldPath = path.join(__dirname, '..', projet.image_principale);
+                    const oldPath = toAbsPath(projet.image_principale);
                     if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
                 } catch (_) {}
             }
@@ -290,7 +322,7 @@ class ProjetService {
             // Supprimer l'image principale si elle n'est pas dans existing
             if (projet.image_principale) {
                 try {
-                    const oldPath = path.join(__dirname, '..', projet.image_principale);
+                    const oldPath = toAbsPath(projet.image_principale);
                     if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
                 } catch (_) {}
             }
@@ -403,8 +435,11 @@ class ProjetService {
         for (const resource of resourcesToDelete) {
             if (resource.url) {
                 try {
-                    const filePath = path.join(__dirname, '..', resource.url);
-                    if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
+                    const filePath = path.join(__dirname, '..', resource.url.replace(/^\//, ''));
+                    if (fs.existsSync(filePath)) {
+                        fs.unlinkSync(filePath);
+                        this._removeEmptyDirs(filePath);
+                    }
                 } catch (_) {}
             }
             await ressourceRepository.delete(resource.id, options);
