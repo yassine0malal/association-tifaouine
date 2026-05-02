@@ -8,10 +8,11 @@ class MessageController {
     async create(req, res) {
         try {
             const { nom_complet, email, objet, message } = req.body;
-
+            console.log(nom_complet)
             // Validation de base
             if (!nom_complet || !email || !objet || !message) {
                 return res.status(400).json({
+                    
                     success: false,
                     message: "Tous les champs (nom_complet, email, objet, message) sont obligatoires."
                 });
@@ -66,10 +67,10 @@ class MessageController {
         try {
             const { page, limit, offset } = req.pagination;
             const { objet, lu, dateDebut, dateFin } = req.query;
-            
+
             // Validation des filtres
             const filters = { limit, offset };
-            
+
             // Filtre par objet
             if (objet) {
                 const validObjets = ['DEMANDE_PARTENARIAT', 'DEMANDE_BENEVOLE', 'DEMANDE_MEMBRE', 'DEMANDE_SERVICE', 'DEMANDE_INFORMATION'];
@@ -81,7 +82,7 @@ class MessageController {
                 }
                 filters.objet = objet;
             }
-            
+
             // Filtre par statut de lecture
             if (lu !== undefined) {
                 if (lu === 'true') {
@@ -95,7 +96,7 @@ class MessageController {
                     });
                 }
             }
-            
+
             // Filtre par dates
             if (dateDebut) {
                 const startDate = new Date(dateDebut);
@@ -107,7 +108,7 @@ class MessageController {
                 }
                 filters.dateDebut = dateDebut;
             }
-            
+
             if (dateFin) {
                 const endDate = new Date(dateFin);
                 if (isNaN(endDate.getTime())) {
@@ -118,7 +119,7 @@ class MessageController {
                 }
                 filters.dateFin = dateFin;
             }
-            
+
             // Validation de la cohérence des dates
             if (dateDebut && dateFin && new Date(dateDebut) > new Date(dateFin)) {
                 return res.status(400).json({
@@ -126,9 +127,9 @@ class MessageController {
                     message: "La date de début ne peut pas être postérieure à la date de fin"
                 });
             }
-            
+
             const result = await messageService.getAllMessages(filters);
-            
+
             return res.status(200).json({
                 success: true,
                 ...buildPaginatedResponse(result, page, limit),
@@ -141,10 +142,10 @@ class MessageController {
             });
         } catch (error) {
             console.error("Erreur récupération messages:", error);
-            return res.status(500).json({ 
-                success: false, 
-                message: "Erreur lors de la récupération des messages.", 
-                error: error.message 
+            return res.status(500).json({
+                success: false,
+                message: "Erreur lors de la récupération des messages.",
+                error: error.message
             });
         }
     }
@@ -173,7 +174,7 @@ class MessageController {
     async updateStatus(req, res) {
         try {
             const { lu } = req.body;
-            
+
             if (typeof lu !== 'boolean') {
                 return res.status(400).json({
                     success: false,
@@ -222,7 +223,7 @@ class MessageController {
         try {
             const { dateDebut, dateFin } = req.query;
             const filters = {};
-            
+
             // Validation des dates si fournies
             if (dateDebut) {
                 const startDate = new Date(dateDebut);
@@ -234,7 +235,7 @@ class MessageController {
                 }
                 filters.dateDebut = dateDebut;
             }
-            
+
             if (dateFin) {
                 const endDate = new Date(dateFin);
                 if (isNaN(endDate.getTime())) {
@@ -245,7 +246,7 @@ class MessageController {
                 }
                 filters.dateFin = dateFin;
             }
-            
+
             // Validation de la cohérence des dates
             if (dateDebut && dateFin && new Date(dateDebut) > new Date(dateFin)) {
                 return res.status(400).json({
@@ -253,9 +254,9 @@ class MessageController {
                     message: "La date de début ne peut pas être postérieure à la date de fin"
                 });
             }
-            
+
             const stats = await messageService.getMessageStats(filters);
-            
+
             return res.status(200).json({
                 success: true,
                 data: stats,

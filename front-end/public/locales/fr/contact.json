@@ -17,7 +17,7 @@
                 },
                 "location": {
                     "title": "Adresse / Location",
-                    "value": "douar asni lakdim 42150, Marrakech Al Haouz - Maroc "
+                    "value": "douar asni lakdim 42150, Marrakech Al Haouz - Maroc"
                 }
             }
         },
@@ -25,13 +25,20 @@
             "heading": "À votre écoute",
             "subheading": "Vous avez une question ?",
             "placeholders": {
-                "fullName": "Nom & Prenom",
+                "fullName": "Nom & Prénom",
                 "email": "Email",
                 "phone": "Téléphone",
                 "subject": "Objet",
                 "message": "Message",
                 "send": "Envoyer",
                 "send-what": "Contactez-nous sur WhatsApp"
+            },
+            "object": {
+                "partenariat": "Demande de Partenariat",
+                "benevole": "Demande de Bénévolat",
+                "membre": "Demande d'Adhésion",
+                "service": "Demande de Service",
+                "information": "Demande d'Information"
             }
         },
         "validation": {

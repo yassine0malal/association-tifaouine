@@ -23,8 +23,6 @@ router.get('/project-for-don',projetController.getAllByLangForDon.bind(projetCon
 router.get('/projet-admin',paginate, projetController.getAllByLangForAdmin.bind(projetController));
 
 
-
-
 // add autre api qui contient seulement le id de projet et son nom 
 // ─── Événements 
 router.get('/evenements',paginate, evenementController.getAllByLang.bind(evenementController));

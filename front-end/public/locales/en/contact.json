@@ -32,6 +32,13 @@
         "message": "Message",
         "send": "Send",
         "send-what": "Contact us on WhatsApp"
+      },
+      "object": {
+        "partenariat": "Partnership Request",
+        "benevole": "Volunteer Request",
+        "membre": "Membership Request",
+        "service": "Service Request",
+        "information": "Information Request"
       }
     },
     "validation": {

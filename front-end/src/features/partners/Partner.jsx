@@ -21,7 +21,7 @@ export default function Partner() {
     const currentLang = i18n.language;
     const dispatch = useDispatch();
     const { setTitlRef } = useTilt(); // Plus besoin de cleanupAll ici
-    
+
     const {
         partners,
         loading,
@@ -57,7 +57,7 @@ export default function Partner() {
             </div>
         );
     }
-    
+
     if (error) {
         return (
             <div className={styles.fullContainerPartner}>
@@ -68,7 +68,7 @@ export default function Partner() {
             </div>
         );
     }
-
+    console.log("ach tari", partners)
     return (
         <div className={styles.fullContainerPartner}>
             <PageHero title={t("heroTitle")} heroImg={herImg} />
