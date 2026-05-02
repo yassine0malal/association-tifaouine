@@ -6,9 +6,7 @@ const toMembreListDTO = (m, lang) => ({
     nom:          m.nom,
     poste:        m.membre.poste,
     description:  m.membre[`description_poste_${lang}`] || m.membre.description_poste_fr || null,
-    photo:        m.membre.photo_profile || null,
-    status:       m.membre.status,
-    date_adhesion: m.membre.date_adhesion
+    photo:        m.membre.photo_profile || null
 });
 
 module.exports = { toMembreListDTO };

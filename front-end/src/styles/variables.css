@@ -22,6 +22,7 @@
   --accent-border: #F1904C;
   --second-buttons-bg: #2EB431;
   --icons-color: #4BAF47;
+  --icons-color-light: #4aaf4772;
   --dark-green-color: #006e0f;
   --text-green-color: #CCE2CF;
   --upper-footer-bg: #061E22;
@@ -38,6 +39,7 @@
   --color-contact-btn: #4E2D00;
   --color-title-btn: #1B1C18;
   --footer-section-bg: #F3ECE6;
+  --sidebar-color:#f5f5f5;
   /* fin me */
   --social-bg: rgba(244, 243, 236, 0.5);
   --shadow: rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;

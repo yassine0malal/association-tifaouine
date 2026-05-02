@@ -30,11 +30,35 @@ const membre=sequelize.define('membre',{
         allowNull:false,
         defaultValue: DataTypes.NOW
     },
+    telephone: {
+        type: DataTypes.STRING(20),
+        allowNull: true,
+    },
+    competences: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+    },
+    adresse: {
+        type: DataTypes.STRING(255),
+        allowNull: true,
+    },
+    motivation: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+    },
+    carte_identite: {
+        type: DataTypes.STRING(250),
+        allowNull: true,
+    },
+    cv: {
+        type: DataTypes.STRING(250),
+        allowNull: true,
+    },
     status: {
         type: DataTypes.STRING(20),
         allowNull: false,
         validate: {
-            isIn: [['actif', 'inactif', 'suspendu']]
+            isIn: [['actif', 'inactif', 'suspendu', 'en_attente']]
         }
     },
     utilisateur_id: {

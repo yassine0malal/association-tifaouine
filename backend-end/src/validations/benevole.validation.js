@@ -8,6 +8,7 @@ const createBenevoleSchema = Joi.object({
     status: Joi.string().valid('actif', 'inactif', 'suspendu').required()
 });
 
+
 const updateBenevoleSchema = Joi.object({
     nom: Joi.string().min(2).max(120).optional(),
     email: Joi.string().email().max(180).optional(),

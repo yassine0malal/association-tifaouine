@@ -182,9 +182,67 @@ const uploadRessources = multer({
     { name: 'image_couverture', maxCount: 1  }
 ]);
 
+// ─── 5. Upload formulaire "Être membre" ──────────────────────────────────────
+// fields: photo (image), identity_card (doc), cv_doc (doc)
+
+const uploadEtreMembre = multer({
+    storage: multer.diskStorage({
+        destination: (req, file, cb) => {
+            const subfolders = {
+                photo:         'membres/photos',
+                identity_card: 'membres/identites',
+                cv_doc:        'membres/cvs'
+            };
+            const sub  = subfolders[file.fieldname] || 'membres';
+            const dest = path.join(__dirname, '../data', sub);
+            ensureDir(dest);
+            cb(null, dest);
+        },
+        filename: makeFilename('r')
+    }),
+    fileFilter: (req, file, cb) => {
+        if (file.fieldname === 'photo') return imageFilter(req, file, cb);
+        return mediaFilter(req, file, cb);
+    },
+    limits: { fileSize: 10 * 1024 * 1024 }
+}).fields([
+    { name: 'photo',         maxCount: 1 },
+    { name: 'identity_card', maxCount: 1 },
+    { name: 'cv_doc',        maxCount: 1 }
+]);
+
+// ─── 6. Upload formulaire "Être bénévole" ────────────────────────────────────
+// fields: photo (image), identity_card (doc)
+
+const uploadEtreBenevole = multer({
+    storage: multer.diskStorage({
+        destination: (req, file, cb) => {
+            const subfolders = {
+                photo:         'benevoles/photos',
+                identity_card: 'benevoles/identites'
+            };
+            const sub  = subfolders[file.fieldname] || 'benevoles';
+            const dest = path.join(__dirname, '../data', sub);
+            ensureDir(dest);
+            cb(null, dest);
+        },
+        filename: makeFilename('r')
+    }),
+    fileFilter: (req, file, cb) => {
+        if (file.fieldname === 'photo') return imageFilter(req, file, cb);
+        return mediaFilter(req, file, cb);
+    },
+    limits: { fileSize: 10 * 1024 * 1024 }
+}).fields([
+    { name: 'photo',         maxCount: 1 },
+    { name: 'identity_card', maxCount: 1 }
+]);
+
 module.exports = {
     uploadSimple,
     uploadProjetPrincipal,
     uploadEvenementPrincipal,
-    uploadRessources
+    uploadRessources,
+    uploadEtreMembre,
+    uploadEtreBenevole
 };

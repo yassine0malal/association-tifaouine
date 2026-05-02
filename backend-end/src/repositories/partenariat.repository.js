@@ -6,12 +6,10 @@ class PartenariatRepository {
      */
     async findAll(filters = {}) {
         const { limit, offset } = filters;
-        const query = {
-            order: [['created_at', 'DESC']],
-            offset: offset || 0
-        };
-        if (limit) query.limit = limit;
-        return await Partenariat.findAndCountAll(query);
+        return await Partenariat.findAndCountAll({
+            order:  [['created_at', 'DESC']]
+            
+        });
     }
 
     /**

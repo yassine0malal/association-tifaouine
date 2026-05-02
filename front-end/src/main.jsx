@@ -1,31 +1,57 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import "./i18n";
+import './styles/globals.css'
 import "./styles/variables.css";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import App from "./App.jsx";
 import MemberForm from "./components/forms/MemberForm.jsx";
 import Footer from "./components/Layout/Footer/Footer.jsx";
 import Projets from "./features/projets/projects-list/ProjetList.jsx";
-import AdminLogin from "./features/admin/AdminLogin.jsx";
+import AdminLogin from "./features/admin/Login/AdminLogin.jsx";
 import ProjectCard from "./components/common/ProjectCard.jsx";
 import Pagination from "./components/common/Pagination.jsx";
 import ProjectPage from "./features/projets/project-page/ProjetDetail.jsx";
 import ProjectCardSkeleton from "./components/common/ProjectCardSkeleton.jsx";
 import { Provider } from "react-redux";
 import { store } from './app/store.js';
-import About from "./features/public/About.jsx";
+import About from "./features/public/about/About.jsx";
 import Contact from "./features/public/contact/Contact.jsx";
-import Home from "./features/public/Accueil.jsx";
-
-import "./i18n";
-import RessourcesPage from "./features/ressources/Ressources.jsx";
-import EventList from "./features/evenements/event-list/EventList.jsx";
-import './styles/globals.css'
+import Home from "./features/public/home/Home.jsx";
 import EventPage from "./features/evenements/event-page/EventPage.jsx";
 import JoinUsPage from "./features/benevolat/JoinUsPage.jsx";
 import Partner from "./features/partners/Partner.jsx";
 import Domain from "./features/domains/domainsPage/Domain.jsx";
 import DonationPage from "./features/dons/DonationPage.jsx";
+import RessourcesPage from "./features/ressources/Ressources.jsx";
+import EventList from "./features/evenements/event-list/EventList.jsx";
+
+import { ProtectedRoute } from "./components/common/admin/ProtectedRoute.jsx";
+import AdminDashboard from "./features/admin/Dashboard/AdminDashboard.jsx";
+import { GuestRoute } from "./components/common/admin/GuestRoute.jsx";
+import AdminLayout from "./features/admin/AdminLayout/AdminLayout.jsx";
+import AdminProjetsList from "./features/admin/Projets/AdminProjetsList.jsx";
+import AdminProjetEdit from "./features/admin/Projets/AdminProjetEdit.jsx";
+import AdminProjetCreate from "./features/admin/Projets/AdminProjetCreate.jsx";
+import AdminMessagesList from "./features/admin/Contact/AdminContactsList.jsx";
+import AdminMessageDetail from "./features/admin/Contact/AdminMessagesDetail.jsx";
+import AdminEventsList from "./features/admin/Evenements/AdminEventsList.jsx";
+import AdminEventCreate from "./features/admin/Evenements/AdminEventCreate.jsx";
+import AdminEventEdit from "./features/admin/Evenements/AdminEventEdit.jsx";
+import AdminRessourcesList from "./features/admin/Ressources/AdminRessourcesList.jsx";
+import AdminRessourceCreate from "./features/admin/Ressources/AdminRessourceCreate.jsx";
+import AdminRessourceEdit from "./features/admin/Ressources/AdminRessourceEdit.jsx";
+import AdminPartenairesList from "./features/admin/Partenaires/AdminPartenairesList.jsx";
+import AdminPartenaireCreate from "./features/admin/Partenaires/AdminPartenaireCreate.jsx";
+import AdminPartenaireEdit from "./features/admin/Partenaires/AdminPartenaireEdit.jsx";
+import AdminDomainesList from "./features/admin/Domaines/AdminDomainesList.jsx";
+import AdminDomaineCreate from "./features/admin/Domaines/AdminDomaineCreate.jsx";
+import AdminDomaineEdit from "./features/admin/Domaines/AdminDomaineEdit.jsx";
+import AdminBenevolesList from "./features/admin/Benevoles/AdminBenevolesList.jsx";
+import AdminBenevoleDetail from "./features/admin/Benevoles/AdminBenevoleDetail.jsx";
+import AdminDonsList from "./features/admin/Dons/AdminDonsList.jsx";
+import AdminDonDetail from "./features/admin/Dons/AdminDonDetail.jsx";
+import AdminMembersList from "./features/admin/Members/AdminMembersList.jsx";
 
 createRoot(document.getElementById("root")).render(
   <Provider store={store}>
@@ -35,7 +61,10 @@ createRoot(document.getElementById("root")).render(
           {/* Main Route: Home */}
           <Route path="/" element={<App />}>
             {/* Default one  */}
-            <Route index element={<Home />} />
+            <Route path="/:lang" index element={<Home />} />
+
+            {/* Redirect / vers /fr par défaut */}
+            <Route index element={<Navigate to="/fr" replace />} />
 
             {/* Main Route: A propos */}
             <Route path="/:lang">
@@ -52,14 +81,14 @@ createRoot(document.getElementById("root")).render(
 
             {/* Main Routes : Participez */}
             <Route path="/:lang">
-              <Route path="donate" element={ <DonationPage />} />
+              <Route path="donate" element={<DonationPage />} />
               <Route path="join-us" element={<JoinUsPage />} />
               <Route path="join-us/:contributor" element={<JoinUsPage />} />
             </Route>
 
             {/* Main Routes : Domaines */}
             <Route path="/:lang/domains">
-              <Route index  element={<Domain />} />
+              <Route index element={<Domain />} />
               <Route path=":id" element={<Domain />} />
             </Route>
 
@@ -70,8 +99,67 @@ createRoot(document.getElementById("root")).render(
             </Route>
           </Route>
 
+          {/* Admin Routes */}
+          <Route element={<GuestRoute />}>
+            <Route path="/adminLogin" element={<AdminLogin />} />
+          </Route>
+
+
+          {/* the details of the admin routes */}
+          <Route path="/admin" element={<ProtectedRoute />}>
+            <Route element={<AdminLayout />}>
+
+              {/* Dashboard */}
+              <Route index element={<AdminDashboard />} />
+
+              {/* Projets */}
+              <Route path="projets" element={<AdminProjetsList />} />
+              <Route path="projets/create" element={<AdminProjetCreate />} />
+              <Route path="projets/:id/edit" element={<AdminProjetEdit />} />
+
+              {/* Evenements */}
+              <Route path="evenements" element={<AdminEventsList />} />
+              <Route path="evenements/create" element={<AdminEventCreate />} />
+              <Route path="evenements/:id/edit" element={<AdminEventEdit />} />
+
+              {/* Ressources / Rapports */}
+              <Route path="ressources" element={<AdminRessourcesList />} />
+              <Route path="ressources/create" element={<AdminRessourceCreate />} />
+              <Route path="ressources/:id/edit" element={<AdminRessourceEdit />} />
+
+              {/* Partenaires */}
+              <Route path="partenaires" element={<AdminPartenairesList />} />
+              <Route path="partenaires/create" element={<AdminPartenaireCreate />} />
+              <Route path="partenaires/:id/edit" element={<AdminPartenaireEdit />} />
+
+              {/* Domaines */}
+              <Route path="domaines" element={<AdminDomainesList />} />
+              <Route path="domaines/create" element={<AdminDomaineCreate />} />
+              <Route path="domaines/:id/edit" element={<AdminDomaineEdit />} />
+
+              {/* Benevolat / Join Us */}
+              <Route path="benevoles" element={<AdminBenevolesList />} />
+              <Route path="benevoles/:id" element={<AdminBenevoleDetail />} />
+
+              {/* Members*/}
+              <Route path="membre" element={<AdminMembersList />} />
+              {/* <Route path="membre/:id" element={<AdminBenevoleDetail />} /> */}
+
+              {/* Dons */}
+              <Route path="dons" element={<AdminDonsList />} />
+              <Route path="dons/:id" element={<AdminDonDetail />} />
+
+              {/* Contact (messages reçus) */}
+              <Route path="messages" element={<AdminMessagesList />} />
+              <Route path="messages/:id" element={<AdminMessageDetail />} />
+
+            </Route>
+          </Route>
+
+
+
+
           {/* test routes */}
-          <Route path="/AdminLogin" element={<AdminLogin />} />
           <Route path="/projectCard" element={<ProjectCard />} />
           <Route path="/projects" element={<Projets />} />
           <Route path="/pagination" element={<Pagination />} />

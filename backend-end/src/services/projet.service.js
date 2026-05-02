@@ -10,6 +10,9 @@ class ProjetService {
         return await projetRepository.findAllWithDomaine(filters);
     }
 
+    async getAllProjetsWithDomaineForDon(filters={}){
+        return await projetRepository.findAllWithDomaineForDon(filters);
+    }
     async getProjetById(id) {
         const projet = await projetRepository.findById(id);
         if (!projet) throw new Error(`Le projet avec l'ID ${id} n'existe pas`);

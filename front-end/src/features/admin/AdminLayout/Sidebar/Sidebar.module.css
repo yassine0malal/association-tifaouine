@@ -1,0 +1,253 @@
+.sidebar {
+  width: 260px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 24px 16px;
+  border-right: 1px solid rgba(0, 0, 0, 0.05);
+
+  overflow-y: auto;
+}
+
+/* Hide scrollbar for Chrome/Safari */
+.sidebar::-webkit-scrollbar {
+  display: none;
+}
+
+
+/* Logo */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 8px 24px;
+  border-bottom: 1px solid #e8e4db;
+  margin-bottom: 8px;
+}
+
+.logo img {
+  width: 200px;
+}
+
+
+/* Section Label */
+.sectionLabel {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #a09880;
+  padding: 12px 8px 4px;
+  margin: 0;
+}
+
+/* Nav */
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* Link */
+.link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: #5a5040;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  width: 100%;
+  text-align: left;
+}
+
+.link:hover {
+  background: #edeae2;
+  color: #3a3020;
+}
+
+
+
+/* Group Button (dropdown) */
+.groupBtn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: #5a5040;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  width: 100%;
+  transition: background 0.2s, color 0.2s;
+}
+
+.groupBtn:hover {
+  background: #edeae2;
+  color: #3a3020;
+}
+
+.groupLeft {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.groupOpen {
+  color: #8a6a1a;
+}
+
+/* Chevron */
+.chevron {
+  transition: transform 0.25s ease;
+  color: #a09880;
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+/* Sub Links */
+.subLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding-left: 20px;
+  margin-bottom: 2px;
+  overflow: hidden;
+  animation: slideDown 0.2s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.subLink {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #6a5c40;
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+  position: relative;
+}
+
+.subLink::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #c4a050;
+  margin-right: 8px;
+  opacity: 0.5;
+  flex-shrink: 0;
+}
+
+.subLink:hover {
+  background: #edeae2;
+  color: #3a3020;
+}
+
+.subLink.active {
+  color: #8a6a1a;
+  font-weight: 600;
+}
+
+.subLink.active::before {
+  opacity: 1;
+}
+
+/* Logout */
+.logoutBtn {
+  color: #c0392b;
+}
+
+.logoutBtn:hover {
+  background: #fde8e8;
+  color: #a93226;
+}
+
+
+.link.active {
+  /* background: #e8e0cc; */
+  color: #8a6a1a;
+  font-weight: 600;
+}
+
+.link svg {
+  flex-shrink: 0;
+  transition: color 0.2s ease, fill 0.2s ease, stroke 0.2s ease;
+  fill: currentColor;
+}
+
+.link svg[stroke="currentColor"] {
+  fill: none;
+  stroke: currentColor;
+}
+
+.logoutBtn svg {
+  color: #c0392b;
+}
+
+.logoutBtn:hover svg {
+  color: #a93226;
+}
+
+.topPart {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.bottomPart {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-top: 16px;
+  border-top: 1px solid #e8e4db;
+}
+
+
+/* ============Responsive Design==========  */
+
+@media (max-width:900px) {
+  .sidebar {
+    position: fixed;
+    left: -260px;
+    /* Hide off-screen by default */
+    transition: left 0.3s ease-in-out;
+    z-index: 1001;
+    /* Above the header */
+  }
+
+  .showSidebar {
+    left: 0;
+    /* Slide in when active */
+  }
+
+}

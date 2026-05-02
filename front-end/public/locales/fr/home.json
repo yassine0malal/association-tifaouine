@@ -1,4 +1,19 @@
 {
   "title": "Bienvenue",
-  "description": "Nous soutenons les communautés rurales."
+  "description": "Nous soutenons les communautés rurales.",
+
+  "event": {
+    "title": "Nos Événements",
+    "subtitle": "Découvrez nos derniers événements"
+  },
+
+  "partner": {
+    "title": "Nos Partenaires",
+    "subtitle": "Ils nous font confiance"
+  },
+
+  "testimonial": {
+    "title": "Témoignages",
+    "subtitle": "Ce que disent nos bénévoles"
+  }
 }

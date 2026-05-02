@@ -32,7 +32,7 @@ export default function Domain() {
     const { data: domainsList, laoding } = useSelector((state) => state.domainsPage);
     useEffect(() => {
         if (id && cardRefs.current[id]) {
-            
+
             setTimeout(() => {
                 cardRefs.current[id].scrollIntoView({
                     behavior: "smooth",
@@ -50,7 +50,7 @@ export default function Domain() {
         dispatch(fetchDomainsPage(lang))
     }, [dispatch, i18n.language])
     if (laoding) return <Loader />
-    
+
     return (
         <div className={styles.fullContainer}>
             <PageHero title={t("heroTitle")} heroImg={asni} />
@@ -64,6 +64,7 @@ export default function Domain() {
                 {domainsList?.map((domaine) => (
                     <section key={domaine.id}>
                         <div
+                            aria-label="loading"
                             className={styles.domainCard}
                             ref={(el) => (cardRefs.current[domaine.id] = el)}
                             style={{ '--bg-image': `url(${BASE_BACK_END_URL}${domaine.icone})` }}

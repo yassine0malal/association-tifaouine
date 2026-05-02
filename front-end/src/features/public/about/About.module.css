@@ -571,6 +571,10 @@
   rotate: 180deg;
 }
 
+.carouselTrack .cardFooter .poste{
+  color: var(--accent);
+}
+
 [dir="rtl"] .partenaires .buttons button:first-child {
   rotate: 0deg;
 }
@@ -578,6 +582,8 @@
 [dir="rtl"] .partenaires .buttons button:last-child {
   rotate: 180deg;
 }
+
+
 
 /*------------- Responsive ------------------- */
 

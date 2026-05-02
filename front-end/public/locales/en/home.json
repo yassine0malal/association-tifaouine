@@ -1,4 +1,19 @@
 {
   "title": "Welcome",
-  "description": "We support rural communities."
+  "description": "We support rural communities.",
+
+  "event": {
+    "title": "Our Events",
+    "subtitle": "Discover our latest events"
+  },
+
+  "partner": {
+    "title": "Our Partners",
+    "subtitle": "They trust us"
+  },
+
+  "testimonial": {
+    "title": "Testimonials",
+    "subtitle": "What our volunteers say"
+  }
 }

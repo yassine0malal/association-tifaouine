@@ -33,10 +33,10 @@ class MembreController {
     async getAllByLang(req, res) {
         try {
             const { lang } = req;
-            const { page, limit, offset } = req.pagination;
-            const result = await membreService.getAllMembresWithProfile({ limit, offset });
-            const rows = result.rows.map(m => toMembreListDTO(m, lang));
-            return res.status(200).json({ success: true, ...buildPaginatedResponse({ count: result.count, rows }, page, limit) });
+            const { status } = req.query;
+            const result = await membreService.getAllMembresWithProfile({ status });
+            const data = result.rows.map(m => toMembreListDTO(m, lang));
+            return res.status(200).json({ success: true, data });
         } catch (error) {
             return res.status(500).json({ success: false, message: error.message });
         }

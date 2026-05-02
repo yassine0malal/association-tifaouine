@@ -1,6 +1,7 @@
 const partenariatService = require('../services/partenariat.service');
 const { buildPaginatedResponse } = require('../utils/paginate');
 const { toPartenariatListDTO } = require('../dto/partenariat.dto');
+const { toPartenariathomeListDTO} = require('../dto/partenariat.dto-home');
 
 class PartenariatController {
     async create(req, res) {
@@ -31,12 +32,24 @@ class PartenariatController {
             const { lang } = req;
             const result = await partenariatService.getAllPartenariatsByLang();
             const rows = result.rows.map(p => toPartenariatListDTO(p, lang));
-            return res.status(200).json({ success: true, rows});
+            return res.status(200).json({ success: true, rows });
         } catch (error) {
             return res.status(500).json({ success: false, message: error.message });
         }
     }
 
+    async getAllByLangForHome(req, res) {
+        try {
+            const { lang } = req;
+            const result = await partenariatService.getAllPartenariatsByLang();
+            const rows = result.rows.map(p => toPartenariathomeListDTO(p, lang));
+            return res.status(200).json({ success: true, rows });
+        } catch (error) {
+            return res.status(500).json({ success: false, message: error.message });
+        }
+
+
+    }
     async getById(req, res) {
         try {
             const partenariat = await partenariatService.getPartenariatById(req.params.id);

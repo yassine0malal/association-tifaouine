@@ -16,14 +16,26 @@ class ProjetRepository {
         const { domaine_id, statut, limit, offset } = filters;
         const where = {};
         if (domaine_id) where.domaine_id = domaine_id;
-        if (statut)     where.statut     = statut;
+        if (statut) where.statut = statut;
         return await Projet.findAndCountAll({
             where,
             include: [{ model: Domaine, attributes: ['id', 'nom_fr', 'nom_ar', 'nom_en'] }],
-            order:   [['date_debut', 'DESC']],
-            limit:   limit  || 9,
-            offset:  offset || 0
+            order: [['date_debut', 'DESC']],
+            limit: limit || 9,
+            offset: offset || 0
         });
+    }
+    async findAllWithDomaineForDon(filters = {}) {
+        const { domaine_id, statut } = filters;
+        const where = {};
+        if (domaine_id) where.domaine_id = domaine_id;
+        if (statut) where.statut = statut;
+        const rows = await Projet.findAll({
+            where,
+            include: [{ model: Domaine, attributes: ['id', 'nom_fr', 'nom_ar', 'nom_en'] }],
+            order: [['date_debut', 'DESC']],
+        });
+        return { rows, count: rows.length };
     }
 
     async findById(id) {
@@ -42,9 +54,9 @@ class ProjetRepository {
     async findImages(projetId, filters = {}) {
         const { limit, offset } = filters;
         return await Ressource.findAndCountAll({
-            where:  { projet_id: projetId, type: 'photo' },
-            order:  [['created_at', 'DESC']],
-            limit:  limit  || 9,
+            where: { projet_id: projetId, type: 'photo' },
+            order: [['created_at', 'DESC']],
+            limit: limit || 9,
             offset: offset || 0
         });
     }

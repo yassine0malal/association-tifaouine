@@ -5,58 +5,50 @@ import {
   useAnimationFrame
 } from 'framer-motion';
 
-import association from "../../assets/images/about-us.png"
-import checked from "../../assets/icons/checked.png"
-import HeroBg from "../../assets/images/projects_hero.jpg"
-import bg from "../../assets/images/bg.png"
-import call from "../../assets/icons/call.png"
-import arrow from "../../assets/icons/arrow-right.png"
+import association from "../../../assets/images/about-us.png"
+import checked from "../../../assets/icons/checked.png"
+import HeroBg from "../../../assets/images/projects_hero.jpg"
+import bg from "../../../assets/images/bg.png"
+import call from "../../../assets/icons/call.png"
+import arrow from "../../../assets/icons/arrow-right.png"
 //Partenairs
-import agriculture from "../../assets/images/partenaires/agriculture.png"
-import analphabetisme from "../../assets/images/partenaires/analphabitisme.png"
-import anapec from "../../assets/images/partenaires/anapec.png"
-import entraide from "../../assets/images/partenaires/entraide-nationale.png"
-import equipement from "../../assets/images/partenaires/equipement.png"
-import habous from "../../assets/images/partenaires/habous.png"
-import province from "../../assets/images/partenaires/province-el-haouz.png"
-import travail from "../../assets/images/partenaires/travail.png"
-import bgImage from "../../assets/images/partenaires/bg-image.png"
+import agriculture from "../../../assets/images/partenaires/agriculture.png"
+import analphabetisme from "../../../assets/images/partenaires/analphabitisme.png"
+import anapec from "../../../assets/images/partenaires/anapec.png"
+import entraide from "../../../assets/images/partenaires/entraide-nationale.png"
+import equipement from "../../../assets/images/partenaires/equipement.png"
+import habous from "../../../assets/images/partenaires/habous.png"
+import province from "../../../assets/images/partenaires/province-el-haouz.png"
+import travail from "../../../assets/images/partenaires/travail.png"
+import bgImage from "../../../assets/images/partenaires/bg-image.png"
+import { fetchPartenaires } from './partnerSlice';
 //Import gallery images
-import centre from "../../assets/images/about/centre.png"
-import energy from "../../assets/images/about/energy.jpeg"
-import science from "../../assets/images/about/science.png"
-import nature from "../../assets/images/about/nature.jpg"
-import children from "../../assets/images/about/children.jpg"
+import centre from "../../../assets/images/about/centre.png"
+import energy from "../../../assets/images/about/energy.jpeg"
+import science from "../../../assets/images/about/science.png"
+import nature from "../../../assets/images/about/nature.jpg"
+import children from "../../../assets/images/about/children.jpg"
+import defaultPartner from "../../../assets/images/default-partner.png"
 
 // Import CSS Module
 import styles from './About.module.css';
-import PageHero from '../../components/common/PageHero';
-import Btn from '../../components/common/Button';
+import PageHero from '../../../components/common/PageHero';
+import Btn from '../../../components/common/Button';
 import { useTranslation } from 'react-i18next';
 import i18n from 'i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchMembres } from './membresSlice';
 
-const teamData = [
-  { id: 1, src: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80", title: "Real-Time Collaboration", desc: "Communicate seamlessly and keep everyone in sync." },
-  { id: 2, src: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80", title: "Task & Project Tracking", desc: "Assign tasks, set deadlines, and visualize progress." },
-  { id: 3, src: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80", title: "Performance Insights", desc: "Make smarter decisions with real-time analytics." },
-  { id: 4, src: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80", title: "Real-Time Collaboration", desc: "Communicate seamlessly and keep everyone in sync." },
-  { id: 5, src: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80", title: "Task & Project Tracking", desc: "Assign tasks, set deadlines, and visualize progress." },
-  { id: 6, src: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80", title: "Performance Insights", desc: "Make smarter decisions with real-time analytics." },
-];
-const partners = [
-  { id: 1, title: "Project 1", image: agriculture },
-  { id: 2, title: "Project 2", image: analphabetisme },
-  { id: 3, title: "Project 3", image: anapec },
-  { id: 4, title: "Project 4", image: entraide },
-  { id: 5, title: "Project 5", image: equipement },
-  { id: 6, title: "Project 6", image: habous },
-  { id: 7, title: "Project 7", image: province },
-  { id: 8, title: "Project 8", image: travail },
-]
 
-const infiniteData = [...teamData, ...teamData, ...teamData];
+const BASE_BACK_END_URL = import.meta.env.VITE_BASE_BACK_END_URL;
+
+
 
 const About = () => {
+
+  const { membres: teamData, loading, error } = useSelector((state) => state.membres);
+  const { partenaires: partners, loading: partenairesLoading } = useSelector((state) => state.partenaires);
+  const dispatch = useDispatch();
   const [trackWidth, setTrackWidth] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const trackRef = useRef(null);
@@ -66,10 +58,12 @@ const About = () => {
   const { t } = useTranslation("about");
   const [isRTL, setIsRTL] = useState(i18n.language === "ar");
   const isRTLRef = useRef(i18n.language === "ar");
+  const lang = i18n.language
   //Refferences
   const tiltRefs = useRef(new Map())
 
 
+  const infiniteData = [...teamData, ...teamData, ...teamData];
 
   const setTitlRef = useCallback((element, id) => {
     if (element) {
@@ -94,6 +88,13 @@ const About = () => {
   const prev = () => {
     setIndex((prev) => (prev > 0 ? prev - 1 : maxindex))
   }
+
+  useEffect(() => {
+    dispatch(fetchMembres({ lang }));
+    dispatch(fetchPartenaires({ lang }));
+  }, [lang]);
+
+
 
   useEffect(() => {
     const updateDirection = (lng) => {
@@ -163,8 +164,6 @@ const About = () => {
     }
   }, [trackWidth]);
 
-  // Add a counter so it only logs every 120 frames (not every frame)
-
   useAnimationFrame((t, delta) => {
     if (isPaused || trackWidth === 0) return;
 
@@ -185,6 +184,8 @@ const About = () => {
 
     x.set(newX);
   });
+
+  console.log("0000",)
 
   return (
     <>
@@ -323,7 +324,7 @@ const About = () => {
             <article>
               <img src={nature} alt="" />
             </article>
-            
+
             <article>
               <img src={science} alt="" />
             </article>
@@ -353,7 +354,7 @@ const About = () => {
                   style={{ minWidth: `${100 / visibleItems}%` }}
                 >
 
-                  <img src={p.image} alt={p.title} />
+                  <img src={p.image ? `${BASE_BACK_END_URL}${p.image}` : defaultPartner} alt={p.name} />
                 </div>
               ))}
 
@@ -372,6 +373,9 @@ const About = () => {
     </>
   );
 }
+
+
+
 const CarouselCard = ({ item, styles }) => {
   return (
     <div className={styles.cardGroup}>
@@ -379,12 +383,12 @@ const CarouselCard = ({ item, styles }) => {
         className={styles.carouselCard}
         whileTap={{ cursor: "grabbing" }}
       >
-        <img src={item.src} alt={item.title} draggable="false" />
+        <img src={`${BASE_BACK_END_URL}${item.photo}`} alt={item.nom} draggable="false" />
       </motion.div>
 
       <div className={styles.cardFooter}>
-        <h3>{item.title}</h3>
-        <p>{item.desc}</p>
+        <h3>{item.nom} - <span className={styles.poste}>{item.poste}</span></h3>
+        <p>{item.description.slice(0, 100)}</p>
       </div>
     </div>
   );

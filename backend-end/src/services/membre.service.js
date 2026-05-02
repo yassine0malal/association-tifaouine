@@ -1,4 +1,4 @@
-const { sequelize, Utilisateur, membre } = require('../models');
+const { sequelize, Utilisateur, membre, AdminNotification } = require('../models');
 const membreRepository = require('../repositories/membre.repository');
 const fs = require('fs');
 const path = require('path');
@@ -40,6 +40,13 @@ class MembreService {
                     date_adhesion: date_adhesion || new Date()
                 }, { transaction: t });
 
+                // 4. Créer la notification Admin
+                await AdminNotification.create({
+                    type: 'NOUVEAU_MEMBRE',
+                    entity_id: user.id,
+                    message: `Nouvelle inscription membre: ${nom} (${email})`
+                }, { transaction: t });
+
                 createdResults.push({
                     id: user.id,
                     nom: user.nom,
@@ -57,7 +64,7 @@ class MembreService {
     /**
      * @desc    Récupérer la liste complète des membres
      */
-    async getAllMembers(filters = {}) {
+    async getAllMembers(filters ={}) {
         const result = await membreRepository.findAll(filters);
         return { rows: result.rows.map(m => this._formatMember(m)), count: result.count };
     }
@@ -65,7 +72,6 @@ class MembreService {
     async getAllMembresWithProfile(filters = {}) {
         return await membreRepository.findAll(filters);
     }
-
     /**
      * @desc    Récupérer un membre par son Email
      */

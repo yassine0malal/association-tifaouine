@@ -1,0 +1,123 @@
+.treasuryCard {
+    background: white;
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
+    padding: 24px;
+    /* padding-top: 50px; */
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+    /* The signature accent line on the left, using your gold colors */
+    border-left: 6px solid #d4a76a;
+    min-width: 350px;
+    background:
+        linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3)),
+        url('../../assets/images/admin/calculator.png') center / cover no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 80px;
+}
+
+/* Faint background icon to replace the calculator graphic */
+.bgIcon {
+    position: absolute;
+    right: -20px;
+    bottom: -20px;
+    font-size: 150px;
+    color: rgba(212, 167, 106, 0.05);
+    /* Very faint gold */
+    z-index: 0;
+    transform: rotate(-10deg);
+    pointer-events: none;
+}
+
+.cardContent {
+    position: relative;
+    z-index: 1;
+
+}
+
+.title {
+    font-size: 14px;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0 0 20px 0;
+    font-weight: 600;
+}
+
+.balances {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 25px;
+}
+
+/* Primary Balance Styling */
+.mainBalance {
+    display: flex;
+    flex-direction: column;
+}
+
+.amount {
+    font-size: 32px;
+    font-weight: 700;
+    color: #d4a76a;
+    /* Gold text for the main number */
+    line-height: 1;
+}
+
+.currency {
+    font-size: 16px;
+    font-weight: 600;
+    color: #cfcfcf;
+    margin-left: 4px;
+}
+
+.label {
+    font-size: 12px;
+    color: #888;
+    margin-top: 8px;
+}
+
+/* Secondary "Locked" Balance Styling */
+.secondaryBalance {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    padding-top: 8px;
+}
+
+.subAmount {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--bg);
+}
+
+.subLabel {
+    font-size: 12px;
+    color: #888;
+    margin-top: 4px;
+}
+
+/* Action Button */
+.actionButton {
+    background: linear-gradient(135deg, #d4a76a 0%, #b88d4d 100%);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    margin-top: 20px;
+}
+
+.actionButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(212, 167, 106, 0.3);
+}

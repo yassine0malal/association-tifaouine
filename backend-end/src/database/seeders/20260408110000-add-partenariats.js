@@ -1,4 +1,6 @@
 'use strict';
+const fs = require('fs');
+const path = require('path');
 
 // NOTE : Déposer les logos dans backend-end/src/data/partenariats/
 // avec exactement les noms de fichiers définis ci-dessous avant d'appliquer le seeder.
@@ -140,7 +142,6 @@ module.exports = {
         description_en: 'National institution - Renewable Energy Development Centre',
         site_web:       'https://www.iresen.org'
       },
-
       // ─── Société Civile Marocaine ───────────────────────────────────────────
       {
         nom:            'Association Al Majal',
@@ -190,7 +191,6 @@ module.exports = {
         description_en: 'Local partner association - Ahrram Toubou',
         site_web:       null
       },
-
       // ─── Partenaires Internationaux ────────────────────────────────────────
       {
         nom:            'Virgin Unite',
@@ -258,16 +258,28 @@ module.exports = {
       }
     ];
 
-    await queryInterface.bulkInsert('partenariat',
-      partenariats.map(p => ({
+    const partenariatsWithCheck = partenariats.map(p => {
+      // Extraire le nom du fichier depuis le chemin attendu
+      const fileName = path.basename(p.logo);
+      // Construire le chemin absolu vers le dossier où les images sont stockées
+      const filePath = path.join(__dirname, '../../data/partenariats', fileName);
+      
+      // Vérifier si le fichier existe
+      const finalLogoPath = fs.existsSync(filePath) ? p.logo : null;
+
+      return {
         ...p,
+        logo: finalLogoPath,
         created_at: now,
         updated_at: now
-      }))
-    );
+      };
+    });
+
+    await queryInterface.bulkInsert('partenariat', partenariatsWithCheck);
   },
 
   async down(queryInterface, Sequelize) {
     await queryInterface.bulkDelete('partenariat', null, {});
   }
 };
+
