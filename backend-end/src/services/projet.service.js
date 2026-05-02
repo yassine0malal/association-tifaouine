@@ -239,11 +239,37 @@ class ProjetService {
      * Garde seulement les ressources présentes dans les tableaux "existing" et ajoute les nouvelles
      */
     async updateProjetComplet(id, projetData, principalFile, principalRelUrl, extraFiles, galerieRelUrl, videoFiles, videosRelUrl) {
+        console.log("=== [updateProjetComplet] START ===");
+        console.log("ID:", id);
+        console.log("projetData.titre_fr:", projetData.titre_fr);
+        
         const projet = await projetRepository.findById(id);
+        
+        if (!projet) {
+            console.error("Projet introuvable pour ID:", id);
+            throw new Error("Projet introuvable pour la mise à jour");
+        }
+        
         const oldFolder = cleanFolderName(projet.titre_fr);
         const newFolder = cleanFolderName(projetData.titre_fr || projet.titre_fr);
 
+        console.log("Ancien dossier:", oldFolder);
+        console.log("Nouveau dossier:", newFolder);
 
+        if (projetData.statut) {
+            projetData.statut = STATUT_MAP[projetData.statut] || projetData.statut;
+        }
+
+        // Extraire les données des ressources existantes
+        // IMPORTANT: on garde undefined si le champ n'est pas envoyé par le frontend
+        // pour distinguer "garder tout" (undefined) de "supprimer tout" ([])
+        const {
+            existingImagePrincipale,
+            existingExtraImages,   // undefined = non envoyé → ne pas toucher la galerie
+            existingVideos,        // undefined = non envoyé → ne pas toucher les vidéos
+            partenariat_ids,
+            ...champProjet
+        } = projetData;
 
         if (oldFolder !== newFolder) {
             const basePath = path.join(__dirname, '../data/ressources');
@@ -256,7 +282,15 @@ class ProjetService {
                 const oldPath = path.join(basePath, folder);
                 const newPath = path.join(basePath, folder.replace(oldFolder, newFolder));
                 if (fs.existsSync(oldPath)) {
-                    fs.renameSync(oldPath, newPath);
+                    try {
+                        // Copier d'abord, puis supprimer (contourne EPERM OneDrive/Windows)
+                        fs.cpSync(oldPath, newPath, { recursive: true });
+                        fs.rmSync(oldPath, { recursive: true, force: true });
+                        console.log(`[Renommage] OK: ${oldPath} → ${newPath}`);
+                    } catch (err) {
+                        console.error(`[Renommage] ECHEC: ${oldPath} → ${newPath}`, err.message);
+                        throw err;
+                    }
                 }
             }
 
@@ -275,69 +309,20 @@ class ProjetService {
             }
         }
 
-
-        if (!projet) throw new Error("Projet introuvable pour la mise à jour");
-
         if (projetData.statut) {
             projetData.statut = STATUT_MAP[projetData.statut] || projetData.statut;
         }
 
-        // Extraire les données des ressources existantes
-        // IMPORTANT: on garde undefined si le champ n'est pas envoyé par le frontend
-        // pour distinguer "garder tout" (undefined) de "supprimer tout" ([])
-        const {
-            existingImagePrincipale,
-            existingExtraImages,   // undefined = non envoyé → ne pas toucher la galerie
-            existingVideos,        // undefined = non envoyé → ne pas toucher les vidéos
-            partenariat_ids,
-            ...champProjet
-        } = projetData;
-
-        // --- Bug #3 : Gestion du renommage de dossier si titre_fr change ---
-        const ancienFolder  = cleanFolderName(projet.titre_fr);
-        const nouveauFolder = cleanFolderName(champProjet.titre_fr || projet.titre_fr);
-        let folderRenomme   = false;
-
-        if (champProjet.titre_fr && ancienFolder !== nouveauFolder) {
-            const baseDir = path.join(__dirname, '../data/ressources');
-            const pairesRenommage = [
-                [
-                    path.join(baseDir, 'images', 'projets', ancienFolder),
-                    path.join(baseDir, 'images', 'projets', nouveauFolder)
-                ],
-                [
-                    path.join(baseDir, 'videos', 'projets', ancienFolder),
-                    path.join(baseDir, 'videos', 'projets', nouveauFolder)
-                ]
-            ];
-            for (const [oldPath, newPath] of pairesRenommage) {
-                if (fs.existsSync(oldPath)) {
-                    try {
-                        // Copier d'abord, puis supprimer (contourne EPERM OneDrive/Windows)
-                        fs.cpSync(oldPath, newPath, { recursive: true });
-                        fs.rmSync(oldPath, { recursive: true, force: true });
-                        console.log(`[Renommage] OK: ${oldPath} → ${newPath}`);
-                    } catch (err) {
-                        console.error(`[Renommage] ECHEC: ${oldPath} → ${newPath}`, err.message);
-                    }
-                } else {
-                    console.warn(`[Renommage] Dossier source introuvable: ${oldPath}`);
-                }
-            }
-            // Mettre à jour image_principale si elle référence l'ancien folder
-            if (champProjet.image_principale && champProjet.image_principale.includes(ancienFolder)) {
-                champProjet.image_principale = champProjet.image_principale.replace(ancienFolder, nouveauFolder);
-            } else if (projet.image_principale && projet.image_principale.includes(ancienFolder)) {
-                champProjet.image_principale = projet.image_principale.replace(ancienFolder, nouveauFolder);
-            }
-            folderRenomme = true;
-        }
-
-        // Si le folder a été renommé, mettre à jour existingImagePrincipale aussi
-        // pour éviter qu'elle écrase la valeur déjà corrigée
+        // Variables pour le renommage (déjà fait au début si titre change)
+        let folderRenomme = false;
         let existingImagePrincipaleNormalisee = existingImagePrincipale;
-        if (folderRenomme && existingImagePrincipale && existingImagePrincipale.includes(ancienFolder)) {
-            existingImagePrincipaleNormalisee = existingImagePrincipale.replace(ancienFolder, nouveauFolder);
+        
+        if (oldFolder !== newFolder) {
+            folderRenomme = true;
+            // Mettre à jour existingImagePrincipale si elle référence l'ancien folder
+            if (existingImagePrincipale && existingImagePrincipale.includes(oldFolder)) {
+                existingImagePrincipaleNormalisee = existingImagePrincipale.replace(oldFolder, newFolder);
+            }
         }
 
         // Helper local: strip leading slash for correct path resolution on Windows
@@ -386,10 +371,16 @@ class ProjetService {
             // 3. Mettre à jour les URLs des ressources en DB si le folder a changé (Bug #3)
             if (folderRenomme) {
                 const { QueryTypes } = require('sequelize');
+                // Utiliser un pattern plus spécifique pour éviter les remplacements multiples
+                // Remplacer /projets/oldFolder/ par /projets/newFolder/
+                const oldPattern = `/projets/${oldFolder}/`;
+                const newPattern = `/projets/${newFolder}/`;
+                console.log("SQL UPDATE - Ancien pattern:", oldPattern);
+                console.log("SQL UPDATE - Nouveau pattern:", newPattern);
                 await sequelize.query(
                     `UPDATE ressource SET url = REPLACE(url, :ancien, :nouveau) WHERE projet_id = :id`,
                     {
-                        replacements: { ancien: ancienFolder, nouveau: nouveauFolder, id },
+                        replacements: { ancien: oldPattern, nouveau: newPattern, id },
                         type: QueryTypes.UPDATE,
                         transaction: t
                     }
@@ -400,12 +391,33 @@ class ProjetService {
             // Seulement si le frontend a explicitement envoyé les champs existing
             // (undefined = non envoyé = ne pas toucher les ressources existantes)
             if (existingExtraImages !== undefined || existingVideos !== undefined) {
+                console.log("=== [Gestion ressources existantes] ===");
+                console.log("existingExtraImages AVANT:", existingExtraImages);
+                console.log("existingVideos AVANT:", existingVideos);
+                
+                // Normaliser les URLs si le dossier a été renommé
+                let normalizedExtraImages = existingExtraImages;
+                let normalizedVideos = existingVideos;
+                
+                if (folderRenomme) {
+                    normalizedExtraImages = (existingExtraImages || []).map(url => 
+                        url.replace(oldFolder, newFolder)
+                    );
+                    normalizedVideos = (existingVideos || []).map(url => 
+                        url.replace(oldFolder, newFolder)
+                    );
+                    console.log("existingExtraImages APRÈS renommage:", normalizedExtraImages);
+                    console.log("existingVideos APRÈS renommage:", normalizedVideos);
+                }
+                
                 await this._manageExistingResources(
                     id,
-                    existingExtraImages ?? [],
-                    existingVideos      ?? [],
+                    normalizedExtraImages ?? [],
+                    normalizedVideos      ?? [],
                     { transaction: t }
                 );
+            } else {
+                console.log("=== [Ressources] Pas de gestion (undefined) ===");
             }
 
             // 5. Ajouter les nouvelles images
@@ -448,6 +460,10 @@ class ProjetService {
                 await ressourceRepository.bulkCreate(videosData, { transaction: t });
             }
 
+            console.log("=== [updateProjetComplet] AVANT RETURN ===");
+            console.log("misAjour.id:", misAjour.id);
+            console.log("misAjour.image_principale:", misAjour.image_principale);
+            
             return misAjour;
         });
     }

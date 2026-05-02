@@ -281,6 +281,11 @@ class ProjetController {
                 req._videosRelUrl || null
             );
 
+            console.log("=== [updateComplet] RESPONSE ===");
+            console.log("Projet mis à jour:", misAjour.id);
+            console.log("Image principale:", misAjour.image_principale);
+            console.log("Ressources associées:", misAjour.ressources?.length || 0);
+
             return res.status(200).json({ success: true, message: "Projet mis à jour avec succès", data: misAjour });
 
         } catch (error) {
@@ -291,6 +296,9 @@ class ProjetController {
                     try { fs.unlinkSync(file.path); } catch (_) { }
                 }
             }
+            console.error("=== [updateComplet] ERROR ===");
+            console.error("Message:", error.message);
+            console.error("Stack:", error.stack);
             const status = error.message.includes('introuvable') ? 404 : 400;
             return res.status(status).json({ success: false, message: "Erreur lors de la mise à jour du projet", error: error.message });
         }
