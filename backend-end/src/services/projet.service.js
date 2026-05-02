@@ -19,7 +19,7 @@ class ProjetService {
         return await projetRepository.findAllWithDomaine(filters);
     }
 
-    async getAllProjetsWithDomaineForDon(filters={}){
+    async getAllProjetsWithDomaineForDon(filters = {}) {
         return await projetRepository.findAllWithDomaineForDon(filters);
     }
     async getProjetById(id) {
@@ -114,7 +114,7 @@ class ProjetService {
                     try {
                         const filePath = path.join(__dirname, '..', ressource.url);
                         if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
-                    } catch (_) {}
+                    } catch (_) { }
                 }
             }
             // Supprimer l'image principale
@@ -122,7 +122,7 @@ class ProjetService {
                 try {
                     const filePath = path.join(__dirname, '..', projet.image_principale);
                     if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
-                } catch (_) {}
+                } catch (_) { }
             }
             await projetRepository.delete(id, { transaction: t });
             return true;
@@ -169,15 +169,15 @@ class ProjetService {
             if (extraFiles && extraFiles.length > 0) {
                 const imagesData = extraFiles.map(file => {
                     const stat = fs.existsSync(file.path) ? fs.statSync(file.path) : null;
-                    const ext  = path.extname(file.originalname).toLowerCase().replace('.', '');
+                    const ext = path.extname(file.originalname).toLowerCase().replace('.', '');
                     return {
-                        projet_id:    nvProjet.id,
-                        type:         'photo',
-                        url:          `${galerieRelUrl}/${file.filename}`,
+                        projet_id: nvProjet.id,
+                        type: 'photo',
+                        url: `${galerieRelUrl}/${file.filename}`,
                         nom_original: file.originalname,
-                        file_size:    stat ? stat.size : null,
-                        file_type:    ext || null,
-                        is_featured:  false
+                        file_size: stat ? stat.size : null,
+                        file_type: ext || null,
+                        is_featured: false
                     };
                 });
                 await ressourceRepository.bulkCreate(imagesData, { transaction: t });
@@ -187,15 +187,15 @@ class ProjetService {
             if (videoFiles && videoFiles.length > 0) {
                 const videosData = videoFiles.map(file => {
                     const stat = fs.existsSync(file.path) ? fs.statSync(file.path) : null;
-                    const ext  = path.extname(file.originalname).toLowerCase().replace('.', '');
+                    const ext = path.extname(file.originalname).toLowerCase().replace('.', '');
                     return {
-                        projet_id:    nvProjet.id,
-                        type:         'video',
-                        url:          `${videosRelUrl}/${file.filename}`,
+                        projet_id: nvProjet.id,
+                        type: 'video',
+                        url: `${videosRelUrl}/${file.filename}`,
                         nom_original: file.originalname,
-                        file_size:    stat ? stat.size : null,
-                        file_type:    ext || null,
-                        is_featured:  false
+                        file_size: stat ? stat.size : null,
+                        file_type: ext || null,
+                        is_featured: false
                     };
                 });
                 await ressourceRepository.bulkCreate(videosData, { transaction: t });
@@ -211,6 +211,42 @@ class ProjetService {
      */
     async updateProjetComplet(id, projetData, principalFile, principalRelUrl, extraFiles, galerieRelUrl, videoFiles, videosRelUrl) {
         const projet = await projetRepository.findById(id);
+        const oldFolder = cleanFolderName(projet.titre_fr);
+        const newFolder = cleanFolderName(projetData.titre_fr || projet.titre_fr);
+
+
+
+        if (oldFolder !== newFolder) {
+            const basePath = path.join(__dirname, '../data/ressources');
+            const foldersToRename = [
+                `images/projets/${oldFolder}`,
+                `videos/projets/${oldFolder}`,
+            ];
+
+            for (const folder of foldersToRename) {
+                const oldPath = path.join(basePath, folder);
+                const newPath = path.join(basePath, folder.replace(oldFolder, newFolder));
+                if (fs.existsSync(oldPath)) {
+                    fs.renameSync(oldPath, newPath);
+                }
+            }
+
+            // ✅ Mettre à jour les URLs en DB pour refléter le nouveau dossier
+            const resources = await ressourceRepository.findAll({ projet_id: id, limit: 9999, offset: 0 });
+            for (const resource of resources.rows) {
+                if (resource.url) {
+                    const newUrl = resource.url.replace(oldFolder, newFolder);
+                    await ressourceRepository.update(resource.id, { url: newUrl });
+                }
+            }
+
+            // Mettre à jour l'image principale aussi
+            if (projet.image_principale) {
+                champProjet.image_principale = projet.image_principale.replace(oldFolder, newFolder);
+            }
+        }
+
+
         if (!projet) throw new Error("Projet introuvable pour la mise à jour");
 
         if (projetData.statut) {
@@ -218,13 +254,14 @@ class ProjetService {
         }
 
         // Extraire les données des ressources existantes
-        const { 
-            existingImagePrincipale, 
-            existingExtraImages = [], 
+        const {
+            existingImagePrincipale,
+            existingExtraImages = [],
             existingVideos = [],
             partenariat_ids,
-            ...champProjet 
+            ...champProjet
         } = projetData;
+        console.warn("proj------------>", projetData)
 
         // Gestion de l'image principale
         if (principalFile && principalRelUrl) {
@@ -233,7 +270,7 @@ class ProjetService {
                 try {
                     const oldPath = path.join(__dirname, '..', projet.image_principale);
                     if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
-                } catch (_) {}
+                } catch (_) { }
             }
             champProjet.image_principale = `${principalRelUrl}/${principalFile.filename}`;
         } else if (existingImagePrincipale) {
@@ -245,7 +282,7 @@ class ProjetService {
                 try {
                     const oldPath = path.join(__dirname, '..', projet.image_principale);
                     if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
-                } catch (_) {}
+                } catch (_) { }
             }
             champProjet.image_principale = null;
         }
@@ -275,15 +312,15 @@ class ProjetService {
                 const relUrl = galerieRelUrl || `/data/ressources/images/projets/${folder}/galerie`;
                 const imagesData = extraFiles.map(file => {
                     const stat = fs.existsSync(file.path) ? fs.statSync(file.path) : null;
-                    const ext  = path.extname(file.originalname).toLowerCase().replace('.', '');
+                    const ext = path.extname(file.originalname).toLowerCase().replace('.', '');
                     return {
-                        projet_id:    id,
-                        type:         'photo',
-                        url:          `${relUrl}/${file.filename}`,
+                        projet_id: id,
+                        type: 'photo',
+                        url: `${relUrl}/${file.filename}`,
                         nom_original: file.originalname,
-                        file_size:    stat ? stat.size : null,
-                        file_type:    ext || null,
-                        is_featured:  false
+                        file_size: stat ? stat.size : null,
+                        file_type: ext || null,
+                        is_featured: false
                     };
                 });
                 await ressourceRepository.bulkCreate(imagesData, { transaction: t });
@@ -295,15 +332,15 @@ class ProjetService {
                 const relUrl = videosRelUrl || `/data/ressources/videos/projets/${folder}`;
                 const videosData = videoFiles.map(file => {
                     const stat = fs.existsSync(file.path) ? fs.statSync(file.path) : null;
-                    const ext  = path.extname(file.originalname).toLowerCase().replace('.', '');
+                    const ext = path.extname(file.originalname).toLowerCase().replace('.', '');
                     return {
-                        projet_id:    id,
-                        type:         'video',
-                        url:          `${relUrl}/${file.filename}`,
+                        projet_id: id,
+                        type: 'video',
+                        url: `${relUrl}/${file.filename}`,
                         nom_original: file.originalname,
-                        file_size:    stat ? stat.size : null,
-                        file_type:    ext || null,
-                        is_featured:  false
+                        file_size: stat ? stat.size : null,
+                        file_type: ext || null,
+                        is_featured: false
                     };
                 });
                 await ressourceRepository.bulkCreate(videosData, { transaction: t });
@@ -319,20 +356,20 @@ class ProjetService {
      */
     async _manageExistingResources(projetId, existingImages = [], existingVideos = [], options = {}) {
         // Récupérer toutes les ressources actuelles du projet
-        const currentResources = await ressourceRepository.findAll({ 
-            projet_id: projetId, 
-            limit: 9999, 
-            offset: 0 
+        const currentResources = await ressourceRepository.findAll({
+            projet_id: projetId,
+            limit: 9999,
+            offset: 0
         });
 
         const resourcesToKeep = [...existingImages, ...existingVideos];
-        
+
         // Filtrer pour ne garder que les ressources qui appartiennent vraiment au projet
-        const validResourcesToKeep = resourcesToKeep.filter(url => 
+        const validResourcesToKeep = resourcesToKeep.filter(url =>
             currentResources.rows.some(resource => resource.url === url)
         );
 
-        const resourcesToDelete = currentResources.rows.filter(resource => 
+        const resourcesToDelete = currentResources.rows.filter(resource =>
             !validResourcesToKeep.includes(resource.url)
         );
 
@@ -343,7 +380,7 @@ class ProjetService {
                 try {
                     const filePath = path.join(__dirname, '..', resource.url);
                     if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
-                } catch (_) {}
+                } catch (_) { }
             }
             // Supprimer l'entrée en base
             await ressourceRepository.delete(resource.id, options);

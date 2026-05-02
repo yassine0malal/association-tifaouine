@@ -189,28 +189,45 @@ const uploadRessources = multer({
 //   'extraVideos'     (vidéos, max 10) → /videos/projets/{folder}/
 
 const projetCompletStorage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        const folder = cleanFolderName(req.body.titre_fr || 'projet_sans_titre');
+    destination: async (req, file, cb) => {
+        try {
+            // ✅ Utiliser l'ancien titre depuis la DB si c'est un UPDATE (id dans params)
+            let folderName;
 
-        if (file.fieldname === 'imagePrincipale') {
-            const dest = path.join(__dirname, `../data/ressources/images/projets/${folder}/principal`);
+            if (req.params.id) {
+                // C'est un UPDATE — on utilise le titre existant en DB
+                const projet = await Projet.findByPk(req.params.id, { attributes: ['titre_fr'] });
+                folderName = projet
+                    ? cleanFolderName(projet.titre_fr)
+                    : cleanFolderName(req.body.titre_fr || 'projet_sans_titre');
+            } else {
+                // C'est un CREATE — on utilise le titre du body
+                folderName = cleanFolderName(req.body.titre_fr || 'projet_sans_titre');
+            }
+
+            if (file.fieldname === 'imagePrincipale') {
+                const dest = path.join(__dirname, `../data/ressources/images/projets/${folderName}/principal`);
+                ensureDir(dest);
+                req._principalRelUrl = `/data/ressources/images/projets/${folderName}/principal`;
+                return cb(null, dest);
+            }
+
+            if (file.fieldname === 'extraImages') {
+                const dest = path.join(__dirname, `../data/ressources/images/projets/${folderName}/galerie`);
+                ensureDir(dest);
+                if (!req._galerieRelUrl) req._galerieRelUrl = `/data/ressources/images/projets/${folderName}/galerie`;
+                return cb(null, dest);
+            }
+
+            // extraVideos
+            const dest = path.join(__dirname, `../data/ressources/videos/projets/${folderName}`);
             ensureDir(dest);
-            req._principalRelUrl = `/data/ressources/images/projets/${folder}/principal`;
-            return cb(null, dest);
-        }
+            if (!req._videosRelUrl) req._videosRelUrl = `/data/ressources/videos/projets/${folderName}`;
+            cb(null, dest);
 
-        if (file.fieldname === 'extraImages') {
-            const dest = path.join(__dirname, `../data/ressources/images/projets/${folder}/galerie`);
-            ensureDir(dest);
-            if (!req._galerieRelUrl) req._galerieRelUrl = `/data/ressources/images/projets/${folder}/galerie`;
-            return cb(null, dest);
+        } catch (err) {
+            cb(err);
         }
-
-        // extraVideos
-        const dest = path.join(__dirname, `../data/ressources/videos/projets/${folder}`);
-        ensureDir(dest);
-        if (!req._videosRelUrl) req._videosRelUrl = `/data/ressources/videos/projets/${folder}`;
-        cb(null, dest);
     },
     filename: (req, file, cb) => {
         const ext    = path.extname(file.originalname);
@@ -229,7 +246,7 @@ const projetCompletFilter = (req, file, cb) => {
 const uploadProjetComplet = multer({
     storage: projetCompletStorage,
     fileFilter: projetCompletFilter,
-    limits: { fileSize: 200 * 1024 * 1024 } // 200MB pour supporter les vidéos
+    limits: { fileSize: 400 * 1024 * 1024 } // pour supporter les vidéos
 }).fields([
     { name: 'imagePrincipale', maxCount: 1  },
     { name: 'extraImages',     maxCount: 20 },

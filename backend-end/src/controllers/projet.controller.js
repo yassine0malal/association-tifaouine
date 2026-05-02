@@ -55,7 +55,7 @@ class ProjetController {
             const result = await projetService.getAllProjetsForAdmin({ domaine_id, statut, limit, offset });
             const rows = result.rows.map(p => toProjetAdminListDTO(p.toJSON(), lang));
             return res.status(200).json({
-                success:      true,
+                success: true,
                 total_budget: result.total_budget,
                 ...buildPaginatedResponse({ count: result.count, rows }, page, limit)
             });
@@ -99,12 +99,12 @@ class ProjetController {
             const result = await projetService.getProjetImages(req.params.id, { limit, offset });
             const totalPages = Math.ceil(result.count / limit);
             return res.status(200).json({
-                success:      true,
-                images:       result.rows.map(img => ({ id: img.id, src: img.url, alt: img[`titre_${lang}`] || img.titre_fr || '' })),
-                currentPage:  page,
+                success: true,
+                images: result.rows.map(img => ({ id: img.id, src: img.url, alt: img[`titre_${lang}`] || img.titre_fr || '' })),
+                currentPage: page,
                 totalPages,
-                nextPage:     page < totalPages ? page + 1 : null,
-                prevPage:     page > 1 ? page - 1 : 0,
+                nextPage: page < totalPages ? page + 1 : null,
+                prevPage: page > 1 ? page - 1 : 0,
                 itemsPerPage: limit
             });
         } catch (error) {
@@ -142,7 +142,7 @@ class ProjetController {
             return res.status(201).json({ success: true, message: "Projet créé avec succès", data: nvProjet });
         } catch (error) {
             if (req.file && req.file.path && fs.existsSync(req.file.path)) {
-                try { fs.unlinkSync(req.file.path); } catch (_) {}
+                try { fs.unlinkSync(req.file.path); } catch (_) { }
             }
             return res.status(400).json({ success: false, message: "Erreur lors de la création du projet", error: error.message });
         }
@@ -155,9 +155,9 @@ class ProjetController {
      */
     async createComplet(req, res) {
         const principalFiles = req.files?.['imagePrincipale'] || [];
-        const extraFiles     = req.files?.['extraImages']     || [];
-        const videoFiles     = req.files?.['extraVideos']     || [];
-        const principalFile  = principalFiles[0] || null;
+        const extraFiles = req.files?.['extraImages'] || [];
+        const videoFiles = req.files?.['extraVideos'] || [];
+        const principalFile = principalFiles[0] || null;
 
         try {
             const nvProjet = await projetService.createProjetComplet(
@@ -165,21 +165,21 @@ class ProjetController {
                 principalFile,
                 req._principalRelUrl || null,
                 extraFiles,
-                req._galerieRelUrl   || null,
+                req._galerieRelUrl || null,
                 videoFiles,
-                req._videosRelUrl    || null
+                req._videosRelUrl || null
             );
             const nbFichiers = extraFiles.length + videoFiles.length;
             return res.status(201).json({
                 success: true,
                 message: `Projet créé avec succès${nbFichiers > 0 ? ` (${nbFichiers} fichier(s) ajouté(s))` : ''}`,
-                data:    nvProjet
+                data: nvProjet
             });
         } catch (error) {
             const allFiles = [...principalFiles, ...extraFiles, ...videoFiles];
             for (const file of allFiles) {
                 if (file.path && fs.existsSync(file.path)) {
-                    try { fs.unlinkSync(file.path); } catch (_) {}
+                    try { fs.unlinkSync(file.path); } catch (_) { }
                 }
             }
             return res.status(400).json({ success: false, message: "Erreur lors de la création du projet", error: error.message });
@@ -198,7 +198,7 @@ class ProjetController {
             return res.status(200).json({ success: true, message: "Projet mis à jour avec succès", data: misAjour });
         } catch (error) {
             if (req.file && req.file.path && fs.existsSync(req.file.path)) {
-                try { fs.unlinkSync(req.file.path); } catch (_) {}
+                try { fs.unlinkSync(req.file.path); } catch (_) { }
             }
             return res.status(error.message.includes('introuvable') ? 404 : 400).json({ success: false, message: "Erreur lors de la mise à jour du projet", error: error.message });
         }
@@ -224,30 +224,73 @@ class ProjetController {
      */
     async updateComplet(req, res) {
         const principalFiles = req.files?.['imagePrincipale'] || [];
-        const extraFiles     = req.files?.['extraImages']     || [];
-        const videoFiles     = req.files?.['extraVideos']     || [];
-        const principalFile  = principalFiles[0] || null;
+        const extraFiles = req.files?.['extraImages'] || [];
+        const videoFiles = req.files?.['extraVideos'] || [];
+        const principalFile = principalFiles[0] || null;
+
+        // console.log("existingImagePrincipale :", req.body.existingImagePrincipale);
+        // console.log("existingExtraImages     :", req.body['existingExtraImages[]']);
+        // console.log("existingVideos          :", req.body['existingVideos[]']);
+        // console.log("Fichier principal       :", req.files?.['imagePrincipale']?.[0]?.filename);
 
         try {
-            // Traiter les données des ressources existantes
-            const processedData = this._processExistingResourcesData(req.body);
-            
+            // 1. Clone req.body so we don't lose any text fields (titre, description, etc.)
+            const dataToUpdate = { ...req.body };
+
+            // 2. Normalize arrays from FormData (Handle the '[]' suffix and single-string vs array issue)
+
+            // Partenariats
+            if (req.body['partenariat_ids[]']) {
+                dataToUpdate.partenariat_ids = Array.isArray(req.body['partenariat_ids[]'])
+                    ? req.body['partenariat_ids[]']
+                    : [req.body['partenariat_ids[]']];
+                delete dataToUpdate['partenariat_ids[]'];
+            }
+
+            // Existing Extra Images
+            if (req.body['existingExtraImages[]']) {
+                dataToUpdate.existingExtraImages = Array.isArray(req.body['existingExtraImages[]'])
+                    ? req.body['existingExtraImages[]']
+                    : [req.body['existingExtraImages[]']];
+                delete dataToUpdate['existingExtraImages[]'];
+            } else {
+                dataToUpdate.existingExtraImages = []; // Ensure it's always an array
+            }
+
+            // Existing Videos
+            if (req.body['existingVideos[]']) {
+                dataToUpdate.existingVideos = Array.isArray(req.body['existingVideos[]'])
+                    ? req.body['existingVideos[]']
+                    : [req.body['existingVideos[]']];
+                delete dataToUpdate['existingVideos[]'];
+            } else {
+                dataToUpdate.existingVideos = [];
+            }
+
+            // 3. (Optional) If you still need your custom processing method, pass the normalized data
+            const processedData = this._processExistingResourcesData ?
+                this._processExistingResourcesData(dataToUpdate) : dataToUpdate;
+
+            // 4. Send ALL data (text fields + normalized existing media) to the service
             const misAjour = await projetService.updateProjetComplet(
                 req.params.id,
-                processedData,
+                processedData, // This now contains all text fields AND existing images/videos
                 principalFile,
                 req._principalRelUrl || null,
                 extraFiles,
-                req._galerieRelUrl   || null,
+                req._galerieRelUrl || null,
                 videoFiles,
-                req._videosRelUrl    || null
+                req._videosRelUrl || null
             );
+
             return res.status(200).json({ success: true, message: "Projet mis à jour avec succès", data: misAjour });
+
         } catch (error) {
+            // Cleanup uploaded files on error
             const allFiles = [...principalFiles, ...extraFiles, ...videoFiles];
             for (const file of allFiles) {
                 if (file.path && fs.existsSync(file.path)) {
-                    try { fs.unlinkSync(file.path); } catch (_) {}
+                    try { fs.unlinkSync(file.path); } catch (_) { }
                 }
             }
             const status = error.message.includes('introuvable') ? 404 : 400;

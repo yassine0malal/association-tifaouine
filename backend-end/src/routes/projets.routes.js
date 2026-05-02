@@ -32,9 +32,9 @@ router.use(isAdmin);
  * @desc    Créer un nouveau projet
  */
 router.post(
-    '/', 
-    uploadProjetPrincipal, 
-    validate(createProjetSchema), 
+    '/',
+    uploadProjetPrincipal,
+    validate(createProjetSchema),
     projetController.create.bind(projetController)
 );
 
@@ -54,10 +54,39 @@ router.post(
  * @route   PUT /api/projets/complet/:id
  * @desc    Mettre à jour un projet complet (champs + fichiers optionnels)
  */
+// routes/projet.routes.js
 router.put(
     '/complet/:id',
     uploadProjetComplet,
+
+    // ✅ Sauvegarder AVANT que Joi ne touche req.body
+    (req, res, next) => {
+        req._existingMedia = {
+            existingImagePrincipale: req.body['existingImagePrincipale'] || null,
+            existingExtraImages: req.body['existingExtraImages[]']
+                ? (Array.isArray(req.body['existingExtraImages[]'])
+                    ? req.body['existingExtraImages[]']
+                    : [req.body['existingExtraImages[]']])
+                : [],
+            existingVideos: req.body['existingVideos[]']
+                ? (Array.isArray(req.body['existingVideos[]'])
+                    ? req.body['existingVideos[]']
+                    : [req.body['existingVideos[]']])
+                : [],
+        };
+        next();
+    },
+
     validate(updateProjetSchema),
+
+    // ✅ Réinjecter après validation
+    (req, res, next) => {
+        req.body.existingImagePrincipale = req._existingMedia.existingImagePrincipale;
+        req.body.existingExtraImages = req._existingMedia.existingExtraImages;
+        req.body.existingVideos = req._existingMedia.existingVideos;
+        next();
+    },
+
     projetController.updateComplet.bind(projetController)
 );
 
@@ -72,9 +101,9 @@ router.delete('/complet/:id', projetController.deleteComplet.bind(projetControll
  * @desc    Mettre à jour un projet
  */
 router.put(
-    '/:id', 
-    uploadProjetPrincipal, 
-    validate(updateProjetSchema), 
+    '/:id',
+    uploadProjetPrincipal,
+    validate(updateProjetSchema),
     projetController.update.bind(projetController)
 );
 

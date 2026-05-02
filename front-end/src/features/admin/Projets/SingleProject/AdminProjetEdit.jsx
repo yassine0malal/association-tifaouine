@@ -177,78 +177,7 @@ export default function AdminProjetEdit() {
 
     const removeVideo = (index) => setVideoFiles(prev => prev.filter((_, i) => i !== index));
 
-    // Soumission
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
-    //     setFormError("");
-
-    //     try {
-    //         const dataToSend = new FormData();
-
-    //         // 1. Standard Fields (Domaine, Titres, etc.)
-    //         Object.keys(formData).forEach(key => {
-    //             if (key === "partenariat_ids") {
-    //                 formData.partenariat_ids.forEach(id => dataToSend.append("partenariat_ids[]", id));
-    //             } else {
-    //                 dataToSend.append(key, formData[key]);
-    //             }
-    //         });
-
-    //         // 2. Main Image
-    //         if (imagePrincipale?.file) {
-    //             // New file selected
-    //             dataToSend.append("imagePrincipale", imagePrincipale.file);
-    //         } else if (imagePrincipale?.url) {
-    //             // Existing image: strip the base URL to send only the relative path
-    //             const cleanPath = imagePrincipale.url.replace(BASE_BACK_END_URL, "");
-    //             dataToSend.append("existingImagePrincipale", cleanPath);
-    //         }
-
-    //         // 3. Extra Images (Galerie)
-    //         extraImages.forEach(img => {
-    //             if (img.file) {
-    //                 // New binary file to upload
-    //                 dataToSend.append("extraImages", img.file);
-    //             } else if (img.url) {
-    //                 // Existing path: strip base URL so backend gets "/data/ressources/..."
-    //                 const cleanPath = img.url.replace(BASE_BACK_END_URL, "");
-    //                 dataToSend.append("existingExtraImages[]", cleanPath);
-    //             }
-    //         });
-
-    //         // 4. Videos
-    //         videoFiles.forEach(v => {
-    //             if (v.file) {
-    //                 // New binary file to upload
-    //                 dataToSend.append("extraVideos", v.file);
-    //             } else if (v.url) {
-    //                 // Existing path: strip base URL
-    //                 const cleanPath = v.url.replace(BASE_BACK_END_URL, "");
-    //                 dataToSend.append("existingVideos[]", cleanPath);
-    //             }
-    //         });
-
-    //         // --- Debugging Tip ---
-    //         // Note: Object.fromEntries(dataToSend) does NOT show multiple values for the same key (arrays).
-    //         // Use this loop instead to see everything being sent:
-    //         console.log("--- FormData Debug ---");
-    //         for (let [key, value] of dataToSend.entries()) {
-    //             console.log(`${key}:`, value);
-    //         }
-    //         debugger;
-    //         const response = await protectedApi.put(`/api/projets/complet/${id}`, dataToSend);
-
-    //         if (response.data.success) {
-    //             alert("Projet mis à jour avec succès !");
-    //             navigate("/admin/projets");
-    //         }
-    //     } catch (error) {
-    //         console.error("Erreur mise à jour :", error);
-    //         setFormError(error.response?.data?.message || "Une erreur est survenue lors de la mise à jour.");
-    //     }
-    // };
-
-
+    
 
 
 
