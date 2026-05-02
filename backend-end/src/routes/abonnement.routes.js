@@ -6,7 +6,7 @@ const { getCsrfToken, verifyCsrf } = require('../middlewares/csrf.middleware');
 const { verifyHoneypot } = require('../middlewares/honeypot.middleware');
 const { verifyToken, isAdmin } = require('../middlewares/auth.middleware');
 const { validate } = require('../middlewares/validate.middleware');
-const { abonnement, abonnesFilters } = require('../validations/abonnement.validation');
+const { abonnement, desabonnement, abonnesFilters } = require('../validations/abonnement.validation');
 
 // Rate limiting spécifique pour les abonnements
 const rateLimit = require('express-rate-limit');
@@ -67,7 +67,7 @@ router.post(
 router.post(
   '/desabonner',
   desabonnementLimiter,
-  validate(abonnement.fork(['email'], { override: true })), // Seulement l'email requis
+  validate(desabonnement), // Utilise le schéma spécifique pour le désabonnement
   abonnementController.desabonner.bind(abonnementController)
 );
 

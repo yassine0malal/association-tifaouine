@@ -21,6 +21,21 @@ const abonnement = Joi.object({
 });
 
 /**
+ * Validation pour le désabonnement (seulement email)
+ */
+const desabonnement = Joi.object({
+  email: Joi.string()
+    .email({ tlds: { allow: false } })
+    .max(255)
+    .required()
+    .messages({
+      'string.email': 'Format d\'email invalide',
+      'string.max': 'L\'email ne peut pas dépasser 255 caractères',
+      'any.required': 'L\'email est requis'
+    })
+});
+
+/**
  * Validation pour les filtres admin
  */
 const abonnesFilters = Joi.object({
@@ -56,5 +71,6 @@ const abonnesFilters = Joi.object({
 
 module.exports = {
   abonnement,
+  desabonnement,
   abonnesFilters
 };
