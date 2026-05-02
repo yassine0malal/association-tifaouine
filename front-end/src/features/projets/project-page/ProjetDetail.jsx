@@ -78,8 +78,8 @@ const ProjectPage = () => {
           </div>
         </div>
         <div className={styles.btns}>
-          <Link to="/projects">{t("project.vol_btn")}</Link>
-          <Link to="/projects">{t("project.donate_btn")}</Link>
+          <Link to={`/${currentLang}/join-us`}>{t("project.vol_btn")}</Link>
+          <Link to={`/${currentLang}/donate?project_id=${id}`}>{t("project.donate_btn")}</Link>
         </div>
 
         <div className={styles.devider}></div>

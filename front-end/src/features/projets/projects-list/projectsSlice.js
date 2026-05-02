@@ -9,7 +9,7 @@ export const fetchProjects = createAsyncThunk(
     return data;
   },
   {
-    condition: ({ page, filter }, { getState }) => {
+    condition: ({ page, lang , filter }, { getState }) => {
       const { projects } = getState();
       // 🚫 don't fetch if already loading
       if (projects.loading) return false;
@@ -34,10 +34,10 @@ export const fetchProjectsForSelect = createAsyncThunk(
     return data;
   },
   {
-    condition: ({ page, filter }, { getState }) => {
+    condition: ({lang}, { getState }) => {
       const { projects } = getState();
       // 🚫 don't fetch if already loading
-      if (projects.projectForSelect.loading) return false;
+      if (projects.projectsForSelect.loading) return false;
 
       // 🚫 don't fetch same page + same filter again
       // if (projects.currentPage === page && projects.currentFilter === filter) {
@@ -56,7 +56,7 @@ const projectsSlice = createSlice({
   name: "projects",
   initialState: {
     data: [],
-    projectForSelect:{
+    projectsForSelect:{
       data:[],
       loading:false,
       error:null
@@ -89,12 +89,13 @@ const projectsSlice = createSlice({
       // success
       .addCase(fetchProjects.fulfilled, (state, action) => {
         state.loading = false;
-        state.data = action.payload?.projects || [];
-
-        // state.currentPage = action.payload.currentPage;
-        state.totalPages = action.payload.totalPages;
-        state.nextPage = action.payload.nextPage;
-        state.prevPage = action.payload.prevPage;
+        state.data = action.payload?.data || [];
+        console.log(action.payload);
+        
+        state.currentPage = action.payload?.pagination?.page;
+        state.totalPages = action.payload?.pagination?.totalPages;
+        state.nextPage = action.payload?.pagination?.hasNext;
+        state.prevPage = action.payload?.pagination?.hasNext;
         state.itemsPerPage = action.payload.itemsPerPage;
       })
 
@@ -106,20 +107,20 @@ const projectsSlice = createSlice({
 
       // loading
       .addCase(fetchProjectsForSelect.pending, (state) => {
-        state.projectForSelect.loading = true;
-        state.projectForSelect.error = null;
+        state.projectsForSelect.loading = true;
+        state.projectsForSelect.error = null;
       })
 
       // success
       .addCase(fetchProjectsForSelect.fulfilled, (state, action) => {
-        state.projectForSelect.loading = false;
-        state.projectForSelect.data = action.payload?.projects || ""
+        state.projectsForSelect.loading = false;
+        state.projectsForSelect.data = action.payload?.projects || ""
       })
 
       // error
       .addCase(fetchProjectsForSelect.rejected, (state, action) => {
-        state.projectForSelect.loading = false;
-        state.projectForSelect.error = action?.error || "";
+        state.projectsForSelect.loading = false;
+        state.projectsForSelect.error = action?.error || "";
       });
   },
 });

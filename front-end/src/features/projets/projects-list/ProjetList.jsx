@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
@@ -16,6 +16,8 @@ import i18n from "../../../i18n";
 
 export default function Projets() {
   const dispatch = useDispatch();
+  const projectsRef = useRef(null);
+
   const { t } = useTranslation("projects");
 
   const {
@@ -38,15 +40,24 @@ export default function Projets() {
   const currentLang = i18n.language || "fr";
 
   useEffect(() => {
-    dispatch(fetchProjects({ page: currentPage, filter: currentFilter,lang: currentLang}));
+    dispatch(
+      fetchProjects({
+        page: currentPage,
+        filter: currentFilter,
+        lang: currentLang,
+      }),
+    );
   }, [dispatch, currentPage, currentFilter, currentLang]);
+
 
   // 🔹 Handlers
   const handleFilterChange = (filterKey) => {
+    projectsRef.current.scrollIntoView({ behavior: "smooth" });
     dispatch(setFilter(filterKey));
   };
 
   const handlePageChange = (page) => {
+    projectsRef.current.scrollIntoView({ behavior: "smooth" , block:"start"});
     dispatch(setPage(page));
   };
 
@@ -82,7 +93,7 @@ export default function Projets() {
     <div className={styles.projectList}>
       <PageHero heroImg={heroImg} title={t("projects.heroTitle")} />
 
-      <div className={styles.projectsContainer}>
+      <div className={styles.projectsContainer} ref={projectsRef}>
         <div className={styles.filterContainer}>
           <h2 className={styles.header}>{t("projects.viewProjects")}</h2>
           <FilterButtons
@@ -92,7 +103,9 @@ export default function Projets() {
           />
         </div>
 
-        <div className={styles.projects}>{renderProjects()}</div>
+        <div className={styles.projects}>
+          {renderProjects()}
+        </div>
 
         <Pagination
           currentPage={currentPage}

@@ -37,8 +37,8 @@
   text-align: center;
 }
 
-.donationPage section  > .subtitle,
-.donationPage section .container > .subtitle
+.donationPage section  .subtitle,
+.donationPage section .container .subtitle
 {
   color: var(--on-surface-variant);
   font-size: 1rem;

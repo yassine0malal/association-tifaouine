@@ -11,15 +11,13 @@ import email from "../../../assets/icons/email.png";
 import map from "../../../assets/icons/map.png";
 import logo from "../../../assets/images/logo.png";
 import { useTranslation } from "react-i18next";
+import { FaBarsStaggered } from "react-icons/fa6";
 
 export default function NavBar() {
   const { i18n, t } = useTranslation("nav");
   const currentLang = i18n.language;
   const [showAside, setShowAside] = useState(false);
 
-  const handleShowAside = () => {
-    setShowAside(!showAside);
-  };
   function changeLanguage(lang) {
     i18n.changeLanguage(lang);
   }
@@ -70,17 +68,28 @@ export default function NavBar() {
 
       <div className={styles.navBarSection}>
         <div className={styles.container}>
-          <div>
+          <div className={styles.logoContainer}>
             <Link to="/">
               <img src={logo} width="160px" />
             </Link>
           </div>
 
-          <div className={styles.link2}>
-            <Links />
+          <div className={`${styles.link2} ${showAside ? styles.open : ""}`}>
+            <Links setShowAside={setShowAside}/>
           </div>
 
-          <Link className={styles.participateBtn} to={`/${currentLang}/join-us`}>{t("nav.participate")}</Link>
+          <div className={styles.navBtns}>
+            <Link
+              className={styles.participateBtn}
+              to={`/${currentLang}/join-us`}
+            >
+              {t("nav.participate")}
+            </Link>
+
+            <div className={styles.sideBarMenuIcon} onClick={() => setShowAside(true)}>
+              <FaBarsStaggered />
+            </div>
+          </div>
         </div>
       </div>
     </>

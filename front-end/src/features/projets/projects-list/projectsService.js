@@ -1,5 +1,7 @@
 import axios from "axios";
-const apiUrl = import.meta.env.REACT_APP_API_URL;
+
+
+const BACK_END_API = import.meta.env.VITE_BASE_BACK_END_URL
 
 export const fetchProjectsAPI = async (
   page = 1,
@@ -7,7 +9,7 @@ export const fetchProjectsAPI = async (
   lang = "fr",
 ) => {
   try {
-    const res = await axios.get(`/api/${lang}/projects.json`);
+    const res = await axios.get(`${BACK_END_API}/api/${lang}/projets?page=${page}?statut=${filter}`);
     return res.data;
   } catch (err) {
     console.log(err);

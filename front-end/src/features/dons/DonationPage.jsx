@@ -141,10 +141,8 @@ function CurrentNeeds({ t }) {
   return (
     <section className={styles.currentNeeds}>
       {/* Section Header */}
-      <div className={styles.header}>
-        <h2 className={styles.title}>{t("currentNeeds.title")}</h2>
-        <p className={styles.subtitle}>{t("currentNeeds.subtitle")}</p>
-      </div>
+      <h2 className={styles.title}>{t("currentNeeds.title")}</h2>
+      <p className={styles.subtitle}>{t("currentNeeds.subtitle")}</p>
 
       {/* Need Cards */}
       <div className={styles.cardsGrid}>
@@ -628,9 +626,11 @@ function TransparencySection({ t }) {
 }
 function DonationFromSection({ t, i18n }) {
   const dispatch = useDispatch();
-  const dataForSelect = useSelector((state) => state.projects.projectsForSelect);
+  const dataForSelect = useSelector(
+    (state) => state.projects.projectsForSelect,
+  );
   console.log(dataForSelect);
-  
+
   const params = new URLSearchParams(window.location.search);
   const project_id = params.get("project_id");
   const lang = i18n.language;
@@ -746,12 +746,12 @@ function DonationFromSection({ t, i18n }) {
   };
 
   const validateProject = (project) => {
-    if (!project || project === "") {
-      return t("donationForm.validation.project.required");
-    }
-    if (project === "none") {
-      return t("donationForm.validation.project.invalid");
-    }
+    // if (!project || project === "") {
+    //   return t("donationForm.validation.project.required");
+    // }
+    // if (project === "none") {
+    //   return t("donationForm.validation.project.invalid");
+    // }
     return "";
   };
 
@@ -774,7 +774,6 @@ function DonationFromSection({ t, i18n }) {
     }
     return "";
   };
-
   const validateMessage = (message) => {
     if (message && message.length > 1000) {
       return t("donationForm.validation.message.maxLength");
