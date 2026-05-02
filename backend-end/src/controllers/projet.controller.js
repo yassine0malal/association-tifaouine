@@ -208,6 +208,19 @@ class ProjetController {
      * @route   PUT /api/projets/complet/:id
      * @desc    Mettre à jour un projet complet (champs + fichiers optionnels)
      * @access  Private (Admin)
+     * 
+     * @body_params:
+     * - existingImagePrincipale: string - URL de l'image principale à conserver
+     * - existingExtraImages: array|string - Tableau des URLs des images de galerie à conserver
+     * - existingVideos: array|string - Tableau des URLs des vidéos à conserver
+     * - imagePrincipale: file - Nouvelle image principale (optionnel)
+     * - extraImages: files[] - Nouvelles images à ajouter (optionnel)
+     * - extraVideos: files[] - Nouvelles vidéos à ajouter (optionnel)
+     * 
+     * @logic:
+     * 1. Garde seulement les ressources présentes dans les tableaux "existing"
+     * 2. Supprime physiquement et en DB les ressources non mentionnées
+     * 3. Ajoute les nouveaux fichiers uploadés
      */
     async updateComplet(req, res) {
         const principalFiles = req.files?.['imagePrincipale'] || [];
@@ -216,9 +229,12 @@ class ProjetController {
         const principalFile  = principalFiles[0] || null;
 
         try {
+            // Traiter les données des ressources existantes
+            const processedData = this._processExistingResourcesData(req.body);
+            
             const misAjour = await projetService.updateProjetComplet(
                 req.params.id,
-                req.body,
+                processedData,
                 principalFile,
                 req._principalRelUrl || null,
                 extraFiles,
@@ -237,6 +253,48 @@ class ProjetController {
             const status = error.message.includes('introuvable') ? 404 : 400;
             return res.status(status).json({ success: false, message: "Erreur lors de la mise à jour du projet", error: error.message });
         }
+    }
+
+    /**
+     * Méthode utilitaire pour traiter les données des ressources existantes
+     * Convertit les chaînes JSON en tableaux si nécessaire
+     */
+    _processExistingResourcesData(body) {
+        const processedData = { ...body };
+
+        // Traiter existingExtraImages
+        if (processedData.existingExtraImages) {
+            if (typeof processedData.existingExtraImages === 'string') {
+                try {
+                    processedData.existingExtraImages = JSON.parse(processedData.existingExtraImages);
+                } catch (e) {
+                    processedData.existingExtraImages = [];
+                }
+            }
+            if (!Array.isArray(processedData.existingExtraImages)) {
+                processedData.existingExtraImages = [];
+            }
+        } else {
+            processedData.existingExtraImages = [];
+        }
+
+        // Traiter existingVideos
+        if (processedData.existingVideos) {
+            if (typeof processedData.existingVideos === 'string') {
+                try {
+                    processedData.existingVideos = JSON.parse(processedData.existingVideos);
+                } catch (e) {
+                    processedData.existingVideos = [];
+                }
+            }
+            if (!Array.isArray(processedData.existingVideos)) {
+                processedData.existingVideos = [];
+            }
+        } else {
+            processedData.existingVideos = [];
+        }
+
+        return processedData;
     }
 
     /**
