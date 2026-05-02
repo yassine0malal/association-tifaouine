@@ -62,8 +62,8 @@ class MessageController {
      */
     async getAll(req, res) {
         try {
-            const { page, limit, offset } = req.pagination;
-            const result = await messageService.getAllMessages({ limit, offset });
+            // const { page, limit, offset } = req.pagination;
+            const result = await messageService.getAllMessages();
             return res.status(200).json({
                 success: true,
                 ...buildPaginatedResponse(result, page, limit)

@@ -204,9 +204,9 @@ export default function AdminProjetCreate() {
                 dataToSend.append("extraImages", img.file);
             });
             videoFiles.forEach((v) => {
-                dataToSend.append("videos", v.file);
+                dataToSend.append("extraVideos", v.file);
             });
-
+            console.log("se nd",dataToSend)
             const response = await protectedApi.post("/api/projets/complet", dataToSend);
             // ...
 

@@ -52,6 +52,7 @@ import AdminBenevoleDetail from "./features/admin/Benevoles/AdminBenevoleDetail.
 import AdminDonsList from "./features/admin/Dons/AdminDonsList.jsx";
 import AdminDonDetail from "./features/admin/Dons/AdminDonDetail.jsx";
 import AdminMembersList from "./features/admin/Members/AdminMembersList.jsx";
+import AdminProjetDetail from "./features/admin/Projets/SingleProject/AdminProjetDetail.jsx";
 
 createRoot(document.getElementById("root")).render(
   <Provider store={store}>
@@ -115,6 +116,7 @@ createRoot(document.getElementById("root")).render(
               {/* Projets */}
               <Route path="projets" element={<AdminProjetsList />} />
               <Route path="projets/create" element={<AdminProjetCreate />} />
+              <Route path="projets/:id" element={<AdminProjetDetail />} />
               <Route path="projets/:id/edit" element={<AdminProjetEdit />} />
 
               {/* Evenements */}

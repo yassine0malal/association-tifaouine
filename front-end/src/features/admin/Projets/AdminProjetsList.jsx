@@ -1,18 +1,20 @@
 
 
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styles from "./ProjectList.module.css";
 import Pagination from "../../../components/common/Pagination";
+import ConfirmPopup from "../../../components/popup/ConfirmPopup";
 
 const BASE_BACK_END_URL = import.meta.env.VITE_BASE_BACK_END_URL;
 
 // Import your Redux actions
-import { fetchProjectsAdmin, setPage, setFilter } from "./projectsSlice"
+import { fetchProjectsAdmin, setPage, setFilter, deleteProjectAdmin } from "./projectsSlice"
 
 export default function AdminProjetsList() {
+    const [popup, setPopup] = useState({ open: false, projectId: null, projectTitle: "" });
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -42,7 +44,44 @@ export default function AdminProjetsList() {
     };
     const totalBudget = projects?.reduce((sum, project) => sum + (project.budget || 0), 0);
 
+
+
+
+    const handleDelete = (id, title) => {
+        setPopup({ open: true, projectId: id, projectTitle: title });
+    };
+
+    const confirmDelete = async () => {
+        try {
+            await dispatch(deleteProjectAdmin(popup.projectId)).unwrap();
+            setPopup({ open: false, projectId: null, projectTitle: "" });
+
+            const newPage = projects.length === 1 && currentPage > 1
+                ? currentPage - 1
+                : currentPage;
+
+            if (projects.length === 1 && currentPage > 1) {
+                dispatch(setPage(newPage));
+            } else {
+                // ← Forcer le re-fetch sur la même page
+                dispatch(fetchProjectsAdmin({
+                    page: currentPage,
+                    filter: currentFilter,
+                    lang: "fr"
+                }));
+            }
+
+        } catch (err) {
+            alert("Erreur lors de la suppression : " + err);
+        }
+    };
+
+
+
     // console.warn("projects  ===> ", projects, "currentPage ===> ", currentPage)
+
+
+
     return (
         <div className={styles.container}>
             {/* --- HEADER --- */}
@@ -56,7 +95,7 @@ export default function AdminProjetsList() {
                 <div className={styles.statCard}>
                     <span className={styles.statLabel}>PROJETS TOTAUX</span>
                     <div className={styles.statValue}>
-                        {total}
+                        +{total}
                         <svg xmlns="http://www.w3.org/2000/svg" fill="#000000" width="20" height="20" viewBox="0 0 20 20">
                             <g>
                                 <path d="M2,9H9V2H2ZM4,4H7V7H4Zm7-2V9h7V2Zm5,5H13V4h3ZM2,18H9V11H2Zm2-5H7v3H4Zm7,5h7V11H11Zm2-5h3v3H13Z" />
@@ -66,7 +105,7 @@ export default function AdminProjetsList() {
                 </div>
                 <div className={styles.statCard}>
                     <span className={styles.statLabel}>BUDGET ALLOUÉ</span>
-                    <div className={styles.statValue}>${ totalBudget } MAD <span className={styles.subText}>Allocated</span></div>
+                    <div className={styles.statValue}>+{totalBudget} MAD <span className={styles.subText}>Allocated</span></div>
                 </div>
 
                 <div className={styles.statCard}>
@@ -99,7 +138,10 @@ export default function AdminProjetsList() {
                 ) : (
                     projects.map((project) => (
                         <div key={project.id} className={styles.card}>
-                            <div className={styles.imageContainer}>
+                            <div
+                                className={styles.imageContainer}
+                                onClick={() => navigate(`/admin/projets/${project.id}`)}
+                            >
                                 <img aria-label="loading" src={`${BASE_BACK_END_URL}${project.image_principal}`} alt={project.titre} className={styles.projectImg} />
                                 <span className={`${styles.badge} ${project.statut === 'TERMINÉ' ? styles.badgeDone : styles.badgeActive}`}>
                                     {project.statut}
@@ -114,7 +156,10 @@ export default function AdminProjetsList() {
                                                 <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" />
                                             </svg>
                                         </button>
-                                        <button className={`${styles.actionBtn} ${styles.deleteBtn}`}>
+                                        <button
+                                            className={`${styles.actionBtn} ${styles.deleteBtn}`}
+                                            onClick={() => handleDelete(project.id, project.titre)}
+                                        >
                                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                                 <path d="M3 6h18" />
                                                 <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
@@ -154,6 +199,18 @@ export default function AdminProjetsList() {
                 </svg>
                 AJOUTER UN PROJET
             </button>
+            <ConfirmPopup
+                isOpen={popup.open}
+                onClose={() => setPopup({ open: false, projectId: null, projectTitle: "" })}
+                onConfirm={confirmDelete}
+                variant="danger"
+                title="Supprimer ce projet ?"
+                description="Cette action est irréversible. Toutes les données associées seront définitivement supprimées."
+                detailLabel="Projet ciblé"
+                detailValue={popup.projectTitle}
+                confirmLabel="Supprimer"
+                cancelLabel="Annuler"
+            />
         </div>
     );
 }

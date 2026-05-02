@@ -6,11 +6,11 @@ class MessageRepository {
     }
 
     async findAll(filters = {}) {
-        const { limit, offset } = filters;
+        // const { limit, offset } = filters;
         return await MessageContact.findAndCountAll({
             order:  [['created_at', 'DESC']],
-            limit:  limit  || 9,
-            offset: offset || 0
+            // limit:  limit  || 9,
+            // offset: offset || 0
         });
     }
 
