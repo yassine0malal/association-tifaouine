@@ -8,6 +8,7 @@ const { createMessageSchema, updateMessageStatusSchema } = require('../validatio
 
 router.post('/', validate(createMessageSchema), messageController.create.bind(messageController));
 
+router.get('/stats', verifyToken, isAdmin, messageController.getStats.bind(messageController));
 router.get('/', verifyToken, isAdmin, paginate, messageController.getAll.bind(messageController));
 router.get('/:id', verifyToken, isAdmin, messageController.getById.bind(messageController));
 router.put('/:id', verifyToken, isAdmin, validate(updateMessageStatusSchema), messageController.updateStatus.bind(messageController));

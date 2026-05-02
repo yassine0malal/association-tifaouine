@@ -20,7 +20,7 @@ const MessageContact = sequelize.define('MessageContact', {
         }
     },
     objet: {
-        type: DataTypes.ENUM('DEMANDE_PARTENARIAT', 'DEMANDE_BENEVOLE', 'DEMANDE_MEMBRE', 'DEMANDE_SERVICE', 'DEMANDE_INFORMATION'),
+        type: DataTypes.ENUM('DEMANDE_PARTENARIAT', 'DEMANDE_SERVICE', 'DEMANDE_INFORMATION'),
         allowNull: false,
     },
     message: {
