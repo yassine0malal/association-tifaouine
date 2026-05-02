@@ -262,6 +262,18 @@ class ProjetController {
     _processExistingResourcesData(body) {
         const processedData = { ...body };
 
+        // Traiter existingImagePrincipale
+        if (processedData.existingImagePrincipale) {
+            // S'assurer que c'est une string non vide
+            if (typeof processedData.existingImagePrincipale === 'string' && processedData.existingImagePrincipale.trim() !== '') {
+                processedData.existingImagePrincipale = processedData.existingImagePrincipale.trim();
+            } else {
+                processedData.existingImagePrincipale = null;
+            }
+        } else {
+            processedData.existingImagePrincipale = null;
+        }
+
         // Traiter existingExtraImages
         if (processedData.existingExtraImages) {
             if (typeof processedData.existingExtraImages === 'string') {
