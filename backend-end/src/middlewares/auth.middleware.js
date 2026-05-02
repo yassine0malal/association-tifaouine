@@ -9,6 +9,8 @@ const verifyToken = async (req, res, next) => {
         const token = req.cookies?.accessToken;
 
         if (!token) {
+                    console.log("adddmin")
+
             return res.status(401).json({
                 success: false,
                 message: 'Accès non autorisé : Token manquant'

@@ -253,7 +253,6 @@ export default function AdminProjetEdit() {
 
 
 
-    // 3. ✅ Modifier handleSubmit — afficher le popup au lieu d'envoyer directement
 
 
     const handleSubmit = async (e) => {
@@ -286,14 +285,13 @@ export default function AdminProjetEdit() {
             if (v.file) dataToSend.append("extraVideos", v.file);
             else if (v.url) dataToSend.append("existingVideos[]", v.url.replace(BASE_BACK_END_URL, ""));
         });
+        setPendingData(dataToSend);
+        setSavePopup(true);
         console.log("--- FormData Debug ---");
         for (let [key, value] of dataToSend.entries()) {
             console.log(`${key}:`, value);
         }
         debugger;
-        // ✅ Stocker et ouvrir le popup au lieu d'envoyer
-        setPendingData(dataToSend);
-        setSavePopup(true);
     };
 
     // ✅ Envoi réel après confirmation

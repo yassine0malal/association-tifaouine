@@ -1,12 +1,18 @@
-import axios from "axios";
-const VITE_BASE_BACK_END_URL = import.meta.env.VITE_BASE_BACK_END_URL;
+import { protectedApi } from "../Login/authService";
 
 export const fetchAdminContactAPI = async () => {
-    const res = await axios.get(`${VITE_BASE_BACK_END_URL}/api/messages`);
-    return res.data; 
+    const res = await protectedApi.get(`/api/messages`);
+    console.info(res.data)
+    return res.data;
 };
 
 export const deleteContactAPI = async (id) => {
-    const res = await axios.delete(`${VITE_BASE_BACK_END_URL}/api/fr/contacts/${id}`);
+    const res = await protectedApi.delete(`/api/messages/${id}`);
+    return res.data;
+};
+
+// On ajoute le payload { lu } pour que le backend sache quoi modifier
+export const updateContactStatusAPI = async (id, lu) => {
+    const res = await protectedApi.put(`/api/messages/${id}`, { lu });
     return res.data;
 };
