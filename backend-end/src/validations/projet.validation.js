@@ -94,4 +94,33 @@ const updateProjetSchema = Joi.object({
 }).options({ allowUnknown: true }) 
   .min(1);
 
-module.exports = { createProjetSchema, createProjetCompletSchema, updateProjetSchema, STATUT_MAP };
+const updateProjetCompletSchema = Joi.object({
+    domaine_id:              Joi.number().integer().optional(),
+    titre_fr:                Joi.string().min(2).max(255).optional(),
+    titre_ar:                Joi.string().min(2).max(255).optional(),
+    titre_en:                Joi.string().min(2).max(255).optional(),
+    description_fr:          Joi.string().optional().allow('', null),
+    description_ar:          Joi.string().optional().allow('', null),
+    description_en:          Joi.string().optional().allow('', null),
+    statut:                  Joi.string().valid(...Object.keys(STATUT_MAP)).optional(),
+    localisation:            Joi.string().max(150).optional().allow('', null),
+    nb_beneficiaires:        Joi.number().integer().min(0).optional(),
+    date_debut:              Joi.date().iso().optional().allow(null),
+    date_fin:                Joi.date().iso().optional().allow(null),
+    budget:                  Joi.number().precision(2).optional(),
+    partenariat_ids:         Joi.alternatives().try(
+        Joi.array().items(Joi.number().integer()),
+        Joi.number().integer()
+    ).optional(),
+    existingImagePrincipale: Joi.string().optional().allow('', null),
+    existingExtraImages:     Joi.alternatives().try(
+        Joi.array().items(Joi.string()),
+        Joi.string()
+    ).optional().default([]),
+    existingVideos:          Joi.alternatives().try(
+        Joi.array().items(Joi.string()),
+        Joi.string()
+    ).optional().default([])
+}).min(1);
+
+module.exports = { createProjetSchema, createProjetCompletSchema, updateProjetSchema, updateProjetCompletSchema, STATUT_MAP };

@@ -4,8 +4,8 @@ const projetController = require('../controllers/projet.controller');
 const { verifyToken, isAdmin } = require('../middlewares/auth.middleware');
 const { validate } = require('../middlewares/validate.middleware');
 const { paginate } = require('../middlewares/pagination.middleware');
-const { uploadProjetPrincipal, uploadProjetComplet } = require('../middlewares/upload.middleware');
-const { createProjetSchema, createProjetCompletSchema, updateProjetSchema } = require('../validations/projet.validation');
+const { uploadProjetPrincipal, uploadProjetComplet, uploadProjetCompletUpdate } = require('../middlewares/upload.middleware');
+const { createProjetSchema, createProjetCompletSchema, updateProjetSchema, updateProjetCompletSchema } = require('../validations/projet.validation');
 
 router.get('/', paginate, projetController.getAll.bind(projetController));
 
@@ -57,36 +57,8 @@ router.post(
 // routes/projet.routes.js
 router.put(
     '/complet/:id',
-    uploadProjetComplet,
-
-    // ✅ Sauvegarder AVANT que Joi ne touche req.body
-    (req, res, next) => {
-        req._existingMedia = {
-            existingImagePrincipale: req.body['existingImagePrincipale'] || null,
-            existingExtraImages: req.body['existingExtraImages[]']
-                ? (Array.isArray(req.body['existingExtraImages[]'])
-                    ? req.body['existingExtraImages[]']
-                    : [req.body['existingExtraImages[]']])
-                : [],
-            existingVideos: req.body['existingVideos[]']
-                ? (Array.isArray(req.body['existingVideos[]'])
-                    ? req.body['existingVideos[]']
-                    : [req.body['existingVideos[]']])
-                : [],
-        };
-        next();
-    },
-
-    validate(updateProjetSchema),
-
-    // ✅ Réinjecter après validation
-    (req, res, next) => {
-        req.body.existingImagePrincipale = req._existingMedia.existingImagePrincipale;
-        req.body.existingExtraImages = req._existingMedia.existingExtraImages;
-        req.body.existingVideos = req._existingMedia.existingVideos;
-        next();
-    },
-
+    uploadProjetCompletUpdate,
+    validate(updateProjetCompletSchema),
     projetController.updateComplet.bind(projetController)
 );
 
