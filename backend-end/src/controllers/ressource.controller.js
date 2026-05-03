@@ -134,16 +134,62 @@ class RessourceController {
     /**
      * @route   PUT /api/ressources/:id
      * @desc    Mettre à jour les métadonnées (Admin)
+     *          Peut aussi mettre à jour les fichiers (url et/ou image_couverture)
      */
     async update(req, res) {
         try {
-            const misAjour = await ressourceService.updateRessource(req.params.id, req.body);
+            const mainFile = (req.files && req.files['files']) ? req.files['files'][0] : null;
+            const couvertureFile = (req.files && req.files['image_couverture'])
+                ? req.files['image_couverture'][0]
+                : null;
+
+            // Récupérer la ressource actuelle
+            const ressourceActuelle = await ressourceService.getRessourceById(req.params.id);
+
+            // Préparer les données de mise à jour
+            const updateData = { ...req.body };
+
+            // Si un nouveau fichier principal est fourni
+            if (mainFile) {
+                const urlEntry = req.uploadedUrls ? req.uploadedUrls[mainFile._urlIndex] : null;
+                if (urlEntry) {
+                    updateData.url = `${urlEntry.relUrl}/${mainFile.filename}`;
+                    updateData.nom_original = mainFile.originalname;
+                    
+                    // Marquer l'ancien fichier pour suppression
+                    updateData._oldUrl = ressourceActuelle.url;
+                }
+            }
+
+            // Si une nouvelle image de couverture est fournie
+            if (couvertureFile) {
+                updateData.image_couverture = `${req._couvertureRelUrl}/${couvertureFile.filename}`;
+                
+                // Marquer l'ancienne couverture pour suppression
+                updateData._oldImageCouverture = ressourceActuelle.image_couverture;
+            }
+
+            // Mettre à jour la ressource
+            const misAjour = await ressourceService.updateRessource(req.params.id, updateData);
+
             return res.status(200).json({
                 success: true,
                 message: "Ressource mise à jour avec succès",
                 data: misAjour
             });
         } catch (error) {
+            // Nettoyer les fichiers uploadés en cas d'erreur
+            if (req.files) {
+                const allFiles = [
+                    ...(req.files['files'] || []),
+                    ...(req.files['image_couverture'] || [])
+                ];
+                for (const file of allFiles) {
+                    if (file.path && fs.existsSync(file.path)) {
+                        try { fs.unlinkSync(file.path); } catch (_) {}
+                    }
+                }
+            }
             return res.status(400).json({
                 success: false,
                 message: error.message

@@ -83,13 +83,76 @@ class RessourceService {
     }
 
     async updateRessource(id, updateData) {
+        console.log('[DEBUG SERVICE UPDATE] ID:', id);
+        console.log('[DEBUG SERVICE UPDATE] Données reçues:', updateData);
+
         const ressource = await ressourceRepository.findById(id);
         if (!ressource) throw new Error("Ressource introuvable");
+
+        // Extraire les marqueurs de suppression d'anciens fichiers
+        const oldUrl = updateData._oldUrl;
+        const oldImageCouverture = updateData._oldImageCouverture;
+
+        // Filtrer les champs null et les champs internes
+        const cleanedData = {};
+        for (const [key, value] of Object.entries(updateData)) {
+            // Ignorer les champs internes (commençant par _)
+            if (key.startsWith('_')) continue;
+            
+            // Ignorer les champs null, undefined ou vides
+            if (value !== null && value !== undefined && value !== '') {
+                cleanedData[key] = value;
+            }
+        }
+
+        console.log('[DEBUG SERVICE UPDATE] Données filtrées (sans null):', cleanedData);
+
+        if (Object.keys(cleanedData).length === 0) {
+            console.warn('[DEBUG SERVICE UPDATE] Aucune donnée à mettre à jour');
+            throw new Error("Aucune donnée valide à mettre à jour");
+        }
+
         return await sequelize.transaction(async (t) => {
-            if (updateData.is_featured) {
+            // Si is_featured est true, retirer le featured des autres
+            if (cleanedData.is_featured) {
+                console.log('[DEBUG SERVICE UPDATE] Unsetting previous featured');
                 await ressourceRepository.unsetAllFeatured({ transaction: t });
             }
-            return await ressourceRepository.update(id, updateData, { transaction: t });
+
+            console.log('[DEBUG SERVICE UPDATE] Mise à jour avec:', cleanedData);
+            const updated = await ressourceRepository.update(id, cleanedData, { transaction: t });
+            console.log('[DEBUG SERVICE UPDATE] Ressource mise à jour');
+
+            // Supprimer les anciens fichiers APRÈS la mise à jour réussie
+            if (oldUrl) {
+                try {
+                    const oldFilePath = path.join(__dirname, '..', oldUrl);
+                    console.log('[DEBUG SERVICE UPDATE] Suppression ancien fichier:', oldFilePath);
+                    
+                    if (fs.existsSync(oldFilePath)) {
+                        fs.unlinkSync(oldFilePath);
+                        console.log('[DEBUG SERVICE UPDATE] Ancien fichier supprimé');
+                    }
+                } catch (err) {
+                    console.error('[ERROR SERVICE UPDATE] Erreur suppression ancien fichier:', err.message);
+                }
+            }
+
+            if (oldImageCouverture) {
+                try {
+                    const oldCouverturePath = path.join(__dirname, '..', oldImageCouverture);
+                    console.log('[DEBUG SERVICE UPDATE] Suppression ancienne couverture:', oldCouverturePath);
+                    
+                    if (fs.existsSync(oldCouverturePath)) {
+                        fs.unlinkSync(oldCouverturePath);
+                        console.log('[DEBUG SERVICE UPDATE] Ancienne couverture supprimée');
+                    }
+                } catch (err) {
+                    console.error('[ERROR SERVICE UPDATE] Erreur suppression ancienne couverture:', err.message);
+                }
+            }
+
+            return updated;
         });
     }
 

@@ -43,12 +43,13 @@ router.post(
 
 /**
  * @route   PUT /api/ressources/:id
- * @desc    Mise à jour des métadonnées d'une ressource
+ * @desc    Mise à jour des métadonnées et/ou fichiers d'une ressource
  * @access  Admin
 */
 
 router.put(
     '/:id', 
+    uploadRessources,
     validate(updateRessourceSchema), 
     ressourceController.update.bind(ressourceController)
 );
