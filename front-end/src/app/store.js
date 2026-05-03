@@ -8,6 +8,7 @@ import projectImagesReducer from '../features/projets/project-gallery/projectIma
 import ressourceReducer from '../features/ressources/ressourcesSlice'
 import membres from '../features/public/about/membresSlice'
 import partenaires from '../features/public/about/partnerSlice'
+import adminPartnerSlice from '../features/admin/Partenaires/adminPartnerSlice'
 
 import eventsReducer from '../features/evenements/event-list/eventsSlice'
 import eventReducer from '../features/evenements/event-page/eventSlice'
@@ -33,6 +34,7 @@ export const store = configureStore({
         partenaires:partenaires,
         singleProject:projectSliceSingleAdminReducer,
         contacts:contactsReducer,
+        adminPartner:adminPartnerSlice
 
 
     },

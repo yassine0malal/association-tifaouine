@@ -41,9 +41,9 @@ import AdminEventEdit from "./features/admin/Evenements/AdminEventEdit.jsx";
 import AdminRessourcesList from "./features/admin/Ressources/AdminRessourcesList.jsx";
 import AdminRessourceCreate from "./features/admin/Ressources/AdminRessourceCreate.jsx";
 import AdminRessourceEdit from "./features/admin/Ressources/AdminRessourceEdit.jsx";
-import AdminPartenairesList from "./features/admin/Partenaires/AdminPartenairesList.jsx";
-import AdminPartenaireCreate from "./features/admin/Partenaires/AdminPartenaireCreate.jsx";
-import AdminPartenaireEdit from "./features/admin/Partenaires/AdminPartenaireEdit.jsx";
+import AdminPartenairesList from "./features/admin/Partenaires/AdminPartnerList.jsx";
+import AdminPartenaireCreate from "./features/admin/Partenaires/AdminPartnerCreate.jsx";
+import AdminPartenaireEdit from "./features/admin/Partenaires/AdminPartnerEdit.jsx";
 import AdminDomainesList from "./features/admin/Domaines/AdminDomainesList.jsx";
 import AdminDomaineCreate from "./features/admin/Domaines/AdminDomaineCreate.jsx";
 import AdminDomaineEdit from "./features/admin/Domaines/AdminDomaineEdit.jsx";
@@ -132,7 +132,7 @@ createRoot(document.getElementById("root")).render(
               {/* Partenaires */}
               <Route path="partenaires" element={<AdminPartenairesList />} />
               <Route path="partenaires/create" element={<AdminPartenaireCreate />} />
-              <Route path="partenaires/:id/edit" element={<AdminPartenaireEdit />} />
+              <Route path="partenaires/edit/:id" element={<AdminPartenaireEdit />} />
 
               {/* Domaines */}
               <Route path="domaines" element={<AdminDomainesList />} />

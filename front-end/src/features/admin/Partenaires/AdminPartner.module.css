@@ -1,0 +1,208 @@
+.container {
+    background-color: #FDF9F3; /* Fond beige très clair */
+    padding: 40px;
+    font-family: 'Inter', sans-serif;
+    color: #333;
+    min-height: 100vh;
+}
+
+.breadcrumb {
+    font-size: 14px;
+    color: #8D775F;
+    margin-bottom: 20px;
+}
+
+.breadcrumb .active {
+    font-weight: bold;
+    color: #B08D57;
+}
+
+.header h1 {
+    padding-top: 40px;
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    color: #1A1A1A;
+}
+
+.header p {
+    color: #666;
+    margin-bottom: 40px;
+}
+
+.sectionTitle {
+    font-size: 18px;
+    color: #A67C52;
+    margin: 30px 0 15px 0;
+    display: flex;
+    align-items: center;
+}
+
+.sectionTitle::before {
+    content: "";
+    display: inline-block;
+    width: 40px;
+    height: 4px;
+    background-color: #D4A373;
+    margin-right: 15px;
+    border-radius: 2px;
+}
+
+/* Cartes */
+.card, .editorialCard {
+    background-color: #F4F1EA;
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 25px;
+}
+
+.editorialCard.rtl * {
+    font-family: var(--ar-lang);
+}
+
+/* Zone d'Upload */
+.uploadZone {
+    margin-bottom: 20px;
+}
+
+.uploadBox {
+    border: 2px dashed #D1C9BC;
+    border-radius: 12px;
+    padding: 30px;
+    text-align: center;
+    color: #8D775F;
+    cursor: pointer;
+    position: relative;
+    transition: 0.3s;
+}
+
+.uploadBox:hover {
+    background-color: #EBE7DE;
+}
+
+.fileInput {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.uploadBox span {
+    font-size: 12px;
+    display: block;
+    margin-top: 5px;
+}
+
+/* Inputs & Labels */
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+.inputGroup label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #555;
+    margin-bottom: 8px;
+}
+
+.inputGroup input, .inputGroup textarea {
+    padding: 15px;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    background-color: #FFFFFF;
+    font-size: 15px;
+}
+
+.inputGroup textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* Badges de langue */
+.langBadgeFr, .langBadgeAr, .langBadgeEn {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.langBadgeFr span, .langBadgeAr span, .langBadgeEn span {
+    background: #F3D9B1;
+    color: #8D6E4E;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 10px;
+    margin-right: 10px;
+}
+
+.langBadgeAr span { margin-left: 10px; margin-right: 0; background: #8D6E4E; color: white; }
+
+/* Support RTL pour l'arabe */
+.rtl {
+    direction: rtl;
+}
+
+.rtl .inputGroup label {
+    text-align: right;
+}
+
+/* Boutons */
+.actions {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 40px;
+}
+
+.btnSave {
+    background-color: #006D1B; /* Vert forêt */
+    color: white;
+    border: none;
+    padding: 18px;
+    border-radius: 12px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.btnCancel {
+    background-color: transparent;
+    color: #8D6E4E;
+    border: 1px solid #F3D9B1;
+    padding: 15px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.charCount {
+    display: block;
+    text-align: right;
+    font-size: 0.8rem;
+    color: #666;
+    margin-top: 4px;
+}
+.rtl .charCount {
+    text-align: left;
+}
+
+.errorBanner {
+    background-color: #FFF0F0;
+    border: 1px solid #E0A0A0;
+    color: #B00020;
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    font-size: 14px;
+    line-height: 1.5;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}

@@ -13,7 +13,7 @@ const getMediaType = (filename) => {
 };
 
 const mediaFilter = (req, file, cb) => {
-    const allowed = /jpeg|jpg|png|webp|gif|mp4|webm|mov|mkv|avi|pdf|doc|docx|xls|xlsx/;
+    const allowed = /jpeg|jpg|png|svg|webp|gif|mp4|webm|mov|mkv|avi|pdf|doc|docx|xls|xlsx/;
     const ext = path.extname(file.originalname).toLowerCase();
     if (allowed.test(file.mimetype) || allowed.test(ext)) return cb(null, true);
     cb(new Error("Format non supporté. Accepté : images, vidéos, documents"), false);
