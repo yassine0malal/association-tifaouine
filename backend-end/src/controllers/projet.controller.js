@@ -247,25 +247,23 @@ class ProjetController {
                 delete dataToUpdate['partenariat_ids[]'];
             }
 
-            // Existing Extra Images
-            if (req.body['existingExtraImages[]']) {
-                dataToUpdate.existingExtraImages = Array.isArray(req.body['existingExtraImages[]'])
-                    ? req.body['existingExtraImages[]']
-                    : [req.body['existingExtraImages[]']];
-                delete dataToUpdate['existingExtraImages[]'];
+            // Existing Extra Images — supporte les deux formes : 'existingExtraImages[]' et 'existingExtraImages'
+            const rawExtraImages = req.body['existingExtraImages[]'] ?? req.body['existingExtraImages'];
+            if (rawExtraImages !== undefined) {
+                dataToUpdate.existingExtraImages = Array.isArray(rawExtraImages) ? rawExtraImages : [rawExtraImages];
             } else {
-                dataToUpdate.existingExtraImages = []; // Ensure it's always an array
+                dataToUpdate.existingExtraImages = [];
             }
+            delete dataToUpdate['existingExtraImages[]'];
 
-            // Existing Videos
-            if (req.body['existingVideos[]']) {
-                dataToUpdate.existingVideos = Array.isArray(req.body['existingVideos[]'])
-                    ? req.body['existingVideos[]']
-                    : [req.body['existingVideos[]']];
-                delete dataToUpdate['existingVideos[]'];
+            // Existing Videos — supporte les deux formes : 'existingVideos[]' et 'existingVideos'
+            const rawVideos = req.body['existingVideos[]'] ?? req.body['existingVideos'];
+            if (rawVideos !== undefined) {
+                dataToUpdate.existingVideos = Array.isArray(rawVideos) ? rawVideos : [rawVideos];
             } else {
                 dataToUpdate.existingVideos = [];
             }
+            delete dataToUpdate['existingVideos[]'];
 
             // 3. (Optional) If you still need your custom processing method, pass the normalized data
             const processedData = this._processExistingResourcesData ?
@@ -283,6 +281,11 @@ class ProjetController {
                 req._videosRelUrl || null
             );
 
+            console.log("=== [updateComplet] RESPONSE ===");
+            console.log("Projet mis à jour:", misAjour.id);
+            console.log("Image principale:", misAjour.image_principale);
+            console.log("Ressources associées:", misAjour.ressources?.length || 0);
+
             return res.status(200).json({ success: true, message: "Projet mis à jour avec succès", data: misAjour });
 
         } catch (error) {
@@ -293,6 +296,9 @@ class ProjetController {
                     try { fs.unlinkSync(file.path); } catch (_) { }
                 }
             }
+            console.error("=== [updateComplet] ERROR ===");
+            console.error("Message:", error.message);
+            console.error("Stack:", error.stack);
             const status = error.message.includes('introuvable') ? 404 : 400;
             return res.status(status).json({ success: false, message: "Erreur lors de la mise à jour du projet", error: error.message });
         }
@@ -318,35 +324,43 @@ class ProjetController {
         }
 
         // Traiter existingExtraImages
-        if (processedData.existingExtraImages) {
-            if (typeof processedData.existingExtraImages === 'string') {
+        // undefined = non envoyé → laisser undefined (le service ne touchera pas la galerie)
+        // null / '' → forcer []
+        // string JSON / array → parser normalement
+        if (processedData.existingExtraImages !== undefined) {
+            if (processedData.existingExtraImages === null || processedData.existingExtraImages === '') {
+                processedData.existingExtraImages = [];
+            } else if (typeof processedData.existingExtraImages === 'string') {
                 try {
                     processedData.existingExtraImages = JSON.parse(processedData.existingExtraImages);
                 } catch (e) {
                     processedData.existingExtraImages = [];
                 }
-            }
-            if (!Array.isArray(processedData.existingExtraImages)) {
+                if (!Array.isArray(processedData.existingExtraImages)) {
+                    processedData.existingExtraImages = [];
+                }
+            } else if (!Array.isArray(processedData.existingExtraImages)) {
                 processedData.existingExtraImages = [];
             }
-        } else {
-            processedData.existingExtraImages = [];
         }
 
         // Traiter existingVideos
-        if (processedData.existingVideos) {
-            if (typeof processedData.existingVideos === 'string') {
+        // undefined = non envoyé → laisser undefined (le service ne touchera pas les vidéos)
+        if (processedData.existingVideos !== undefined) {
+            if (processedData.existingVideos === null || processedData.existingVideos === '') {
+                processedData.existingVideos = [];
+            } else if (typeof processedData.existingVideos === 'string') {
                 try {
                     processedData.existingVideos = JSON.parse(processedData.existingVideos);
                 } catch (e) {
                     processedData.existingVideos = [];
                 }
-            }
-            if (!Array.isArray(processedData.existingVideos)) {
+                if (!Array.isArray(processedData.existingVideos)) {
+                    processedData.existingVideos = [];
+                }
+            } else if (!Array.isArray(processedData.existingVideos)) {
                 processedData.existingVideos = [];
             }
-        } else {
-            processedData.existingVideos = [];
         }
 
         return processedData;
