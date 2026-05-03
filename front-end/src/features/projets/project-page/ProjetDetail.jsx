@@ -7,24 +7,24 @@ import { useEffect } from "react";
 import { fetchProject } from "./projectSlice";
 import { div, p } from "framer-motion/client";
 import ProjectGallery from "../project-gallery/ProjectGallery";
-import Loader from "../../../components/common/Loader";
-import { useTranslation } from "react-i18next";
-import i18n from "../../../i18n";
 
 const ProjectPage = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const { data, loading, error } = useSelector((state) => state.project);
+
   const { title, description, img, status, meta } = data;
-  const { t } = useTranslation("project_page");
-  const currentLang = i18n.language || "fr";
 
   useEffect(() => {
-    dispatch(fetchProject({ id, lang: currentLang }));
-  }, [dispatch, id, currentLang]);
+    dispatch(fetchProject(id));
+  }, [dispatch, id]);
 
   if (loading) {
-    return <Loader />;
+    return (
+      <div className={styles.loaderContainer}>
+        <div className={styles.loader}></div>
+      </div>
+    );
   }
 
   if (!data) {
@@ -36,23 +36,17 @@ const ProjectPage = () => {
       <PageHero heroImg={heroImg} title={title} />
 
       <div className={styles.statusBar}>
-        <span>
-          {t("project.peopleHelped")} : {status.peopleHelped}
-        </span>
+        <span>PEOPLE HELPED : {status.peopleHelped}</span>
         <span className={styles.devider}></span>
-        <span>
-          {t("project.target_region")} : {status.targetRegion}
-        </span>
+        <span>TARGET REGION : {status.targetRegion}</span>
         <span className={styles.devider}></span>
-        <span>
-          {t("project.status")} : {status.projectStatus}
-        </span>
+        <span>STATUS : {status.projectStatus}</span>
       </div>
 
       <div className={styles.content}>
         <div className={styles.project}>
           <div className={styles.projectImage}>
-            <img src={img} alt="" aria-label="loading" />
+            <img src={img} alt="" aria-label="loading"/>
           </div>
 
           <div className={styles.details}>
@@ -61,25 +55,25 @@ const ProjectPage = () => {
 
             <div className={styles.metaBox}>
               <div>
-                <strong>{t("project.completion")} :</strong>
+                <strong>Completation :</strong>
                 {meta.completion}
               </div>
 
               <div>
-                <strong>{t("project.partners")} :</strong>
+                <strong>Partenaires :</strong>
                 {meta.partners}
               </div>
 
               <div>
-                <strong>{t("project.domain")} :</strong>
+                <strong>Domaine :</strong>
                 {meta.domain}
               </div>
             </div>
           </div>
         </div>
         <div className={styles.btns}>
-          <Link to="/projects">{t("project.vol_btn")}</Link>
-          <Link to="/projects">{t("project.donate_btn")}</Link>
+          <Link to="/projects">DEVENIR BÉNÉVOLE</Link>
+          <Link to="/projects">DONATE TO SIMILAR PROJECTS</Link>
         </div>
 
         <div className={styles.devider}></div>

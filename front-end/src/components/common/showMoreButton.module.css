@@ -26,6 +26,26 @@
   color: var(--accent);
   border: 2px solid var(--accent);
   padding: 10px 20px;
+  margin: 1.5rem 0;
+  position: relative;
+}
+
+/* Simple line through the button */
+.showMore::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent-border), var(--accent), var(--accent-border), transparent);
+  z-index: 0;
+}
+
+.showMore button {
+  background: var(--accent);
+  border: none;
+  padding: 6px 18px;
   border-radius: 20px;
   cursor: pointer;
   display: flex;
@@ -74,8 +94,39 @@
   width: 10px;
   height: 10px;
   color: white;
+  
+  gap: 8px;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  color: white;
+  transition: all 0.2s ease;
+  position: relative;
+  z-index: 1;
+  min-width: 100px;
+  justify-content: center;
 }
 
+.showMore button:hover {
+  background: var(--accent-border);
+  transform: translateY(-1px);
+}
+
+.showMore button:active {
+  transform: translateY(0);
+}
+
+/* Arrow icon */
+.showMore .arrowIcon {
+  transition: transform 0.2s ease;
+  width: 8px;
+  height: 8px;
+  color: white;
+}
+
+.showMore button:hover .arrowIcon {
+  transform: translateX(3px);
+}
 
 /* Loading state */
 .showMore button.loading {
@@ -97,6 +148,8 @@
   position: absolute;
   width: 18px;
   height: 18px;
+  width: 14px;
+  height: 14px;
   border: 2px solid rgba(255, 255, 255, 0.3);
   border-top-color: white;
   border-radius: 50%;
@@ -119,4 +172,5 @@
 .showMore button:focus {
   outline: none;
   /* box-shadow: 0 0 0 2px var(--accent-light); */
+  box-shadow: 0 0 0 2px var(--accent-light);
 }

@@ -1,34 +1,27 @@
 import styles from "./event-page.module.css";
 import heroImg from "../../../assets/images/projects_hero.jpg";
 import PageHero from "../../../components/common/PageHero";
-import locationIcon from "../../../assets/icons/location2.png";
-import dateStartIcon from "../../../assets/icons/date.png";
-import dateEndIcon from "../../../assets/icons/time.png";
-import eventImg from "../../../assets/images/event_img.jpeg";
+import locationIcon from "../../../assets/icons/location.png";
+import dateIcon from "../../../assets/icons/date.png";
 
 // swiper
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import { Link, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchEvent } from "./eventSlice";
-import Loader from "../../../components/common/Loader";
-import { useTranslation } from "react-i18next";
-import i18n from "../../../i18n";
+import { Link } from "react-router-dom";
+import { useState } from "react";
 
-function LastEvent({ id, img, title, date_start }) {
+function RelatedEvent() {
   return (
-    <Link to={`/evenement/${id}`} className={styles.event}>
+    <Link className={styles.event}>
       <div className={styles.image}>
-        <img src={img} alt="" aria-label="loading" />
+        <img src="https://picsum.photos/300/200" alt="" aria-label="loading"/>
       </div>
 
       <div className={styles.details}>
-        <h3>{title}</h3>
+        <h3>Hol of the event</h3>
         <p>
-          <img src={dateStartIcon} />
-          <span>{date_start}</span>
+          <img src={dateIcon} />
+          <span>10 Avril, 2023</span>
         </p>
       </div>
       <button>
@@ -52,84 +45,39 @@ function LastEvent({ id, img, title, date_start }) {
   );
 }
 
-function CommonEvent({ id, img , domain, title }) {
-  return (
-    <Link to={`/evenement/${id}`} className={styles.event}>
-      <div className={styles.image}>
-        <img src={img} aria-label="loading" />
-      </div>
-
-      <div className={styles.content}>
-        <p>{domain}</p>
-        <p>{title}</p>
-      </div>
-    </Link>
-  );
-}
-
 function EventPage() {
-
   const [currentImage, setCurrentImage] = useState(0);
-  const dispatch = useDispatch();
-  const { id } = useParams();
-  const { data, loading } = useSelector((state) => state.event);
-  const { t } = useTranslation("event_page");
-  const currentLang = i18n.language  || 'fr';
-  useEffect(() => {
-    dispatch(fetchEvent({ id, lang: currentLang }));
-  }, [dispatch, currentLang]);
 
-  const images = data?.images || [];
-  const LastEvents = data?.last_posts || [];
-  const commonEvents = data?.common_events || [];
-  
-
-  const renderLastEvents = () => {
-    return LastEvents.map((event) => (
-      <LastEvent key={event.id} {...event} />
-    ));
+  const generateImages = (max) => {
+    return Array.from(
+      { length: max },
+      (_, i) => `https://picsum.photos/900/600?random=${i}`,
+    );
   };
 
-  const renderCommonEvents = () => {
-    return commonEvents.map((event) => (
-      <CommonEvent key={event.id} {...event} />
-    ));
-  };
+  const images = generateImages(10);
 
-  console.log(renderCommonEvents());
-  
-
-  const renderImages = () => {
+  const swiperImages = () => {
     return images.map((image, index) => (
       <SwiperSlide
         onClick={() => setCurrentImage(index)}
         className={`${styles.slide} ${index === currentImage ? styles.active : ""}`}
         key={index}
       >
-        <img src={image.src} alt="" aria-label="loading" />
+        <img src={image} alt="" aria-label="loading"/>
       </SwiperSlide>
     ));
   };
 
-  console.log(data);
-  
-  if (loading) {
-    return <Loader />;
-  }
-
-  if (!data) {
-    return null;
-  }
-
   return (
     <div className={styles.eventPage}>
-      <PageHero title={data.title} heroImg={heroImg} />
+      <PageHero title="Details de l’evenment" heroImg={heroImg} />
 
       <div className={styles.eventContentContainer}>
-        <section className={styles.row1}>
+        <div className={styles.row1}>
           <div className={styles.imagesContainer}>
             <div className={styles.mainImage}>
-              <img src={images[currentImage]?.src || ''} aria-label="loading" />
+              <img src={images[currentImage]} aria-label="loading" />
             </div>
             <div className={styles.imageCarousil}>
               <Swiper
@@ -137,13 +85,13 @@ function EventPage() {
                 spaceBetween={30}
                 className={styles.imgSwiper}
               >
-                {renderImages()}
+                {swiperImages()}
               </Swiper>
             </div>
           </div>
 
           <div className={styles.details}>
-            <h2>{t("event.details")}</h2>
+            <h2>Details</h2>
 
             <div className={styles.infos}>
               <div className={`${styles.location} ${styles.infoWrapper}`}>
@@ -151,71 +99,88 @@ function EventPage() {
                   <img src={locationIcon} />
                 </div>
                 <div>
-                  <h3>{t("event.location")}</h3>
-                  <p>{data.location}</p>
+                  <h3>Location</h3>
+                  <p>Doar asni , Al lhouz, Marrakech</p>
                 </div>
               </div>
 
               <div className={`${styles.date} ${styles.infoWrapper}`}>
                 <div>
-                  <img src={dateStartIcon} />
+                  <img src={dateIcon} />
                 </div>
                 <div>
-                  <h3>{t("event.date_start")}</h3>
-                  <p>{data.date_start}</p>
-                </div>
-              </div>
-
-              <div className={`${styles.date} ${styles.infoWrapper}`}>
-                <div>
-                  <img src={dateEndIcon} />
-                </div>
-                <div>
-                  <h3>{t("event.date_end")}</h3>
-                  <p>{data.date_end}</p>
+                  <h3>12 Avril</h3>
+                  <p>2025 , 7:00 AM</p>
                 </div>
               </div>
             </div>
 
-            <div
-              className={styles.eventAddImg}
-              style={{ backgroundImage: `url(${eventImg})` }}
-            >
-              <Link>{t("event.benevole_btn")}</Link>
+            <div className={styles.locationCard}>
+              <iframe
+                width="100%"
+                height="200"
+                loading="lazy"
+                src="https://www.google.com/maps?q=31.6295,-7.9811&z=14&output=embed"
+              ></iframe>
             </div>
           </div>
-        </section>
+        </div>
 
-        <section className={styles.row2}>
+        <div className={styles.row2}>
           <div className={styles.col1}>
-            <h2 className={styles.title}>{data.title}</h2>
-            <p className={styles.categorie}>
-              {t("event.category")} : {data.category}
-            </p>
-            <p className={styles.description}>{data.description}</p>
-
-            <h2 className={styles.commonEventsTitle}>
-              {t("event.common_events")}
+            <h2 className={styles.title}>
+              LA CONSTRUCTION D’UN STATATION D’EAU
             </h2>
-            <div className={styles.commonEvents}>
-              {renderCommonEvents()}
-            </div>
+            <p className={styles.categorie}>
+              Catégorie : Le projet de develepement durable
+            </p>
+            <p className={styles.description}>
+              Ce projet representing your event images, this approach allows you
+              to highlight key moments by mixing different photo aspect ratios
+              and sizes, adding depth and narrative to the gallery section. The
+              use of generous whitespace and a clean, professional color palette
+              (like deep teal and warm accents shown here) further enhances the
+              beauty and readability of the interface. When representing your
+              event images, this approach allows you to highlight key moments by
+              mixing different photo aspect ratios and sizes, adding depth and
+              narrative to the gallery section. The use of generous whitespace
+              and a clean, professional color palette (like deep teal and warm
+              accents shown here) further enhances the beauty and readability of
+              the interface. Ce projet representing your event images, this
+              approach allows you to highlight key moments by mixing different
+              photo aspect ratios and sizes, adding depth and narrative to the
+              gallery section. The use of generous whitespace and a clean,
+              professional color palette (like deep teal and warm accents shown
+              here) further enhances the beauty and readability of the
+              interface. When representing your event images, this approach
+              allows you to highlight key moments by mixing different photo
+              aspect ratios and sizes, adding depth and narrative to the gallery
+              section. The use of generous whitespace and a clean, professional
+              color palette (like deep teal and warm accents shown here) further
+              enhances the beauty and readability of the interface.
+            </p>
           </div>
           <div className={styles.col2}>
             <div className={styles.wrapper}>
-              <h3>{t("event.last_posts")}</h3>
-              <div className={styles.lastEvents}>
-                {renderLastEvents()}
+              <h3>Dernière Posts</h3>
+              <div className={styles.relatedEvents}>
+                <RelatedEvent />
+                <RelatedEvent />
+                <RelatedEvent />
               </div>
             </div>
 
             <div className={styles.wrapper}>
-              <h3>{t("event.contribute")}</h3>
-              <p>{t("event.contribute_text")}</p>
-              <Link className={styles.btn}>{t("event.donate_btn")}</Link>
+              <h3>Contribuer</h3>
+              <p>
+                Votre soutien peut faire la différence. Chaque don, même le plus
+                petit, contribue à améliorer des vies et à construire un avenir
+                meilleur. Rejoignez-nous dans cette mission solidaire.
+              </p>
+              <Link className={styles.btn}>Faire une don</Link>
             </div>
           </div>
-        </section>
+        </div>
       </div>
     </div>
   );

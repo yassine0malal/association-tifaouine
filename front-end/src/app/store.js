@@ -33,5 +33,7 @@ export const store = configureStore({
         partenaires:partenaires,
         singleProject:projectSliceSingleAdminReducer,
         contacts:contactsReducer,
+
+
     },
 })

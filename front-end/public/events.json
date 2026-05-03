@@ -1,0 +1,51 @@
+{
+  "events": [
+    {
+      "id": 1,
+      "title": "How collaboration makes us better designers",
+      "domain": "Eau et envirement",
+      "date": "Avril 14, 2024",
+      "img": "https://picsum.photos/300/200?random=1"
+    },
+    {
+      "id": 2,
+      "title": "How collaboration makes us better designers",
+      "domain": "Eau et envirement",
+      "date": "Avril 14, 2024",
+      "img": "https://picsum.photos/300/200?random=2"
+    },
+    {
+      "id": 3,
+      "title": "How collaboration makes us better designers",
+      "domain": "Eau et envirement",
+      "date": "Avril 14, 2024",
+      "img": "https://picsum.photos/300/200?random=3"
+    },
+    {
+      "id": 4,
+      "title": "How collaboration makes us better designers",
+      "domain": "Eau et envirement",
+      "date": "Avril 14, 2024",
+      "img": "https://picsum.photos/300/200?random=4"
+    },
+    {
+      "id": 5,
+      "title": "How collaboration makes us better designers",
+      "domain": "Eau et envirement",
+      "date": "Avril 14, 2024",
+      "img": "https://picsum.photos/300/200?random=5"
+    },
+    {
+      "id": 6,
+      "title": "How collaboration makes us better designers",
+      "domain": "Eau et envirement",
+      "date": "Avril 14, 2024",
+      "img": "https://picsum.photos/300/200?random=6"
+    }
+  ],
+  "currentPage": 9,
+  "nextPage": 10,
+  "prevPage": 8,
+  "totalPages": 10,
+  "itemsPerPage": 8
+}

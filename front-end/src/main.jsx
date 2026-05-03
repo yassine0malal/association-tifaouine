@@ -53,6 +53,11 @@ import AdminDonsList from "./features/admin/Dons/AdminDonsList.jsx";
 import AdminDonDetail from "./features/admin/Dons/AdminDonDetail.jsx";
 import AdminMembersList from "./features/admin/Members/AdminMembersList.jsx";
 import AdminProjetDetail from "./features/admin/Projets/SingleProject/AdminProjetDetail.jsx";
+import { store }  from './app/store.js';
+import About from "./features/public/About.jsx";
+import EventList from "./features/evenements/event-list/EventList.jsx";
+import './styles/globals.css'
+import EventPage from "./features/evenements/event-page/EventPage.jsx";
 
 createRoot(document.getElementById("root")).render(
   <Provider store={store}>
