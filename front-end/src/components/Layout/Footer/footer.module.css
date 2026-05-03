@@ -82,15 +82,21 @@
 }
 
 /* ---------Style of the send input ---------*/
-
-.footerSection .send input:-webkit-autofill,
-.footerSection .send input:-webkit-autofill:hover,
-.footerSection .send input:-webkit-autofill:focus {
-    -webkit-box-shadow: 0 0 0px 100px var(--bg) inset;
-    -webkit-text-fill-color: var(--bg) inset;
+.footerSection .send input[type="email"]:-webkit-autofill,
+.footerSection .send input[type="email"]:-webkit-autofill:hover,
+.footerSection .send input[type="email"]:-webkit-autofill:focus,
+.footerSection .send input[type="email"]:-webkit-autofill:active {
+    /* Garde le fond de la couleur de votre thème */
+    -webkit-box-shadow: 0 0 0px 1000px var(--bg) inset !important; 
+    
+    /* Applique la bonne couleur au texte (sans 'inset') */
+    -webkit-text-fill-color: var(--color-text) !important; 
+    
+    /* Maintient l'astuce de transition */
     transition: background-color 5000s ease-in-out 0s;
+    
+    /* Arrondis */
     border-radius: 8px;
-
 }
 
 
@@ -114,7 +120,9 @@
 }
 
 .footerSection .send .sendIcon {
+    all: unset;
     width: 30px;
+
     height: 30px;
     position: absolute;
     inset-inline-end: 0;

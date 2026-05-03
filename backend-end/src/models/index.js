@@ -20,8 +20,9 @@ const Stat = require('./Stat');
 const RefreshToken = require('./RefreshToken');
 const TokenBlacklist = require('./TokenBlacklist');
 const AdminNotification = require('./AdminNotification');
-const Abonne = require('./abonne');
-
+const { DataTypes } = require('sequelize'); // add this at the top
+// ...
+const Abonne = require('./abonne')(sequelize, DataTypes);
 // --- Associations ---
 
 // Héritage 1:1 pour Utilisateur

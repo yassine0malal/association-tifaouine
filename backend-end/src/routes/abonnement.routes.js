@@ -52,7 +52,7 @@ router.get('/csrf-token', getCsrfToken);
  */
 router.post(
   '/',
-  abonnementLimiter,
+  // abonnementLimiter,
   verifyCsrf,
   validate(abonnement),
   verifyHoneypot,
