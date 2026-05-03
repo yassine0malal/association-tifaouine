@@ -452,7 +452,7 @@ class ProjetService {
             projet_id: projetId,
             limit: 9999,
             offset: 0
-        });
+        });     
 
         const resourcesToKeep = [...existingImages, ...existingVideos];
 
