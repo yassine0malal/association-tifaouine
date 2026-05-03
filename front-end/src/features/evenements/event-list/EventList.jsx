@@ -8,59 +8,49 @@ import Pagination from "../../../components/common/Pagination";
 import EventCardSkeleton from "../../../components/common/EventCardSkeleton";
 import { useEffect } from "react";
 import { fetchEvents, setFilter, setPage } from "./eventsSlice";
-import { useTranslation } from "react-i18next";
-import i18n from "../../../i18n";
-
 
 function EventList() {
   const dispatch = useDispatch();
-  const { t } = useTranslation("events");
-  const { events, domains } = useSelector((state) => state);
 
   const {
+    data,
     loading,
     currentPage,
     totalPages,
     currentFilter,
     itemsPerPage,
-  } = events;
+  } = useSelector((state) => state.events);
 
-  const filters = domains.data.map( domain => ({ key:domain.id , label:domain.label }) )
-  const currentLang = i18n.language || 'fr';
+  const filters = ["Tout", "Eau", "Agricultur", "Aid", "Ramadan"];
 
   useEffect(() => {
-    dispatch(
-      fetchEvents({
-        page: currentPage,
-        filter: currentFilter,
-        lang: currentLang,
-      }),
-    );
-  }, [dispatch, currentPage, currentFilter, currentLang]);
+    dispatch(fetchEvents({ page: currentPage, filter: currentFilter }));
+  }, [dispatch, currentPage, currentFilter]);
 
   const renderEvents = () => {
+
     if (loading) {
       return Array.from({ length: itemsPerPage }, (_, i) => (
         <EventCardSkeleton key={`skeleton-${i}`} />
       ));
     }
 
-    return events.data.map((event) => <EventCard key={event.id} {...event} />);
+    return data.map((event) => <EventCard key={event.id} {...event} />);
   };
 
   const handleFilterChange = (filter) => {
-    dispatch(setFilter(filter));
+    dispatch(setFilter(filter))
   };
   const handlePageChange = (page) => {
-    dispatch(setPage(page));
+    dispatch(setPage(page))
   };
   return (
     <div className={styles.eventListPage}>
-      <PageHero title={t("events.hero.title")} heroImg={heroImg} />
+      <PageHero title="Ne manquez rien de nos nouveautés" heroImg={heroImg} />
 
       <div className={styles.eventListContainer}>
         <div className={styles.filtersContainer}>
-          <h2>{t("events.section_title")}</h2>
+          <h2>Au cœur de l’action</h2>
           <FilterButtons
             filters={filters}
             currentFilter={currentFilter}

@@ -43,7 +43,8 @@ const verifyToken = (token) => {
 
 /**
  * GET /api/csrf-token
- * Génère un token, le pose en cookie HttpOnly + le renvoie dans le body
+ * Génère un token et le pose uniquement en cookie HttpOnly
+ * Le token n'est PAS exposé dans le body pour plus de sécurité
  */
 const getCsrfToken = (req, res) => {
     const token = generateToken();
@@ -55,7 +56,11 @@ const getCsrfToken = (req, res) => {
         maxAge:   TOKEN_TTL
     });
 
-    return res.status(200).json({ success: true, csrfToken: token });
+    return res.status(200).json({ 
+        success: true, 
+        message: 'Token CSRF généré et configuré avec succès. Vous pouvez maintenant soumettre le formulaire.',
+        tokenExpiry: new Date(Date.now() + TOKEN_TTL).toISOString()
+    });
 };
 
 /**
@@ -81,4 +86,20 @@ const verifyCsrf = (req, res, next) => {
     next();
 };
 
-module.exports = { getCsrfToken, verifyCsrf };
+/**
+ * Fonction utilitaire pour extraire le token CSRF des cookies côté client
+ * À utiliser dans le frontend JavaScript
+ */
+const extractCsrfTokenFromCookies = () => {
+    // Cette fonction sera documentée pour usage côté client
+    const cookies = document.cookie.split(';');
+    for (let cookie of cookies) {
+        const [name, value] = cookie.trim().split('=');
+        if (name === COOKIE_NAME) {
+            return decodeURIComponent(value);
+        }
+    }
+    return null;
+};
+
+module.exports = { getCsrfToken, verifyCsrf, COOKIE_NAME };

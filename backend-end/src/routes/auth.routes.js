@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const authController = require('../controllers/auth.controller');
 const { verifyToken, isAdmin } = require('../middlewares/auth.middleware');
-const { authLimiter } = require('../middlewares/rateLimit.middleware');
+const { authLimiter, refreshLimiter } = require('../middlewares/rateLimit.middleware');
 const { validate } = require('../middlewares/validate.middleware');
 const { loginSchema, updateProfileSchema } = require('../validations/auth.validation');
 
@@ -10,7 +10,7 @@ const { loginSchema, updateProfileSchema } = require('../validations/auth.valida
 router.post('/login', authLimiter, validate(loginSchema), authController.login);
 
 // @route  POST /api/auth/refresh-token
-router.post('/refresh-token', authController.refreshToken);
+router.post('/refresh-token', refreshLimiter, authController.refreshToken);
 
 // @route  POST /api/auth/logout
 router.post('/logout', verifyToken, isAdmin, authController.logout);

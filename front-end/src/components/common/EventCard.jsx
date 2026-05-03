@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import styles from "./event-card.module.css";
 
-function EventCard( { id , title , img , date , domain } ) {
+function EventCard( { title , img , date , domain } ) {
   return (
-    <Link to={`/evenement/${id}`} className={styles.eventCard}>
+    <Link className={styles.eventCard}>
       <div style={{ backgroundImage: `url(${img})`}} className={styles.cardBody}>
         <div className={styles.content}>
             <div className={styles.meta}>

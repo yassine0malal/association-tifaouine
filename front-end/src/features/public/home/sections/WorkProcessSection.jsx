@@ -31,7 +31,7 @@ const steps = [
                 </g>
             </svg>
         ),
-        label: "Être à l’écoute des besoins des communautés sur le terrain",
+        labelKey: "workProcess.step1",
     },
     {
         num: "02",
@@ -51,7 +51,7 @@ const steps = [
                 </g>
             </svg>
         ),
-        label: "Co-construire des actions solidaires porteuses de changement",
+        labelKey: "workProcess.step2",
     },
     {
         num: "03",
@@ -64,7 +64,7 @@ const steps = [
                 </g>
             </svg>
         ),
-        label: "Assurer la réussite du projet grâce à l’engagement de nos équipes",
+        labelKey: "workProcess.step3",
     },
 ];
 
@@ -74,7 +74,7 @@ export default function WorkProcess({ t }) {
 
             {/* Titre — zone beige en haut */}
             <div className={styles.titleArea}>
-                <p className={styles.label}>LE CYCLE DE VIE DE NOTRE PROJET</p>
+                <p className={styles.label}>{t("workProcess.title")}</p>
             </div>
 
             {/* Carte blanche avec les étapes */}
@@ -89,7 +89,7 @@ export default function WorkProcess({ t }) {
                                 <span className={styles.badge}>{step.num}</span>
                             </div>
                             <p className={styles.stepLabel}>
-                                {step.label.split("\n").map((line, j) => (
+                                {t(step.labelKey).split("\n").map((line, j) => (
                                     <span key={j}>{line}<br /></span>
                                 ))}
                             </p>

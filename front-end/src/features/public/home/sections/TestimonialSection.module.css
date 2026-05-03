@@ -1,0 +1,171 @@
+.wrapper {
+    width: 90%;
+    /* Prend 90% de la largeur de l'écran */
+    margin: 50px auto;
+    margin-bottom: 200px;
+    /* Centre le bloc horizontalement avec un peu d'espace en haut/bas */
+    background-color: #fff;
+    text-align: center;
+    border-radius: 40px;
+    /* Optionnel : arrondit les bords du wrapper extérieur aussi */
+}
+
+.header {
+    margin-bottom: 40px;
+    padding-top: 20px;
+}
+
+.header h2 {
+    font-size: 38px;
+    color: var(--accent);
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+.container {
+    width: 100%;
+    /* Le container prend maintenant 100% de son parent (le wrapper à 90%) */
+    max-width: none;
+    /* On retire la limite pour laisser le wrapper dicter la largeur */
+    margin: 0 auto;
+
+    background-color: #f7f3ed;
+    border-radius: 30px;
+    padding: 100px 60px;
+
+    position: relative;
+    overflow: hidden;
+    min-height: 550px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.03);
+}
+
+/* Motif de fond agrandi */
+.pattern {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.15;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 10 Q 50 10 50 50 T 90 90' stroke='%231a2b4b' fill='transparent'/%3E%3C/svg%3E");
+    background-size: 400px;
+}
+
+.content {
+    max-width: 900px;
+    /* On limite la largeur du texte pour la lisibilité */
+    z-index: 1;
+}
+
+.stars {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 40px;
+}
+
+/* Texte beaucoup plus grand pour l'impact */
+.quote {
+    font-size: 2.2rem;
+    font-weight: 600;
+    line-height: 1.3;
+    color: #111;
+    max-width: 850px;
+    /* Pour garder une bonne lisibilité du texte */
+}
+
+.author {
+    font-size: 1.2rem;
+    color: #555;
+    letter-spacing: 0.05em;
+}
+
+/* Boutons de navigation plus grands */
+.navBtn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: white;
+    border: none;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    z-index: 10;
+    transition: all 0.3s ease;
+}
+
+.navBtn:hover {
+    background: var(--accent);
+    color: white;
+}
+
+.left {
+    left: 40px;
+}
+
+.right {
+    right: 40px;
+}
+
+/* Pagination plus visible */
+.dots {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #d1cbc3;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.activeDot {
+    background: var(--accent);
+    width: 30px;
+    /* Barre allongée pour le point actif */
+    border-radius: 10px;
+}
+
+/* --- RESPONSIVE : On réduit pour les mobiles --- */
+@media (max-width: 768px) {
+    .container {
+        padding: 60px 20px;
+        min-height: 450px;
+        width: 95%;
+    }
+
+    .quote {
+        font-size: 1.5rem;
+    }
+
+    .navBtn {
+        width: 45px;
+        height: 45px;
+    }
+
+    .left {
+        left: 10px;
+    }
+
+    .right {
+        right: 10px;
+    }
+}

@@ -11,23 +11,37 @@ import phone from "../../../assets/icons/phone-call.png";
 import whatsapp from "../../../assets/images/whatsapp.svg";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom"
-import { form } from "framer-motion/client";
+import { body, form } from "framer-motion/client";
+import { protectedApi } from "../../admin/Login/authService";
+import axios from "axios";
+
+const VITE_BASE_BACK_END_URL = import.meta.env.VITE_BASE_BACK_END_URL;
+
 export default function Contact() {
-    const [isSend, setIsSend] = useState(false);
     const { t } = useTranslation("contact");
+
+    const objectOptions = [
+        { value: 'DEMANDE_PARTENARIAT', label: t('contact.form.object.partenariat') || 'Demande de Partenariat' },
+        { value: 'DEMANDE_BENEVOLE', label: t('contact.form.object.benevole') || 'Demande de Bénévole' },
+        { value: 'DEMANDE_MEMBRE', label: t('contact.form.object.membre') || 'Demande de Membre' },
+        { value: 'DEMANDE_SERVICE', label: t('contact.form.object.service') || 'Demande de Service' },
+        { value: 'DEMANDE_INFORMATION', label: t('contact.form.object.information') || "Demande d'Information" },
+    ];
+
+    const [isSend, setIsSend] = useState(false);
     const [formData, setFormData] = useState({
         fullName: '',
         email: '',
         phone: '',
-        object: '',
+        object: 'DEMANDE_INFORMATION',
         message: ''
     });
 
     const [errors, setErrors] = useState({});
+
     function handleChange(e) {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
-        // Clear error for this field while typing (optional)
         if (errors[name]) {
             setErrors(prev => ({ ...prev, [name]: '' }));
         }
@@ -46,11 +60,12 @@ export default function Contact() {
             newErrors.email = t('contact.validation.emailInvalid');
         }
 
-        if (!formData.phone.trim()) {
-            newErrors.phone = t('contact.validation.phoneRequired');
-        } else if (!/^[\d\s\+\-\(\)]{8,20}$/.test(formData.phone)) {
-            newErrors.phone = t('contact.validation.phoneInvalid');
-        }
+        // 🔁 Phone validation removed – backend doesn't expect it
+        // if (!formData.phone.trim()) {
+        //     newErrors.phone = t('contact.validation.phoneRequired');
+        // } else if (!/^[\d\s\+\-\(\)]{8,20}$/.test(formData.phone)) {
+        //     newErrors.phone = t('contact.validation.phoneInvalid');
+        // }
 
         if (!formData.object.trim()) {
             newErrors.object = t('contact.validation.subjectRequired');
@@ -63,7 +78,7 @@ export default function Contact() {
         return newErrors;
     }
 
-    async function send(e) {
+    const send = async (e) => {
         e.preventDefault();
         const validationErrors = validate();
 
@@ -72,34 +87,43 @@ export default function Contact() {
             return;
         }
 
-        console.log('Form data ready to send:', formData);
         setIsSend(true);
-        console.log("----the data ----", formData);
+        setErrors({});
 
-        // Here you would typically call an API to redux 
         try {
-            const response = await fetch("url", {
-                headers: "application/json",
-                body: JSON.stringify(formData)
-            });
+            const payload = {
+                nom_complet: formData.fullName,
+                email: formData.email,
+                objet: formData.object,
+                message: formData.message
+            };
 
-            if (!response.ok) {
-                throw new Error("failed")
+            const response = await axios.post(
+                `${VITE_BASE_BACK_END_URL}/api/messages`,
+                payload,
+                {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+            );
+
+            if (response.status === 201 || response.data?.success) {
+                setIsSend(true);
+                // Optional: reset form
+                // setFormData({ fullName: '', email: '', phone: '', object: 'DEMANDE_INFORMATION', message: '' });
             } else {
-                setIsSend(true)
+                throw new Error(response.data?.message || "Unknown error");
             }
-
         } catch (error) {
-            console.log("error at sending the data ", error)
-            setErrors(prev => ({ ...prev, form: t("validation.submitError") }));
-        } finally {
+            console.error("Error sending message:", error);
+            setIsSend(false);
+            setErrors(prev => ({
+                ...prev,
+                form: error.response?.data?.message || t('validation.submitError')
+            }));
         }
-    }
-    {
-        errors.form && (
-            <div className={styles.formError}>{errors.form}</div>
-        )
-    }
+    };
 
     return (
         <>
@@ -129,12 +153,10 @@ export default function Contact() {
                 </div>
 
                 <section className={styles.contactUsSection}>
-                    {/* Map Container */}
                     <div className={styles.carte}>
                         <iframe
                             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d27289.995421248605!2d-8.00359187117829!3d31.241517757906724!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xdb01ae195aced95%3A0x22df9dee53cf33eb!2sAsni!5e0!3m2!1sen!2sma!4v1775732508977!5m2!1sen!2sma"
                             width="660"
-                            // height=""
                             style={{ border: 0 }}
                             allowFullScreen=""
                             loading="lazy"
@@ -142,8 +164,7 @@ export default function Contact() {
                         ></iframe>
                     </div>
 
-                    {/* Form Container */}
-                    <form className={styles.form} onSubmit={(e) => send(e)}>
+                    <form className={styles.form} onSubmit={send}>
                         <h1>{t('contact.form.heading')}</h1>
                         <h3>{t('contact.form.subheading')}</h3>
                         <div className={styles.inputsWarper}>
@@ -169,12 +190,10 @@ export default function Contact() {
                                         onChange={handleChange}
                                     />
                                     {errors.email && <span className={styles.error}>{errors.email}</span>}
-
                                 </div>
 
                                 <div className={styles.field}>
                                     <input
-                                        required
                                         type="tel"
                                         name="phone"
                                         placeholder={t('contact.form.placeholders.phone')}
@@ -183,16 +202,20 @@ export default function Contact() {
                                     />
                                     {errors.phone && <span className={styles.error}>{errors.phone}</span>}
                                 </div>
-                                <div className={styles.field}>
 
-                                    <input
-                                        required
-                                        type="text"
+                                {/* 🔁 REPLACED TEXT INPUT WITH DROPDOWN */}
+                                <div className={styles.field}>
+                                    <select
                                         name="object"
-                                        placeholder={t('contact.form.placeholders.subject')}
                                         value={formData.object}
                                         onChange={handleChange}
-                                    />
+                                    >
+                                        {objectOptions.map(opt => (
+                                            <option key={opt.value} value={opt.value}>
+                                                {opt.label}
+                                            </option>
+                                        ))}
+                                    </select>
                                     {errors.object && <span className={styles.error}>{errors.object}</span>}
                                 </div>
                             </div>
@@ -208,6 +231,10 @@ export default function Contact() {
                                 {errors.message && <span className={styles.error}>{errors.message}</span>}
                             </div>
                         </div>
+
+                        {/* 🔁 Moved errors.form inside the form */}
+                        {errors.form && <div className={styles.formError}>{errors.form}</div>}
+
                         <div className={styles.sendButton}>
                             {isSend ? (
                                 <DotLottieReact
@@ -221,12 +248,13 @@ export default function Contact() {
                                     <button type="submit">
                                         {t('contact.form.placeholders.send')}
                                     </button>
-
                                 </>
                             )}
                             <button>
                                 <img src={whatsapp} alt="" />
-                                <a href="https://wa.me/212655146069?text=bonjour" target="_blank">  {t('contact.form.placeholders.send-what')}</a>
+                                <a href="https://wa.me/212655146069?text=bonjour" target="_blank">
+                                    {t('contact.form.placeholders.send-what')}
+                                </a>
                             </button>
                         </div>
                     </form>

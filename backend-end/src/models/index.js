@@ -20,6 +20,7 @@ const Stat = require('./Stat');
 const RefreshToken = require('./RefreshToken');
 const TokenBlacklist = require('./TokenBlacklist');
 const AdminNotification = require('./AdminNotification');
+const Abonne = require('./abonne');
 
 // --- Associations ---
 
@@ -113,5 +114,6 @@ module.exports = {
     Stat,
     RefreshToken,
     TokenBlacklist,
-    AdminNotification
+    AdminNotification,
+    Abonne
 };

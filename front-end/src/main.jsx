@@ -31,7 +31,7 @@ import AdminDashboard from "./features/admin/Dashboard/AdminDashboard.jsx";
 import { GuestRoute } from "./components/common/admin/GuestRoute.jsx";
 import AdminLayout from "./features/admin/AdminLayout/AdminLayout.jsx";
 import AdminProjetsList from "./features/admin/Projets/AdminProjetsList.jsx";
-import AdminProjetEdit from "./features/admin/Projets/AdminProjetEdit.jsx";
+import AdminProjetEdit from "./features/admin/Projets/SingleProject/AdminProjetEdit.jsx";
 import AdminProjetCreate from "./features/admin/Projets/AdminProjetCreate.jsx";
 import AdminMessagesList from "./features/admin/Contact/AdminContactsList.jsx";
 import AdminMessageDetail from "./features/admin/Contact/AdminMessagesDetail.jsx";
@@ -52,6 +52,7 @@ import AdminBenevoleDetail from "./features/admin/Benevoles/AdminBenevoleDetail.
 import AdminDonsList from "./features/admin/Dons/AdminDonsList.jsx";
 import AdminDonDetail from "./features/admin/Dons/AdminDonDetail.jsx";
 import AdminMembersList from "./features/admin/Members/AdminMembersList.jsx";
+import AdminProjetDetail from "./features/admin/Projets/SingleProject/AdminProjetDetail.jsx";
 
 createRoot(document.getElementById("root")).render(
   <Provider store={store}>
@@ -115,6 +116,7 @@ createRoot(document.getElementById("root")).render(
               {/* Projets */}
               <Route path="projets" element={<AdminProjetsList />} />
               <Route path="projets/create" element={<AdminProjetCreate />} />
+              <Route path="projets/:id" element={<AdminProjetDetail />} />
               <Route path="projets/:id/edit" element={<AdminProjetEdit />} />
 
               {/* Evenements */}

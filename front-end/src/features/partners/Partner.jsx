@@ -4,7 +4,7 @@ import herImg from "../../assets/images/partners.jpg";
 import defaultPartner from "../../assets/images/default-partner.png";
 import lnk from "../../assets/icons/link.png";
 import partner from "../../assets/icons/partner.png";
-import agr from "../../assets/images/partenaires/agriculture.png";
+// import agr from "../../assets/images/partenaires/agriculture.png"; // unused
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useCallback, useEffect, useRef } from "react";
@@ -16,12 +16,12 @@ const BASE_BACK_END_URL = import.meta.env.VITE_BASE_BACK_END_URL;
 
 import VanillaTilt from "vanilla-tilt"
 
-
 export default function Partner() {
     const { t } = useTranslation("partners");
     const currentLang = i18n.language;
     const dispatch = useDispatch();
-    const { setTitlRef, cleanupAll, cleanupTilt } = useTilt();
+    const { setTitlRef } = useTilt(); // Plus besoin de cleanupAll ici
+
     const {
         partners,
         loading,
@@ -30,16 +30,10 @@ export default function Partner() {
 
     useEffect(() => {
         dispatch(fetchPartners({ lang: currentLang }));
-    }, [dispatch, currentLang])
-    const buttonRef = useRef(null);
+    }, [dispatch, currentLang]);
 
-
-    useEffect(() => {
-        cleanupAll();
-    }, [partners, cleanupAll]);
-
-    useEffect(() => {
-        const element = buttonRef.current;
+    // 1. Solution pour le bouton : Utiliser un useCallback au lieu d'un useEffect
+    const buttonCallbackRef = useCallback((element) => {
         if (element) {
             VanillaTilt.init(element, {
                 max: 30,
@@ -47,9 +41,11 @@ export default function Partner() {
                 glare: false,
                 'max-glare': 0.2,
                 reverse: true
-            })
+            });
         }
-    })
+    }, []);
+
+    // SUPPRIMÉ : Les deux useEffect qui cassaient votre code (celui du bouton et celui du cleanupAll)
 
     if (loading && partners.length === 0) {
         return (
@@ -61,6 +57,7 @@ export default function Partner() {
             </div>
         );
     }
+
     if (error) {
         return (
             <div className={styles.fullContainerPartner}>
@@ -71,7 +68,7 @@ export default function Partner() {
             </div>
         );
     }
-
+    console.log("ach tari", partners)
     return (
         <div className={styles.fullContainerPartner}>
             <PageHero title={t("heroTitle")} heroImg={herImg} />
@@ -114,7 +111,8 @@ export default function Partner() {
                 <div className={styles.bePartner}>
                     <h2>{t("becomePartner.title")}</h2>
                     <p>{t("becomePartner.description")}</p>
-                    <Link to={`/${currentLang}/contact`} ref={buttonRef}>
+                    {/* On utilise la callback ref ici */}
+                    <Link to={`/${currentLang}/contact`} ref={buttonCallbackRef}>
                         <button>
                             <span>{t("becomePartner.button")}</span>
                             <img src={partner} alt="" />
@@ -126,28 +124,9 @@ export default function Partner() {
     );
 }
 
-
-
-
 function useTilt() {
-
     const tiltRefs = useRef(new Map());
-    //set the ref
-    const setTitlRef = useCallback((element, id) => {
-        if (element) {
-            VanillaTilt.init(element, {
-                max: 15,
-                speed: 400,
-                glare: false,
-                "max-glare": 0.2,
-                reverse: true,
-                "mouse-event-element": ".tilt-trigger"
-            });
-            tiltRefs.current.set(id, element);
-        }
-    }, [])
 
-    //destroy the ref
     const cleanupTilt = useCallback((id) => {
         const element = tiltRefs.current.get(id);
         if (element && element.vanillaTilt) {
@@ -155,13 +134,28 @@ function useTilt() {
             tiltRefs.current.delete(id);
         }
     }, []);
-    const cleanupAll = useCallback(() => {
-        tiltRefs.current.forEach((element, id) => {
-            if (element && element.vanillaTilt) {
-                element.vanillaTilt.destroy();
+
+    // 2. Solution pour les cartes : Gérer l'initialisation ET le nettoyage directement dans le setRef
+    const setTitlRef = useCallback((element, id) => {
+        if (element) {
+            // Initialise uniquement si ça n'a pas déjà été fait
+            if (!element.vanillaTilt) {
+                VanillaTilt.init(element, {
+                    max: 15,
+                    speed: 400,
+                    glare: false,
+                    "max-glare": 0.2,
+                    reverse: true,
+                    "mouse-event-element": ".tilt-trigger"
+                });
+                tiltRefs.current.set(id, element);
             }
-        });
-        tiltRefs.current.clear();
-    }, []);
-    return { setTitlRef, cleanupAll, cleanupTilt };
+        } else {
+            // Quand React démonte la carte, il appelle ref avec 'null'
+            // C'est ici que l'on doit nettoyer !
+            cleanupTilt(id);
+        }
+    }, [cleanupTilt]);
+
+    return { setTitlRef };
 }

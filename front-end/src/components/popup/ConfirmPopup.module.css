@@ -1,0 +1,102 @@
+/* ConfirmPopup.module.css */
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    animation: fadeIn 0.15s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.popup {
+    background: var(--color-background-primary, #fff);
+    border-radius: 20px;
+    width: 360px;
+    overflow: hidden;
+    animation: popIn 0.2s ease;
+    border: 1px solid rgba(0,0,0,0.08);
+}
+
+@keyframes popIn {
+    from { transform: scale(0.92); opacity: 0; }
+    to   { transform: scale(1);    opacity: 1; }
+}
+
+.iconZone {
+    padding: 2rem 2rem 1rem;
+    display: flex;
+    justify-content: center;
+}
+
+.iconCircle {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.body {
+    padding: 0 2rem 1.25rem;
+    text-align: center;
+}
+
+.title {
+    font-size: 17px;
+    font-weight: 600;
+    color: #1a1208;
+    margin: 0 0 8px;
+}
+
+.desc {
+    font-size: 13px;
+    color: #7a6a4a;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.detail {
+    margin: 0 1.5rem 1rem;
+    background: #f5f0e8;
+    border-radius: 10px;
+    padding: 10px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.detailLabel { font-size: 12px; color: #9a8a6a; }
+.detailValue { font-size: 12px; font-weight: 600; color: #3a3020; }
+
+.actions {
+    padding: 0.75rem 1.5rem 1.5rem;
+    display: flex;
+    gap: 8px;
+}
+
+.btn {
+    flex: 1;
+    padding: 11px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: opacity 0.15s, transform 0.1s;
+}
+.btn:hover  { opacity: 0.87; }
+.btn:active { transform: scale(0.98); }
+
+.btnCancel  { background: #f0ece4; color: #7a6a4a; }
+.btnDanger  { background: #E24B4A; color: #fff; }
+.btnSuccess { background: #639922; color: #fff; }
+.btnWarning { background: #BA7517; color: #fff; }
+.btnInfo    { background: #378ADD; color: #fff; }
