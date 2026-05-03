@@ -6,7 +6,7 @@ import { Upload, Save, Loader2 } from "lucide-react";
 
 // Composants communs
 import BackButton from "../../../components/common/admin/BackButton";
-import ConfirmPopup from "../../../components/popup/ConfirmPopup"; 
+import ConfirmPopup from "../../../components/popup/ConfirmPopup";
 
 // Redux Actions
 import { fetchPartnerById, updatePartner, resetStatus } from "./adminPartnerSlice";
@@ -31,7 +31,7 @@ export default function AdminPartnerEdit() {
     const { id } = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    
+
     // États locaux
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [showSuccessPopup, setShowSuccessPopup] = useState(false);
@@ -68,7 +68,7 @@ export default function AdminPartnerEdit() {
                 description_ar: currentPartner.description_ar || "",
                 description_en: currentPartner.description_en || "",
                 site_web: currentPartner.site_web || "",
-                logo: null 
+                logo: null
             });
             if (currentPartner.logo) {
                 setPreview(currentPartner.logo);
@@ -142,21 +142,24 @@ export default function AdminPartnerEdit() {
             </header>
 
             <form className={styles.form} onSubmit={handleSubmit}>
-                
+
                 {/* SECTION 1: Identité Visuelle */}
                 <h2 className={styles.sectionTitle}>Identité Visuelle</h2>
                 <div className={styles.card}>
                     <div className={styles.uploadZone}>
                         <div className={`${styles.uploadBox} ${preview ? styles.hasPreview : ""}`}>
                             {preview ? (
-                                <img
-                                    // LOGIQUE DE SOURCE : blob (local) vs chemin (serveur)
-                                    src={preview.startsWith('blob:') ? preview : `${VITE_BASE_BACK_END_URL}${preview}`}
-                                    alt="Logo Preview"
-                                    className={styles.imagePreview}
-                                    width="40%"
-                                    height="40%"
-                                />
+                                <div className={styles.imagePreviewContainer}>
+                                    <img
+                                        src={preview.startsWith('blob:') ? preview : `${VITE_BASE_BACK_END_URL}${preview}`}
+                                        alt="Logo Preview"
+                                        className={styles.imagePreview}
+                                    />
+                                    <div className={styles.imageOverlay}>
+                                        <Upload size={24} />
+                                        <span>Choisir un autre logo</span>
+                                    </div>
+                                </div>
                             ) : (
                                 <>
                                     <Upload size={32} strokeWidth={1.5} />

@@ -3,32 +3,40 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styles from "./AdminPartner.module.css";
 import { Upload, Save, Loader2 } from "lucide-react";
+
+// Composants communs
 import BackButton from "../../../components/common/admin/BackButton";
+import Info from "../../../components/popup/Info";
 
 // Import des actions du slice
 import { createPartner, resetStatus } from "./adminPartnerSlice";
 
-// Fonction utilitaire pour formater les erreurs 400
+/**
+ * Utilitaire pour formater les erreurs de validation
+ */
 const formatValidationError = (error) => {
     if (!error) return null;
     if (typeof error === 'string') return error;
     const data = error?.response?.data || error;
+    
     if (data.details && Array.isArray(data.details)) {
         const messages = data.details.map(d => d.message).join(', ');
         return `Veuillez corriger les erreurs suivantes : ${messages}`;
     }
-    if (data.message) return data.message+". Les noms et descriptions doivent contenir entre 2 et 200 caractères Merci de corriger les champs concernés.";
-    if (error.message) return error.message+"Les noms et descriptions doivent contenir entre 2 et 200 caractères Merci de corriger les champs concernés.";
-    return 'Une erreur est survenue';
+    if (data.message) {
+        return `${data.message}. Les noms et descriptions doivent contenir entre 2 et 200 caractères.`;
+    }
+    return 'Une erreur est survenue lors de la création.';
 };
 
 export default function AdminPartnerCreate() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    // Récupération de l'état depuis le store
-    const { loading, error, success } = useSelector((state) => state.adminPartner);
-
+    // États locaux
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+    const [preview, setPreview] = useState(null);
     const [formData, setFormData] = useState({
         nom_fr: "", nom_ar: "", nom_en: "",
         description_fr: "", description_ar: "", description_en: "",
@@ -36,16 +44,29 @@ export default function AdminPartnerCreate() {
         logo: null
     });
 
-    const [preview, setPreview] = useState(null);
+    // Récupération de l'état depuis le store
+    const { loading, error, success } = useSelector((state) => state.adminPartner);
 
-    // Gérer la redirection et le nettoyage après succès
+    // 1. Initialisation et nettoyage
     useEffect(() => {
-        if (success) {
-            alert("Partenaire créé avec succès !");
-            dispatch(resetStatus());
-            navigate("/admin/partenaires");
+        dispatch(resetStatus());
+        return () => dispatch(resetStatus());
+    }, [dispatch]);
+
+    // 2. Surveillance du succès pour afficher le Popup Info
+    useEffect(() => {
+        if (success && isSubmitting) {
+            setShowSuccessPopup(true);
+            setIsSubmitting(false);
         }
-    }, [success, dispatch, navigate]);
+    }, [success, isSubmitting]);
+
+    // Handlers
+    const handleClosePopup = () => {
+        setShowSuccessPopup(false);
+        dispatch(resetStatus());
+        navigate("/admin/partenaires");
+    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -62,32 +83,39 @@ export default function AdminPartnerCreate() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        setIsSubmitting(true);
 
         const data = new FormData();
-        data.append("nom_fr", formData.nom_fr);
-        data.append("nom_ar", formData.nom_ar);
-        data.append("nom_en", formData.nom_en);
-        data.append("description_fr", formData.description_fr);
-        data.append("description_ar", formData.description_ar);
-        data.append("description_en", formData.description_en);
-        data.append("site_web", formData.site_web);
-
-        if (formData.logo) {
-            data.append("logo", formData.logo);
-        }
+        Object.keys(formData).forEach(key => {
+            if (key === 'logo') {
+                if (formData.logo) data.append("logo", formData.logo);
+            } else {
+                data.append(key, formData[key]);
+            }
+        });
 
         dispatch(createPartner(data));
     };
 
     return (
         <div className={styles.container}>
+            {/* Fenêtre de confirmation après succès (Remplace l'alert) */}
+            <Info
+                isOpen={showSuccessPopup}
+                onClose={handleClosePopup}
+                onConfirm={handleClosePopup}
+                variant="success"
+                title="Création réussie"
+                description={`Le partenaire "${formData.nom_fr}" a été ajouté avec succès à la base de données.`}
+                confirmLabel="Voir la liste"
+            />
+
             <BackButton label="Retour aux partenaires" />
 
             <header className={styles.header}>
                 <h1>Ajouter un Partenaire</h1>
-                <p>Enregistrez un nouveau collaborateur institutionnel dans les archives du portail.</p>
+                <p>Enregistrez un nouveau collaborateur institutionnel pour l'association Tifaouine.</p>
             </header>
-
 
             <form className={styles.form} onSubmit={handleSubmit}>
                 {/* SECTION 1: Identité Visuelle */}
@@ -146,13 +174,13 @@ export default function AdminPartnerCreate() {
                         <textarea
                             name="description_fr"
                             required
-                            placeholder="Description détaillée de l'institution..."
+                            placeholder="Description détaillée..."
                             value={formData.description_fr}
                             onChange={handleChange}
-                            maxLength={100}
+                            maxLength={200}
                         />
                         <small className={styles.charCount}>
-                            {formData.description_fr.length}/100 caractères
+                            {formData.description_fr.length}/200
                         </small>
                     </div>
                 </div>
@@ -176,13 +204,13 @@ export default function AdminPartnerCreate() {
                         <textarea
                             name="description_ar"
                             required
-                            placeholder="وصف مفصل للمؤسسة..."
+                            placeholder="وصف مفصل..."
                             value={formData.description_ar}
                             onChange={handleChange}
-                            maxLength={100}
+                            maxLength={200}
                         />
                         <small className={styles.charCount}>
-                            {formData.description_ar.length}/100 حرف
+                            {formData.description_ar.length}/200
                         </small>
                     </div>
                 </div>
@@ -206,17 +234,18 @@ export default function AdminPartnerCreate() {
                         <textarea
                             name="description_en"
                             required
-                            placeholder="Detailed institutional description..."
+                            placeholder="Detailed description..."
                             value={formData.description_en}
                             onChange={handleChange}
-                            maxLength={100}
+                            maxLength={200}
                         />
                         <small className={styles.charCount}>
-                            {formData.description_en.length}/100 characters
+                            {formData.description_en.length}/200
                         </small>
                     </div>
                 </div>
-            {error && <div className={styles.errorBanner}>{formatValidationError(error)}</div>}
+
+                {error && <div className={styles.errorBanner}>{formatValidationError(error)}</div>}
 
                 {/* Actions */}
                 <div className={styles.actions}>
