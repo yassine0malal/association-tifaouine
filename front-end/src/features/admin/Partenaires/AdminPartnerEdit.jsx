@@ -50,16 +50,37 @@ export default function AdminPartnerEdit() {
 
     // 1. Montage : Charger les données et réinitialiser les status
     useEffect(() => {
+        // On vide l'état local immédiatement pour éviter de voir les données précédentes
+        setFormData({
+            nom_fr: "", nom_ar: "", nom_en: "",
+            description_fr: "", description_ar: "", description_en: "",
+            site_web: "",
+            logo: null
+        });
+        setPreview(null);
+
         dispatch(resetStatus());
+
         if (id) {
             dispatch(fetchPartnerById(id));
         }
-        return () => dispatch(resetStatus()); // Nettoyage au démontage
+
+        // Fonction de nettoyage au démontage (quand on quitte la page)
+        return () => {
+            dispatch(resetStatus());
+            setFormData({
+                nom_fr: "", nom_ar: "", nom_en: "",
+                description_fr: "", description_ar: "", description_en: "",
+                site_web: "",
+                logo: null
+            });
+            setPreview(null);
+        };
     }, [id, dispatch]);
 
-    // 2. Remplissage du formulaire dès que les données sont reçues
+    // 2. Remplissage du formulaire
     useEffect(() => {
-        if (currentPartner) {
+        if (currentPartner && currentPartner.id == id) { // On vérifie aussi que l'ID correspond
             setFormData({
                 nom_fr: currentPartner.nom_fr || "",
                 nom_ar: currentPartner.nom_ar || "",
@@ -70,11 +91,9 @@ export default function AdminPartnerEdit() {
                 site_web: currentPartner.site_web || "",
                 logo: null
             });
-            if (currentPartner.logo) {
-                setPreview(currentPartner.logo);
-            }
+            setPreview(currentPartner.logo || null);
         }
-    }, [currentPartner]);
+    }, [currentPartner, id]);
 
     // 3. Surveillance du succès pour afficher le Popup
     useEffect(() => {
@@ -134,7 +153,7 @@ export default function AdminPartnerEdit() {
                 confirmLabel="Retour à la liste"
             />
 
-            <BackButton label="Retour aux partenaires" />
+            <BackButton to={"/admin/partenaires/"} label="Retour aux partenaires" />
 
             <header className={styles.header}>
                 <h1>Modifier le Partenaire</h1>
@@ -154,6 +173,8 @@ export default function AdminPartnerEdit() {
                                         src={preview.startsWith('blob:') ? preview : `${VITE_BASE_BACK_END_URL}${preview}`}
                                         alt="Logo Preview"
                                         className={styles.imagePreview}
+                                        width="40%"
+                                        height="40%"
                                     />
                                     <div className={styles.imageOverlay}>
                                         <Upload size={24} />
