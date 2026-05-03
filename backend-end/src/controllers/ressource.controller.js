@@ -71,6 +71,7 @@ class RessourceController {
      * @route   POST /api/ressources
      * @desc    Upload et création d'une ou plusieurs ressources (Admin)
      *          fields: 'files' (documents/images, max 20) + 'image_couverture' (optionnel, max 1)
+     *          Pour les ressources de l'association: projet_id et evenement_id doivent être null
      */
     async create(req, res) {
         // Avec multer.fields(), req.files est un objet { files: [...], image_couverture: [...] }
@@ -87,6 +88,10 @@ class RessourceController {
                 });
             }
 
+            // Validation: si c'est une ressource de l'association, projet_id et evenement_id doivent être null
+            const projet_id = req.body.projet_id ? parseInt(req.body.projet_id) : null;
+            const evenement_id = req.body.evenement_id ? parseInt(req.body.evenement_id) : null;
+
             // URL de la couverture si fournie
             const image_couverture = couvertureFile
                 ? `${req._couvertureRelUrl}/${couvertureFile.filename}`
@@ -97,10 +102,13 @@ class RessourceController {
                 const urlEntry = req.uploadedUrls[file._urlIndex];
                 const ressourceData = {
                     ...req.body,
+                    projet_id,
+                    evenement_id,
                     url:              `${urlEntry.relUrl}/${file.filename}`,
                     nom_original:     file.originalname,
                     ...(image_couverture && { image_couverture })
                 };
+
                 const nvRessource = await ressourceService.createRessource(ressourceData, file.path);
                 created.push(nvRessource);
             }
@@ -145,14 +153,65 @@ class RessourceController {
 
     /**
      * @route   DELETE /api/ressources/:id
-     * @desc    Supprimer une ressource (DB + Disque)
+     * @desc    Supprimer une ressource (DB + Disque + Image de couverture)
      */
     async delete(req, res) {
         try {
+            const ressource = await ressourceService.getRessourceById(req.params.id);
+
             await ressourceService.deleteRessource(req.params.id);
+            
             return res.status(200).json({
                 success: true,
-                message: "Ressource et fichier supprimés avec succès"
+                message: "Ressource et fichier(s) supprimés avec succès",
+                data: {
+                    id: ressource.id,
+                    type: ressource.type,
+                    nom_original: ressource.nom_original,
+                    fichiers_supprimes: {
+                        fichier_principal: ressource.url,
+                        image_couverture: ressource.image_couverture || null
+                    }
+                }
+            });
+        } catch (error) {
+            return res.status(404).json({
+                success: false,
+                message: error.message
+            });
+        }
+    }
+
+    /**
+     * @route   GET /api/ressources/association
+     * @desc    Récupérer les ressources de l'association (projet_id IS NULL, evenement_id IS NULL)
+     * @access  Admin
+     */
+    async getAssociationRessources(req, res) {
+        try {
+            const { type } = req.query;
+            const { page, limit, offset } = req.pagination;
+            const result = await ressourceService.getAssociationRessources({ type, limit, offset });
+            return res.status(200).json({
+                success: true,
+                ...buildPaginatedResponse(result, page, limit)
+            });
+        } catch (error) {
+            return res.status(500).json({ success: false, message: error.message });
+        }
+    }
+
+    /**
+     * @route   GET /api/ressources/association/:associationId
+     * @desc    Récupérer une ressource de l'association par ID
+     * @access  Admin
+     */
+    async getAssociationRessourceById(req, res) {
+        try {
+            const ressource = await ressourceService.getAssociationRessourceById(req.params.associationId);
+            return res.status(200).json({
+                success: true,
+                data: ressource
             });
         } catch (error) {
             return res.status(404).json({

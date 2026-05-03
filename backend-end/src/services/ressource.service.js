@@ -21,13 +21,27 @@ class RessourceService {
      * Si oui → erreur 409 (le fichier uploadé est supprimé du disque).
      */
     async createRessource(data, filePath = null) {
+        console.log('[DEBUG SERVICE CREATE] Données reçues:', {
+            type: data.type,
+            projet_id: data.projet_id,
+            evenement_id: data.evenement_id,
+            nom_original: data.nom_original
+        });
+
         if (data.nom_original) {
+            console.log('[DEBUG SERVICE CREATE] Vérification doublon pour:', {
+                nom_original: data.nom_original,
+                projet_id: data.projet_id,
+                evenement_id: data.evenement_id
+            });
+
             const doublon = await ressourceRepository.findDuplicate(
                 data.nom_original,
                 data.projet_id    || null,
                 data.evenement_id || null
             );
             if (doublon) {
+                console.warn('[DEBUG SERVICE CREATE] Doublon trouvé!');
                 if (filePath && fs.existsSync(filePath)) {
                     try { fs.unlinkSync(filePath); } catch (_) {}
                 }
@@ -42,19 +56,29 @@ class RessourceService {
             try {
                 const stat = fs.statSync(filePath);
                 data.file_size = stat.size;
+                console.log('[DEBUG SERVICE CREATE] File size calculé:', data.file_size);
             } catch (_) {}
         }
         if (data.nom_original && !data.file_type) {
             const ext = path.extname(data.nom_original).toLowerCase().replace('.', '');
             if (ext) data.file_type = ext;
+            console.log('[DEBUG SERVICE CREATE] File type calculé:', data.file_type);
         }
 
         // Si is_featured = true → retirer le featured actuel (un seul à la fois)
         return await sequelize.transaction(async (t) => {
             if (data.is_featured) {
+                console.log('[DEBUG SERVICE CREATE] Unsetting previous featured');
                 await ressourceRepository.unsetAllFeatured({ transaction: t });
             }
-            return await ressourceRepository.create(data, { transaction: t });
+            console.log('[DEBUG SERVICE CREATE] Création de la ressource avec:', {
+                type: data.type,
+                projet_id: data.projet_id,
+                evenement_id: data.evenement_id
+            });
+            const created = await ressourceRepository.create(data, { transaction: t });
+            console.log('[DEBUG SERVICE CREATE] Ressource créée avec ID:', created.id);
+            return created;
         });
     }
 
@@ -70,21 +94,83 @@ class RessourceService {
     }
 
     async deleteRessource(id) {
+        console.log('[DEBUG SERVICE DELETE] Suppression de la ressource ID:', id);
+        
         const ressource = await ressourceRepository.findById(id);
-        if (!ressource) throw new Error("Ressource introuvable");
+        if (!ressource) {
+            console.error('[ERROR SERVICE DELETE] Ressource introuvable:', id);
+            throw new Error("Ressource introuvable");
+        }
+
+        console.log('[DEBUG SERVICE DELETE] Ressource trouvée:', {
+            id: ressource.id,
+            url: ressource.url,
+            image_couverture: ressource.image_couverture,
+            projet_id: ressource.projet_id,
+            evenement_id: ressource.evenement_id
+        });
 
         return await sequelize.transaction(async (t) => {
+            // Supprimer le fichier principal
             if (ressource.url) {
                 try {
                     const filePath = path.join(__dirname, '..', ressource.url);
-                    if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
+                    console.log('[DEBUG SERVICE DELETE] Chemin du fichier principal:', filePath);
+                    
+                    if (fs.existsSync(filePath)) {
+                        fs.unlinkSync(filePath);
+                        console.log('[DEBUG SERVICE DELETE] Fichier principal supprimé du disque');
+                    } else {
+                        console.warn('[DEBUG SERVICE DELETE] Fichier principal non trouvé sur le disque:', filePath);
+                    }
                 } catch (err) {
-                    console.error("Erreur suppression fichier physique :", err.message);
+                    console.error('[ERROR SERVICE DELETE] Erreur suppression fichier principal:', err.message);
                 }
             }
+
+            // Supprimer l'image de couverture si elle existe
+            if (ressource.image_couverture) {
+                try {
+                    const couverturePath = path.join(__dirname, '..', ressource.image_couverture);
+                    console.log('[DEBUG SERVICE DELETE] Chemin de l\'image de couverture:', couverturePath);
+                    
+                    if (fs.existsSync(couverturePath)) {
+                        fs.unlinkSync(couverturePath);
+                        console.log('[DEBUG SERVICE DELETE] Image de couverture supprimée du disque');
+                    } else {
+                        console.warn('[DEBUG SERVICE DELETE] Image de couverture non trouvée sur le disque:', couverturePath);
+                    }
+                } catch (err) {
+                    console.error('[ERROR SERVICE DELETE] Erreur suppression image de couverture:', err.message);
+                }
+            }
+            
+            console.log('[DEBUG SERVICE DELETE] Suppression de la base de données');
             await ressourceRepository.delete(id, { transaction: t });
+            console.log('[DEBUG SERVICE DELETE] Ressource supprimée de la base de données');
             return true;
         });
+    }
+
+    /**
+     * Récupérer les ressources de l'association (projet_id IS NULL, evenement_id IS NULL)
+     */
+    async getAssociationRessources(filters = {}) {
+        console.log('[DEBUG SERVICE] getAssociationRessources - Filters:', filters);
+        const result = await ressourceRepository.findAssociationRessources(filters);
+        console.log('[DEBUG SERVICE] Result:', { count: result.count, rows: result.rows.length });
+        return result;
+    }
+
+    /**
+     * Récupérer une ressource de l'association par ID
+     */
+    async getAssociationRessourceById(id) {
+        console.log('[DEBUG SERVICE] getAssociationRessourceById - ID:', id);
+        const ressource = await ressourceRepository.findAssociationRessourceById(id);
+        console.log('[DEBUG SERVICE] Found ressource:', ressource);
+        if (!ressource) throw new Error(`La ressource de l'association avec l'ID ${id} n'existe pas`);
+        return ressource;
     }
 
     /**
