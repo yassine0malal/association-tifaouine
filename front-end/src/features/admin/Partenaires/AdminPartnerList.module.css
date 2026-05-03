@@ -265,3 +265,16 @@
     background-color: #FFFFFF;
     border-radius: 12px;
 }
+
+.headerLeft h1::before{
+    content: "";
+    position: absolute;
+    width: 3px;
+    height: 100%;
+    left: -12px;
+    background-color: var(--accent);
+}
+.headerLeft h1{
+    color: var(--accent);
+    position: relative;
+}

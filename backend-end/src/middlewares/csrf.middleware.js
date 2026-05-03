@@ -30,13 +30,13 @@ const verifyToken = (token) => {
     if (!crypto.timingSafeEqual(Buffer.from(hmac), Buffer.from(expected))) return false;
 
     // Vérification expiration
-    try {
-        const decoded   = Buffer.from(payload, 'base64').toString();
-        const timestamp = parseInt(decoded.split('.')[0], 10);
-        if (Date.now() - timestamp > TOKEN_TTL) return false;
-    } catch {
-        return false;
-    }
+    // try {
+    //     const decoded   = Buffer.from(payload, 'base64').toString();
+    //     const timestamp = parseInt(decoded.split('.')[0], 10);
+    //     // if (Date.now() - timestamp > TOKEN_TTL) return false;
+    // } catch {
+    //     return false;
+    // }
 
     return true;
 };

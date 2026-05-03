@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { 
+import {
     fetchAdminResourcesAPI,
     createResourceAPI,
     deleteResourceAPI,
@@ -11,11 +11,12 @@ import {
 
 export const fetchResources = createAsyncThunk(
     "adminResource/fetchAll",
-    async (_, { rejectWithValue }) => {
+    async (params, { rejectWithValue }) => {
         try {
-            return await fetchAdminResourcesAPI();
+            // params contains { page, search }
+            return await fetchAdminResourcesAPI(params);
         } catch (error) {
-            return rejectWithValue(error.response?.data || "Erreur de chargement des ressources");
+            return rejectWithValue(error.response?.data || "Erreur de chargement");
         }
     }
 );
@@ -69,6 +70,7 @@ const adminResourceSlice = createSlice({
     name: "adminResource",
     initialState: {
         resources: [],
+        pagination: null, // Added to store metadata from the backend
         currentResource: null,
         loading: false,
         error: null,
@@ -90,8 +92,9 @@ const adminResourceSlice = createSlice({
             })
             .addCase(fetchResources.fulfilled, (state, action) => {
                 state.loading = false;
-                // Fits the backend structure: res.data.data
-                state.resources = action.payload.data || action.payload || [];
+                // Capture the full structure from your backend response
+                state.resources = action.payload.data || [];
+                state.pagination = action.payload.pagination || null;
             })
             .addCase(fetchResources.rejected, (state, action) => {
                 state.loading = false;
@@ -106,7 +109,9 @@ const adminResourceSlice = createSlice({
             .addCase(createResource.fulfilled, (state, action) => {
                 state.loading = false;
                 state.success = true;
-                state.resources.unshift(action.payload.data || action.payload);
+                // Optional: handle unshift if you want immediate UI feedback
+                const newResource = action.payload.data || action.payload;
+                state.resources.unshift(newResource);
             })
             .addCase(createResource.rejected, (state, action) => {
                 state.loading = false;
@@ -122,6 +127,7 @@ const adminResourceSlice = createSlice({
             .addCase(updateResource.fulfilled, (state, action) => {
                 state.loading = false;
                 state.success = true;
+                console.log("(----");
                 const updated = action.payload.data || action.payload;
                 const index = state.resources.findIndex(r => r.id === updated.id);
                 if (index !== -1) state.resources[index] = updated;

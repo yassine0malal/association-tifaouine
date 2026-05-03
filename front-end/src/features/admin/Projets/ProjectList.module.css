@@ -16,10 +16,24 @@
     margin-bottom: 40px;
 }
 
+.mainTitle::before {
+    content: "";
+    position: absolute;
+    width: 3px;
+    height: 100%;
+    left: -12px;
+    background-color: var(--accent);
+}
+
 .mainTitle {
-    color: #8a5a2a;
-    font-size: 28px;
+    margin-top: 25px;
+    color: var(--accent);
+    position: relative;
+        font-size: 36px;
     font-weight: 800;
+    margin-left: 20px;
+    /* margin: 0 0 10px 0; */
+
 }
 
 .headerActions {
@@ -235,8 +249,9 @@
     display: flex;
     gap: 8px;
 }
-.divider{
-    background-color:var(--accent-light);
+
+.divider {
+    background-color: var(--accent-light);
     height: 1px;
 }
 

@@ -1,0 +1,385 @@
+/* Color Palette based on the design */
+:root {
+    --bg-main: #FAFAF7; /* Warm cream background */
+    --bg-card: #F4F1EA; /* Slightly darker for cards */
+    --text-dark: #2D2A26;
+    --text-brown: #8C6A4A;
+    --border-color: #E6E2D8;
+    --primary-green: #006400; /* Deep green for save button */
+}
+
+.container {
+    background-color: var(--bg-main);
+    min-height: 100vh;
+    padding: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--text-dark);
+    max-width: 1460px;
+    margin: 0 auto;
+}
+
+/* Header */
+.header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 30px;
+}
+
+.backBtn {
+    background: transparent;
+    border: none;
+    color: var(--text-brown);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    margin-left: -8px;
+}
+
+.header h1 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+/* Sections */
+.section {
+    margin-bottom: 30px;
+}
+
+.sectionTitle {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+/* Image Upload */
+.imageContainer {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    height: 220px;
+    background-color: #000;
+}
+
+.coverImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.85;
+}
+
+.changeImageBtn {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    background-color: rgba(244, 241, 234, 0.95);
+    color: var(--text-brown);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    transition: transform 0.2s;
+}
+
+.changeImageBtn:hover {
+    transform: scale(1.05);
+}
+
+/* Cards */
+.cardSection {
+    background-color: var(--bg-card);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+.cardTitle {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.transparentSection {
+    margin-bottom: 30px;
+}
+
+.sectionHeader {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 20px;
+}
+
+.sectionHeader svg {
+    color: var(--text-brown);
+}
+
+/* Inputs */
+.inputGroup {
+    margin-bottom: 20px;
+}
+
+.inputGroup label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-brown);
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+}
+
+.input, .textarea {
+    width: 100%;
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    padding: 12px 14px;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    color: var(--text-dark);
+    transition: border-color 0.2s;
+}
+
+.input:focus, .textarea:focus {
+    outline: none;
+    border-color: var(--text-brown);
+    background-color: white;
+}
+
+/* RTL specific inputs for Arabic */
+.inputRtl, .textareaRtl {
+    width: 100%;
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    padding: 12px 14px;
+    border-radius: 6px;
+    font-size: 1rem;
+    color: var(--text-dark);
+    font-family: 'Amiri', serif; /* Or your preferred Arabic font */
+    text-align: right;
+}
+
+.inputRtl:focus, .textareaRtl:focus {
+    outline: none;
+    border-color: var(--text-brown);
+    background-color: white;
+}
+
+.textarea, .textareaRtl {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* Input with Icon */
+.inputWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.inputIcon {
+    position: absolute;
+    left: 12px;
+    color: #999;
+}
+
+.inputWithIcon {
+    width: 100%;
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    padding: 12px 14px 12px 40px;
+    border-radius: 6px;
+    font-size: 0.95rem;
+}
+
+.inputWithIcon:focus {
+    outline: none;
+    border-color: var(--text-brown);
+    background-color: white;
+}
+
+select.input {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%232D2A26%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px top 50%;
+    background-size: 10px auto;
+}
+
+/* Footer Buttons */
+.actions {
+    display: flex;
+    gap: 16px;
+    margin-top: 40px;
+    padding-bottom: 20px;
+}
+
+.btnCancel {
+    flex: 1;
+    background-color: transparent;
+    border: 1px solid var(--text-brown);
+    color: var(--text-brown);
+    padding: 14px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btnCancel:hover {
+    background-color: rgba(140, 106, 74, 0.05);
+}
+
+.btnSave {
+    flex: 1.5;
+    background-color: var(--primary-green);
+    border: none;
+    color: white;
+    padding: 14px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.2s;
+}
+
+.btnSave:hover {
+    background-color: #004d00;
+}
+
+.btnSave:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.loaderWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 50vh;
+}
+
+.spinner {
+    animation: spin 1s linear infinite;
+    color: var(--text-brown);
+}
+.spinnerIcon {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin { 
+    to { transform: rotate(360deg); } 
+}
+
+/* Container for the file upload area */
+.fileUploadZone {
+    border: 2px dashed #d1d5db;
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100px;
+}
+
+.fileUploadZone:hover {
+    border-color: #8b5e34; /* Matching your theme color */
+    background-color: #f9f5f0;
+}
+
+/* Style when a file is already selected */
+.fileUploadZone.hasFile {
+    border-style: solid;
+    border-color: #10b981; /* Green success border */
+    background-color: #f0fdf4;
+}
+
+.fileUploadContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: #6b7280;
+}
+
+.uploadIcon {
+    color: #9ca3af;
+}
+
+.fileIcon {
+    color: #10b981;
+}
+
+.fileName {
+    font-weight: 600;
+    color: #374151;
+    font-size: 0.95rem;
+}
+
+/* Hint text for the existing file link */
+.currentFileHint {
+    margin-top: 8px;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.currentFileHint a {
+    color: #8b5e34;
+    text-decoration: underline;
+    font-weight: 500;
+}
+
+/* Syncing button styles with your Partner Edit style */
+.btnSave {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #8b5e34;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.btnSave:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.errorBanner {
+    background-color: #fee2e2;
+    color: #b91c1c;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border: 1px solid #fecaca;
+    font-size: 0.9rem;
+}
+.arabic{
+    font-family: var(--ar-lang);
+}

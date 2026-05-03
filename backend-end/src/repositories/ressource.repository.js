@@ -115,7 +115,7 @@ class RessourceRepository {
         const result = await Ressource.findAndCountAll({
             where,
             order:  [['created_at', 'DESC']],
-            limit:  limit  || 9,
+            limit:  12  || 12,
             offset: offset || 0
         });
 

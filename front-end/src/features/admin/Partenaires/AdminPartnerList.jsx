@@ -104,7 +104,7 @@ export default function AdminPartnerList() {
             {/* EN-TÊTE */}
             <header className={styles.header}>
                 <div className={styles.headerLeft}>
-                    <span className={styles.surtitle}>NOS PARTENAIRES</span>
+                    {/* <span className={styles.surtitle}>NOS PARTENAIRES</span> */}
                     <h1>Gestion des Partenaires</h1>
                     <p>Centralisez et gérez les collaborations stratégiques de la fondation Tifaouine à travers le monde.</p>
                 </div>
