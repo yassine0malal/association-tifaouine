@@ -42,6 +42,7 @@ const dashboardSlice = createSlice({
             })
             .addCase(fetchDashboardStats.fulfilled, (state, action) => {
                 state.loading = false;
+                console.log("------",action.payload);
                 // API returns { success: true, data: { total_projets, ... } }
                 state.stats   = action.payload?.data ?? action.payload ?? state.stats;
             })
