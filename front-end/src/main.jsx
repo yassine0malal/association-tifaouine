@@ -30,6 +30,7 @@ import { ProtectedRoute } from "./components/common/admin/ProtectedRoute.jsx";
 import AdminDashboard from "./features/admin/Dashboard/AdminDashboard.jsx";
 import { GuestRoute } from "./components/common/admin/GuestRoute.jsx";
 import AdminLayout from "./features/admin/AdminLayout/AdminLayout.jsx";
+import AdminNotificationsList from "./features/admin/Notifications/AdminNotificationsList.jsx";
 import AdminProjetsList from "./features/admin/Projets/AdminProjetsList.jsx";
 import AdminProjetEdit from "./features/admin/Projets/SingleProject/AdminProjetEdit.jsx";
 import AdminProjetCreate from "./features/admin/Projets/AdminProjetCreate.jsx";
@@ -53,6 +54,7 @@ import AdminDonsList from "./features/admin/Dons/AdminDonsList.jsx";
 import AdminDonDetail from "./features/admin/Dons/AdminDonDetail.jsx";
 import AdminMembersList from "./features/admin/Members/AdminMembersList.jsx";
 import AdminProjetDetail from "./features/admin/Projets/SingleProject/AdminProjetDetail.jsx";
+import SubscriptionAdmin from "./features/admin/subscription/SubscriptionAdmin.jsx";
 
 createRoot(document.getElementById("root")).render(
   <Provider store={store}>
@@ -155,6 +157,11 @@ createRoot(document.getElementById("root")).render(
               <Route path="messages" element={<AdminMessagesList />} />
               <Route path="messages/:id" element={<AdminMessageDetail />} />
 
+              {/* Notifications*/}
+              <Route path="notifications" element={<AdminNotificationsList />} />
+
+              {/* Subscriptions */}
+              <Route path="subscription" element={<SubscriptionAdmin />} />
             </Route>
           </Route>
 

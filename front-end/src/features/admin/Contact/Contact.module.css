@@ -6,9 +6,11 @@
 }
 
 .title {
+
     color: #8b5e34; /* Brownish color from image */
     font-size: 28px;
     margin-bottom: 8px;
+    margin-top: 30px;
     font-weight: 800;
 }
 
@@ -223,6 +225,7 @@
     }
 
     .title {
+        margin-top: 30px;
         font-size: 22px;
     }
 

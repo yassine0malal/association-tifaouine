@@ -1,134 +1,202 @@
-import React from 'react';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import styles from './dashboard.module.css';
 import TreasuryCard from '../../../components/admin/TreasuryCard';
+import { fetchDashboardStats } from './dashboardSlice';
 import { ArrowUpRightIcon, CalendarIcon, MoneyIcon, NewsIcon } from '../AdminLayout/Sidebar/icons';
 
-const AdminDashboard = () => {
-  // Dummy data for the "Recent Requests" table
-  const recentRequests = [
-    { id: 1, user: "Username", role: "Member", status: "Approved", date: "2025-03-04" },
-    { id: 2, user: "Username", role: "Benevol", status: "pending", date: "2025-03-05" },
-    { id: 3, user: "Username", role: "Member", status: "rejected", date: "2022-03-05" },
-    { id: 4, user: "Username", role: "benevol", status: "Approved", date: "2026-05-11" },
-  ];
-  const statsData = [
-    {
-      title: "Total Projets",
-      value: 24,
-      trend: "+ 5%",
-      description: "Increased from last month",
-      icon: "arrow-up-right",
-      highlight: true
-    },
-    {
-      title: "Total Evenments",
-      value: 12,
-      trend: "+ 3%",
-      description: "Increased from last month",
-      icon: "calendar"
-    },
-    {
-      title: "Total Domains",
-      value: 45,
-      trend: "+ 3%",
-      description: "Increased from last month",
-      icon: "news"
-    },
-    {
-      title: "Total dons",
-      value: "4.43K DH",
-      trend: "+ 8%",
-      description: "Increased from last month",
-      icon: "money"
+// ─── Helpers ───────────────────────────────────────────────
+
+const formatMoney = (value) => {
+    if (!value && value !== 0) return '—';
+    if (value >= 1000) return `${(value / 1000).toFixed(2)}K DH`;
+    return `${value} DH`;
+};
+
+const formatDate = (isoString) => {
+    if (!isoString) return '—';
+    return new Date(isoString).toLocaleDateString('fr-FR', {
+        day: '2-digit', month: '2-digit', year: 'numeric',
+    });
+};
+
+const getRoleBadgeClass = (type) => {
+    switch (type?.toLowerCase()) {
+        case 'admin':    return styles.roleAdmin;
+        case 'membre':   return styles.roleMembre;
+        case 'benevole': return styles.roleBenevole;
+        default:         return styles.roleMembre;
     }
-  ];
+};
 
-  const iconMap = {
-    "arrow-up-right": <ArrowUpRightIcon />,
-    "calendar": <CalendarIcon />,
-    "news": <NewsIcon />,
-    "money": <MoneyIcon />
-  };
-  return (
-    <div className={styles.dashboardAdminPage}>
-      {/* Header Section */}
-      <header className={styles.header}>
-        <div className={styles.headerText}>
-          <h1>Dashboard</h1>
-          <p>Plan, prioritize, and accomplish your tasks with ease.</p>
-        </div>
-        <div className={styles.headerActions}>
-          <button className={styles.addProjectBtn}><span>+</span> Ajouter Projet</button>
-          <button className={styles.addEventBtn}><span>+</span> Ajouter Evenement</button>
-        </div>
-      </header>
+// ─── Component ─────────────────────────────────────────────
 
-      {/* Stats Cards Grid */}
-      <div className={styles.statsGrid}>
-        {statsData.map((item, index) => (
-          <div
-            key={index}
-            className={`${styles.statCard} ${item.highlight ? styles.goldCard : ""
-              }`}
-          >
-            <div className={styles.cardHeader}>
-              <span>{item.title}</span>
-              <div className={styles.iconCircle}>
-                {/* <div className={item.icon}> */}
-                {iconMap[item.icon]}
-                {/* </div> */}
-              </div>
+const AdminDashboard = () => {
+    const dispatch  = useDispatch();
+    const navigate  = useNavigate();
+    const { stats, loading, error } = useSelector((state) => state.dashboard);
+
+    useEffect(() => {
+        dispatch(fetchDashboardStats());
+    }, [dispatch]);
+
+    // Build stats cards from live data
+    const statsData = [
+        {
+            title:       "Total Projets",
+            value:       loading ? '…' : stats.total_projets,
+            trend:       "+ 5%",
+            description: "Augmentation ce mois",
+            icon:        "arrow-up-right",
+            highlight:   true,
+        },
+        {
+            title:       "Total Événements",
+            value:       loading ? '…' : stats.total_evenements,
+            trend:       "+ 3%",
+            description: "Augmentation ce mois",
+            icon:        "calendar",
+        },
+        {
+            title:       "Total Domaines",
+            value:       loading ? '…' : stats.total_domaines,
+            trend:       "+ 3%",
+            description: "Augmentation ce mois",
+            icon:        "news",
+        },
+        {
+            title:       "Total Dons",
+            value:       loading ? '…' : formatMoney(stats.total_dons_financiers),
+            trend:       "+ 8%",
+            description: "Augmentation ce mois",
+            icon:        "money",
+        },
+    ];
+
+    const iconMap = {
+        "arrow-up-right": <ArrowUpRightIcon />,
+        "calendar":       <CalendarIcon />,
+        "news":           <NewsIcon />,
+        "money":          <MoneyIcon />,
+    };
+
+    return (
+        <div className={styles.dashboardAdminPage}>
+
+            {/* ── Header ── */}
+            <header className={styles.header}>
+                <div className={styles.headerText}>
+                    <h1>Dashboard</h1>
+                    <p>Plan, prioritize, and accomplish your tasks with ease.</p>
+                </div>
+                <div className={styles.headerActions}>
+                    <button
+                        className={styles.addProjectBtn}
+                        onClick={() => navigate('/admin/projets/new')}
+                    >
+                        <span>+</span> Ajouter Projet
+                    </button>
+                    <button
+                        className={styles.addEventBtn}
+                        onClick={() => navigate('/admin/evenements/new')}
+                    >
+                        <span>+</span> Ajouter Événement
+                    </button>
+                </div>
+            </header>
+
+            {error && (
+                <div className={styles.error}>
+                    Erreur : {error}
+                </div>
+            )}
+
+            {/* ── Stats Cards ── */}
+            <div className={styles.statsGrid}>
+                {statsData.map((item, index) => (
+                    <div
+                        key={index}
+                        className={`${styles.statCard} ${item.highlight ? styles.goldCard : ''}`}
+                    >
+                        <div className={styles.cardHeader}>
+                            <span>{item.title}</span>
+                            <div className={styles.iconCircle}>
+                                {iconMap[item.icon]}
+                            </div>
+                        </div>
+                        <div className={styles.cardValue}>{item.value}</div>
+                        <div className={styles.footerCard}>
+                            <div className={styles.cardTrend}>
+                                <span className={styles.trend}>{item.trend}</span> {item.description}
+                            </div>
+                        </div>
+                    </div>
+                ))}
             </div>
 
-            <div className={styles.cardValue}>{item.value}</div>
-            <div className={styles.footerCard}>
+            {/* ── Main Content ── */}
+            <div className={styles.mainContent}>
+                <section className={styles.tableSection}>
+                    <div className={styles.sectionHeader}>
+                        <h2>Utilisateurs récents</h2>
+                        <button
+                            className={styles.showMore}
+                            onClick={() => navigate('/admin/membres')}
+                        >
+                            <span>Voir plus</span> &gt;
+                        </button>
+                    </div>
 
-              <div className={styles.cardTrend}>
-                <span className={styles.trend}>{item.trend}</span> {item.description}
-              </div>
+                    {loading ? (
+                        <p style={{ padding: '1rem', color: '#9c8f7e', fontFamily: 'sans-serif', fontSize: '0.88rem' }}>
+                            Chargement…
+                        </p>
+                    ) : (
+                        <table className={styles.requestsTable}>
+                            <thead>
+                                <tr>
+                                    <th>Nom</th>
+                                    <th>Email</th>
+                                    <th>Rôle</th>
+                                    <th>Date d'inscription</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {(stats.recent_users ?? []).map((user) => (
+                                    <tr key={user.id}>
+                                        <td>{user.nom}</td>
+                                        <td>{user.email}</td>
+                                        <td>
+                                            <span className={`${styles.statusBadge} ${getRoleBadgeClass(user.type)}`}>
+                                                {user.type}
+                                            </span>
+                                        </td>
+                                        <td>{formatDate(user.created_at)}</td>
+                                    </tr>
+                                ))}
+
+                                {!loading && stats.recent_users?.length === 0 && (
+                                    <tr>
+                                        <td colSpan={4} style={{ textAlign: 'center', color: '#a09585', fontFamily: 'sans-serif', fontSize: '0.85rem' }}>
+                                            Aucun utilisateur récent.
+                                        </td>
+                                    </tr>
+                                )}
+                            </tbody>
+                        </table>
+                    )}
+                </section>
+
+                <TreasuryCard
+                    totalDons={stats.total_dons_financiers}
+                    totalBudget={stats.total_budget_projets}
+                    totalBeneficiaires={stats.total_beneficiaires}
+                    loading={loading}
+                />
             </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Main Content: Requests and Activity */}
-      <div className={styles.mainContent}>
-        <section className={styles.tableSection}>
-          <div className={styles.sectionHeader}>
-            <h2>Recent Requests</h2>
-            <button className={styles.showMore}><span>Show More</span> &gt;</button>
-          </div>
-          <table className={styles.requestsTable}>
-            <thead>
-              <tr>
-                <th>Username</th>
-                <th>Role</th>
-                <th>Status</th>
-                <th>Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              {recentRequests.map((req) => (
-                <tr key={req.id}>
-                  <td>{req.user}</td>
-                  <td>{req.role}</td>
-                  <td>
-                    <span className={`${styles.statusBadge} ${styles[req.status.toLowerCase()]}`}>
-                      {req.status}
-                    </span>
-                  </td>
-                  <td>{req.date}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </section>
-
-        <TreasuryCard />
-
-      </div>
-    </div>
-  );
+        </div>
+    );
 };
 
 export default AdminDashboard;

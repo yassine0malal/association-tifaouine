@@ -9,7 +9,6 @@ const verifyHoneypot = (req, res, next) => {
     const trap = req.body?.website;
     // Si le champ honeypot est rempli → c'est un bot
     if (trap !== undefined && trap !== '') {
-        console.log("bypassed verifyHoneypot")
         // On répond 200 pour ne pas alerter le bot qu'il a été détecté
         return res.status(200).json({
             success: true,

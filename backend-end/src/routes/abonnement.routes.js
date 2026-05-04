@@ -82,7 +82,7 @@ router.get(
   '/admin/abonnes',
   verifyToken,
   isAdmin,
-  validate(abonnesFilters, 'query'),
+  // validate(abonnesFilters, 'query'),
   abonnementController.getAllAbonnes.bind(abonnementController)
 );
 

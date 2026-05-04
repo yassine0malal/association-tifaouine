@@ -340,7 +340,7 @@ export default function Footer() {
             });
         }
     };
-    console.log("ddd", csrfToken)
+    // console.log("ddd", csrfToken)
 
     return (
         <div className={styles.warper}>

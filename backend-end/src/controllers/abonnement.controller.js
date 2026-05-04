@@ -9,7 +9,6 @@ class AbonnementController {
   async souscrire(req, res) {
     try {
       const result = await abonnementService.souscrireAbonnement(req.body);
-      console.log("controller abonnees : ",result)
       return res.status(201).json({
         success: true,
         message: 'Votre abonnement à notre newsletter a été confirmé avec succès. Merci !',
@@ -38,7 +37,6 @@ class AbonnementController {
       };
 
       const result = await abonnementService.getAllAbonnes(filters);
-      
       return res.status(200).json({
         success: true,
         message: 'Liste des abonnés récupérée avec succès',

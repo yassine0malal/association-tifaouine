@@ -3,19 +3,34 @@ import { useNavigate } from "react-router-dom";
 import profile from '../../../../assets/images/profile.png'
 import { logoutAdmin, markForceLoggedOut } from "../../../admin/Login/authSlice";
 import styles from "./Header.module.css";
-import { useState } from "react";
 import logo from "../../../../assets/images/logo.png"
+import { fetchUnreadCount } from "../../Notifications/adminNotificationsSlice";
+import { useEffect } from "react";
 
 
 const Header = ({ onMenuClick }) => {
   const dispatch = useDispatch();
+  // const { unreadCount, loading, error } = useSelector(
+  //   (state) => state.adminNotifications
+  // );
+  
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
-  const [existsMessage, setExistsMessage] = useState(true);
+
+  // ← pull unreadCount from the notifications slice instead of local state
+  const unreadCount = useSelector((state) => state.adminNotifications?.unreadCount ?? 0);
+  const hasUnread = unreadCount > 0;
+
   const handleLogout = async () => {
     await dispatch(logoutAdmin());
     dispatch(markForceLoggedOut());
   };
+
+  // In your admin Layout component
+  useEffect(() => {
+    dispatch(fetchUnreadCount()); // lightweight — just the count
+  }, [dispatch]);
+
 
   return (
     <header className={styles.header}>
@@ -23,12 +38,12 @@ const Header = ({ onMenuClick }) => {
       <div className={styles.responsiveLogoMenu}>
         <svg onClick={onMenuClick} xmlns="http://www.w3.org/2000/svg" width="60" height="80" viewBox="0 0 24 24" fill="none">
           <rect width="4" height="4" fill="white" />
-          <path d="M6 12H18" stroke="var(--accent)"/>
+          <path d="M6 12H18" stroke="var(--accent)" />
           <path d="M6 15.5H18" stroke="var(--accent)" />
           <path d="M6 8.5H18" stroke="var(--accent)" />
         </svg>
-        <div className={styles.logo}>
-            <img src={logo} alt="Tifaouine Logo" />
+        <div className={styles.logo} onClick={()=>navigate('/admin')} >
+          <img src={logo} alt="Tifaouine Logo" />
         </div>
       </div>
 
@@ -52,7 +67,7 @@ const Header = ({ onMenuClick }) => {
         </div>
       </div>
 
-      <div className={styles.account}>
+      <div className={styles.account} onClick={() => navigate("/admin/notifications")}>
 
         <div className={styles.notification}>
           <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24">
@@ -60,9 +75,9 @@ const Header = ({ onMenuClick }) => {
               fill="#000000"
               d="M12,23a2,2,0,0,1-2-2h4A2,2,0,0,1,12,23ZM20.707,17.293L19,15.586V10H17v6a1,1,0,0,0,.293.707l.293.293H6.414l.293-.293A1,1,0,0,0,7,16V10a4.98,4.98,0,0,1,5.912-4.912L14.5,3.5a.913.913,0,0,0-.168-.1A7,7,0,0,0,13,3.084V2a1,1,0,0,0-2,0V3.08A7,7,0,0,0,5,10v5.586L3.293,17.293A1,1,0,0,0,4,19H20a1,1,0,0,0,.707-1.707Z"
             />
-
+            {/* Red when unread notifications exist, black when none */}
             <path
-              fill={existsMessage ? "#FF0000" : "#000000"}
+              fill={hasUnread ? "#FF0000" : "#000000"}
               d="M20,6a2,2,0,1,0-2,2A2,2,0,0,0,20,6Z"
             />
           </svg>
@@ -70,16 +85,13 @@ const Header = ({ onMenuClick }) => {
         </div>
 
         <div className={styles.profileInfo}>
-
           <img src={profile} alt="" />
           <div className={styles.accountText}>
             <span>{user?.nom || "Admin"}</span>
             <span>{user?.email || "Admin@tifaouine.org"}</span>
           </div>
-
         </div>
       </div>
-
 
     </header>
   );

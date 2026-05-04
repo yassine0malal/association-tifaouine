@@ -19,7 +19,7 @@ export default function TreasuryCard() {
 
                     <div className={styles.secondaryBalance}>
                         <span className={styles.subAmount}>8,541.67</span>
-                        <span className={styles.subLabel}>Alloués aux projets</span>
+                        <span className={styles.subLabel}>Nombre de bénéficiaires</span>
                     </div>
                 </div>
 

@@ -16,14 +16,14 @@ class AbonneRepository {
   /**
    * Crée un nouvel abonné
    * @param {Object} abonneData 
-   * @returns {Promise<Object>}
+   *k @returns {Promise<Object>}
    */
   async create(abonneData) {
     return await Abonne.create(abonneData);
   }
 
   /**
-   * Récupère tous les abonnés avec pagination et filtres
+   * Récupère tous les abonnés avec pagintion et filtres
    * @param {Object} options - Options de requête
    * @param {number} options.page - Numéro de page
    * @param {number} options.limit - Nombre d'éléments par page
@@ -31,36 +31,35 @@ class AbonneRepository {
    * @param {Date} options.dateFin - Date de fin pour le filtre
    * @returns {Promise<Object>} Résultat avec données et pagination
    */
-  async findAllWithPagination(options = {}) {
+  async findAllWithPagination(options) {
     const { page = 1, limit = 10, dateDebut, dateFin } = options;
     const offset = (page - 1) * limit;
 
     // Construction des conditions de filtre
-    const whereConditions = {};
+    // const whereConditions = {};
     
-    if (dateDebut || dateFin) {
-      whereConditions.created_at = {};
+    // if (dateDebut || dateFin) {
+    //   whereConditions.created_at = {};
       
-      if (dateDebut) {
-        whereConditions.created_at[Op.gte] = new Date(dateDebut);
-      }
+    //   if (dateDebut) {
+    //     whereConditions.created_at[Op.gte] = new Date(dateDebut);
+    //   }
       
-      if (dateFin) {
-        // Ajouter 23:59:59 à la date de fin pour inclure toute la journée
-        const endDate = new Date(dateFin);
-        endDate.setHours(23, 59, 59, 999);
-        whereConditions.created_at[Op.lte] = endDate;
-      }
-    }
-
+    //   if (dateFin) {
+    //     // Ajouter 23:59:59 à la date de fin pour inclure toute la journée
+    //     const endDate = new Date(dateFin);
+    //     endDate.setHours(23, 59, 59, 999);
+    //     whereConditions.created_at[Op.lte] = endDate;
+    //   }
+    // }
     const { count, rows } = await Abonne.findAndCountAll({
-      where: whereConditions,
+      // where: whereConditions,
       order: [['created_at', 'DESC']], // Ordre décroissant par date
-      limit: parseInt(limit),
-      offset: parseInt(offset),
+      // limit: parseInt(limit),
+      // offset: parseInt(offset),
       distinct: true
     });
-
+    
     return {
       abonnes: rows,
       pagination: {

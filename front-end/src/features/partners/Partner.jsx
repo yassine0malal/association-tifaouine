@@ -68,7 +68,7 @@ export default function Partner() {
             </div>
         );
     }
-    console.log("ach tari", partners)
+    // console.log("ach tari", partners)
     return (
         <div className={styles.fullContainerPartner}>
             <PageHero title={t("heroTitle")} heroImg={herImg} />

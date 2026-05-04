@@ -37,7 +37,7 @@ class AbonnementService {
    * @param {Object} filters - Filtres et pagination
    * @returns {Promise<Object>} Liste paginée des abonnés
    */
-  async getAllAbonnes(filters = {}) {
+  async getAllAbonnes(filters) {
     const result = await abonneRepository.findAllWithPagination(filters);
     return toAbonnesListDTO(result.abonnes, result.pagination);
   }

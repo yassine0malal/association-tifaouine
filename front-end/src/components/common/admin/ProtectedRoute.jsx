@@ -10,7 +10,7 @@ export const ProtectedRoute = () => {
   const dispatch = useDispatch();
   const location = useLocation()
   const { loading, isAuthenticated } = useSelector((state) => state.auth);
-  console.log("location")
+  // console.log("location")
   useEffect(() => {
     if (!isAuthenticated) {
       dispatch(restoreSession());

@@ -10,6 +10,9 @@ import membres from '../features/public/about/membresSlice'
 import partenaires from '../features/public/about/partnerSlice'
 import adminPartnerSlice from '../features/admin/Partenaires/adminPartnerSlice'
 import adminResourceSlice from '../features/admin/Ressources/adminResourceSlice'
+import adminAbonnementReducer from '../features/admin/subscription/SubscriptionAdminSlice'
+import adminNotificationsReducer from '../features/admin/Notifications/adminNotificationsSlice'
+import dashboardReducer from '../features/admin/Dashboard/dashboardSlice'
 
 import eventsReducer from '../features/evenements/event-list/eventsSlice'
 import eventReducer from '../features/evenements/event-page/eventSlice'
@@ -31,12 +34,14 @@ export const store = configureStore({
         domainsPage: domainsPageReducer,
         partners: partnersReducer,
         auth: authAdmin,
-        membres:membres,
-        partenaires:partenaires,
-        singleProject:projectSliceSingleAdminReducer,
-        contacts:contactsReducer,
-        adminPartner:adminPartnerSlice,
-        adminResources:adminResourceSlice,
-
+        membres: membres,
+        partenaires: partenaires,
+        singleProject: projectSliceSingleAdminReducer,
+        contacts: contactsReducer,
+        adminPartner: adminPartnerSlice,
+        adminResources: adminResourceSlice,
+        adminSubscription: adminAbonnementReducer,
+        adminNotifications: adminNotificationsReducer,
+        dashboard: dashboardReducer
     },
 })
