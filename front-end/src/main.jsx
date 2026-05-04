@@ -30,6 +30,7 @@ import { ProtectedRoute } from "./components/common/admin/ProtectedRoute.jsx";
 import AdminDashboard from "./features/admin/Dashboard/AdminDashboard.jsx";
 import { GuestRoute } from "./components/common/admin/GuestRoute.jsx";
 import AdminLayout from "./features/admin/AdminLayout/AdminLayout.jsx";
+import AdminNotificationsList from "./features/admin/Notifications/AdminNotificationsList.jsx";
 import AdminProjetsList from "./features/admin/Projets/AdminProjetsList.jsx";
 import AdminProjetEdit from "./features/admin/Projets/SingleProject/AdminProjetEdit.jsx";
 import AdminProjetCreate from "./features/admin/Projets/AdminProjetCreate.jsx";
@@ -39,11 +40,11 @@ import AdminEventsList from "./features/admin/Evenements/AdminEventsList.jsx";
 import AdminEventCreate from "./features/admin/Evenements/AdminEventCreate.jsx";
 import AdminEventEdit from "./features/admin/Evenements/AdminEventEdit.jsx";
 import AdminRessourcesList from "./features/admin/Ressources/AdminRessourcesList.jsx";
-import AdminRessourceCreate from "./features/admin/Ressources/AdminRessourceCreate.jsx";
-import AdminRessourceEdit from "./features/admin/Ressources/AdminRessourceEdit.jsx";
-import AdminPartenairesList from "./features/admin/Partenaires/AdminPartenairesList.jsx";
-import AdminPartenaireCreate from "./features/admin/Partenaires/AdminPartenaireCreate.jsx";
-import AdminPartenaireEdit from "./features/admin/Partenaires/AdminPartenaireEdit.jsx";
+import AdminResourceAdd from "./features/admin/Ressources/AdminResourceAdd.jsx";
+import AdminResourceEdit from "./features/admin/Ressources/AdminResourceEdit.jsx";
+import AdminPartenairesList from "./features/admin/Partenaires/AdminPartnerList.jsx";
+import AdminPartenaireCreate from "./features/admin/Partenaires/AdminPartnerCreate.jsx";
+import AdminPartenaireEdit from "./features/admin/Partenaires/AdminPartnerEdit.jsx";
 import AdminDomainesList from "./features/admin/Domaines/AdminDomainesList.jsx";
 import AdminDomaineCreate from "./features/admin/Domaines/AdminDomaineCreate.jsx";
 import AdminDomaineEdit from "./features/admin/Domaines/AdminDomaineEdit.jsx";
@@ -53,6 +54,7 @@ import AdminDonsList from "./features/admin/Dons/AdminDonsList.jsx";
 import AdminDonDetail from "./features/admin/Dons/AdminDonDetail.jsx";
 import AdminMembersList from "./features/admin/Members/AdminMembersList.jsx";
 import AdminProjetDetail from "./features/admin/Projets/SingleProject/AdminProjetDetail.jsx";
+import SubscriptionAdmin from "./features/admin/subscription/SubscriptionAdmin.jsx";
 
 createRoot(document.getElementById("root")).render(
   <Provider store={store}>
@@ -126,13 +128,13 @@ createRoot(document.getElementById("root")).render(
 
               {/* Ressources / Rapports */}
               <Route path="ressources" element={<AdminRessourcesList />} />
-              <Route path="ressources/create" element={<AdminRessourceCreate />} />
-              <Route path="ressources/:id/edit" element={<AdminRessourceEdit />} />
+              <Route path="ressources/create" element={<AdminResourceAdd />} />
+              <Route path="ressources/edit/:id" element={<AdminResourceEdit />} />
 
               {/* Partenaires */}
               <Route path="partenaires" element={<AdminPartenairesList />} />
               <Route path="partenaires/create" element={<AdminPartenaireCreate />} />
-              <Route path="partenaires/:id/edit" element={<AdminPartenaireEdit />} />
+              <Route path="partenaires/edit/:id" element={<AdminPartenaireEdit />} />
 
               {/* Domaines */}
               <Route path="domaines" element={<AdminDomainesList />} />
@@ -155,6 +157,11 @@ createRoot(document.getElementById("root")).render(
               <Route path="messages" element={<AdminMessagesList />} />
               <Route path="messages/:id" element={<AdminMessageDetail />} />
 
+              {/* Notifications*/}
+              <Route path="notifications" element={<AdminNotificationsList />} />
+
+              {/* Subscriptions */}
+              <Route path="subscription" element={<SubscriptionAdmin />} />
             </Route>
           </Route>
 

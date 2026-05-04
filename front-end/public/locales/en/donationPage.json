@@ -1,0 +1,203 @@
+{
+  "currentNeeds": {
+    "title": "Current Needs",
+    "subtitle": "Discover the most urgent needs of our association and help us make a difference.",
+    "urgent": "Urgent",
+    "funded": "% funded",
+    "needsData": [
+      {
+        "id": 1,
+        "title": "Food Supplies",
+        "description": "Essential nutritious food baskets for 50 families in the remote rural communities.",
+        "raised": "$4,250",
+        "goal": "$5,000"
+      },
+      {
+        "id": 2,
+        "title": "School Materials",
+        "description": "Providing backpacks, notebooks, and essential stationery for the upcoming school year.",
+        "raised": "$1,260",
+        "goal": "$3,000"
+      },
+      {
+        "id": 3,
+        "title": "Medical Aid",
+        "description": "Emergency medical kits and specialized medicine for our local health clinic center.",
+        "raised": "$5,600",
+        "goal": "$8,000"
+      },
+      {
+        "id": 4,
+        "title": "Housing Assistance",
+        "description": "Structural repairs and insulation for community housing before the winter season begins.",
+        "raised": "$1,800",
+        "goal": "$12,000"
+      }
+    ],
+    "galleryData": [
+      {
+        "id": 1,
+        "label": "Community Joy"
+      },
+      {
+        "id": 2,
+        "label": "Direct Support"
+      },
+      {
+        "id": 3,
+        "label": "Future Growth"
+      }
+    ]
+  },
+  "donateInfos": {
+    "directSupport": {
+      "title": "DIRECT SUPPORT",
+      "subtitle": "Bank Transfer (RIB)",
+      "description": "The most direct way to fund our mission without platform fees.",
+      "accountName": "ACCOUNT NAME",
+      "bankName": "BANK NAME",
+      "rib": "RIB (BANK ACCOUNT NUMBER)",
+      "iban": "IBAN",
+      "swift": "SWIFT / BIC",
+      "trustMessage": "This account is officially verified. All transactions are securely handled by Attijariwafa Bank Morocco."
+    },
+    "contacts": {
+      "title": "Contact to Donate",
+      "phone": "PHONE",
+      "email": "EMAIL",
+      "whatsapp": "Chat on WhatsApp"
+    }
+  },
+  "impactSection": {
+    "title": "Every Dirham Matters",
+    "subtitle": "See how your contribution directly transforms lives.",
+    "cards": {
+      "currency": "MAD",
+      "education": {
+        "amount": "100",
+        "description": "Provides essential school supplies notebooks, pens, and bags for a child for an entire academic year.",
+        "impactLabel": "Education"
+      },
+      "healthcare": {
+        "amount": "500",
+        "description": "Supports local medical outreach programs, covering consultations and essential medicine for elders in remote villages.",
+        "impactLabel": "Healthcare"
+      },
+      "agriculture": {
+        "amount": "1000",
+        "description": "Funds critical agricultural tools and sustainable irrigation pipes for small-scale local farmers.",
+        "impactLabel": "Agriculture"
+      }
+    }
+  },
+  "transparencySection": {
+    "title": "Built on Trust.",
+    "titleLine2": "Driven by Transparency.",
+    "description": "At Association Tifaouine, we believe that impact is measured not just in numbers, but in the sustainable growth of our heritage and communities. Every dirham is accounted for in our annual transparency reports.",
+    "stats": {
+      "schools": {
+        "number": "50+",
+        "title": "Schools Supported",
+        "description": "Modernizing infrastructure and providing resources."
+      },
+      "patients": {
+        "number": "10k+",
+        "title": "Patients Treated",
+        "description": "Mobile clinics reaching the most remote valleys."
+      },
+      "farms": {
+        "number": "200+",
+        "title": "Farms Empowered",
+        "description": "Implementing sustainable irrigation and tools."
+      }
+    }
+  },
+  "donationForm": {
+    "title": "From Donation to Impact",
+    "subtitle": "Every step ensures your support reaches those who need it most.",
+    "successMessage": "Thank you! Your donation has been submitted successfully.",
+    
+    "steps": {
+      "step1": {
+        "title": "You give a gift",
+        "description": "You securely complete your donation."
+      },
+      "step2": {
+        "title": "Funds are received",
+        "description": "Gifts are securely deposited and accounted for."
+      },
+      "step3": {
+        "title": "Funds are pooled",
+        "description": "Individual donations are combined to amplify impact."
+      },
+      "step4": {
+        "title": "Project allocation",
+        "description": "Our team selects the highest-priority rural initiatives."
+      },
+      "step5": {
+        "title": "Community impact",
+        "description": "Schools, healthcare, and sustainable agriculture are funded."
+      },
+      "step6": {
+        "title": "Sustainable outcomes",
+        "description": "Long-term, life-changing results are achieved."
+      }
+    },
+    
+    "form": {
+      "title": "Confirm Your Donation",
+      "description": "After your transfer, please send us the receipt so we can confirm your donation and send your acknowledgement.",
+      
+      "labels": {
+        "fullname": "Fullname *",
+        "email": "Email *",
+        "amount": "Amount (Optional)",
+        "project": "Choose the project *",
+        "projectNone": "None",
+        "receipt": "Upload receipt *",
+        "message": "Your Message (Optional)"
+      },
+      
+      "receiptHint": "Upload your receipt <br/> PDF, JPG or PNG up to 5MB",
+      "fileSelected": "Selected: {{fileName}}",
+      "submitButton": "Confirm & Send Receipt",
+      "submittingButton": "Submitting..."
+    },
+    
+    "validation": {
+      "fullname": {
+        "required": "Full name is required",
+        "minLength": "Full name must be at least 2 characters",
+        "maxLength": "Full name must be less than 100 characters",
+        "invalid": "Please enter a valid name (letters and spaces only)"
+      },
+      "email": {
+        "required": "Email address is required",
+        "invalid": "Please enter a valid email address (e.g., name@example.com)",
+        "maxLength": "Email address must be less than 255 characters"
+      },
+      "amount": {
+        "invalidNumber": "Please enter a valid number",
+        "greaterThanZero": "Amount must be greater than 0",
+        "maxValue": "Amount cannot exceed 1,000,000",
+        "maxDecimals": "Amount can have up to 2 decimal places"
+      },
+      "project": {
+        "required": "Please select a project",
+        "invalid": "Please select a valid project"
+      },
+      "receipt": {
+        "required": "Receipt is required",
+        "invalidType": "Receipt must be a PDF, JPG, or PNG file",
+        "maxSize": "Receipt must be less than 5MB"
+      },
+      "message": {
+        "maxLength": "Message must be less than 1000 characters"
+      }
+    },
+    
+    "errors": {
+      "submissionFailed": "Failed to submit donation. Please try again."
+    }
+  }
+}

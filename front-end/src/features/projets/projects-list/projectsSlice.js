@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { fetchProjectsAPI } from "./projectsService";
+import { fetchProjectsAPI, fetchProjectsForSelectAPI } from "./projectsService";
 
 // async thunk
 export const fetchProjects = createAsyncThunk(
@@ -9,7 +9,7 @@ export const fetchProjects = createAsyncThunk(
     return data;
   },
   {
-    condition: ({ page, filter }, { getState }) => {
+    condition: ({ page, lang , filter }, { getState }) => {
       const { projects } = getState();
       // 🚫 don't fetch if already loading
       if (projects.loading) return false;
@@ -18,14 +18,49 @@ export const fetchProjects = createAsyncThunk(
       // if (projects.currentPage === page && projects.currentFilter === filter) {
       //   return false;
       // }
+
+      return true;
     },
   },
 );
+
+
+
+// async thunk
+export const fetchProjectsForSelect = createAsyncThunk(
+  "projects/fetchProjectsForSelect",
+  async ({ lang }) => {
+    const data = await fetchProjectsForSelectAPI(lang);
+    return data;
+  },
+  {
+    condition: ({lang}, { getState }) => {
+      const { projects } = getState();
+      // 🚫 don't fetch if already loading
+      if (projects.projectsForSelect.loading) return false;
+
+      // 🚫 don't fetch same page + same filter again
+      // if (projects.currentPage === page && projects.currentFilter === filter) {
+      //   return false;
+      // }
+
+      return true;
+    },
+  },
+);
+
+
+
 
 const projectsSlice = createSlice({
   name: "projects",
   initialState: {
     data: [],
+    projectsForSelect:{
+      data:[],
+      loading:false,
+      error:null
+    },
     loading: false,
     error: null,
     currentFilter: "all",
@@ -67,6 +102,24 @@ const projectsSlice = createSlice({
       .addCase(fetchProjects.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
+      })
+
+      // loading
+      .addCase(fetchProjectsForSelect.pending, (state) => {
+        state.projectsForSelect.loading = true;
+        state.projectsForSelect.error = null;
+      })
+
+      // success
+      .addCase(fetchProjectsForSelect.fulfilled, (state, action) => {
+        state.projectsForSelect.loading = false;
+        state.projectsForSelect.data = action.payload?.projects || ""
+      })
+
+      // error
+      .addCase(fetchProjectsForSelect.rejected, (state, action) => {
+        state.projectsForSelect.loading = false;
+        state.projectsForSelect.error = action?.error || "";
       });
   },
 });

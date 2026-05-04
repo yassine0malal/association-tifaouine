@@ -51,7 +51,7 @@ const ressourcesSlice = createSlice({
         .addCase(fetchRessources.fulfilled, (state, action) => {
             
             
-            // console.log("----------------------------------new data pagination--->", action.payload.pagination);
+            console.log("----------------------------------new data ress--->", action.payload);
                 if (action.meta.arg.lang !== state.currentLang) {
                     state.loading = false;
                     return;

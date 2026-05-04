@@ -27,7 +27,7 @@ const corsOptions = {
     origin: process.env.FRONTEND_URL, // Autorise uniquement l'URL de votre site
     credentials: true,               // Autorise l'envoi des cookies sécurisés (HttpOnly)
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-    allowedHeaders: ['Content-Type'],
+    allowedHeaders: ['Content-Type','x-csrf-token'],
     exposedHeaders: ['Content-Disposition']
 };
 // Servir les fichiers statiques (Photos des membres, bénévoles, etc.)

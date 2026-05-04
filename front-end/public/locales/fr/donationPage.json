@@ -1,0 +1,203 @@
+{
+  "currentNeeds": {
+    "title": "Besoins Actuels",
+    "subtitle": "Découvrez les besoins les plus urgents de notre association et aidez-nous à faire la différence.",
+    "urgent": "Urgent",
+    "funded": "% financé",
+    "needsData": [
+      {
+        "id": 1,
+        "title": "Fournitures Alimentaires",
+        "description": "Paniers alimentaires nutritifs essentiels pour 50 familles dans les communautés rurales isolées.",
+        "raised": "4 250 $",
+        "goal": "5 000 $"
+      },
+      {
+        "id": 2,
+        "title": "Matériel Scolaire",
+        "description": "Fourniture de cartables, cahiers et fournitures essentielles pour la prochaine année scolaire.",
+        "raised": "1 260 $",
+        "goal": "3 000 $"
+      },
+      {
+        "id": 3,
+        "title": "Aide Médicale",
+        "description": "Trousse médicale d'urgence et médicaments spécialisés pour notre centre de santé local.",
+        "raised": "5 600 $",
+        "goal": "8 000 $"
+      },
+      {
+        "id": 4,
+        "title": "Aide au Logement",
+        "description": "Réparations structurelles et isolation pour les logements communautaires avant le début de la saison hivernale.",
+        "raised": "1 800 $",
+        "goal": "12 000 $"
+      }
+    ],
+    "galleryData": [
+      {
+        "id": 1,
+        "label": "Joie Communautaire"
+      },
+      {
+        "id": 2,
+        "label": "Soutien Direct"
+      },
+      {
+        "id": 3,
+        "label": "Croissance Future"
+      }
+    ]
+  },
+  "donateInfos": {
+    "directSupport": {
+      "title": "SOUTIEN DIRECT",
+      "subtitle": "Virement Bancaire (RIB)",
+      "description": "Le moyen le plus direct de financer notre mission sans frais de plateforme.",
+      "accountName": "NOM DU COMPTE",
+      "bankName": "NOM DE LA BANQUE",
+      "rib": "RIB (NUMÉRO DE COMPTE BANCAIRE)",
+      "iban": "IBAN",
+      "swift": "SWIFT / BIC",
+      "trustMessage": "Ce compte est officiellement vérifié. Toutes les transactions sont sécurisées par Attijariwafa Bank Maroc."
+    },
+    "contacts": {
+      "title": "Contacter pour Faire un Don",
+      "phone": "TÉLÉPHONE",
+      "email": "E-MAIL",
+      "whatsapp": "Discuter sur WhatsApp"
+    }
+  },
+  "impactSection": {
+    "title": "Chaque Dirham Compte",
+    "subtitle": "Découvrez comment votre contribution transforme directement des vies.",
+    "cards": {
+      "currency": "MAD",
+      "education": {
+        "amount": "100",
+        "description": "Fournit du matériel scolaire essentiel : cahiers, stylos et cartables pour un enfant pour une année scolaire entière.",
+        "impactLabel": "Éducation"
+      },
+      "healthcare": {
+        "amount": "500",
+        "description": "Soutient les programmes médicaux locaux, couvrant les consultations et les médicaments essentiels pour les personnes âgées dans les villages reculés.",
+        "impactLabel": "Santé"
+      },
+      "agriculture": {
+        "amount": "1000",
+        "description": "Finance des outils agricoles essentiels et des tuyaux d'irrigation durables pour les petits agriculteurs locaux.",
+        "impactLabel": "Agriculture"
+      }
+    }
+  },
+  "transparencySection": {
+    "title": "Construit sur la Confiance.",
+    "titleLine2": "Animé par la Transparence.",
+    "description": "À l'Association Tifaouine, nous croyons que l'impact ne se mesure pas seulement en chiffres, mais dans la croissance durable de notre patrimoine et de nos communautés. Chaque dirham est comptabilisé dans nos rapports de transparence annuels.",
+    "stats": {
+      "schools": {
+        "number": "50+",
+        "title": "Écoles Soutenues",
+        "description": "Modernisation des infrastructures et fourniture de ressources."
+      },
+      "patients": {
+        "number": "10k+",
+        "title": "Patients Traités",
+        "description": "Cliniques mobiles atteignant les vallées les plus reculées."
+      },
+      "farms": {
+        "number": "200+",
+        "title": "Fermes Autonomisées",
+        "description": "Mise en œuvre d'irrigation durable et d'outils."
+      }
+    }
+  },
+  "donationForm": {
+    "title": "Du Don à l'Impact",
+    "subtitle": "Chaque étape garantit que votre soutien atteint ceux qui en ont le plus besoin.",
+    "successMessage": "Merci ! Votre don a été soumis avec succès.",
+
+    "steps": {
+      "step1": {
+        "title": "Vous faites un don",
+        "description": "Vous effectuez votre don en toute sécurité."
+      },
+      "step2": {
+        "title": "Les fonds sont reçus",
+        "description": "Les dons sont déposés et comptabilisés en toute sécurité."
+      },
+      "step3": {
+        "title": "Les fonds sont regroupés",
+        "description": "Les dons individuels sont combinés pour amplifier l'impact."
+      },
+      "step4": {
+        "title": "Attribution des projets",
+        "description": "Notre équipe sélectionne les initiatives rurales prioritaires."
+      },
+      "step5": {
+        "title": "Impact communautaire",
+        "description": "Les écoles, les soins de santé et l'agriculture durable sont financés."
+      },
+      "step6": {
+        "title": "Résultats durables",
+        "description": "Des résultats durables et transformateurs sont obtenus."
+      }
+    },
+
+    "form": {
+      "title": "Confirmez Votre Don",
+      "description": "Après votre virement, veuillez nous envoyer le reçu afin que nous puissions confirmer votre don et vous envoyer votre accusé de réception.",
+
+      "labels": {
+        "fullname": "Nom complet *",
+        "email": "E-mail *",
+        "amount": "Montant (Optionnel)",
+        "project": "Choisissez le projet *",
+        "projectNone": "Aucun",
+        "receipt": "Télécharger le reçu *",
+        "message": "Votre Message (Optionnel)"
+      },
+
+      "receiptHint": "Télécharger votre reçu <br/> PDF, JPG ou PNG jusqu'à 5 Mo",
+      "fileSelected": "Sélectionné : {{fileName}}",
+      "submitButton": "Confirmer & Envoyer le Reçu",
+      "submittingButton": "Envoi en cours..."
+    },
+
+    "validation": {
+      "fullname": {
+        "required": "Le nom complet est requis",
+        "minLength": "Le nom complet doit comporter au moins 2 caractères",
+        "maxLength": "Le nom complet doit comporter moins de 100 caractères",
+        "invalid": "Veuillez saisir un nom valide (lettres et espaces uniquement)"
+      },
+      "email": {
+        "required": "L'adresse e-mail est requise",
+        "invalid": "Veuillez saisir une adresse e-mail valide (ex. : nom@exemple.com)",
+        "maxLength": "L'adresse e-mail doit comporter moins de 255 caractères"
+      },
+      "amount": {
+        "invalidNumber": "Veuillez saisir un nombre valide",
+        "greaterThanZero": "Le montant doit être supérieur à 0",
+        "maxValue": "Le montant ne peut pas dépasser 1 000 000",
+        "maxDecimals": "Le montant peut avoir jusqu'à 2 décimales"
+      },
+      "project": {
+        "required": "Veuillez sélectionner un projet",
+        "invalid": "Veuillez sélectionner un projet valide"
+      },
+      "receipt": {
+        "required": "Le reçu est requis",
+        "invalidType": "Le reçu doit être un fichier PDF, JPG ou PNG",
+        "maxSize": "Le reçu doit être inférieur à 5 Mo"
+      },
+      "message": {
+        "maxLength": "Le message doit comporter moins de 1000 caractères"
+      }
+    },
+
+    "errors": {
+      "submissionFailed": "Échec de l'envoi du don. Veuillez réessayer."
+    }
+  }
+}

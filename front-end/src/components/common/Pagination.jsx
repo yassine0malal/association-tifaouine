@@ -3,7 +3,7 @@ import styles from "./pagination.module.css";
 
 export default function Pagination({ currentPage, totalPages, onPageChange }) {
   const { t } = useTranslation('pagination')
-  
+  if(!currentPage || !totalPages) return null
   const getPages = () => {
     if (totalPages <= 5) {
       return Array.from({ length: totalPages }, (_, i) => i + 1);

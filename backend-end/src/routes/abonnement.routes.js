@@ -52,7 +52,7 @@ router.get('/csrf-token', getCsrfToken);
  */
 router.post(
   '/',
-  abonnementLimiter,
+  // abonnementLimiter,
   verifyCsrf,
   validate(abonnement),
   verifyHoneypot,
@@ -83,7 +83,7 @@ router.get(
   '/admin/abonnes',
   verifyToken,
   isAdmin,
-  validate(abonnesFilters, 'query'),
+  // validate(abonnesFilters, 'query'),
   abonnementController.getAllAbonnes.bind(abonnementController)
 );
 

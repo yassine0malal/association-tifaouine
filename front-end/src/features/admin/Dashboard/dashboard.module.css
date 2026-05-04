@@ -15,10 +15,21 @@
 }
 
 .dashboardAdminPage .headerText h1 {
-    font-size: 30px;
-    padding-bottom: 20px;
-    margin: 0;
-    color: #1a1a1a;
+    position: relative;
+    /* padding-bottom: 20px; */
+    margin-bottom: 30px;
+    margin-left: 12px;
+    color: var(--accent);
+}
+
+.dashboardAdminPage .headerText h1::before {
+    content: "";
+    /* padding-left: 12px; */
+    position: absolute;
+    width: 3px;
+    height: 100%;
+    background-color: var(--accent);
+    left: -12px;
 }
 
 .dashboardAdminPage .headerText p {
@@ -294,4 +305,40 @@
         gap: 30px;
         flex-direction: column;
     }
+}
+
+
+
+/* ─── Role badges ─────────────────────────────────────────── */
+.roleAdmin {
+  background: #fdecea;
+  color: #c0392b;
+  padding: 3px 10px;
+  border-radius: 99px;
+  font-size: 0.75rem;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.roleMembre {
+  background: #e8f4ea;
+  color: #2d5a27;
+  padding: 3px 10px;
+  border-radius: 99px;
+  font-size: 0.75rem;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.roleBenevole {
+  background: #f0eafa;
+  color: #6c3483;
+  padding: 3px 10px;
+  border-radius: 99px;
+  font-size: 0.75rem;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 600;
+  text-transform: capitalize;
 }

@@ -8,7 +8,7 @@ const AdminNotification = sequelize.define('AdminNotification', {
         autoIncrement: true
     },
     type: {
-        type: DataTypes.ENUM('NOUVEAU_CONTACT', 'NOUVEAU_DON', 'NOUVEAU_BENEVOLE', 'NOUVEAU_MEMBRE'),
+        type: DataTypes.ENUM('NOUVEAU_CONTACT', 'NOUVEAU_DON', 'NOUVEAU_BENEVOLE', 'NOUVEAU_MEMBRE','NOUVEL_ABONNE'),
         allowNull: false
     },
     entity_id: {

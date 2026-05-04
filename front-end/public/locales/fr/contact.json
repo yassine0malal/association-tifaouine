@@ -29,7 +29,7 @@
                 "email": "Email",
                 "phone": "Téléphone",
                 "subject": "Objet",
-                "message": "Message",
+                "message": "Message (Le message doit comporter plus de 10 caractères)",
                 "send": "Envoyer",
                 "send-what": "Contactez-nous sur WhatsApp"
             },
