@@ -3,7 +3,7 @@ const rateLimit = require('express-rate-limit');
 
 const apiLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 100, // Limite chaque IP à 100 requêtes par fenêtre de 15 min
+    max: 10000,  // l'augmentation de nombre de requete dans la partie de navigation
     message: {
         success: false,
         message: "Trop de requêtes effectuées depuis cette adresse IP, veuillez réessayer plus tard."
