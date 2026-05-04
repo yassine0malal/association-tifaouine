@@ -78,6 +78,7 @@ router.post(
  * @desc   Récupérer tous les abonnés avec pagination et filtres
  * @access Private (Admin)
  */
+
 router.get(
   '/admin/abonnes',
   verifyToken,
@@ -91,6 +92,7 @@ router.get(
  * @desc   Récupérer les statistiques des abonnements
  * @access Private (Admin)
  */
+
 router.get(
   '/admin/abonnes/stats',
   verifyToken,
