@@ -1,13 +1,14 @@
 import React from 'react';
 import styles from './TreasuryCard.module.css';
+import { useNavigate } from 'react-router-dom';
 
 const formatMoney = (value) => {
     if (!value && value !== 0) return '—';
     const num = parseFloat(value);
     return num.toLocaleString('fr-MA', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
 };
-
 export default function TreasuryCard({ totalDons, totalBudget, totalBeneficiaires, loading }) {
+    const navigate =useNavigate()
     return (
         <div className={styles.treasuryCard}>
             <i className={`fa-solid fa-vault ${styles.bgIcon}`}></i>
@@ -39,7 +40,7 @@ export default function TreasuryCard({ totalDons, totalBudget, totalBeneficiaire
                     </div>
                 </div>
 
-                <button className={styles.actionButton}>
+                <button className={styles.actionButton} onClick={()=>navigate("/admin/dons")}>
                     Gérer les fonds
                 </button>
             </div>

@@ -93,13 +93,13 @@ const AdminDashboard = () => {
                 <div className={styles.headerActions}>
                     <button
                         className={styles.addProjectBtn}
-                        onClick={() => navigate('/admin/projets/new')}
+                        onClick={() => navigate('/admin/projets/create')}
                     >
                         <span>+</span> Ajouter Projet
                     </button>
                     <button
                         className={styles.addEventBtn}
-                        onClick={() => navigate('/admin/evenements/new')}
+                        onClick={() => navigate('/admin/evenements/create')}
                     >
                         <span>+</span> Ajouter Événement
                     </button>
