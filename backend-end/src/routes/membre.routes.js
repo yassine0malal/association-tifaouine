@@ -7,6 +7,10 @@ const { validate } = require('../middlewares/validate.middleware');
 const { paginate } = require('../middlewares/pagination.middleware');
 const { createMembreSchema, updateMembreSchema } = require('../validations/membre.validation');
 
+// --- TOUTES LES ROUTES CI-DESSOUS SONT RÉSERVÉES À L'ADMIN ---
+router.use(verifyToken);
+router.use(isAdmin);
+
 router.get('/', paginate, membreController.getAll);
 
 /**
@@ -14,11 +18,6 @@ router.get('/', paginate, membreController.getAll);
  * @desc    Récupérer un membre par ID (ou query name/email)
  */
 router.get('/:id', membreController.getById);
-
-
-// --- ROUTES PRIVÉES (Admin seulement) ---
-router.use(verifyToken);
-router.use(isAdmin);
 
 /**
  * @route   POST /api/membres

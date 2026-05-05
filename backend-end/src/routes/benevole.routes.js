@@ -7,6 +7,10 @@ const { validate } = require('../middlewares/validate.middleware');
 const { paginate } = require('../middlewares/pagination.middleware');
 const { createBenevoleSchema, updateBenevoleSchema } = require('../validations/benevole.validation');
 
+// --- TOUTES LES ROUTES CI-DESSOUS SONT RÉSERVÉES À L'ADMIN ---
+router.use(verifyToken);
+router.use(isAdmin);
+
 router.get('/', paginate, benevoleController.getAll);
 
 /**
@@ -14,11 +18,6 @@ router.get('/', paginate, benevoleController.getAll);
  * @desc    Récupérer un bénévole par ID (ou query name/email)
  */
 router.get('/:id', benevoleController.getById);
-
-
-// --- ROUTES PRIVÉES (Admin seulement) ---
-router.use(verifyToken);
-router.use(isAdmin);
 
 /**
  * @route   POST /api/benevoles

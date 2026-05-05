@@ -1,6 +1,7 @@
-﻿const { sequelize } = require('../config/database');
+const { sequelize } = require('../config/database');
 const { AdminNotification } = require('../models');
 const donRepository = require('../repositories/don.repository');
+const { toDonListDTO, toDonDetailDTO } = require('../dto/don.dto');
 
 const STATUTS_VALIDES    = ['recu', 'en_attente', 'traite'];
 const TYPES_DEST_VALIDES = ['general', 'specifique'];
@@ -53,7 +54,8 @@ class DonService {
                 message: `Nouveau don financier de ${nom_complet} (${montant} ${devise || 'MAD'})`
             }, { transaction: t });
 
-            return await donRepository.findById(don.id);
+            const fullDon = await donRepository.findById(don.id, { transaction: t });
+            return toDonDetailDTO(fullDon);
         });
     }
 
@@ -97,7 +99,8 @@ class DonService {
                 date_decision: date_decision || null
             }, { transaction: t });
 
-            return await donRepository.findById(don.id);
+            const fullDon = await donRepository.findById(don.id, { transaction: t });
+            return toDonDetailDTO(fullDon);
         });
     }
 
@@ -106,12 +109,17 @@ class DonService {
      * @param   {Object} filters - type_don, statut, type_destination, projet_id
      */
     async getAllDons(filters = {}) {
-        return await donRepository.findAll(filters);
+        const result = await donRepository.findAll(filters);
+        return { 
+            rows:  result.rows.map(d => toDonListDTO(d)), 
+            count: result.count 
+        };
     }
+
     async getDonById(id) {
         const don = await donRepository.findById(id);
         if (!don) throw new Error(`Don avec l'ID ${id} introuvable.`);
-        return don;
+        return toDonDetailDTO(don);
     }
 
     /**
@@ -126,7 +134,8 @@ class DonService {
         if (!don) throw new Error(`Don avec l'ID ${id} introuvable.`);
 
         return await sequelize.transaction(async (t) => {
-            return await donRepository.updateStatut(id, statut, { transaction: t });
+            const updated = await donRepository.updateStatut(id, statut, { transaction: t });
+            return toDonDetailDTO(updated);
         });
     }
 

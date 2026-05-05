@@ -155,7 +155,7 @@ describe('🧑‍💼 Tests Intégration — API Membres (Admin) 100% Champs', (
         it('devrait retourner le membre avec l\'intégralité des champs (200)', async () => {
             assert.ok(createdMembreId, '⚠️ Créer d\'abord le membre');
 
-            const res  = await fetch(`${BASE_URL}/membres/${createdMembreId}`);
+            const res  = await authFetch(`${BASE_URL}/membres/${createdMembreId}`);
             const body = await res.json();
 
             assert.strictEqual(res.status, 200, `❌ ${JSON.stringify(body)}`);
@@ -220,7 +220,7 @@ describe('🧑‍💼 Tests Intégration — API Membres (Admin) 100% Champs', (
             assert.strictEqual(body.success, true);
             console.log('\n   ✅ Suppression réussie');
 
-            const checkRes  = await fetch(`${BASE_URL}/membres/${createdMembreId}`);
+            const checkRes  = await authFetch(`${BASE_URL}/membres/${createdMembreId}`);
             assert.strictEqual(checkRes.status, 404, '❌ Le membre existe encore en base');
 
             // Vérifier que les fichiers physiques sont supprimés

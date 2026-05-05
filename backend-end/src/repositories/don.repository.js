@@ -1,4 +1,4 @@
-﻿const { Don, DonFinancier, DonMateriel, Projet } = require('../models');
+const { Don, DonFinancier, DonMateriel, Projet } = require('../models');
 const { Op } = require('sequelize');
 
 class DonRepository {
@@ -19,7 +19,7 @@ class DonRepository {
      * @param {Object} filters - type_don, statut, type_destination, projet_id
      */
     async findAll(filters = {}) {
-        const { type_don, statut, type_destination, projet_id, limit, offset } = filters;
+        const { type_don, statut, type_destination, projet_id, limit, offset, search } = filters;
         const where = {};
 
         if (type_don)         where.type_don         = type_don;
@@ -27,20 +27,28 @@ class DonRepository {
         if (type_destination) where.type_destination = type_destination;
         if (projet_id)        where.projet_id        = projet_id;
 
+        if (search) {
+            where[Op.or] = [
+                { nom_complet: { [Op.like]: `%${search}%` } },
+                { email:       { [Op.like]: `%${search}%` } }
+            ];
+        }
+
         return await Don.findAndCountAll({
             where,
             include: this._buildIncludes(),
             order:   [['date_reception', 'DESC']],
-            limit:   limit  || 9,
-            offset:  offset || 0
+            limit:   limit  ? parseInt(limit)  : 9,
+            offset:  offset ? parseInt(offset) : 0
         });
     }
 
     /**
      * Trouver un don par son ID (avec sous-entité)
      */
-    async findById(id) {
+    async findById(id, options = {}) {
         return await Don.findByPk(id, {
+            ...options,
             include: this._buildIncludes()
         });
     }

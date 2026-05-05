@@ -145,7 +145,7 @@ describe('🧑‍🤝‍🧑 Tests Intégration — API Bénévoles (Admin) 100%
         it('devrait retourner le bénévole avec l\'intégralité des champs (200)', async () => {
             assert.ok(createdBenevoleId, '⚠️ Créer d\'abord le bénévole');
 
-            const res  = await fetch(`${BASE_URL}/benevoles/${createdBenevoleId}`); // Public ou Admin (pas de token nécessaire pour le getById)
+            const res  = await authFetch(`${BASE_URL}/benevoles/${createdBenevoleId}`);
             const body = await res.json();
 
             assert.strictEqual(res.status, 200, `❌ ${JSON.stringify(body)}`);
@@ -209,7 +209,7 @@ describe('🧑‍🤝‍🧑 Tests Intégration — API Bénévoles (Admin) 100%
             console.log('\n   ✅ Suppression réussie');
 
             // Vérifier qu'il est bien supprimé
-            const checkRes  = await fetch(`${BASE_URL}/benevoles/${createdBenevoleId}`);
+            const checkRes  = await authFetch(`${BASE_URL}/benevoles/${createdBenevoleId}`);
             assert.strictEqual(checkRes.status, 404, '❌ Le bénévole existe encore en base');
 
             // Vérifier que les fichiers physiques sont supprimés
