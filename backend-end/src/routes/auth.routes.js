@@ -21,4 +21,11 @@ router.get('/profile', verifyToken, isAdmin, authController.getProfile);
 // @route  PATCH /api/auth/update-profile
 router.patch('/update-profile', verifyToken, isAdmin, validate(updateProfileSchema), authController.updateProfile);
 
+
+
+
+
+
+
+
 module.exports = router;

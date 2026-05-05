@@ -7,15 +7,15 @@ const { validate } = require('../middlewares/validate.middleware');
 const { paginate } = require('../middlewares/pagination.middleware');
 const { createDomaineSchema, updateDomaineSchema } = require('../validations/domaine.validation');
 
-router.get('/', domaineController.getAll.bind(domaineController));
-router.get('/:id', domaineController.getById.bind(domaineController));
 
 // Routes privées (Admin seulement) protégées par authentification
 router.use(verifyToken);
 router.use(isAdmin);
 
-router.post('/', uploadSimple('domaines', 'icone'), validate(createDomaineSchema), domaineController.create.bind(domaineController));
-router.put('/:id', uploadSimple('domaines', 'icone'), validate(updateDomaineSchema), domaineController.update.bind(domaineController));
-router.delete('/:id', domaineController.delete.bind(domaineController));
+router.get('/admin/all', domaineController.getAllWithStats.bind(domaineController));
+router.get('/admin/:id', domaineController.getByIdWithStats.bind(domaineController));
+router.post('/admin', uploadSimple('domaines', 'icone'), validate(createDomaineSchema), domaineController.create.bind(domaineController));
+router.put('/admin/:id', uploadSimple('domaines', 'icone'), validate(updateDomaineSchema), domaineController.update.bind(domaineController));
+router.delete('/admin/:id', domaineController.delete.bind(domaineController));
 
 module.exports = router;
