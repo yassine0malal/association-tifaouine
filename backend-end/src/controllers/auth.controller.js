@@ -167,10 +167,10 @@ class AuthController {
     }
 
     /**
-     * @route   PATCH /api/auth/update-profile
-     * @desc    Mettre à jour le profil admin
+     * @route   PUT /api/auth/profile
+     * @desc    Mettre à jour le profil admin (nom, email, password)
      */
-    async updateProfile(req, res) {
+    async updateProfileFull(req, res) {
         try {
             const userId = req.user.id;
             const { nom, email, password } = req.body;
@@ -184,7 +184,45 @@ class AuthController {
             });
 
         } catch (error) {
-            console.error("Erreur updateProfile controller : ", error.message);
+            console.error('[ERROR PUT PROFILE]:', error.message);
+            return res.status(400).json({
+                success: false,
+                message: error.message
+            });
+        }
+    }
+
+    /**
+     * @route   DELETE /api/auth/profile
+     * @desc    Supprimer le compte admin
+     */
+    async deleteProfile(req, res) {
+        try {
+            const userId = req.user.id;
+
+            // Supprimer le profil
+            await authService.deleteAdminProfile(userId);
+
+            // Nettoyer les cookies
+            res.clearCookie('refreshToken', {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                sameSite: process.env.NODE_ENV === 'production' ? 'Strict' : 'Lax',
+            });
+
+            res.clearCookie('accessToken', {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                sameSite: 'Strict'
+            });
+
+            return res.status(200).json({
+                success: true,
+                message: "Compte supprimé avec succès."
+            });
+
+        } catch (error) {
+            console.error('[ERROR DELETE PROFILE]:', error.message);
             return res.status(400).json({
                 success: false,
                 message: error.message

@@ -5,16 +5,11 @@ const { toDomaineListDTO, toDomaineFullDTO } = require('../dto/domaine.dto');
 class DomaineController {
     async create(req, res) {
         try {
-            console.log('[DEBUG CREATE] Body reçu:', req.body);
-            console.log('[DEBUG CREATE] Fichier reçu:', req.file);
-            
             if (req.file) {
                 req.body.icone = '/data/domaines/' + req.file.filename;
-                console.log('[DEBUG CREATE] Icone path:', req.body.icone);
             }
             
             const result = await domaineService.createDomaine(req.body);
-            console.log('[DEBUG CREATE] Domaine créé:', result.id);
             
             return res.status(201).json({ 
                 success: true, 
@@ -90,17 +85,11 @@ class DomaineController {
 
     async update(req, res) {
         try {
-            console.log('[DEBUG UPDATE] ID:', req.params.id);
-            console.log('[DEBUG UPDATE] Body reçu:', req.body);
-            console.log('[DEBUG UPDATE] Fichier reçu:', req.file);
-            
             if (req.file) {
                 req.body.icone = '/data/domaines/' + req.file.filename;
-                console.log('[DEBUG UPDATE] Nouvelle icone path:', req.body.icone);
             }
             
             const theUpdate = await domaineService.updateDomaine(req.params.id, req.body);
-            console.log('[DEBUG UPDATE] Domaine mis à jour:', theUpdate.id);
             
             return res.status(200).json({ 
                 success: true, 
@@ -118,10 +107,7 @@ class DomaineController {
 
     async delete(req, res) {
         try {
-            console.log('[DEBUG DELETE] ID:', req.params.id);
-            
             await domaineService.deleteDomaine(req.params.id);
-            console.log('[DEBUG DELETE] Domaine supprimé avec succès');
             
             return res.status(200).json({ 
                 success: true, 

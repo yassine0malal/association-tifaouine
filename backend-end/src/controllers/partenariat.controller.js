@@ -6,16 +6,11 @@ const { toPartenariathomeListDTO} = require('../dto/partenariat.dto-home');
 class PartenariatController {
     async create(req, res) {
         try {
-            console.log('[DEBUG CREATE] Body reçu:', req.body);
-            console.log('[DEBUG CREATE] Fichier reçu:', req.file);
-            
             if (req.file) {
                 req.body.logo = '/data/partenariats/' + req.file.filename;
-                console.log('[DEBUG CREATE] Logo path:', req.body.logo);
             }
             
             const result = await partenariatService.createPartenariat(req.body);
-            console.log('[DEBUG CREATE] Partenariat créé:', result.id);
             
             return res.status(201).json({ 
                 success: true, 
@@ -116,17 +111,11 @@ class PartenariatController {
 
     async update(req, res) {
         try {
-            console.log('[DEBUG UPDATE] ID:', req.params.id);
-            console.log('[DEBUG UPDATE] Body reçu:', req.body);
-            console.log('[DEBUG UPDATE] Fichier reçu:', req.file);
-            
             if (req.file) {
                 req.body.logo = '/data/partenariats/' + req.file.filename;
-                console.log('[DEBUG UPDATE] Nouveau logo path:', req.body.logo);
             }
             
             const updated = await partenariatService.updatePartenariat(req.params.id, req.body);
-            console.log('[DEBUG UPDATE] Partenariat mis à jour:', updated.id);
             
             return res.status(200).json({ 
                 success: true, 
@@ -144,10 +133,7 @@ class PartenariatController {
 
     async delete(req, res) {
         try {
-            console.log('[DEBUG DELETE] ID:', req.params.id);
-            
             await partenariatService.deletePartenariat(req.params.id);
-            console.log('[DEBUG DELETE] Partenariat supprimé avec succès');
             
             return res.status(200).json({ 
                 success: true, 
