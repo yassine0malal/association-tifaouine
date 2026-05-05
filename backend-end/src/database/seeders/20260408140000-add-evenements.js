@@ -333,6 +333,7 @@ module.exports = {
     await queryInterface.bulkInsert('evenement',
       evenements.map(e => ({
         ...e,
+        image_principale: null,
         created_at: now,
         updated_at: now
       }))
