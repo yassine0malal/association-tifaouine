@@ -372,9 +372,9 @@ describe('🎪 Tests Intégration — API Événements (Admin)', () => {
             const body = await res.json();
             
             assert.strictEqual(res.status, 200, `Erreur status ${res.status}: ${JSON.stringify(body)}`);
-            assert.ok(Array.isArray(body.data), `La galerie doit être un tableau, reçu: ${JSON.stringify(body)}`);
-            assert.strictEqual(body.data.length, 2, "La galerie doit contenir 2 images");
-            console.log(`   ✅ Galerie Publique : ${body.data.length} image(s) récupérée(s) avec succès`);
+            assert.ok(Array.isArray(body.images), `La galerie doit être un tableau, reçu: ${JSON.stringify(body)}`);
+            assert.strictEqual(body.images.length, 2, "La galerie doit contenir 2 images");
+            console.log(`   ✅ Galerie Publique : ${body.images.length} image(s) récupérée(s) avec succès`);
         });
     });
 

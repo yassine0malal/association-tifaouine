@@ -146,7 +146,7 @@ class EvenementController {
             const totalPages = Math.ceil(result.count / limit);
             return res.status(200).json({
                 success: true,
-                data: result.rows.map(img => ({ 
+                images: result.rows.map(img => ({ 
                     id: img.id, 
                     src: img.url, 
                     alt: img[`titre_${lang}`] || img.titre_fr || '' 
