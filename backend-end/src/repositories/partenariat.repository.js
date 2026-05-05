@@ -1,4 +1,4 @@
-const { Partenariat } = require('../models');
+const { Partenariat, ProjetPartenariat, EvenementPartenariat } = require('../models');
 
 class PartenariatRepository {
     /**
@@ -64,6 +64,64 @@ class PartenariatRepository {
         if (!partenariat) return false;
         await partenariat.destroy(options);
         return true;
+    }
+
+    /**
+     * Recuperer tous les partenariats avec statistiques et pagination
+     */
+    async findAllWithStats(filters = {}) {
+        const { limit, offset } = filters;
+        
+        const partenariats = await Partenariat.findAndCountAll({
+            order: [['created_at', 'DESC']],
+            limit: limit || 10,
+            offset: offset || 0
+        });
+
+        const partenariatsAvecStats = await Promise.all(
+            partenariats.rows.map(async (partenariat) => {
+                const [totalProjets, totalEvenements] = await Promise.all([
+                    ProjetPartenariat.count({
+                        where: { partenariat_id: partenariat.id }
+                    }),
+                    EvenementPartenariat.count({
+                        where: { partenariat_id: partenariat.id }
+                    })
+                ]);
+
+                return {
+                    ...partenariat.toJSON(),
+                    nombre_projets: totalProjets,
+                    nombre_evenements: totalEvenements
+                };
+            })
+        );
+
+        return {
+            count: partenariats.count,
+            rows: partenariatsAvecStats
+        };
+    }
+
+    /**
+     * Trouver un partenariat par ID avec statistiques
+     */
+    async findByIdWithStats(id) {
+        const partenariat = await Partenariat.findByPk(id);
+        if (!partenariat) return null;
+
+        const [totalProjets, totalEvenements] = await Promise.all([
+            ProjetPartenariat.count({ where: { partenariat_id: id } }),
+            EvenementPartenariat.count({ where: { partenariat_id: id } })
+        ]);
+
+        const result = {
+            ...partenariat.toJSON(),
+            nombre_projets: totalProjets,
+            nombre_evenements: totalEvenements
+        };
+
+        return result;
     }
 }
 

@@ -6,11 +6,28 @@ const { toPartenariathomeListDTO} = require('../dto/partenariat.dto-home');
 class PartenariatController {
     async create(req, res) {
         try {
-            if (req.file) req.body.logo = '/data/partenariats/' + req.file.filename;
+            console.log('[DEBUG CREATE] Body reçu:', req.body);
+            console.log('[DEBUG CREATE] Fichier reçu:', req.file);
+            
+            if (req.file) {
+                req.body.logo = '/data/partenariats/' + req.file.filename;
+                console.log('[DEBUG CREATE] Logo path:', req.body.logo);
+            }
+            
             const result = await partenariatService.createPartenariat(req.body);
-            return res.status(201).json({ success: true, message: "Partenariat créé avec succès", data: result });
+            console.log('[DEBUG CREATE] Partenariat créé:', result.id);
+            
+            return res.status(201).json({ 
+                success: true, 
+                message: "Partenariat créé avec succès", 
+                data: result 
+            });
         } catch (error) {
-            return res.status(400).json({ success: false, message: error.message });
+            console.error('[ERROR CREATE]:', error.message);
+            return res.status(400).json({ 
+                success: false, 
+                message: error.message 
+            });
         }
     }
 
@@ -59,22 +76,89 @@ class PartenariatController {
         }
     }
 
+    /**
+     * @route   GET /api/partenariats/admin/all
+     * @desc    Récupérer tous les partenariats avec stats et pagination (Admin)
+     */
+    async getAllWithStats(req, res) {
+        try {
+            const page = parseInt(req.query.page) || 1;
+            const limit = parseInt(req.query.limit) || 10;
+            
+            const result = await partenariatService.getAllPartenariatsWithStats(page, limit);
+            
+            return res.status(200).json({
+                success: true,
+                data: result.partenariats,
+                pagination: result.pagination
+            });
+        } catch (error) {
+            console.error('[ERROR] getAllWithStats:', error.message);
+            return res.status(500).json({ 
+                success: false, 
+                message: error.message
+            });
+        }
+    }
+
+    /**
+     * @route   GET /api/partenariats/admin/:id
+     * @desc    Récupérer un partenariat par ID avec statistiques (Admin)
+     */
+    async getByIdWithStats(req, res) {
+        try {
+            const partenariat = await partenariatService.getPartenariatByIdWithStats(req.params.id);
+            return res.status(200).json({ success: true, data: partenariat });
+        } catch (error) {
+            return res.status(404).json({ success: false, message: error.message });
+        }
+    }
+
     async update(req, res) {
         try {
-            if (req.file) req.body.logo = '/data/partenariats/' + req.file.filename;
+            console.log('[DEBUG UPDATE] ID:', req.params.id);
+            console.log('[DEBUG UPDATE] Body reçu:', req.body);
+            console.log('[DEBUG UPDATE] Fichier reçu:', req.file);
+            
+            if (req.file) {
+                req.body.logo = '/data/partenariats/' + req.file.filename;
+                console.log('[DEBUG UPDATE] Nouveau logo path:', req.body.logo);
+            }
+            
             const updated = await partenariatService.updatePartenariat(req.params.id, req.body);
-            return res.status(200).json({ success: true, message: "Le partenariat a bien été mis à jour", data: updated });
+            console.log('[DEBUG UPDATE] Partenariat mis à jour:', updated.id);
+            
+            return res.status(200).json({ 
+                success: true, 
+                message: "Le partenariat a bien été mis à jour", 
+                data: updated 
+            });
         } catch (error) {
-            return res.status(400).json({ success: false, message: error.message });
+            console.error('[ERROR UPDATE]:', error.message);
+            return res.status(400).json({ 
+                success: false, 
+                message: error.message 
+            });
         }
     }
 
     async delete(req, res) {
         try {
+            console.log('[DEBUG DELETE] ID:', req.params.id);
+            
             await partenariatService.deletePartenariat(req.params.id);
-            return res.status(200).json({ success: true, message: "Le partenariat a bien été supprimé" });
+            console.log('[DEBUG DELETE] Partenariat supprimé avec succès');
+            
+            return res.status(200).json({ 
+                success: true, 
+                message: "Le partenariat a bien été supprimé" 
+            });
         } catch (error) {
-            return res.status(400).json({ success: false, message: error.message });
+            console.error('[ERROR DELETE]:', error.message);
+            return res.status(400).json({ 
+                success: false, 
+                message: error.message 
+            });
         }
     }
 }

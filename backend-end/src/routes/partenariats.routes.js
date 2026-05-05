@@ -7,44 +7,19 @@ const { validate } = require('../middlewares/validate.middleware');
 const { paginate } = require('../middlewares/pagination.middleware');
 const { createPartenariatSchema, updatePartenariatSchema } = require('../validations/partenariat.validation');
 
+// --- ROUTES PUBLIQUES (avant les routes protégées) ---
 router.get('/', paginate, partenariatController.getAll.bind(partenariatController));
 
-/**
- * @route   GET /api/partenariats/:id
- * @desc    Récupérer un partenariat par son ID (Public)
- */
-router.get('/:id', partenariatController.getById.bind(partenariatController));
-
 // --- ROUTES PRIVÉES (Admin seulement) ---
-router.use(verifyToken);
-router.use(isAdmin);
+// IMPORTANT: Les routes spécifiques /admin/* doivent être AVANT les routes génériques /:id
 
-/**
- * @route   POST /api/partenariats
- * @desc    Créer un nouveau partenariat
- */
-router.post(
-    '/', 
-    uploadSimple('partenariats', 'logo'), 
-    validate(createPartenariatSchema), 
-    partenariatController.create.bind(partenariatController)
-);
+router.get('/admin/all', verifyToken, isAdmin, partenariatController.getAllWithStats.bind(partenariatController));
+router.get('/admin/:id', verifyToken, isAdmin, partenariatController.getByIdWithStats.bind(partenariatController));
+router.post('/admin', verifyToken,isAdmin,uploadSimple('partenariats', 'logo'), validate(createPartenariatSchema), partenariatController.create.bind(partenariatController));
+router.put('/admin/:id',verifyToken,isAdmin,uploadSimple('partenariats', 'logo'), validate(updatePartenariatSchema), partenariatController.update.bind(partenariatController));
+router.delete('/admin/:id', verifyToken, isAdmin, partenariatController.delete.bind(partenariatController));
 
-/**
- * @route   PUT /api/partenariats/:id
- * @desc    Mettre à jour un partenariat
- */
-router.put(
-    '/:id', 
-    uploadSimple('partenariats', 'logo'), 
-    validate(updatePartenariatSchema), 
-    partenariatController.update.bind(partenariatController)
-);
 
-/**
- * @route   DELETE /api/partenariats/:id
- * @desc    Supprimer un partenariat
- */
-router.delete('/:id', partenariatController.delete.bind(partenariatController));
+// router.get('/:id', partenariatController.getById.bind(partenariatController));
 
 module.exports = router;
