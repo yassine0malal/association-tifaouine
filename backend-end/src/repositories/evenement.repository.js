@@ -93,13 +93,37 @@ class EvenementRepository {
     }
 
     /**
-     * Photos liées à un événement
+     * Photos liées à un événement (galerie uniquement)
      */
-    async findImages(evenementId) {
-        return await Ressource.findAll({
+    async findImages(evenementId, filters = {}) {
+        const { limit, offset } = filters;
+        return await Ressource.findAndCountAll({
             where: { evenement_id: evenementId, type: 'photo' },
-            order: [['created_at', 'DESC']]
+            order: [['created_at', 'DESC']],
+            limit: limit || 9999,
+            offset: offset || 0
         });
+    }
+
+    /**
+     * Trouver un événement par ID avec toutes ses associations pour l'édition admin
+     */
+    async findByIdComplet(id) {
+        const evenement = await Evenement.findByPk(id, {
+            include: [
+                { model: Domaine, attributes: ['id', 'nom_fr', 'nom_ar', 'nom_en'] },
+                {
+                    model: Partenariat,
+                    as: 'Partenariats',
+                    attributes: ['id', 'nom_fr', 'nom_ar', 'nom_en'],
+                    through: { attributes: [] }
+                }
+            ]
+        });
+        if (!evenement) return null;
+
+        const images = await this.findImages(id, {});
+        return { evenement, images: images.rows };
     }
 
     /**

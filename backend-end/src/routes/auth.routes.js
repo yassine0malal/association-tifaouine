@@ -18,7 +18,10 @@ router.post('/logout', verifyToken, isAdmin, authController.logout);
 // @route  GET /api/auth/profile
 router.get('/profile', verifyToken, isAdmin, authController.getProfile);
 
-// @route  PATCH /api/auth/update-profile
-router.patch('/update-profile', verifyToken, isAdmin, validate(updateProfileSchema), authController.updateProfile);
+// @route  PUT /api/auth/profile (mise à jour du profil - nom, email, password)
+router.put('/profile', verifyToken, isAdmin, validate(updateProfileSchema), authController.updateProfileFull);
+
+// @route  DELETE /api/auth/profile (suppression du compte)
+router.delete('/profile', verifyToken, isAdmin, authController.deleteProfile);
 
 module.exports = router;

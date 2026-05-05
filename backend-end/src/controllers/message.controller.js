@@ -8,7 +8,7 @@ class MessageController {
     async create(req, res) {
         try {
             const { nom_complet, email, objet, message } = req.body;
-            console.log(nom_complet)
+            
             // Validation de base
             if (!nom_complet || !email || !objet || !message) {
                 return res.status(400).json({

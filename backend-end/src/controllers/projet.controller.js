@@ -228,11 +228,6 @@ class ProjetController {
         const videoFiles = req.files?.['extraVideos'] || [];
         const principalFile = principalFiles[0] || null;
 
-        // console.log("existingImagePrincipale :", req.body.existingImagePrincipale);
-        // console.log("existingExtraImages     :", req.body['existingExtraImages[]']);
-        // console.log("existingVideos          :", req.body['existingVideos[]']);
-        // console.log("Fichier principal       :", req.files?.['imagePrincipale']?.[0]?.filename);
-
         try {
             // 1. Clone req.body so we don't lose any text fields (titre, description, etc.)
             const dataToUpdate = { ...req.body };
@@ -280,11 +275,6 @@ class ProjetController {
                 videoFiles,
                 req._videosRelUrl || null
             );
-
-            console.log("=== [updateComplet] RESPONSE ===");
-            console.log("Projet mis à jour:", misAjour.id);
-            console.log("Image principale:", misAjour.image_principale);
-            console.log("Ressources associées:", misAjour.ressources?.length || 0);
 
             return res.status(200).json({ success: true, message: "Projet mis à jour avec succès", data: misAjour });
 

@@ -5,11 +5,23 @@ const { toDomaineListDTO, toDomaineFullDTO } = require('../dto/domaine.dto');
 class DomaineController {
     async create(req, res) {
         try {
-            if (req.file) req.body.icone = '/data/domaines/' + req.file.filename;
+            if (req.file) {
+                req.body.icone = '/data/domaines/' + req.file.filename;
+            }
+            
             const result = await domaineService.createDomaine(req.body);
-            return res.status(201).json({ success: true, message: "domaine cree avec succes", data: result });
+            
+            return res.status(201).json({ 
+                success: true, 
+                message: "domaine cree avec succes", 
+                data: result 
+            });
         } catch (error) {
-            return res.status(400).json({ success: false, message: error.message });
+            console.error('[ERROR CREATE]:', error.message);
+            return res.status(400).json({ 
+                success: false, 
+                message: error.message 
+            });
         }
     }
 
@@ -27,6 +39,19 @@ class DomaineController {
         try {
             const unDomaine = await domaineService.getDomaineById(req.params.id);
             return res.status(200).json({ success: true, data: unDomaine });
+        } catch (error) {
+            return res.status(404).json({ success: false, message: error.message });
+        }
+    }
+
+    /**
+     * @route   GET /api/domaines/admin/:id
+     * @desc    Recuperer un domaine par ID avec statistiques (Admin)
+     */
+    async getByIdWithStats(req, res) {
+        try {
+            const domaine = await domaineService.getDomaineByIdWithStats(req.params.id);
+            return res.status(200).json({ success: true, data: domaine });
         } catch (error) {
             return res.status(404).json({ success: false, message: error.message });
         }
@@ -51,7 +76,7 @@ class DomaineController {
     async getAllFullByLang(req, res) {
         try {
             const { lang } = req;
-            const domaines = await domaineService.getAllDomainesOrdered();
+            const domaines = await domaineService.getAllDomainesOrderedWithCounts();
             return res.status(200).json({ success: true, domaines: domaines.map(d => toDomaineFullDTO(d, lang)) });
         } catch (error) {
             return res.status(500).json({ success: false, message: error.message });
@@ -60,20 +85,65 @@ class DomaineController {
 
     async update(req, res) {
         try {
-            if (req.file) req.body.icone = '/data/domaines/' + req.file.filename;
+            if (req.file) {
+                req.body.icone = '/data/domaines/' + req.file.filename;
+            }
+            
             const theUpdate = await domaineService.updateDomaine(req.params.id, req.body);
-            return res.status(200).json({ success: true, message: "le domaine a bien ete mis a jour", data: theUpdate });
+            
+            return res.status(200).json({ 
+                success: true, 
+                message: "le domaine a bien ete mis a jour", 
+                data: theUpdate 
+            });
         } catch (error) {
-            return res.status(400).json({ success: false, message: error.message });
+            console.error('[ERROR UPDATE]:', error.message);
+            return res.status(400).json({ 
+                success: false, 
+                message: error.message 
+            });
         }
     }
 
     async delete(req, res) {
         try {
             await domaineService.deleteDomaine(req.params.id);
-            return res.status(200).json({ success: true, message: "le domaine a bien ete supprime" });
+            
+            return res.status(200).json({ 
+                success: true, 
+                message: "le domaine a bien ete supprime" 
+            });
         } catch (error) {
-            return res.status(400).json({ success: false, message: error.message });
+            console.error('[ERROR DELETE]:', error.message);
+            return res.status(400).json({ 
+                success: false, 
+                message: error.message 
+            });
+        }
+    }
+
+    /**
+     * @route   GET /api/domaines/admin/all
+     * @desc    Recuperer tous les domaines avec stats et pagination (Admin)
+     */
+    async getAllWithStats(req, res) {
+        try {
+            const page = parseInt(req.query.page) || 1;
+            const limit = parseInt(req.query.limit) || 10;
+            
+            const result = await domaineService.getAllDomainesWithStats(page, limit);
+            
+            return res.status(200).json({
+                success: true,
+                data: result.domaines,
+                pagination: result.pagination
+            });
+        } catch (error) {
+            console.error('[ERROR] getAllWithStats:', error.message);
+            return res.status(500).json({ 
+                success: false, 
+                message: error.message
+            });
         }
     }
 }
