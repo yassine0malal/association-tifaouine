@@ -64,10 +64,10 @@ createRoot(document.getElementById("root")).render(
           {/* Main Route: Home */}
           <Route path="/" element={<App />}>
             {/* Default one  */}
-            <Route path="/:lang" index element={<Home />} />
+            <Route index index element={<Home />} />
 
             {/* Redirect / vers /fr par défaut */}
-            <Route index element={<Navigate to="/fr" replace />} />
+            {/* <Route index element={<Navigate to="/fr" replace />} /> */}
 
             {/* Main Route: A propos */}
             <Route path="/:lang">

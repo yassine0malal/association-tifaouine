@@ -15,7 +15,7 @@ import { FaBarsStaggered } from "react-icons/fa6";
 
 export default function NavBar() {
   const { i18n, t } = useTranslation("nav");
-  const currentLang = i18n.language;
+  const currentLang = i18n.resolvedLanguage;
   const [showAside, setShowAside] = useState(false);
 
   function changeLanguage(lang) {
@@ -95,3 +95,4 @@ export default function NavBar() {
     </>
   );
 }
+
