@@ -6,8 +6,8 @@ class BenevoleController {
     async create(req, res) {
         try {
             if (req.files) {
-                if (req.files.photo_profile) req.body.photo_profile = `/data/benevoles/photos/${req.files.photo_profile[0].filename}`;
-                if (req.files.carte_identite) req.body.carte_identite = `/data/benevoles/identites/${req.files.carte_identite[0].filename}`;
+                if (req.files.photo) req.body.photo_profile = `/data/benevoles/photos/${req.files.photo[0].filename}`;
+                if (req.files.identity_card) req.body.carte_identite = `/data/benevoles/identites/${req.files.identity_card[0].filename}`;
             }
             const result = await benevoleService.createBenevoles(req.body);
             return res.status(201).json({
@@ -23,7 +23,8 @@ class BenevoleController {
     async getAll(req, res) {
         try {
             const { page, limit, offset } = req.pagination;
-            const result = await benevoleService.getAllBenevoles({ limit, offset });
+            const { status } = req.query;
+            const result = await benevoleService.getAllBenevoles({ limit, offset, status });
             return res.status(200).json({ success: true, ...buildPaginatedResponse(result, page, limit) });
         } catch (error) {
             return res.status(500).json({ success: false, message: "Impossible de récupérer les bénévoles." });
@@ -61,8 +62,8 @@ class BenevoleController {
     async update(req, res) {
         try {
             if (req.files) {
-                if (req.files.photo_profile) req.body.photo_profile = `/data/benevoles/photos/${req.files.photo_profile[0].filename}`;
-                if (req.files.carte_identite) req.body.carte_identite = `/data/benevoles/identites/${req.files.carte_identite[0].filename}`;
+                if (req.files.photo) req.body.photo_profile = `/data/benevoles/photos/${req.files.photo[0].filename}`;
+                if (req.files.identity_card) req.body.carte_identite = `/data/benevoles/identites/${req.files.identity_card[0].filename}`;
             }
             const updated = await benevoleService.updateBenevole(req.params.id, req.body);
             return res.status(200).json({ success: true, message: "Bénévole mis à jour avec succès.", data: updated });

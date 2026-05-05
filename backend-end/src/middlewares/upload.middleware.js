@@ -1,6 +1,6 @@
 const multer = require('multer');
-const path   = require('path');
-const fs     = require('fs');
+const path = require('path');
+const fs = require('fs');
 const { cleanFolderName } = require('../utils/fileHelpers');
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
@@ -8,7 +8,7 @@ const { cleanFolderName } = require('../utils/fileHelpers');
 const getMediaType = (filename) => {
     const ext = path.extname(filename).toLowerCase();
     if (/jpeg|jpg|png|webp|gif/.test(ext)) return 'images';
-    if (/mp4|webm|mov|mkv|avi/.test(ext))  return 'videos';
+    if (/mp4|webm|mov|mkv|avi/.test(ext)) return 'videos';
     return 'documents';
 };
 
@@ -61,7 +61,7 @@ const uploadProjetPrincipal = multer({
     storage: multer.diskStorage({
         destination: (req, file, cb) => {
             const folder = cleanFolderName(req.body.titre_fr || 'projet_sans_titre');
-            const dest   = path.join(__dirname, `../data/ressources/images/projets/${folder}/principal`);
+            const dest = path.join(__dirname, `../data/ressources/images/projets/${folder}/principal`);
             ensureDir(dest);
             req.uploadedUrl = `/data/ressources/images/projets/${folder}/principal`;
             cb(null, dest);
@@ -78,7 +78,7 @@ const uploadEvenementPrincipal = multer({
     storage: multer.diskStorage({
         destination: (req, file, cb) => {
             const folder = cleanFolderName(req.body.titre_fr || 'evenement_sans_titre');
-            const dest   = path.join(__dirname, `../data/ressources/images/evenements/${folder}/principal`);
+            const dest = path.join(__dirname, `../data/ressources/images/evenements/${folder}/principal`);
             ensureDir(dest);
             req.uploadedUrl = `/data/ressources/images/evenements/${folder}/principal`;
             cb(null, dest);
@@ -109,8 +109,8 @@ const ressourceStorage = multer.diskStorage({
             }
 
             // ── Fichiers principaux
-            const mediaType   = getMediaType(file.originalname);
-            const projetId    = req.body.projet_id;
+            const mediaType = getMediaType(file.originalname);
+            const projetId = req.body.projet_id;
             const evenementId = req.body.evenement_id;
 
             let dest, relUrl;
@@ -118,25 +118,25 @@ const ressourceStorage = multer.diskStorage({
             if (projetId && mediaType === 'images') {
                 const projet = await Projet.findByPk(projetId, { attributes: ['titre_fr'] });
                 const folder = projet ? cleanFolderName(projet.titre_fr) : `projet_${projetId}`;
-                dest   = path.join(__dirname, `../data/ressources/images/projets/${folder}/galerie`);
+                dest = path.join(__dirname, `../data/ressources/images/projets/${folder}/galerie`);
                 relUrl = `/data/ressources/images/projets/${folder}/galerie`;
             } else if (evenementId && mediaType === 'images') {
-                const evt    = await Evenement.findByPk(evenementId, { attributes: ['titre_fr'] });
+                const evt = await Evenement.findByPk(evenementId, { attributes: ['titre_fr'] });
                 const folder = evt ? cleanFolderName(evt.titre_fr) : `evenement_${evenementId}`;
-                dest   = path.join(__dirname, `../data/ressources/images/evenements/${folder}/galerie`);
+                dest = path.join(__dirname, `../data/ressources/images/evenements/${folder}/galerie`);
                 relUrl = `/data/ressources/images/evenements/${folder}/galerie`;
             } else if (projetId && mediaType === 'documents') {
                 const projet = await Projet.findByPk(projetId, { attributes: ['titre_fr'] });
                 const folder = projet ? cleanFolderName(projet.titre_fr) : `projet_${projetId}`;
-                dest   = path.join(__dirname, `../data/ressources/documents/projets/${folder}`);
+                dest = path.join(__dirname, `../data/ressources/documents/projets/${folder}`);
                 relUrl = `/data/ressources/documents/projets/${folder}`;
             } else if (evenementId && mediaType === 'documents') {
-                const evt    = await Evenement.findByPk(evenementId, { attributes: ['titre_fr'] });
+                const evt = await Evenement.findByPk(evenementId, { attributes: ['titre_fr'] });
                 const folder = evt ? cleanFolderName(evt.titre_fr) : `evenement_${evenementId}`;
-                dest   = path.join(__dirname, `../data/ressources/documents/evenements/${folder}`);
+                dest = path.join(__dirname, `../data/ressources/documents/evenements/${folder}`);
                 relUrl = `/data/ressources/documents/evenements/${folder}`;
             } else {
-                dest   = path.join(__dirname, `../data/ressources/${mediaType}`);
+                dest = path.join(__dirname, `../data/ressources/${mediaType}`);
                 relUrl = `/data/ressources/${mediaType}`;
             }
 
@@ -178,8 +178,8 @@ const uploadRessources = multer({
     fileFilter: combinedFilter,
     limits: { fileSize: 50 * 1024 * 1024 }
 }).fields([
-    { name: 'files',            maxCount: 20 },
-    { name: 'image_couverture', maxCount: 1  }
+    { name: 'files', maxCount: 20 },
+    { name: 'image_couverture', maxCount: 1 }
 ]);
 
 // ─── 5. Upload projet complet (image principale + galerie images + vidéos) ────
@@ -230,10 +230,10 @@ const projetCompletStorage = multer.diskStorage({
         }
     },
     filename: (req, file, cb) => {
-        const ext    = path.extname(file.originalname);
+        const ext = path.extname(file.originalname);
         const prefix = file.fieldname === 'imagePrincipale' ? 'principal'
-                     : file.fieldname === 'extraImages'     ? 'galerie'
-                     : 'video';
+            : file.fieldname === 'extraImages' ? 'galerie'
+                : 'video';
         cb(null, `${prefix}-${Date.now()}-${Math.round(Math.random() * 1e6)}${ext}`);
     }
 });
@@ -248,9 +248,9 @@ const uploadProjetComplet = multer({
     fileFilter: projetCompletFilter,
     limits: { fileSize: 400 * 1024 * 1024 } // pour supporter les vidéos
 }).fields([
-    { name: 'imagePrincipale', maxCount: 1  },
-    { name: 'extraImages',     maxCount: 20 },
-    { name: 'extraVideos',     maxCount: 10 }
+    { name: 'imagePrincipale', maxCount: 1 },
+    { name: 'extraImages', maxCount: 20 },
+    { name: 'extraVideos', maxCount: 10 }
 ]);
 
 // ─── 5.1. Upload événement complet (image principale + galerie images) ────────
@@ -292,7 +292,7 @@ const evenementCompletStorage = multer.diskStorage({
         }
     },
     filename: (req, file, cb) => {
-        const ext    = path.extname(file.originalname);
+        const ext = path.extname(file.originalname);
         const prefix = file.fieldname === 'imagePrincipale' ? 'principal' : 'galerie';
         cb(null, `${prefix}-${Date.now()}-${Math.round(Math.random() * 1e6)}${ext}`);
     }
@@ -303,8 +303,8 @@ const uploadEvenementComplet = multer({
     fileFilter: imageFilter,
     limits: { fileSize: 10 * 1024 * 1024 }
 }).fields([
-    { name: 'imagePrincipale', maxCount: 1  },
-    { name: 'extraImages',     maxCount: 20 }
+    { name: 'imagePrincipale', maxCount: 1 },
+    { name: 'extraImages', maxCount: 20 }
 ]);
 
 // ─── 5b. Upload projet complet — UPDATE (PUT) ─────────────────────────────────
@@ -344,10 +344,10 @@ const projetCompletUpdateStorage = multer.diskStorage({
         }
     },
     filename: (req, file, cb) => {
-        const ext    = path.extname(file.originalname);
+        const ext = path.extname(file.originalname);
         const prefix = file.fieldname === 'imagePrincipale' ? 'principal'
-                     : file.fieldname === 'extraImages'     ? 'galerie'
-                     : 'video';
+            : file.fieldname === 'extraImages' ? 'galerie'
+                : 'video';
         cb(null, `${prefix}-${Date.now()}-${Math.round(Math.random() * 1e6)}${ext}`);
     }
 });
@@ -357,9 +357,9 @@ const uploadProjetCompletUpdate = multer({
     fileFilter: projetCompletFilter,
     limits: { fileSize: 200 * 1024 * 1024 }
 }).fields([
-    { name: 'imagePrincipale', maxCount: 1  },
-    { name: 'extraImages',     maxCount: 20 },
-    { name: 'extraVideos',     maxCount: 10 }
+    { name: 'imagePrincipale', maxCount: 1 },
+    { name: 'extraImages', maxCount: 20 },
+    { name: 'extraVideos', maxCount: 10 }
 ]);
 
 // ─── 6. Upload formulaire "Être membre" ──────────────────────────────────────
@@ -369,11 +369,11 @@ const uploadEtreMembre = multer({
     storage: multer.diskStorage({
         destination: (req, file, cb) => {
             const subfolders = {
-                photo:         'membres/photos',
+                photo: 'membres/photos',
                 identity_card: 'membres/identites',
-                cv_doc:        'membres/cvs'
+                cv_doc: 'membres/cvs'
             };
-            const sub  = subfolders[file.fieldname] || 'membres';
+            const sub = subfolders[file.fieldname] || 'membres';
             const dest = path.join(__dirname, '../data', sub);
             ensureDir(dest);
             cb(null, dest);
@@ -386,9 +386,9 @@ const uploadEtreMembre = multer({
     },
     limits: { fileSize: 10 * 1024 * 1024 }
 }).fields([
-    { name: 'photo',         maxCount: 1 },
+    { name: 'photo', maxCount: 1 },
     { name: 'identity_card', maxCount: 1 },
-    { name: 'cv_doc',        maxCount: 1 }
+    { name: 'cv_doc', maxCount: 1 }
 ]);
 
 // ─── 6. Upload formulaire "Être bénévole" ────────────────────────────────────
@@ -398,10 +398,10 @@ const uploadEtreBenevole = multer({
     storage: multer.diskStorage({
         destination: (req, file, cb) => {
             const subfolders = {
-                photo:         'benevoles/photos',
+                photo: 'benevoles/photos',
                 identity_card: 'benevoles/identites'
             };
-            const sub  = subfolders[file.fieldname] || 'benevoles';
+            const sub = subfolders[file.fieldname] || 'benevoles';
             const dest = path.join(__dirname, '../data', sub);
             ensureDir(dest);
             cb(null, dest);
@@ -414,36 +414,10 @@ const uploadEtreBenevole = multer({
     },
     limits: { fileSize: 10 * 1024 * 1024 }
 }).fields([
-    { name: 'photo',         maxCount: 1 },
+    { name: 'photo', maxCount: 1 },
     { name: 'identity_card', maxCount: 1 }
 ]);
 
-// ─── 7. Upload admin bénévole ────────────────────────────────────
-// fields: photo_profile (image), carte_identite (doc)
-
-const uploadBenevoleAdmin = multer({
-    storage: multer.diskStorage({
-        destination: (req, file, cb) => {
-            const subfolders = {
-                photo_profile:  'benevoles/photos',
-                carte_identite: 'benevoles/identites'
-            };
-            const sub  = subfolders[file.fieldname] || 'benevoles';
-            const dest = path.join(__dirname, '../data', sub);
-            ensureDir(dest);
-            cb(null, dest);
-        },
-        filename: makeFilename('r')
-    }),
-    fileFilter: (req, file, cb) => {
-        if (file.fieldname === 'photo_profile') return imageFilter(req, file, cb);
-        return mediaFilter(req, file, cb);
-    },
-    limits: { fileSize: 10 * 1024 * 1024 }
-}).fields([
-    { name: 'photo_profile',  maxCount: 1 },
-    { name: 'carte_identite', maxCount: 1 }
-]);
 
 module.exports = {
     uploadSimple,
@@ -454,6 +428,5 @@ module.exports = {
     uploadEvenementComplet,
     uploadRessources,
     uploadEtreMembre,
-    uploadEtreBenevole,
-    uploadBenevoleAdmin
+    uploadEtreBenevole
 };

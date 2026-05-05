@@ -13,18 +13,20 @@ const BASE_URL = 'http://localhost:5000/api';
 const ADMIN_EMAIL    = process.env.ADMIN_EMAIL;
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 
-const TEST_DIR = path.join(__dirname, '../../../benevole_test');
-const PHOTO_TEST = path.join(TEST_DIR, 'profile.png');
-const CARTE_TEST = path.join(TEST_DIR, 'carte.png');
+const TEST_DIR = path.join(__dirname, '../../../membre_test');
+const PHOTO_TEST = path.join(TEST_DIR, 'profile_test.png');
+const CARTE_TEST = path.join(TEST_DIR, 'carte_test.png');
+const CV_TEST = path.join(TEST_DIR, 'cv.pdf');
 
-const DATA_DIR = path.join(__dirname, '../data/benevoles');
+const DATA_DIR = path.join(__dirname, '../data/membres');
 
 // ─── Variables partagées entre les tests ───────────────────────────────────────
 
-let adminCookie      = '';   // Cookie accessToken après login
-let createdBenevoleId = null; // ID du bénévole créé pendant les tests
+let adminCookie      = '';
+let createdMembreId  = null;
 let photoPathCreated = null;
 let cartePathCreated = null;
+let cvPathCreated    = null;
 
 // ─── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -48,6 +50,12 @@ function buildFormData(fields = {}, files = {}) {
         form.append('identity_card', blob, path.basename(files.identity_card));
     }
 
+    if (files.cv_doc && fs.existsSync(files.cv_doc)) {
+        const buffer = fs.readFileSync(files.cv_doc);
+        const blob   = new Blob([buffer], { type: 'application/pdf' }); // Type correct pour le PDF
+        form.append('cv_doc', blob, path.basename(files.cv_doc));
+    }
+
     return form;
 }
 
@@ -60,25 +68,22 @@ async function authFetch(url, options = {}) {
 // SUITE DE TESTS
 // ═══════════════════════════════════════════════════════════════════════════════
 
-describe('🧑‍🤝‍🧑 Tests Intégration — API Bénévoles (Admin) 100% Champs', () => {
+describe('🧑‍💼 Tests Intégration — API Membres (Admin) 100% Champs', () => {
 
     before(async () => {
         console.log('\n═══════════════════════════════════════════════');
-        console.log('  🔐  Initialisation des tests Bénévoles');
+        console.log('  🔐  Initialisation des tests Membres');
         console.log('═══════════════════════════════════════════════');
 
-        // 1. Vérifier que le serveur est démarré
         try {
             await fetch(`${BASE_URL.replace('/api', '')}`);
         } catch {
             throw new Error('❌ Le serveur n\'est pas démarré sur http://localhost:5000. Lancez "npm run dev" d\'abord.');
         }
 
-        // 3. Vérifier que les images de test existent
         assert.ok(fs.existsSync(PHOTO_TEST), `❌ Fichier de test manquant: ${PHOTO_TEST}`);
         assert.ok(fs.existsSync(CARTE_TEST), `❌ Fichier de test manquant: ${CARTE_TEST}`);
 
-        // 4. Login admin pour obtenir le cookie JWT
         const loginRes = await fetch(`${BASE_URL}/auth/login`, {
             method:  'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -95,137 +100,144 @@ describe('🧑‍🤝‍🧑 Tests Intégration — API Bénévoles (Admin) 100%
         console.log('   ✅ Login admin réussi');
     });
 
-    describe('➕ POST /api/benevoles — CRÉATION', () => {
+    describe('➕ POST /api/membres — CRÉATION', () => {
 
-        it('devrait créer un bénévole avec TOUS les champs et Fichiers (201)', async () => {
+        it('devrait créer un membre avec TOUS les champs et Fichiers (201)', async () => {
             const form = buildFormData({
-                nom:           'Bénévole Test Complet',
-                email:         'benevole.complet@test.com',
-                mession:       'Aider à organiser',
-                disponibilite: 'Les weekends',
-                telephone:     '+212600000000',
-                competences:   'JavaScript, Node.js, React',
-                adresse:       '123 Rue de la Paix, Marrakech',
-                motivation:    'Je veux aider mon association !',
+                nom:           'Membre Test Complet',
+                email:         'membre.complet@test.com',
+                poste:         'Président',
+                description_poste_fr: 'Description FR',
+                description_poste_ar: 'Description AR',
+                description_poste_en: 'Description EN',
+                telephone:     '+212600000001',
+                competences:   'Management, Finance',
+                adresse:       'Agadir',
+                motivation:    'Motivé pour gérer',
                 status:        'actif'
             }, {
                 photo: PHOTO_TEST,
-                identity_card: CARTE_TEST
+                identity_card: CARTE_TEST,
+                cv_doc: CV_TEST
             });
 
-            const res  = await authFetch(`${BASE_URL}/benevoles`, { method: 'POST', body: form });
+            const res  = await authFetch(`${BASE_URL}/membres`, { method: 'POST', body: form });
             const body = await res.json();
 
             assert.strictEqual(res.status, 201, `❌ Création échouée: ${JSON.stringify(body)}`);
             assert.strictEqual(body.success, true);
-            assert.ok(body.data[0]?.id, 'Le bénévole créé doit avoir un ID');
+            assert.ok(body.data[0]?.id, 'Le membre créé doit avoir un ID');
 
-            createdBenevoleId = body.data[0].id;
-            console.log(`   ✅ Bénévole créé avec ID: ${createdBenevoleId}`);
+            createdMembreId = body.data[0].id;
+            console.log(`   ✅ Membre créé avec ID: ${createdMembreId}`);
             
-            // Vérification que les champs ont bien été sauvegardés
-            const b = body.data[0];
-            assert.strictEqual(b.mession, 'Aider à organiser');
+            const m = body.data[0];
+            assert.strictEqual(m.poste, 'Président');
             
-            assert.ok(b.photo_profile, '❌ photo_profile absente de la réponse');
-            assert.ok(b.carte_identite, '❌ carte_identite absente de la réponse');
+            assert.ok(m.photo_profile, '❌ photo_profile absente de la réponse');
+            assert.ok(m.carte_identite, '❌ carte_identite absente de la réponse');
+            assert.ok(m.cv, '❌ cv absent de la réponse');
 
-            photoPathCreated = path.join(__dirname, '..', b.photo_profile);
-            cartePathCreated = path.join(__dirname, '..', b.carte_identite);
+            photoPathCreated = path.join(__dirname, '..', m.photo_profile);
+            cartePathCreated = path.join(__dirname, '..', m.carte_identite);
+            cvPathCreated    = path.join(__dirname, '..', m.cv);
 
             assert.ok(fs.existsSync(photoPathCreated), `❌ Fichier photo non trouvé sur le disque : ${photoPathCreated}`);
             assert.ok(fs.existsSync(cartePathCreated), `❌ Fichier carte d'identité non trouvé sur le disque : ${cartePathCreated}`);
+            assert.ok(fs.existsSync(cvPathCreated), `❌ Fichier CV non trouvé sur le disque : ${cvPathCreated}`);
             
             console.log(`   ✅ Fichiers créés physiquement avec succès`);
         });
     });
 
-    describe('🔍 GET /api/benevoles/:id — DÉTAIL', () => {
+    describe('🔍 GET /api/membres/:id — DÉTAIL', () => {
 
-        it('devrait retourner le bénévole avec l\'intégralité des champs (200)', async () => {
-            assert.ok(createdBenevoleId, '⚠️ Créer d\'abord le bénévole');
+        it('devrait retourner le membre avec l\'intégralité des champs (200)', async () => {
+            assert.ok(createdMembreId, '⚠️ Créer d\'abord le membre');
 
-            const res  = await fetch(`${BASE_URL}/benevoles/${createdBenevoleId}`); // Public ou Admin (pas de token nécessaire pour le getById)
+            const res  = await fetch(`${BASE_URL}/membres/${createdMembreId}`);
             const body = await res.json();
 
             assert.strictEqual(res.status, 200, `❌ ${JSON.stringify(body)}`);
             assert.strictEqual(body.success, true);
 
             const data = body.data;
-            assert.strictEqual(data.telephone, '+212600000000', 'Le téléphone doit être +212600000000');
-            assert.strictEqual(data.competences, 'JavaScript, Node.js, React');
-            assert.strictEqual(data.adresse, '123 Rue de la Paix, Marrakech');
-            assert.strictEqual(data.motivation, 'Je veux aider mon association !');
+            assert.strictEqual(data.telephone, '+212600000001');
+            assert.strictEqual(data.competences, 'Management, Finance');
+            assert.strictEqual(data.adresse, 'Agadir');
+            assert.strictEqual(data.motivation, 'Motivé pour gérer');
             assert.strictEqual(data.status, 'actif');
+            assert.strictEqual(data.description_poste_fr, 'Description FR');
             
             assert.ok(data.photo_profile, '❌ photo_profile absente dans le détail');
             assert.ok(data.carte_identite, '❌ carte_identite absente dans le détail');
+            assert.ok(data.cv, '❌ cv absent dans le détail');
 
             console.log(`   ✅ Tous les champs et fichiers sont bien retournés par l'API GET`);
         });
     });
 
-    describe('✏️  PUT /api/benevoles/:id — MISE À JOUR', () => {
+    describe('✏️  PUT /api/membres/:id — MISE À JOUR', () => {
 
-        it('devrait mettre à jour tous les champs du bénévole (200)', async () => {
-            assert.ok(createdBenevoleId, '⚠️ Créer d\'abord le bénévole');
+        it('devrait mettre à jour tous les champs du membre (200)', async () => {
+            assert.ok(createdMembreId, '⚠️ Créer d\'abord le membre');
 
             const form = buildFormData({
-                nom:           'Bénévole Test Modifié',
-                telephone:     '+212611111111',
-                competences:   'Vue.js, Python',
-                adresse:       '456 Avenue Nouvelle, Casa',
-                motivation:    'Toujours très motivé !',
+                nom:           'Membre Test Modifié',
+                telephone:     '+212611111112',
+                competences:   'RH',
+                adresse:       'Tanger',
+                motivation:    'Toujours motivé',
                 status:        'inactif'
             });
 
-            const res  = await authFetch(`${BASE_URL}/benevoles/${createdBenevoleId}`, { method: 'PUT', body: form });
+            const res  = await authFetch(`${BASE_URL}/membres/${createdMembreId}`, { method: 'PUT', body: form });
             const body = await res.json();
 
             assert.strictEqual(res.status, 200, `❌ MAJ échouée: ${JSON.stringify(body)}`);
             assert.strictEqual(body.success, true);
             
             const data = body.data;
-            assert.strictEqual(data.telephone, '+212611111111');
-            assert.strictEqual(data.competences, 'Vue.js, Python');
-            assert.strictEqual(data.adresse, '456 Avenue Nouvelle, Casa');
-            assert.strictEqual(data.motivation, 'Toujours très motivé !');
+            assert.strictEqual(data.telephone, '+212611111112');
+            assert.strictEqual(data.competences, 'RH');
+            assert.strictEqual(data.adresse, 'Tanger');
+            assert.strictEqual(data.motivation, 'Toujours motivé');
             assert.strictEqual(data.status, 'inactif');
 
             console.log('   ✅ Mise à jour de tous les champs réussie');
         });
     });
 
-    describe('🗑️  DELETE /api/benevoles/:id — SUPPRESSION', () => {
+    describe('🗑️  DELETE /api/membres/:id — SUPPRESSION', () => {
 
-        it('devrait supprimer le bénévole (200)', async () => {
-            assert.ok(createdBenevoleId, '⚠️ Créer d\'abord le bénévole');
+        it('devrait supprimer le membre et ses fichiers (200)', async () => {
+            assert.ok(createdMembreId, '⚠️ Créer d\'abord le membre');
 
-            const res  = await authFetch(`${BASE_URL}/benevoles/${createdBenevoleId}`, { method: 'DELETE' });
+            const res  = await authFetch(`${BASE_URL}/membres/${createdMembreId}`, { method: 'DELETE' });
             const body = await res.json();
 
             assert.strictEqual(res.status, 200, `❌ Suppression échouée: ${JSON.stringify(body)}`);
             assert.strictEqual(body.success, true);
             console.log('\n   ✅ Suppression réussie');
 
-            // Vérifier qu'il est bien supprimé
-            const checkRes  = await fetch(`${BASE_URL}/benevoles/${createdBenevoleId}`);
-            assert.strictEqual(checkRes.status, 404, '❌ Le bénévole existe encore en base');
+            const checkRes  = await fetch(`${BASE_URL}/membres/${createdMembreId}`);
+            assert.strictEqual(checkRes.status, 404, '❌ Le membre existe encore en base');
 
             // Vérifier que les fichiers physiques sont supprimés
             assert.ok(!fs.existsSync(photoPathCreated), '❌ Le fichier photo n\'a pas été supprimé du disque !');
             assert.ok(!fs.existsSync(cartePathCreated), '❌ Le fichier carte d\'identité n\'a pas été supprimé du disque !');
+            assert.ok(!fs.existsSync(cvPathCreated), '❌ Le fichier cv n\'a pas été supprimé du disque !');
             
             console.log('   ✅ Fichiers physiques supprimés avec succès');
 
-            createdBenevoleId = null;
+            createdMembreId = null;
         });
     });
 
     after(async () => {
-        if (createdBenevoleId) {
-            console.log(`\n🧹 Nettoyage sécurité: suppression bénévole ID=${createdBenevoleId}`);
-            await authFetch(`${BASE_URL}/benevoles/${createdBenevoleId}`, { method: 'DELETE' })
+        if (createdMembreId) {
+            console.log(`\n🧹 Nettoyage sécurité: suppression membre ID=${createdMembreId}`);
+            await authFetch(`${BASE_URL}/membres/${createdMembreId}`, { method: 'DELETE' })
                 .catch(err => console.warn('   Nettoyage échoué:', err.message));
         }
         console.log('\n✅ Suite de tests terminée.\n');
