@@ -26,13 +26,14 @@ const { describe, it, before, after } = require('node:test');
 const assert = require('node:assert');
 const fs   = require('fs');
 const path = require('path');
+require('dotenv').config();
 
 // ─── Configuration ─────────────────────────────────────────────────────────────
 
 const BASE_URL = 'http://localhost:5000/api';
 
-const ADMIN_EMAIL    = 'admin@tifaouine.com';
-const ADMIN_PASSWORD = 'tifaouine123';
+const ADMIN_EMAIL    = process.env.ADMIN_EMAIL;
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 
 // Images de test fournies par l'utilisateur
 const TEST_DIR          = path.join(__dirname, '../../../events_test');

@@ -5,7 +5,10 @@ const { toBenevoleListDTO } = require('../dto/benevole.dto');
 class BenevoleController {
     async create(req, res) {
         try {
-            if (req.file) req.body.photo_profile = `/data/benevoles/${req.file.filename}`;
+            if (req.files) {
+                if (req.files.photo_profile) req.body.photo_profile = `/data/benevoles/photos/${req.files.photo_profile[0].filename}`;
+                if (req.files.carte_identite) req.body.carte_identite = `/data/benevoles/identites/${req.files.carte_identite[0].filename}`;
+            }
             const result = await benevoleService.createBenevoles(req.body);
             return res.status(201).json({
                 success: true,
@@ -57,7 +60,10 @@ class BenevoleController {
 
     async update(req, res) {
         try {
-            if (req.file) req.body.photo_profile = `/data/benevoles/${req.file.filename}`;
+            if (req.files) {
+                if (req.files.photo_profile) req.body.photo_profile = `/data/benevoles/photos/${req.files.photo_profile[0].filename}`;
+                if (req.files.carte_identite) req.body.carte_identite = `/data/benevoles/identites/${req.files.carte_identite[0].filename}`;
+            }
             const updated = await benevoleService.updateBenevole(req.params.id, req.body);
             return res.status(200).json({ success: true, message: "Bénévole mis à jour avec succès.", data: updated });
         } catch (error) {
