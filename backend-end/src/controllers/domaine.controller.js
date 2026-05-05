@@ -76,7 +76,7 @@ class DomaineController {
     async getAllFullByLang(req, res) {
         try {
             const { lang } = req;
-            const domaines = await domaineService.getAllDomainesOrdered();
+            const domaines = await domaineService.getAllDomainesOrderedWithCounts();
             return res.status(200).json({ success: true, domaines: domaines.map(d => toDomaineFullDTO(d, lang)) });
         } catch (error) {
             return res.status(500).json({ success: false, message: error.message });

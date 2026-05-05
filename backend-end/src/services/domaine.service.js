@@ -38,6 +38,10 @@ class DomaineService {
         return await domaineRepository.findAllOrdered();
     }
 
+    async getAllDomainesOrderedWithCounts() {
+        return await domaineRepository.findAllOrderedWithCounts();
+    }
+
     /**
      * @desc    Recuperer avec un identifiant 
      */

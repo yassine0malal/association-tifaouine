@@ -5,35 +5,40 @@ const { verifyToken, isAdmin } = require('../middlewares/auth.middleware');
 const { validate } = require('../middlewares/validate.middleware');
 const { paginate } = require('../middlewares/pagination.middleware');
 const { createEvenementSchema, updateEvenementSchema } = require('../validations/evenement.validation');
-
-router.get('/', paginate, evenementController.getAll.bind(evenementController));
-
-/**
- * @route   GET /api/evenements/:id
- * @desc    Récupérer un événement par ID (Public)
- */
-router.get('/:id', evenementController.getById.bind(evenementController));
+const { uploadEvenementComplet } = require('../middlewares/upload.middleware');
 
 // --- ROUTES PRIVÉES (Admin seulement) ---
 router.use(verifyToken);
 router.use(isAdmin);
 
 /**
- * @route   POST /api/evenements
- * @desc    Créer un événement
+ * @route   GET /api/evenements/admin/all
+ * @desc    Récupérer tous les événements (Admin)
  */
-router.post('/', validate(createEvenementSchema), evenementController.create.bind(evenementController));
+router.get('/admin/all', paginate, evenementController.getAll.bind(evenementController));
 
 /**
- * @route   PUT /api/evenements/:id
- * @desc    Mettre à jour un événement
+ * @route   GET /api/evenements/admin/complet/:id
+ * @desc    Récupérer un événement complet avec images (pour formulaire d'édition admin)
  */
-router.put('/:id', validate(updateEvenementSchema), evenementController.update.bind(evenementController));
+router.get('/admin/complet/:id', evenementController.getByIdComplet.bind(evenementController));
 
 /**
- * @route   DELETE /api/evenements/:id
- * @desc    Supprimer un événement
+ * @route   POST /api/evenements/complet
+ * @desc    Créer un événement avec image principale + galerie
  */
-router.delete('/:id', evenementController.delete.bind(evenementController));
+router.post('/complet', uploadEvenementComplet, validate(createEvenementSchema), evenementController.createComplet.bind(evenementController));
+
+/**
+ * @route   PUT /api/evenements/complet/:id
+ * @desc    Mettre à jour un événement complet (champs + fichiers optionnels)
+ */
+router.put('/complet/:id', uploadEvenementComplet, validate(updateEvenementSchema), evenementController.updateComplet.bind(evenementController));
+
+/**
+ * @route   DELETE /api/evenements/complet/:id
+ * @desc    Supprimer un événement et toutes ses ressources
+ */
+router.delete('/complet/:id', evenementController.deleteComplet.bind(evenementController));
 
 module.exports = router;

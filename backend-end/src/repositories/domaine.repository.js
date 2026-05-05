@@ -14,6 +14,20 @@ class DomaineRepository {
         return await Domaine.findAll({ order: [['created_at', 'ASC']] });
     }
 
+    async findAllOrderedWithCounts() {
+        const domaines = await Domaine.findAll({ order: [['created_at', 'ASC']] });
+
+        return await Promise.all(
+            domaines.map(async (domaine) => {
+                const [totalProjets, totalEvenements] = await Promise.all([
+                    Projet.count({ where: { domaine_id: domaine.id } }),
+                    Evenement.count({ where: { domaine_id: domaine.id } })
+                ]);
+                return { ...domaine.toJSON(), total_projets: totalProjets, total_evenements: totalEvenements };
+            })
+        );
+    }
+
     // trouve un domaine par id
     async findById(id) {
         return await Domaine.findByPk(id);

@@ -253,6 +253,60 @@ const uploadProjetComplet = multer({
     { name: 'extraVideos',     maxCount: 10 }
 ]);
 
+// ─── 5.1. Upload événement complet (image principale + galerie images) ────────
+// fields:
+//   'imagePrincipale' (image, max 1)   → /images/evenements/{folder}/principal/
+//   'extraImages'     (images, max 20) → /images/evenements/{folder}/galerie/
+
+const evenementCompletStorage = multer.diskStorage({
+    destination: async (req, file, cb) => {
+        try {
+            let folderName;
+
+            if (req.params.id) {
+                // UPDATE — utiliser le titre existant en DB
+                const evenement = await Evenement.findByPk(req.params.id, { attributes: ['titre_fr'] });
+                folderName = evenement
+                    ? cleanFolderName(evenement.titre_fr)
+                    : cleanFolderName(req.body.titre_fr || 'evenement_sans_titre');
+            } else {
+                // CREATE — utiliser le titre du body
+                folderName = cleanFolderName(req.body.titre_fr || 'evenement_sans_titre');
+            }
+
+            if (file.fieldname === 'imagePrincipale') {
+                const dest = path.join(__dirname, `../data/ressources/images/evenements/${folderName}/principal`);
+                ensureDir(dest);
+                req._principalRelUrl = `/data/ressources/images/evenements/${folderName}/principal`;
+                return cb(null, dest);
+            }
+
+            // extraImages
+            const dest = path.join(__dirname, `../data/ressources/images/evenements/${folderName}/galerie`);
+            ensureDir(dest);
+            if (!req._galerieRelUrl) req._galerieRelUrl = `/data/ressources/images/evenements/${folderName}/galerie`;
+            cb(null, dest);
+
+        } catch (err) {
+            cb(err);
+        }
+    },
+    filename: (req, file, cb) => {
+        const ext    = path.extname(file.originalname);
+        const prefix = file.fieldname === 'imagePrincipale' ? 'principal' : 'galerie';
+        cb(null, `${prefix}-${Date.now()}-${Math.round(Math.random() * 1e6)}${ext}`);
+    }
+});
+
+const uploadEvenementComplet = multer({
+    storage: evenementCompletStorage,
+    fileFilter: imageFilter,
+    limits: { fileSize: 10 * 1024 * 1024 }
+}).fields([
+    { name: 'imagePrincipale', maxCount: 1  },
+    { name: 'extraImages',     maxCount: 20 }
+]);
+
 // ─── 5b. Upload projet complet — UPDATE (PUT) ─────────────────────────────────
 // Identique à uploadProjetComplet mais lit le titre ACTUEL depuis la DB
 // via req.params.id pour toujours utiliser le folder existant (évite la création
@@ -370,6 +424,7 @@ module.exports = {
     uploadProjetComplet,
     uploadProjetCompletUpdate,
     uploadEvenementPrincipal,
+    uploadEvenementComplet,
     uploadRessources,
     uploadEtreMembre,
     uploadEtreBenevole
