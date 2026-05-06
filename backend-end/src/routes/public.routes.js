@@ -16,6 +16,7 @@ const { paginate } = require('../middlewares/pagination.middleware');
 router.get('/domaines-navbar', domaineController.getAllByLang.bind(domaineController));
 router.get('/domaines',        domaineController.getAllFullByLang.bind(domaineController));
 
+
 // ─── Projets 
 router.get('/projets',paginate, projetController.getAllByLang.bind(projetController));
 router.get('/projets/:id/images',paginate, projetController.getImagesByLang.bind(projetController));

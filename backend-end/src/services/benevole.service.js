@@ -15,7 +15,7 @@ class BenevoleService {
             const createdResults = [];
 
             for (const item of benevolesData) {
-                const { nom, email, mession, disponibilite, status, date_adhesion } = item;
+                const { nom, email, mession, disponibilite, status, date_adhesion, photo_profile, carte_identite, telephone, competences, adresse, motivation } = item;
 
                 // 1. Vérifier si l'email existe déjà
                 const existingUser = await benevoleRepository.findByEmail(email);
@@ -35,8 +35,14 @@ class BenevoleService {
                     utilisateur_id: user.id,
                     mession: mession || 'benevole',
                     disponibilite: disponibilite || null,
+                    telephone: telephone || null,
+                    competences: competences || null,
+                    adresse: adresse || null,
+                    motivation: motivation || null,
                     status: status || 'actif',
-                    date_adhesion: date_adhesion || new Date()
+                    date_adhesion: date_adhesion || new Date(),
+                    photo_profile: photo_profile || null,
+                    carte_identite: carte_identite || null
                 }, { transaction: t });
 
                 // 4. Notification Admin
@@ -52,6 +58,8 @@ class BenevoleService {
                     email: user.email,
                     mession: benevoleProfile.mession,
                     status: benevoleProfile.status,
+                    photo_profile: benevoleProfile.photo_profile,
+                    carte_identite: benevoleProfile.carte_identite,
                     created_at: user.created_at
                 });
             }
@@ -103,7 +111,7 @@ class BenevoleService {
      * @desc    Mettre à jour un bénévole (Admin seul)
      */
     async updateBenevole(id, updateData) {
-        const { nom, email, mession, disponibilite, status } = updateData;
+        const { nom, email, mession, disponibilite, status, photo_profile, carte_identite, telephone, competences, adresse, motivation, date_adhesion } = updateData;
 
         return await sequelize.transaction(async (t) => {
             const user = await benevoleRepository.findById(id);
@@ -116,8 +124,13 @@ class BenevoleService {
             }
 
             if (nom) user.nom = nom;
-            if (mession) user.benevole.mession = mession;
-            if (disponibilite) user.benevole.disponibilite = disponibilite;
+            if (mession !== undefined) user.benevole.mession = mession;
+            if (disponibilite !== undefined) user.benevole.disponibilite = disponibilite;
+            if (telephone !== undefined) user.benevole.telephone = telephone;
+            if (competences !== undefined) user.benevole.competences = competences;
+            if (adresse !== undefined) user.benevole.adresse = adresse;
+            if (motivation !== undefined) user.benevole.motivation = motivation;
+            if (date_adhesion !== undefined) user.benevole.date_adhesion = date_adhesion;
             
             // Si une nouvelle photo est fournie, supprimer l'ancienne
             if (photo_profile && photo_profile !== user.benevole.photo_profile) {
@@ -132,6 +145,21 @@ class BenevoleService {
                     }
                 }
                 user.benevole.photo_profile = photo_profile;
+            }
+
+            // Si une nouvelle carte d'identité est fournie, supprimer l'ancienne
+            if (carte_identite && carte_identite !== user.benevole.carte_identite) {
+                if (user.benevole.carte_identite && user.benevole.carte_identite !== 'null') {
+                    try {
+                        const oldPath = path.join(__dirname, '..', user.benevole.carte_identite);
+                        if (fs.existsSync(oldPath)) {
+                            fs.unlinkSync(oldPath);
+                        }
+                    } catch (err) {
+                        console.error("Erreur suppression ancienne carte identité update : ", err.message);
+                    }
+                }
+                user.benevole.carte_identite = carte_identite;
             }
 
             if (status) user.benevole.status = status;
@@ -162,6 +190,18 @@ class BenevoleService {
             }
         }
 
+        // Supprimer la carte d'identité du disque si elle existe
+        if (user.benevole && user.benevole.carte_identite && user.benevole.carte_identite !== 'null') {
+            try {
+                const filePath = path.join(__dirname, '..', user.benevole.carte_identite);
+                if (fs.existsSync(filePath)) {
+                    fs.unlinkSync(filePath);
+                }
+            } catch (err) {
+                console.error("Erreur lors de la suppression de la carte d'identité : ", err.message);
+            }
+        }
+
         await user.destroy();
         return true;
     }
@@ -174,10 +214,16 @@ class BenevoleService {
             id: b.id,
             nom: b.nom,
             email: b.email,
+            telephone: b.benevole.telephone,
+            adresse: b.benevole.adresse,
+            competences: b.benevole.competences,
+            motivation: b.benevole.motivation,
             mession: b.benevole.mession,
             status: b.benevole.status,
             disponibilite: b.benevole.disponibilite,
             date_adhesion: b.benevole.date_adhesion,
+            photo_profile: b.benevole.photo_profile,
+            carte_identite: b.benevole.carte_identite,
             created_at: b.created_at
         };
     }
