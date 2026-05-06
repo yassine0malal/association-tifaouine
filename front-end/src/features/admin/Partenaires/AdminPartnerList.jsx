@@ -16,6 +16,7 @@ import {
 import { fetchPartners, deletePartner } from "./adminPartnerSlice";
 import PartnerDetailPopup from "./PartnerDetailPopup";
 import ConfirmPopup from "../../../components/popup/ConfirmPopup";
+import Loader from "../../../components/common/Loader";
 
 export default function AdminPartnerList() {
     const dispatch = useDispatch();
@@ -133,8 +134,7 @@ export default function AdminPartnerList() {
             {/* CHARGEMENT / ERREUR */}
             {loading && (
                 <div className={styles.loaderContainer}>
-                    <Loader2 className={styles.spinner} size={40} />
-                    <p>Chargement des partenaires...</p>
+                    <Loader />
                 </div>
             )}
             {error && <div className={styles.errorBanner}>{error}</div>}
@@ -171,9 +171,14 @@ export default function AdminPartnerList() {
                                         <Link2Off size={14} /> Non dispo.
                                     </span>
                                 )}
+
+                            </div>
+                            <div className={styles.stats}>
+                                <h3 className={styles.partnerName}>{partner.nom_fr}</h3>
+                                <p>Total des projets :<strong> {partner.nombre_projets}</strong></p>
+                                <p>Total des événements : <strong>{partner.nombre_evenements}</strong></p>
                             </div>
 
-                            <h3 className={styles.partnerName}>{partner.nom_fr}</h3>
 
                             <div className={styles.cardActions}>
                                 <button

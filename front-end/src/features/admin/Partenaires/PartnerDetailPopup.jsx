@@ -17,9 +17,9 @@ export default function PartnerDetailPopup({ isOpen, onClose, partner }) {
                 <div className={styles.header}>
                     <div className={styles.logoWrapper}>
                         {partner.logo ? (
-                            <img 
-                                src={`${VITE_BASE_BACK_END_URL}${partner.logo}`} 
-                                alt={partner.nom_fr} 
+                            <img
+                                src={`${VITE_BASE_BACK_END_URL}${partner.logo}`}
+                                alt={partner.nom_fr}
                                 className={styles.logo}
                             />
                         ) : (
@@ -74,6 +74,14 @@ export default function PartnerDetailPopup({ isOpen, onClose, partner }) {
                                 <span className={styles.langTag}>AR</span>
                                 <p>{partner.description_ar || "لا يوجد وصف"}</p>
                             </div>
+                        </div>
+                        <div className={styles.descriptions}>
+                            <div className={styles.sectionHeader}>
+                                <Globe size={18} />
+                                <h3>Relations</h3>
+                            </div>
+                            <p className={styles.infoItem}>Total des projets :<strong> {partner.nombre_projets}</strong></p>
+                            <p className={styles.infoItem}>Total des événements : <strong>{partner.nombre_evenements}</strong></p>
                         </div>
                     </div>
 
