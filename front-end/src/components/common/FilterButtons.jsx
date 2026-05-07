@@ -11,7 +11,7 @@ function FilterButtons({ currentFilter, filters, handleFilterChange }) {
         onClick={() => handleFilterChange(filter.value)}
         className={currentFilter === filter.value ? styles.active : ""}
       >
-        {t(`projects.filters.${filter.label}`)}
+        {t(`projects.filters.${filter.label}`, filter.label)}
       </button>
     ));
 

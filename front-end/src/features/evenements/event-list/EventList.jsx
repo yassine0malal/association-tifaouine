@@ -11,22 +11,19 @@ import { fetchEvents, setFilter, setPage } from "./eventsSlice";
 import { useTranslation } from "react-i18next";
 import i18n from "../../../i18n";
 
-
 function EventList() {
   const dispatch = useDispatch();
   const { t } = useTranslation("events");
   const { events, domains } = useSelector((state) => state);
 
-  const {
-    loading,
-    currentPage,
-    totalPages,
-    currentFilter,
-    itemsPerPage,
-  } = events;
+  const { loading, currentPage, totalPages, currentFilter, itemsPerPage } =
+    events;
 
-  const filters = domains.data.map( domain => ({ key:domain.id , label:domain.label }) )
-  const currentLang = i18n.language || 'fr';
+  const filters = domains.data.map((domain) => ({
+    value: domain.id,
+    label: domain.label,
+  }));
+  const currentLang = i18n.language || "fr";
 
   useEffect(() => {
     dispatch(
