@@ -24,7 +24,7 @@ export default function NavBar() {
     i18n.changeLanguage(lang);
   }
 
-  const { pathnme } = useLocation();
+  const { pathname } = useLocation();
   const isHome = /^\/[a-z]{2}$/.test(pathname);
 
   return (

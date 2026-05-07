@@ -1,4 +1,8 @@
 /* projectList.module.css */
+[dir="rtl"] .projectList *{
+    font-family: var(--ar-lang);
+}
+
 
 .projectList {
     background-color: var(--bg, #fff);

@@ -3,6 +3,8 @@ import projectImg from "../../assets/images/project.jpeg";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
+const apiUrl = import.meta.env.VITE_BASE_BACK_END_URL
+
 export default function ProjectCard({
   id,
   title,
@@ -16,7 +18,7 @@ export default function ProjectCard({
   return (
     <div className={styles.projectCard}>
       <div className={styles.cardImg}>
-        <img src={`${image}`} alt="" aria-label="loading"/>
+        <img src={`${apiUrl}${image}`} alt="" aria-label="loading"/>
       </div>
 
       <div className={styles.cardContent}>

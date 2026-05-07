@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-const BACK_END_API = import.meta.env.VITE_BASE_BACK_END_URL
+const apiUrl = import.meta.env.VITE_BASE_BACK_END_URL
 
 // export const fetchProjectsAPI = async (
 //   page = 1,

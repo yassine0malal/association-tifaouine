@@ -1,15 +1,17 @@
+import { useTranslation } from "react-i18next";
 import styles from "./filter-buttons.module.css";
 
 function FilterButtons({ currentFilter, filters, handleFilterChange }) {
+  const { t } = useTranslation("projects")
   // 🔹 Render Filters
   const renderFilters = () =>
     filters.map((filter) => (
       <button
-        key={filter}
-        onClick={() => handleFilterChange(filter)}
-        className={currentFilter === filter ? styles.active : ""}
+        key={filter.label}
+        onClick={() => handleFilterChange(filter.value)}
+        className={currentFilter === filter.value ? styles.active : ""}
       >
-        {filter}
+        {t(`projects.filters.${filter.label}`)}
       </button>
     ));
 

@@ -11,10 +11,13 @@ import styles from "./projectList.module.css";
 import heroImg from "../../../assets/images/projects_hero.jpg";
 
 import { fetchProjects, setPage, setFilter } from "./projectsSlice";
+import { useTranslation } from "react-i18next";
 
 
 export default function Projets() {
   const dispatch = useDispatch();
+  const {t} =useTranslation("projects");
+  const projectsRef = useRef(null);
 
   const {
     data,
@@ -25,7 +28,13 @@ export default function Projets() {
     itemsPerPage,
   } = useSelector((state) => state.projects);
 
-  const filters = ["All", "Terminé", "En cours", "En attente"];
+  const filters = [
+  { label: "all", value: "all" },
+  { label: "completed", value: "termine" },
+  { label: "inProgress", value: "en_cours" },
+  { label: "pending", value: "suspendu" },
+  {label: "planned" , value:"planifie"}
+];;
 
   // 🔹 Fetch projects when page OR filter changes
   useEffect(() => {
@@ -39,11 +48,9 @@ export default function Projets() {
   };
 
   const handlePageChange = (page) => {
-    projectsRef.current.scrollIntoView({ behavior: "smooth" , block:"start"});
+    projectsRef.current.scrollIntoView({ behavior: "smooth"});
     dispatch(setPage(page));
   };
-
-  console.log(itemsPerPage);
 
   // 🔹 Render Project Cards
   const renderProjects = () => {
@@ -54,20 +61,20 @@ export default function Projets() {
     }
 
     if (!data || data.length === 0) {
-      return <p style={{ alignItems: "center" }}>No projects found.</p>;
+      return <p style={{ alignItems: "center" }}>{t('projects.noProjects')}</p>;
     }
 
     return data.map((project) => <ProjectCard key={project.id} {...project} />);
   };
 
   return (
-    <div className={styles.projectList}>
-      <PageHero heroImg={heroImg} title="Découvrir nos projets" />
+    <div className={styles.projectList} ref={projectsRef}>
+      <PageHero heroImg={heroImg} title={t("projects.heroTitle")} />
 
       <div className={styles.projectsContainer}>
         {/* 🔹 Filters */}
         <div className={styles.filterContainer}>
-          <h2 className={styles.header}>Voir les projets</h2>
+          <h2 className={styles.header}>{t('projects.viewProjects')}</h2>
           <FilterButtons
             currentFilter={currentFilter}
             filters={filters}
