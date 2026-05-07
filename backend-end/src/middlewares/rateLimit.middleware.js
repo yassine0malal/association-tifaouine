@@ -3,7 +3,7 @@ const rateLimit = require('express-rate-limit');
 
 const apiLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 100, // Limite chaque IP à 100 requêtes par fenêtre de 15 min
+    max: 10000,  // l'augmentation de nombre de requete dans la partie de navigation
     message: {
         success: false,
         message: "Trop de requêtes effectuées depuis cette adresse IP, veuillez réessayer plus tard."
@@ -19,6 +19,17 @@ const authLimiter = rateLimit({
     message: {
         success: false,
         message: "Trop de tentatives de connexion échouées. Votre accès est temporairement bloqué pendant 30 minutes."
+    },
+    standardHeaders: true,
+    legacyHeaders: false,
+});
+
+const refreshLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 10, // 10 refresh max par IP par 15 min
+    message: {
+        success: false,
+        message: "Trop de tentatives de rafraîchissement. Veuillez réessayer dans 15 minutes."
     },
     standardHeaders: true,
     legacyHeaders: false,
@@ -49,6 +60,7 @@ const etreBenevole = rateLimit({
 module.exports = {
     apiLimiter,
     authLimiter,
+    refreshLimiter,
     etreMembre,
     etreBenevole
 };

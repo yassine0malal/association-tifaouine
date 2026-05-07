@@ -1,0 +1,16 @@
+{
+  "id":2,
+  "title": "CLAIN WATER INITIATIVE - TIFAOUINE",
+  "img":"https://picsum.photos/300/200",
+  "status": {
+    "peopleHelped": "800+ FAMILIES",
+    "targetRegion": "DOUAR ASNI",
+    "projectStatus": "COMPLETED"
+  },
+    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat maxime, non sed error asperiores repudiandae corporis natus nobis aliquid laboriosam nulla at molestias velit eum explicabo tenetur aut temporibus suscipit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto corrupti harum deleniti, delectus nihil ullam nostrum, cumque esse laboriosam voluptates ducimus dolor culpa vero eum neque voluptas odit at quod?",
+    "meta": {
+      "completion": 2023,
+      "partners": "Moroccan Water",
+      "domain": "Eau"
+    }
+}

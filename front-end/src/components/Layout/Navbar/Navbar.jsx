@@ -17,7 +17,7 @@ const DOMAIN_NAME = "http://localhost:5173"
 
 export default function NavBar() {
   const { i18n, t } = useTranslation("nav");
-  const currentLang = i18n.language;
+  const currentLang = i18n.resolvedLanguage;
   const [showAside, setShowAside] = useState(false);
   const currentUrl = window.location.href;
   function changeLanguage(lang) {
@@ -100,3 +100,4 @@ export default function NavBar() {
     </>
   );
 }
+

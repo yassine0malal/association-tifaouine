@@ -1,19 +1,89 @@
 {
   "title": "Welcome",
   "description": "We support rural communities.",
-
   "event": {
     "title": "Our Events",
-    "subtitle": "Discover our latest events"
+    "subtitle": "Discover our latest events",
+    "viewAll": "VIEW ALL",
+    "status": {
+      "upcoming": "Upcoming",
+      "ongoing": "Ongoing",
+      "done": "Completed"
+    }
   },
-
   "partner": {
     "title": "Our Partners",
-    "subtitle": "They trust us"
+    "subtitle": "They trust us",
+    "label": "Partners"
   },
-
   "testimonial": {
     "title": "Testimonials",
     "subtitle": "What our volunteers say"
+  },
+  "testimonials": [
+    {
+      "rating": 5,
+      "text": "Thanks to this project, our village finally has reliable access to drinking water. It has changed our daily lives remarkably.",
+      "author": "Ahmed B., Zagora"
+    },
+    {
+      "rating": 5,
+      "text": "The academic support given to the children is truly inspiring. Their progress and motivation are visible every day.",
+      "author": "Fatima Z., Ouarzazate"
+    },
+    {
+      "rating": 5,
+      "text": "An exemplary initiative that meets real needs in the field. The association's commitment is admirable.",
+      "author": "Youssef M., Errachidia"
+    },
+    {
+      "rating": 5,
+      "text": "The actions taken have a concrete impact on the lives of families. It is serious and deeply human work.",
+      "author": "Khadija L., Tinghir"
+    }
+  ],
+  "events": [
+    {
+      "id": 1,
+      "titre": "Amazigh Cultural Festival",
+      "description": "A vibrant celebration of Berber heritage, music and traditions in the heart of the High Atlas.",
+      "image": "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=800&q=80",
+      "date": "2025-06-14",
+      "lieu": "Marrakech",
+      "statut": "upcoming"
+    },
+    {
+      "id": 2,
+      "titre": "Environment Day",
+      "description": "Tree planting, wadi cleanup and youth awareness on local climate issues.",
+      "image": "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=800&q=80",
+      "date": "2025-05-20",
+      "lieu": "Ouarzazate",
+      "statut": "ongoing"
+    },
+    {
+      "id": 3,
+      "titre": "Sustainable Farming Training",
+      "description": "Hands-on workshop for local farmers on irrigation and composting techniques.",
+      "image": "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=800&q=80",
+      "date": "2025-04-10",
+      "lieu": "Tahannaout",
+      "statut": "done"
+    },
+    {
+      "id": 4,
+      "titre": "Fundraising Gala",
+      "description": "Annual gala bringing together partners and donors to fund our community projects.",
+      "image": "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80",
+      "date": "2025-07-05",
+      "lieu": "Casablanca",
+      "statut": "upcoming"
+    }
+  ],
+  "workProcess": {
+    "title": "OUR PROJECT LIFECYCLE",
+    "step1": "Listening to community needs on the ground",
+    "step2": "Co-building impactful solidarity actions",
+    "step3": "Ensuring project success through our team's commitment"
   }
 }

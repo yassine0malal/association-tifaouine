@@ -8,10 +8,11 @@ class MessageController {
     async create(req, res) {
         try {
             const { nom_complet, email, objet, message } = req.body;
-
+            
             // Validation de base
             if (!nom_complet || !email || !objet || !message) {
                 return res.status(400).json({
+                    
                     success: false,
                     message: "Tous les champs (nom_complet, email, objet, message) sont obligatoires."
                 });
@@ -58,18 +59,94 @@ class MessageController {
     }
 
     /**
-     * @desc    Récupérer tous les messages (Admin)
+     * @desc    Récupérer tous les messages avec filtres (Admin)
+     * @route   GET /api/messages
+     * @query   page, limit, objet, lu, dateDebut, dateFin
      */
     async getAll(req, res) {
         try {
             const { page, limit, offset } = req.pagination;
-            const result = await messageService.getAllMessages({ limit, offset });
+            const { objet, lu, dateDebut, dateFin } = req.query;
+
+            // Validation des filtres
+            const filters = { limit, offset };
+
+            // Filtre par objet
+            if (objet) {
+                const validObjets = ['DEMANDE_PARTENARIAT', 'DEMANDE_BENEVOLE', 'DEMANDE_MEMBRE', 'DEMANDE_SERVICE', 'DEMANDE_INFORMATION'];
+                if (!validObjets.includes(objet)) {
+                    return res.status(400).json({
+                        success: false,
+                        message: `L'objet doit être parmi : ${validObjets.join(', ')}`
+                    });
+                }
+                filters.objet = objet;
+            }
+
+            // Filtre par statut de lecture
+            if (lu !== undefined) {
+                if (lu === 'true') {
+                    filters.lu = true;
+                } else if (lu === 'false') {
+                    filters.lu = false;
+                } else {
+                    return res.status(400).json({
+                        success: false,
+                        message: "Le paramètre 'lu' doit être 'true' ou 'false'"
+                    });
+                }
+            }
+
+            // Filtre par dates
+            if (dateDebut) {
+                const startDate = new Date(dateDebut);
+                if (isNaN(startDate.getTime())) {
+                    return res.status(400).json({
+                        success: false,
+                        message: "Format de date invalide pour 'dateDebut'. Utilisez YYYY-MM-DD"
+                    });
+                }
+                filters.dateDebut = dateDebut;
+            }
+
+            if (dateFin) {
+                const endDate = new Date(dateFin);
+                if (isNaN(endDate.getTime())) {
+                    return res.status(400).json({
+                        success: false,
+                        message: "Format de date invalide pour 'dateFin'. Utilisez YYYY-MM-DD"
+                    });
+                }
+                filters.dateFin = dateFin;
+            }
+
+            // Validation de la cohérence des dates
+            if (dateDebut && dateFin && new Date(dateDebut) > new Date(dateFin)) {
+                return res.status(400).json({
+                    success: false,
+                    message: "La date de début ne peut pas être postérieure à la date de fin"
+                });
+            }
+
+            const result = await messageService.getAllMessages(filters);
+
             return res.status(200).json({
                 success: true,
-                ...buildPaginatedResponse(result, page, limit)
+                ...buildPaginatedResponse(result, page, limit),
+                filters: {
+                    objet: objet || null,
+                    lu: lu !== undefined ? (lu === 'true') : null,
+                    dateDebut: dateDebut || null,
+                    dateFin: dateFin || null
+                }
             });
         } catch (error) {
-            return res.status(500).json({ success: false, message: "Erreur lors de la récupération des messages.", error: error.message });
+            console.error("Erreur récupération messages:", error);
+            return res.status(500).json({
+                success: false,
+                message: "Erreur lors de la récupération des messages.",
+                error: error.message
+            });
         }
     }
 
@@ -97,7 +174,7 @@ class MessageController {
     async updateStatus(req, res) {
         try {
             const { lu } = req.body;
-            
+
             if (typeof lu !== 'boolean') {
                 return res.status(400).json({
                     success: false,
@@ -133,6 +210,67 @@ class MessageController {
             return res.status(400).json({
                 success: false,
                 message: error.message
+            });
+        }
+    }
+
+    /**
+     * @desc    Obtenir les statistiques des messages (Admin)
+     * @route   GET /api/messages/stats
+     * @query   dateDebut, dateFin
+     */
+    async getStats(req, res) {
+        try {
+            const { dateDebut, dateFin } = req.query;
+            const filters = {};
+
+            // Validation des dates si fournies
+            if (dateDebut) {
+                const startDate = new Date(dateDebut);
+                if (isNaN(startDate.getTime())) {
+                    return res.status(400).json({
+                        success: false,
+                        message: "Format de date invalide pour 'dateDebut'. Utilisez YYYY-MM-DD"
+                    });
+                }
+                filters.dateDebut = dateDebut;
+            }
+
+            if (dateFin) {
+                const endDate = new Date(dateFin);
+                if (isNaN(endDate.getTime())) {
+                    return res.status(400).json({
+                        success: false,
+                        message: "Format de date invalide pour 'dateFin'. Utilisez YYYY-MM-DD"
+                    });
+                }
+                filters.dateFin = dateFin;
+            }
+
+            // Validation de la cohérence des dates
+            if (dateDebut && dateFin && new Date(dateDebut) > new Date(dateFin)) {
+                return res.status(400).json({
+                    success: false,
+                    message: "La date de début ne peut pas être postérieure à la date de fin"
+                });
+            }
+
+            const stats = await messageService.getMessageStats(filters);
+
+            return res.status(200).json({
+                success: true,
+                data: stats,
+                periode: {
+                    dateDebut: dateDebut || null,
+                    dateFin: dateFin || null
+                }
+            });
+        } catch (error) {
+            console.error("Erreur récupération statistiques messages:", error);
+            return res.status(500).json({
+                success: false,
+                message: "Erreur lors de la récupération des statistiques.",
+                error: error.message
             });
         }
     }

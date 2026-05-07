@@ -90,13 +90,12 @@ const projectsSlice = createSlice({
       .addCase(fetchProjects.fulfilled, (state, action) => {
         state.loading = false;
         state.data = action.payload?.data || [];
-        console.log(action.payload);
-        
-        state.currentPage = action.payload?.pagination?.page;
-        state.totalPages = action.payload?.pagination?.totalPages;
-        state.nextPage = action.payload?.pagination?.hasNext;
-        state.prevPage = action.payload?.pagination?.hasNext;
-        state.itemsPerPage = action.payload.itemsPerPage;
+// console.log()
+        // state.currentPage = action.payload.currentPage;
+        state.totalPages = action.payload.pagination.totalPages;
+        state.nextPage = action.payload.pagination.nextPage;
+        state.prevPage = action.payload.pagination.prevPage;
+        state.itemsPerPage = action.payload.pagination.itemsPerPage;
       })
 
       // error

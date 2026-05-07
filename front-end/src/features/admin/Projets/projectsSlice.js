@@ -1,0 +1,95 @@
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { fetchProjectsAdminAPI } from "./projectsService";
+import { protectedApi } from "../Login/authService";
+
+// async thunk
+export const fetchProjectsAdmin = createAsyncThunk(
+  "projects/fetchProjectsAdminAdmin",
+  async ({ page, lang, filter }) => {
+    const data = await fetchProjectsAdminAPI(page, filter, lang);
+    return data;
+  },
+  {
+    condition: ({ page, filter }, { getState }) => {
+      const { projects } = getState();
+      // 🚫 don't fetch if already loading
+      if (projects.loading) return false;
+
+      // 🚫 don't fetch same page + same filter again
+      // if (projects.currentPage === page && projects.currentFilter === filter) {
+      //   return false;
+      // }
+    },
+  },
+);
+
+//delete operation 
+export const deleteProjectAdmin = createAsyncThunk(
+  "projectsAdmin/delete",
+  async (id, { rejectWithValue }) => {
+    try {
+      await protectedApi.delete(`/api/projets/complet/${id}`);
+      return id; // Return the ID so we can remove it from state
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || "Erreur de suppression");
+    }
+  }
+);
+
+const projectsAdminSlice = createSlice({
+  name: "projectsAdmin",
+  initialState: {
+    data: [],
+    loading: false,
+    error: null,
+    currentFilter: "all",
+    currentPage: 1,
+    totalPages: null,
+    total: null,
+    itemsPerPage: 8,
+  },
+  reducers: {
+    setPage: (state, action) => {
+      state.currentPage = action.payload;
+    },
+    setFilter: (state, action) => {
+      state.currentFilter = action.payload;
+      state.currentPage = 1;
+      state.data = []
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      // loading
+      .addCase(fetchProjectsAdmin.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+
+      // success
+      .addCase(fetchProjectsAdmin.fulfilled, (state, action) => {
+        state.loading = false;
+        state.data = action.payload?.data || [];
+        // console.log("slice admin",action.payload)
+        // state.currentPage = action.payload.currentPage;
+        state.totalPages = action.payload.pagination.totalPages;
+        state.total = action.payload.pagination.total;
+        state.nextPage = action.payload.pagination.nextPage;
+        state.prevPage = action.payload.pagination.prevPage;
+        state.itemsPerPage = action.payload.pagination.itemsPerPage;
+      })
+
+      // error
+      .addCase(fetchProjectsAdmin.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(deleteProjectAdmin.fulfilled, (state, action) => {
+        state.data = state.data.filter(p => p.id !== action.payload);
+        state.total = state.total - 1;
+      });
+  },
+});
+
+export const { setPage, setFilter } = projectsAdminSlice.actions;
+export default projectsAdminSlice.reducer;

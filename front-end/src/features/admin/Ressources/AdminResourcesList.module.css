@@ -1,0 +1,276 @@
+:root {
+    --primary-brown: #8b5e34;
+    --bg-light: #f8fafc;
+    --text-dark: #1e293b;
+    --glass-bg: rgba(255, 255, 255, 0.7);
+}
+
+.container {
+    padding: 2rem;
+    background-color: var(--bg-light);
+    min-height: 100vh;
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.headerLeft {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.iconCircle {
+    background: white;
+    padding: 12px;
+    border-radius: 12px;
+    color: var(--primary-brown);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.surtitle {
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--primary-brown);
+}
+
+.header h1 {
+    font-size: 1.8rem;
+    color: var(--text-dark);
+    margin: 0;
+}
+
+/* Search Bar */
+.topActions {
+    margin-bottom: 2rem;
+}
+
+.searchContainer {
+    position: relative;
+    max-width: 400px;
+}
+
+.searchIcon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+}
+
+.searchInput {
+    width: 100%;
+    padding: 12px 12px 12px 42px;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    background: white;
+    transition: all 0.2s;
+}
+
+
+/* Buttons */
+.btnAdd {
+    background: var(--primary-brown);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+/* Grid & Card (Increased Height) */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    min-height: 400px;
+}
+
+.card {
+    background: white;
+    border-radius: 16px;
+    border: 1px solid #f1f5f9;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.imageSection {
+    position: relative;
+    height: 240px;
+    /* Increased Height for better visibility */
+    overflow: hidden;
+    background: #f1f5f9;
+}
+
+.preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+/* Overlays */
+.overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+    backdrop-filter: blur(3px);
+}
+
+.card:hover .overlay {
+    opacity: 1;
+}
+
+.actionGroup {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.viewFileLabel {
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.overlayBtn {
+    background: white;
+    border: none;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+/* Badges */
+.badgeBase {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.65rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: white;
+    backdrop-filter: blur(8px);
+}
+
+.badgeDocument {
+    background: rgba(59, 130, 246, 0.85);
+}
+
+.badgeRapport {
+    background: rgba(16, 185, 129, 0.85);
+}
+
+.badgeGuide {
+    background: rgba(245, 158, 11, 0.85);
+}
+
+.badgePhoto {
+    background: rgba(139, 94, 52, 0.85);
+}
+
+/* Typography */
+.cardContent {
+    padding: 1.25rem;
+    flex-grow: 1;
+}
+
+.resourceTitle {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin: 0;
+}
+
+.arabicTitle {
+    font-family: 'Amiri', serif;
+    color: var(--primary-brown);
+    font-size: 0.95rem;
+    margin: 6px 0 12px 0;
+    text-align: right;
+}
+
+.cardFooter {
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid #f1f5f9;
+    padding-top: 10px;
+    font-size: 0.75rem;
+    color: #64748b;
+}
+
+/* Pagination Wrapper */
+.paginationWrapper {
+    margin-top: 3rem;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 2rem;
+}
+
+.loaderContainer {
+    text-align: center;
+    padding: 4rem;
+}
+
+.spinner {
+    animation: spin 1s linear infinite;
+    color: var(--primary-brown);
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.ibdaaa h1 {
+    position: relative;
+    font-size: 36px;
+    font-weight: 800;
+    color: #1A1A1A;
+    margin: 0 0 10px 0;
+
+    color: var(--accent);
+}
+
+.ibdaaa h1::before {
+    content: "";
+    position: absolute;
+    width: 3px;
+    height: 100%;
+    left: -12px;
+    background-color: var(--accent);
+}

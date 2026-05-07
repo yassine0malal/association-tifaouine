@@ -3,16 +3,10 @@ import { projectImagesAPI } from "./projectImagesService";
 
 export const fetchProjectImages = createAsyncThunk(
   "projectImages/fetchProjectImages",
-  async ({ project, page , lang }) => {
-    const data = await projectImagesAPI(project, page , lang);
+  async ({ project, page }) => {
+    const data = await projectImagesAPI(project, page);
     return data;
   },
-  {
-    condition:({ project, page , lang } , {getState}) => {
-      const { projectImages } = getState();
-      if(projectImages.loading) return false;
-    }
-  }
 );
 
 const projectImagesSlice = createSlice({
@@ -25,7 +19,7 @@ const projectImagesSlice = createSlice({
     totalPages: 1,
     nextPage: 2,
     prevPage: 0,
-    itemsPerPage: 4,
+    itemsPerPage: 0,
   },
   reducers: {
     setImagesPage: (state, action) => {
@@ -41,10 +35,8 @@ const projectImagesSlice = createSlice({
       })
 
       .addCase(fetchProjectImages.fulfilled, (state, action) => {
-
         state.loading = false;
-        const newImages = action.payload?.images || [];
-        
+        const newImages = action.payload.images;
 
         // Remove duplicates based on id
         const existingIds = new Set(state.images.map((img) => img.id));
@@ -52,7 +44,6 @@ const projectImagesSlice = createSlice({
         const filteredImages = newImages.filter(
           (img) => !existingIds.has(img.id),
         );
-
         state.images.push(...filteredImages);
         state.totalPages = action.payload.totalPages;
         state.nextPage = action.payload.nextPage;

@@ -12,10 +12,10 @@ module.exports = {
     const P = {};
     projets.forEach(p => { P[p.titre_fr] = p.id; });
 
-    // Charger les partenariats (nom -> id)
-    const [partenariats] = await queryInterface.sequelize.query(`SELECT id, nom FROM partenariat`);
+    // Charger les partenariats (nom_fr -> id)
+    const [partenariats] = await queryInterface.sequelize.query(`SELECT id, nom_fr FROM partenariat`);
     const PA = {};
-    partenariats.forEach(p => { PA[p.nom] = p.id; });
+    partenariats.forEach(p => { PA[p.nom_fr] = p.id; });
 
     const now = new Date();
 

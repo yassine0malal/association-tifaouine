@@ -10,6 +10,10 @@ i18n
     .use(initReactI18next)
     .init({
         fallbackLng: "fr",
+        supportedLngs: ["fr", "en", "ar"], // N'accepte que ces 3 langues
+        nonExplicitSupportedLngs: true,    // Aide i18next à comprendre que en-US = en
+        load: "languageOnly",
+        
         debug: false,
         ns: ["common", "home", "about", "contact"],
         defaultNs: "common",
@@ -29,15 +33,27 @@ const applyLanguageSettings = (lng) => {
     }
 
     document.documentElement.dir = lng === "ar" ? "rtl" : "ltr";
-
-    document.documentElement.lang = lng; //seo
+    document.documentElement.lang = lng; // seo
 };
 
+// --- INTERCEPTION DES LANGUES COMPOSÉES (ex: en-US -> en) ---
 i18n.on("languageChanged", (lng) => {
-    applyLanguageSettings(lng);
+    // Si la langue contient un tiret, on coupe et on force la version courte
+    if (lng && lng.includes("-")) {
+        i18n.changeLanguage(lng.split("-")[0]);
+    } else {
+        // Sinon on applique les paramètres (RTL/LTR) normalement
+        applyLanguageSettings(lng);
+    }
 });
 
-applyLanguageSettings(i18n.language);
-
+// Vérification au tout premier chargement de la page
+const initialLang = i18n.language || "fr";
+if (initialLang.includes("-")) {
+    i18n.changeLanguage(initialLang.split("-")[0]);
+} else {
+    applyLanguageSettings(initialLang);
+}
+// -----------------------------------------------------------
 
 export default i18n;

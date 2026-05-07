@@ -12,6 +12,35 @@ class ProjetRepository {
         });
     }
 
+    async findAllForAdmin(filters = {}) {
+        const { domaine_id, statut, limit, offset } = filters;
+        const where = {};
+        if (domaine_id) where.domaine_id = domaine_id;
+        if (statut)     where.statut     = statut;
+
+        const [result, totalBudget] = await Promise.all([
+            Projet.findAndCountAll({
+                where,
+                attributes: ['id', 'titre_fr', 'titre_ar', 'titre_en', 'image_principale', 'statut', 'budget', 'localisation'],
+                order:  [['created_at', 'DESC']],
+                limit:  limit  || 9,
+                offset: offset || 0
+            }),
+            // Somme sur TOUS les projets filtrés (pas seulement la page courante)
+            Projet.findOne({
+                where,
+                attributes: [[require('sequelize').fn('SUM', require('sequelize').col('budget')), 'total']],
+                raw: true
+            })
+        ]);
+
+        return {
+            count:        result.count,
+            rows:         result.rows,
+            total_budget: parseFloat(totalBudget?.total) || 0
+        };
+    }
+
     async findAllWithDomaine(filters = {}) {
         const { domaine_id, statut, limit, offset } = filters;
         const where = {};
@@ -46,9 +75,33 @@ class ProjetRepository {
         return await Projet.findByPk(id, {
             include: [
                 { model: Domaine, attributes: ['id', 'nom_fr', 'nom_ar', 'nom_en'] },
-                { model: Partenariat, as: 'Partenariats', attributes: ['nom'], through: { attributes: [] } }
+                { model: Partenariat, as: 'Partenariats', attributes: ['id', 'nom_fr', 'nom_ar', 'nom_en', 'logo'], through: { attributes: [] } }
             ]
         });
+    }
+
+    async findByIdComplet(id) {
+        const [projet, images, videos] = await Promise.all([
+            Projet.findByPk(id, {
+                include: [
+                    { model: Domaine,     attributes: ['id', 'nom_fr', 'nom_ar', 'nom_en'] },
+                    { model: Partenariat, as: 'Partenariats', attributes: ['id', 'nom_fr', 'nom_ar', 'nom_en', 'logo'], through: { attributes: [] } }
+                ]
+            }),
+            Ressource.findAll({
+                where:  { projet_id: id, type: 'photo' },
+                attributes: ['id', 'url', 'nom_original', 'titre_fr', 'titre_ar', 'titre_en'],
+                order: [['created_at', 'ASC']]
+            }),
+            Ressource.findAll({
+                where:  { projet_id: id, type: 'video' },
+                attributes: ['id', 'url', 'nom_original', 'titre_fr', 'titre_ar', 'titre_en'],
+                order: [['created_at', 'ASC']]
+            })
+        ]);
+
+        if (!projet) return null;
+        return { projet, images, videos };
     }
 
     async findImages(projetId, filters = {}) {

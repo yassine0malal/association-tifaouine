@@ -1,5 +1,6 @@
 const messageRepository = require('../repositories/message.repository');
 const { sequelize, AdminNotification } = require('../models');
+const { toMessageListDTOs, toMessageDetailDTO } = require('../dto/message.dto');
 
 class MessageService {
     /**
@@ -21,10 +22,15 @@ class MessageService {
     }
 
     /**
-     * @desc Récupérer tous les messages (Admin)
+     * @desc Récupérer tous les messages avec filtres (Admin)
      */
     async getAllMessages(filters = {}) {
-        return await messageRepository.findAll(filters);
+        const result = await messageRepository.findAll(filters);
+        
+        return {
+            count: result.count,
+            rows: toMessageListDTOs(result.rows)
+        };
     }
 
     /**
@@ -35,7 +41,14 @@ class MessageService {
         if (!message) {
             throw new Error("Message introuvable.");
         }
-        return message;
+        return toMessageDetailDTO(message);
+    }
+
+    /**
+     * @desc Obtenir les statistiques des messages
+     */
+    async getMessageStats(filters = {}) {
+        return await messageRepository.getMessageStats(filters);
     }
 
     /**

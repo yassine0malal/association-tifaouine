@@ -26,7 +26,7 @@ export const ChevronIcon = ({ open }) => (
 );
 
 export const DonsIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="currentColor" height="25" width="25" version="1.1" id="Capa_1" viewBox="0 0 490.766 490.766" xml:space="preserve">
+    <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" fill="currentColor" height="25" width="25" version="1.1" id="Capa_1" viewBox="0 0 490.766 490.766" xmlSpace="preserve">
         <g>
             <path d="M472.554,319.199c-9.4-0.7-28.8,9.8-34.1,12.5c-18.9,9.5-45.2,24.4-62.5,36.3c-1.2,0.8-2.8,1.9-4,2.7  
              c-7.8,5-16,8.3-25.1,10.3c-50.2,10.7-123.3,11.8-123.3,11.8l-4.3,0.2c-3.2,0.2-6.1-2.1-6.5-5.2c-0.5-3.4,2-6.6,5.6-6.9l108.7-10.3  

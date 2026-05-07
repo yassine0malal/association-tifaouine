@@ -12,7 +12,7 @@ class AuthService {
         return jwt.sign(
             { id: user.id, email: user.email, type: user.type },
             process.env.JWT_SECRET,
-            { expiresIn: process.env.JWT_ACCESS_EXPIRATION || '15m' }
+            { expiresIn: process.env.JWT_ACCESS_EXPIRATION || '1h' }
         );
     }
 
@@ -157,20 +157,26 @@ class AuthService {
                 throw new Error("Admin non trouvé.");
             }
 
+            // Nettoyer les champs null ou vides
+            const cleanedData = {};
+            if (nom !== null && nom !== undefined && nom !== '') cleanedData.nom = nom;
+            if (email !== null && email !== undefined && email !== '') cleanedData.email = email;
+            if (password !== null && password !== undefined && password !== '') cleanedData.password = password;
+
             // 2. Si on modifie l'email, vérifier s'il est déjà utilisé par un autre
-            if (email && email !== user.email) {
-                const existingUser = await utilisateurRepository.findAdminByEmail(email);
+            if (cleanedData.email && cleanedData.email !== user.email) {
+                const existingUser = await utilisateurRepository.findAdminByEmail(cleanedData.email);
                 if (existingUser) {
                     throw new Error("Cet email est déjà utilisé.");
                 }
-                user.email = email;
+                user.email = cleanedData.email;
             }
 
-            if (nom) user.nom = nom;
+            if (cleanedData.nom) user.nom = cleanedData.nom;
 
             // 3. Si on modifie le mot de passe, on le hashe
-            if (password) {
-                user.admin.password = await bcrypt.hash(password, 10);
+            if (cleanedData.password) {
+                user.admin.password = await bcrypt.hash(cleanedData.password, 10);
                 await user.admin.save({ transaction: t });
             }
 
@@ -183,7 +189,31 @@ class AuthService {
                 email: user.email,
                 type: user.type
             };
-        })
+        });
+    }
+
+    /**
+     * @desc    Suppression du compte admin
+     */
+    async deleteAdminProfile(userId) {
+        return await sequelize.transaction(async (t) => {
+            const user = await utilisateurRepository.findAdminById(userId);
+            if (!user) {
+                throw new Error("Admin non trouvé.");
+            }
+
+            // Supprimer tous les refresh tokens de cet admin
+            await RefreshToken.destroy({ 
+                where: { utilisateur_id: userId },
+                transaction: t 
+            });
+
+            // Supprimer l'admin (cascade supprimera aussi l'utilisateur)
+            await user.admin.destroy({ transaction: t });
+            await user.destroy({ transaction: t });
+
+            return true;
+        });
     }
 }
 

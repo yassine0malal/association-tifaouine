@@ -43,7 +43,8 @@ const Sidebar = ({ isOpen, closeSidebar }) => {
   const isCommunauteActive = location.pathname.startsWith("/admin/benevoles")
     || location.pathname.startsWith("/admin/membres")
     || location.pathname.startsWith("/admin/notifications")
-    || location.pathname.startsWith("/admin/messages");
+    || location.pathname.startsWith("/admin/messages")
+    || location.pathname.startsWith("/admin/subscription");
 
   return (
     <div className={`${styles.sidebar} ${isOpen ? styles.showSidebar : ""}`}>
@@ -51,7 +52,7 @@ const Sidebar = ({ isOpen, closeSidebar }) => {
 
 
       <div className={styles.topPart}>
-        <div className={styles.logo}>
+        <div className={styles.logo} onClick={()=>navigate('/admin')}>
           <img src={logo} alt="" />
         </div>
 
@@ -116,6 +117,7 @@ const Sidebar = ({ isOpen, closeSidebar }) => {
               <NavLink to="/admin/membres" className={({ isActive }) => isActive ? `${styles.subLink} ${styles.active}` : styles.subLink}>Membres</NavLink>
               <NavLink to="/admin/notifications" className={({ isActive }) => isActive ? `${styles.subLink} ${styles.active}` : styles.subLink}>Notifications</NavLink>
               <NavLink to="/admin/messages" className={({ isActive }) => isActive ? `${styles.subLink} ${styles.active}` : styles.subLink}>Contact</NavLink>
+              <NavLink to="/admin/subscription" className={({ isActive }) => isActive ? `${styles.subLink} ${styles.active}` : styles.subLink}>Abonnés</NavLink>
             </div>
           )}
         </div>

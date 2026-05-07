@@ -43,10 +43,29 @@ class RessourceRepository {
     }
 
     /**
+     * Créer plusieurs ressources en une seule opération (bulk)
+     */
+    async bulkCreate(dataArray, options = {}) {
+        return await Ressource.bulkCreate(dataArray, { returning: true, ...options });
+    }
+
+    /**
      * Créer une ressource
      */
     async create(data, options = {}) {
-        return await Ressource.create(data, options);
+        console.log('[DEBUG REPO CREATE] Création avec données:', {
+            type: data.type,
+            projet_id: data.projet_id,
+            evenement_id: data.evenement_id,
+            nom_original: data.nom_original
+        });
+        const ressource = await Ressource.create(data, options);
+        console.log('[DEBUG REPO CREATE] Ressource créée:', {
+            id: ressource.id,
+            projet_id: ressource.projet_id,
+            evenement_id: ressource.evenement_id
+        });
+        return ressource;
     }
 
     /**
@@ -62,10 +81,66 @@ class RessourceRepository {
      * Désactiver ou supprimer une ressource
      */
     async delete(id, options = {}) {
+        console.log('[DEBUG REPO DELETE] Suppression de la ressource ID:', id);
+        
         const ressource = await Ressource.findByPk(id);
-        if (!ressource) return false;
+        if (!ressource) {
+            console.error('[ERROR REPO DELETE] Ressource introuvable:', id);
+            return false;
+        }
+        
+        console.log('[DEBUG REPO DELETE] Ressource trouvée, suppression en cours');
         await ressource.destroy(options);
+        console.log('[DEBUG REPO DELETE] Ressource supprimée');
         return true;
+    }
+
+    /**
+     * Récupérer les ressources de l'association (projet_id IS NULL, evenement_id IS NULL)
+     * @param {Object} filters - type, limit, offset
+     */
+    async findAssociationRessources(filters = {}) {
+        console.log('[DEBUG REPO] findAssociationRessources - Filters:', filters);
+        
+        const { type, limit, offset } = filters;
+        const where = {
+            projet_id:    null,
+            evenement_id: null
+        };
+
+        if (type) where.type = type;
+
+        console.log('[DEBUG REPO] Where clause:', where);
+
+        const result = await Ressource.findAndCountAll({
+            where,
+            order:  [['created_at', 'DESC']],
+            limit:  12  || 12,
+            offset: offset || 0
+        });
+
+        console.log('[DEBUG REPO] Query result:', { count: result.count, rows: result.rows.length });
+        return result;
+    }
+
+    /**
+     * Récupérer une ressource de l'association par ID
+     */
+    async findAssociationRessourceById(id) {
+        console.log('[DEBUG REPO] findAssociationRessourceById - ID:', id);
+        
+        const where = {
+            id,
+            projet_id:    null,
+            evenement_id: null
+        };
+
+        console.log('[DEBUG REPO] Where clause:', where);
+
+        const ressource = await Ressource.findOne({ where });
+        
+        console.log('[DEBUG REPO] Found ressource:', ressource ? 'YES' : 'NO');
+        return ressource;
     }
 
     /**

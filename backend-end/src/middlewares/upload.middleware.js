@@ -1,15 +1,9 @@
 const multer = require('multer');
 const path   = require('path');
 const fs     = require('fs');
+const { cleanFolderName } = require('../utils/fileHelpers');
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
-
-const cleanFolderName = (name) =>
-    name.toLowerCase()
-        .replace(/[àáâãäå]/g, 'a').replace(/[èéêë]/g, 'e')
-        .replace(/[ìíîï]/g, 'i').replace(/[òóôõö]/g, 'o')
-        .replace(/[ùúûü]/g, 'u').replace(/[ç]/g, 'c')
-        .replace(/[^a-z0-9]/g, '_').replace(/_+/g, '_').replace(/^_|_$/g, '');
 
 const getMediaType = (filename) => {
     const ext = path.extname(filename).toLowerCase();
@@ -19,7 +13,7 @@ const getMediaType = (filename) => {
 };
 
 const mediaFilter = (req, file, cb) => {
-    const allowed = /jpeg|jpg|png|webp|gif|mp4|webm|mov|mkv|avi|pdf|doc|docx|xls|xlsx/;
+    const allowed = /jpeg|jpg|png|svg|webp|gif|mp4|webm|mov|mkv|avi|pdf|doc|docx|xls|xlsx/;
     const ext = path.extname(file.originalname).toLowerCase();
     if (allowed.test(file.mimetype) || allowed.test(ext)) return cb(null, true);
     cb(new Error("Format non supporté. Accepté : images, vidéos, documents"), false);
@@ -29,6 +23,12 @@ const imageFilter = (req, file, cb) => {
     const ext = path.extname(file.originalname).toLowerCase();
     if (/jpeg|jpg|png|webp|gif/.test(ext)) return cb(null, true);
     cb(new Error("Format non supporté. Accepté : JPG, PNG, WEBP, GIF"), false);
+};
+
+const videoFilter = (req, file, cb) => {
+    const ext = path.extname(file.originalname).toLowerCase();
+    if (/mp4|webm|mov|mkv|avi/.test(ext)) return cb(null, true);
+    cb(new Error("Format non supporté. Accepté : MP4, WEBM, MOV, MKV, AVI"), false);
 };
 
 const makeFilename = (prefix) => (req, file, cb) => {
@@ -182,7 +182,187 @@ const uploadRessources = multer({
     { name: 'image_couverture', maxCount: 1  }
 ]);
 
-// ─── 5. Upload formulaire "Être membre" ──────────────────────────────────────
+// ─── 5. Upload projet complet (image principale + galerie images + vidéos) ────
+// fields:
+//   'imagePrincipale' (image, max 1)   → /images/projets/{folder}/principal/
+//   'extraImages'     (images, max 20) → /images/projets/{folder}/galerie/
+//   'extraVideos'     (vidéos, max 10) → /videos/projets/{folder}/
+
+const projetCompletStorage = multer.diskStorage({
+    destination: async (req, file, cb) => {
+        try {
+            // ✅ Utiliser l'ancien titre depuis la DB si c'est un UPDATE (id dans params)
+            let folderName;
+
+            if (req.params.id) {
+                // C'est un UPDATE — on utilise le titre existant en DB
+                const projet = await Projet.findByPk(req.params.id, { attributes: ['titre_fr'] });
+                folderName = projet
+                    ? cleanFolderName(projet.titre_fr)
+                    : cleanFolderName(req.body.titre_fr || 'projet_sans_titre');
+            } else {
+                // C'est un CREATE — on utilise le titre du body
+                folderName = cleanFolderName(req.body.titre_fr || 'projet_sans_titre');
+            }
+
+            if (file.fieldname === 'imagePrincipale') {
+                const dest = path.join(__dirname, `../data/ressources/images/projets/${folderName}/principal`);
+                ensureDir(dest);
+                req._principalRelUrl = `/data/ressources/images/projets/${folderName}/principal`;
+                return cb(null, dest);
+            }
+
+            if (file.fieldname === 'extraImages') {
+                const dest = path.join(__dirname, `../data/ressources/images/projets/${folderName}/galerie`);
+                ensureDir(dest);
+                if (!req._galerieRelUrl) req._galerieRelUrl = `/data/ressources/images/projets/${folderName}/galerie`;
+                return cb(null, dest);
+            }
+
+            // extraVideos
+            const dest = path.join(__dirname, `../data/ressources/videos/projets/${folderName}`);
+            ensureDir(dest);
+            if (!req._videosRelUrl) req._videosRelUrl = `/data/ressources/videos/projets/${folderName}`;
+            cb(null, dest);
+
+        } catch (err) {
+            cb(err);
+        }
+    },
+    filename: (req, file, cb) => {
+        const ext    = path.extname(file.originalname);
+        const prefix = file.fieldname === 'imagePrincipale' ? 'principal'
+                     : file.fieldname === 'extraImages'     ? 'galerie'
+                     : 'video';
+        cb(null, `${prefix}-${Date.now()}-${Math.round(Math.random() * 1e6)}${ext}`);
+    }
+});
+
+const projetCompletFilter = (req, file, cb) => {
+    if (file.fieldname === 'extraVideos') return videoFilter(req, file, cb);
+    return imageFilter(req, file, cb);
+};
+
+const uploadProjetComplet = multer({
+    storage: projetCompletStorage,
+    fileFilter: projetCompletFilter,
+    limits: { fileSize: 400 * 1024 * 1024 } // pour supporter les vidéos
+}).fields([
+    { name: 'imagePrincipale', maxCount: 1  },
+    { name: 'extraImages',     maxCount: 20 },
+    { name: 'extraVideos',     maxCount: 10 }
+]);
+
+// ─── 5.1. Upload événement complet (image principale + galerie images) ────────
+// fields:
+//   'imagePrincipale' (image, max 1)   → /images/evenements/{folder}/principal/
+//   'extraImages'     (images, max 20) → /images/evenements/{folder}/galerie/
+
+const evenementCompletStorage = multer.diskStorage({
+    destination: async (req, file, cb) => {
+        try {
+            let folderName;
+
+            if (req.params.id) {
+                // UPDATE — utiliser le titre existant en DB
+                const evenement = await Evenement.findByPk(req.params.id, { attributes: ['titre_fr'] });
+                folderName = evenement
+                    ? cleanFolderName(evenement.titre_fr)
+                    : cleanFolderName(req.body.titre_fr || 'evenement_sans_titre');
+            } else {
+                // CREATE — utiliser le titre du body
+                folderName = cleanFolderName(req.body.titre_fr || 'evenement_sans_titre');
+            }
+
+            if (file.fieldname === 'imagePrincipale') {
+                const dest = path.join(__dirname, `../data/ressources/images/evenements/${folderName}/principal`);
+                ensureDir(dest);
+                req._principalRelUrl = `/data/ressources/images/evenements/${folderName}/principal`;
+                return cb(null, dest);
+            }
+
+            // extraImages
+            const dest = path.join(__dirname, `../data/ressources/images/evenements/${folderName}/galerie`);
+            ensureDir(dest);
+            if (!req._galerieRelUrl) req._galerieRelUrl = `/data/ressources/images/evenements/${folderName}/galerie`;
+            cb(null, dest);
+
+        } catch (err) {
+            cb(err);
+        }
+    },
+    filename: (req, file, cb) => {
+        const ext    = path.extname(file.originalname);
+        const prefix = file.fieldname === 'imagePrincipale' ? 'principal' : 'galerie';
+        cb(null, `${prefix}-${Date.now()}-${Math.round(Math.random() * 1e6)}${ext}`);
+    }
+});
+
+const uploadEvenementComplet = multer({
+    storage: evenementCompletStorage,
+    fileFilter: imageFilter,
+    limits: { fileSize: 10 * 1024 * 1024 }
+}).fields([
+    { name: 'imagePrincipale', maxCount: 1  },
+    { name: 'extraImages',     maxCount: 20 }
+]);
+
+// ─── 5b. Upload projet complet — UPDATE (PUT) ─────────────────────────────────
+// Identique à uploadProjetComplet mais lit le titre ACTUEL depuis la DB
+// via req.params.id pour toujours utiliser le folder existant (évite la création
+// d'un nouveau folder si titre_fr change).
+
+const projetCompletUpdateStorage = multer.diskStorage({
+    destination: async (req, file, cb) => {
+        try {
+            // Lire le titre ACTUEL depuis la DB, jamais depuis req.body
+            const projet = await Projet.findByPk(req.params.id, { attributes: ['titre_fr'] });
+            if (!projet) return cb(new Error('Projet introuvable'));
+            const folder = cleanFolderName(projet.titre_fr);
+
+            if (file.fieldname === 'imagePrincipale') {
+                const dest = path.join(__dirname, `../data/ressources/images/projets/${folder}/principal`);
+                ensureDir(dest);
+                req._principalRelUrl = `/data/ressources/images/projets/${folder}/principal`;
+                return cb(null, dest);
+            }
+
+            if (file.fieldname === 'extraImages') {
+                const dest = path.join(__dirname, `../data/ressources/images/projets/${folder}/galerie`);
+                ensureDir(dest);
+                if (!req._galerieRelUrl) req._galerieRelUrl = `/data/ressources/images/projets/${folder}/galerie`;
+                return cb(null, dest);
+            }
+
+            // extraVideos
+            const dest = path.join(__dirname, `../data/ressources/videos/projets/${folder}`);
+            ensureDir(dest);
+            if (!req._videosRelUrl) req._videosRelUrl = `/data/ressources/videos/projets/${folder}`;
+            cb(null, dest);
+        } catch (err) {
+            cb(err);
+        }
+    },
+    filename: (req, file, cb) => {
+        const ext    = path.extname(file.originalname);
+        const prefix = file.fieldname === 'imagePrincipale' ? 'principal'
+                     : file.fieldname === 'extraImages'     ? 'galerie'
+                     : 'video';
+        cb(null, `${prefix}-${Date.now()}-${Math.round(Math.random() * 1e6)}${ext}`);
+    }
+});
+
+const uploadProjetCompletUpdate = multer({
+    storage: projetCompletUpdateStorage,
+    fileFilter: projetCompletFilter,
+    limits: { fileSize: 200 * 1024 * 1024 }
+}).fields([
+    { name: 'imagePrincipale', maxCount: 1  },
+    { name: 'extraImages',     maxCount: 20 },
+    { name: 'extraVideos',     maxCount: 10 }
+]);
+
+// ─── 6. Upload formulaire "Être membre" ──────────────────────────────────────
 // fields: photo (image), identity_card (doc), cv_doc (doc)
 
 const uploadEtreMembre = multer({
@@ -241,7 +421,10 @@ const uploadEtreBenevole = multer({
 module.exports = {
     uploadSimple,
     uploadProjetPrincipal,
+    uploadProjetComplet,
+    uploadProjetCompletUpdate,
     uploadEvenementPrincipal,
+    uploadEvenementComplet,
     uploadRessources,
     uploadEtreMembre,
     uploadEtreBenevole
