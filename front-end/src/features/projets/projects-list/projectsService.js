@@ -29,10 +29,12 @@ export const fetchProjectsForSelectAPI = async (lang = "fr") => {
 
 
 export const fetchProjectsAPI = async (page = 1, filter = "all", lang = "fr") => {
+  console.log(page , filter , lang);
+  
     try {
         // Use the apiUrl variable you defined above
         const res = await axios.get(`${apiUrl}/api/${lang}/projets`, {
-            params: { page, filter } // Pass parameters properly
+            params: { page, statut:filter === "all" ? "" : filter } // Pass parameters properly
         });
         // console.warn("project $$$$$", res.data);
         return res.data;

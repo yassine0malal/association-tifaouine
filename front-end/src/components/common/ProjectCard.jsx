@@ -14,7 +14,8 @@ export default function ProjectCard({
   image,
 }) {
 
-  const { t } = useTranslation('common')
+  const { t , i18n } = useTranslation('common')
+  const currentLang = i18n.language 
   return (
     <div className={styles.projectCard}>
       <div className={styles.cardImg}>
@@ -36,7 +37,7 @@ export default function ProjectCard({
 
         <p className={styles.description}>{description}</p>
 
-        <Link to={`/project/${id}`}>
+        <Link to={`/${currentLang}/projets/${id}`}>
           <span>{t('projectCard.see_more')}</span>
           <svg
             xmlns="http://www.w3.org/2000/svg"

@@ -9,10 +9,7 @@ import MemberForm from "./components/forms/MemberForm.jsx";
 import Footer from "./components/Layout/Footer/Footer.jsx";
 import Projets from "./features/projets/projects-list/ProjetList.jsx";
 import AdminLogin from "./features/admin/Login/AdminLogin.jsx";
-import ProjectCard from "./components/common/ProjectCard.jsx";
-import Pagination from "./components/common/Pagination.jsx";
 import ProjectPage from "./features/projets/project-page/ProjetDetail.jsx";
-import ProjectCardSkeleton from "./components/common/ProjectCardSkeleton.jsx";
 import { Provider } from "react-redux";
 import { store } from './app/store.js';
 import About from "./features/public/about/About.jsx";
@@ -78,8 +75,9 @@ createRoot(document.getElementById("root")).render(
             {/* Main Routes : Activites */}
             <Route path="/:lang">
               <Route path="projets" element={<Projets />} />
+              <Route path="projets/:id" element={<ProjectPage />} />
               <Route path="evenements" element={<EventList />} />
-              <Route path="actualites" element={<Footer />} />
+              <Route path="evenements/:id" element={<EventPage />} />
             </Route>
 
             {/* Main Routes : Participez */}
@@ -164,18 +162,6 @@ createRoot(document.getElementById("root")).render(
               <Route path="subscription" element={<SubscriptionAdmin />} />
             </Route>
           </Route>
-
-
-
-
-          {/* test routes */}
-          <Route path="/projectCard" element={<ProjectCard />} />
-          <Route path="/projects" element={<Projets />} />
-          <Route path="/pagination" element={<Pagination />} />
-          <Route path="/project-page" element={<ProjectPage />} />
-          <Route path="/project/:id" element={<ProjectPage />} />
-          <Route path="/skelton" element={<ProjectCardSkeleton />} />
-          <Route path="/evenement/:id" element={<EventPage />} />
         </Routes>
 
       </BrowserRouter>

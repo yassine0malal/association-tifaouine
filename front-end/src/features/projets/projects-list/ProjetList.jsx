@@ -13,12 +13,11 @@ import heroImg from "../../../assets/images/projects_hero.jpg";
 import { fetchProjects, setPage, setFilter } from "./projectsSlice";
 import { useTranslation } from "react-i18next";
 
-
 export default function Projets() {
   const dispatch = useDispatch();
-  const {t} =useTranslation("projects");
+  const { t , i18n} = useTranslation("projects");
   const projectsRef = useRef(null);
-
+  const currentLang = i18n.language
   const {
     data,
     loading,
@@ -29,18 +28,18 @@ export default function Projets() {
   } = useSelector((state) => state.projects);
 
   const filters = [
-  { label: "all", value: "all" },
-  { label: "completed", value: "termine" },
-  { label: "inProgress", value: "en_cours" },
-  { label: "pending", value: "suspendu" },
-  {label: "planned" , value:"planifie"}
-];;
+    { label: "all", value: "all" },
+    { label: "completed", value: "termine" },
+    { label: "inProgress", value: "en_cours" },
+    { label: "pending", value: "suspendu" },
+    { label: "planned", value: "planifie" },
+  ];
+  
 
   // 🔹 Fetch projects when page OR filter changes
   useEffect(() => {
-    dispatch(fetchProjects({ page: currentPage, filter: currentFilter }));
-  }, [dispatch, currentPage, currentFilter]);
-  
+    dispatch(fetchProjects({ page: currentPage, filter: currentFilter , lang:currentLang }));
+  }, [dispatch, currentPage, currentFilter ,currentLang]);
 
   // 🔹 Handlers
   const handleFilterChange = (filter) => {
@@ -48,20 +47,20 @@ export default function Projets() {
   };
 
   const handlePageChange = (page) => {
-    projectsRef.current.scrollIntoView({ behavior: "smooth"});
+    projectsRef.current.scrollIntoView({ behavior: "smooth" });
     dispatch(setPage(page));
   };
 
   // 🔹 Render Project Cards
   const renderProjects = () => {
     if (loading) {
-      return Array.from({ length: itemsPerPage }, (_, i) => (
+      return Array.from({ length: 9 }, (_, i) => (
         <ProjectCardSkeleton key={`skeleton-${i}`} />
       ));
     }
 
     if (!data || data.length === 0) {
-      return <p style={{ alignItems: "center" }}>{t('projects.noProjects')}</p>;
+      return <p style={{ alignItems: "center" }}>{t("projects.noProjects")}</p>;
     }
 
     return data.map((project) => <ProjectCard key={project.id} {...project} />);
@@ -74,7 +73,7 @@ export default function Projets() {
       <div className={styles.projectsContainer}>
         {/* 🔹 Filters */}
         <div className={styles.filterContainer}>
-          <h2 className={styles.header}>{t('projects.viewProjects')}</h2>
+          <h2 className={styles.header}>{t("projects.viewProjects")}</h2>
           <FilterButtons
             currentFilter={currentFilter}
             filters={filters}
