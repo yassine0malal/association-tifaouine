@@ -1,0 +1,393 @@
+/* about.module.css - Flygo About Us Section */
+
+.section {
+  --radius-card: 18px;
+  --shadow-card: 0 24px 60px rgba(0, 0, 0, 0.10);
+  --accent-very-light: #fef6e8;
+  --accent-light: #ffd89b;
+  --accent: #f5a623;
+  --accent-strong: #e8920a;
+  --text-h: #1a2a3a;
+  --paragraph-color: #4a5b6e;
+  --border: rgba(0, 0, 0, 0.08);
+  --bg-small: #ffe6cc;
+
+  position: relative;
+  background: var(--accent-very-light);
+  overflow: hidden;
+  font-family: 'DM Sans', sans-serif;
+  padding: 80px 24px 0;
+}
+
+/* Decorative background blobs */
+.blob1,
+.blob2 {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.35;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.blob1 {
+  width: 420px;
+  height: 420px;
+  background: radial-gradient(circle, var(--accent-light) 0%, transparent 70%);
+  top: -120px;
+  right: -80px;
+}
+
+.blob2 {
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(circle, var(--bg-small) 0%, transparent 70%);
+  bottom: 80px;
+  left: -80px;
+}
+
+/* Main two-column layout */
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 1440px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+  padding-bottom: 72px;
+}
+
+/* Left content */
+.content {
+  max-width: 540px;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent-strong);
+  margin-bottom: 12px;
+}
+
+.heading {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2.4rem, 5vw, 3.4rem);
+  font-weight: 800;
+  color: var(--text-h);
+  line-height: 1.2;
+  margin: 0 0 20px;
+}
+
+.body {
+  font-size: 1rem;
+  color: var(--paragraph-color);
+  line-height: 1.6;
+  margin: 0 0 16px;
+}
+
+.body strong {
+  color: var(--text-h);
+  font-weight: 600;
+}
+
+/* CTA button */
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+  padding: 12px 28px;
+  background: var(--accent);
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border-radius: 40px;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 12px rgba(245, 166, 35, 0.3);
+  border: none;
+  cursor: pointer;
+}
+
+.cta:hover {
+  background: var(--accent-strong);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(232, 146, 10, 0.35);
+}
+
+.ctaArrow {
+  font-size: 1.1rem;
+  transition: transform 0.2s ease;
+}
+
+.cta:hover .ctaArrow {
+  transform: translateX(5px);
+}
+
+/* Right imagery */
+.imagery {
+  position: relative;
+  height: 380px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cardBack,
+.cardFront {
+  position: absolute;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  transition: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+}
+
+/* Back card - larger, behind */
+.cardBack {
+  width: 280px;
+  height: 200px;
+  top: 0;
+  right: 20px;
+  transform: rotate(-5deg);
+  z-index: 1;
+}
+
+.cardBack:hover {
+  transform: rotate(-2deg) scale(1.02);
+  box-shadow: 0 28px 50px rgba(0, 0, 0, 0.15);
+}
+
+/* Front card - overlapping, rotated opposite */
+.cardFront {
+  width: 220px;
+  height: 280px;
+  bottom: 0;
+  left: 20px;
+  transform: rotate(4deg);
+  z-index: 2;
+}
+
+.cardFront:hover {
+  transform: rotate(2deg) scale(1.02);
+  box-shadow: 0 28px 50px rgba(0, 0, 0, 0.15);
+}
+
+.cardImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Stats bar */
+.statsBar {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--border);
+  padding: 48px 0 64px;
+}
+
+.statItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+  position: relative;
+  padding: 0 16px;
+}
+
+/* Vertical dividers between stats */
+.statItem:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 50px;
+  width: 1px;
+  background: var(--border);
+}
+
+.statNumber {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2.2rem, 4vw, 3rem);
+  font-weight: 800;
+  color: var(--text-h);
+  line-height: 1.2;
+  display: inline-flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2px;
+}
+
+.statSuffix {
+  color: var(--accent);
+  font-size: 0.9em;
+  margin-left: 2px;
+}
+
+.statLabel {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--paragraph-color);
+  letter-spacing: 0.03em;
+}
+
+/* ─────────────────────────────────────────
+   RESPONSIVE DESIGN
+   ───────────────────────────────────────── */
+
+/* Tablet */
+@media (max-width: 900px) {
+  .section {
+    padding: 60px 24px 0;
+  }
+
+  .container {
+    grid-template-columns: 1fr;
+    gap: 48px;
+    padding-bottom: 40px;
+  }
+
+  .content {
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .body {
+    max-width: 100%;
+  }
+
+  .imagery {
+    height: 320px;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .cardBack {
+    width: 240px;
+    height: 170px;
+    right: 10px;
+  }
+
+  .cardFront {
+    width: 190px;
+    height: 240px;
+    left: 10px;
+  }
+
+  .statsBar {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px 0;
+    padding: 40px 20px 56px;
+  }
+
+  /* Adjust dividers for 2-column layout */
+  .statItem:nth-child(2)::after {
+    display: none;
+  }
+
+  .statItem:nth-child(odd)::after {
+    display: block;
+  }
+
+  .statItem:nth-child(even)::after {
+    display: none;
+  }
+}
+
+/* Mobile */
+@media (max-width: 540px) {
+  .section {
+    padding: 48px 16px 0;
+  }
+
+  .heading {
+    font-size: 2rem;
+  }
+
+  .body {
+    font-size: 0.95rem;
+  }
+
+  .cta {
+    padding: 10px 24px;
+    font-size: 0.85rem;
+  }
+
+  .imagery {
+    height: 260px;
+  }
+
+  .cardBack {
+    width: 180px;
+    height: 130px;
+    right: 5px;
+  }
+
+  .cardFront {
+    width: 150px;
+    height: 190px;
+    left: 5px;
+  }
+
+  .statsBar {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 32px 12px 48px;
+    gap: 24px 12px;
+  }
+
+  .statNumber {
+    font-size: 1.75rem;
+  }
+
+  .statLabel {
+    font-size: 0.75rem;
+  }
+
+  .statItem {
+    padding: 0 8px;
+  }
+
+  /* Hide dividers on smallest screens for cleaner look */
+  .statItem::after {
+    display: none !important;
+  }
+}
+
+/* Small mobile */
+@media (max-width: 400px) {
+  .imagery {
+    height: 220px;
+  }
+
+  .cardBack {
+    width: 150px;
+    height: 110px;
+  }
+
+  .cardFront {
+    width: 130px;
+    height: 160px;
+  }
+
+  .statsBar {
+    gap: 16px;
+  }
+
+  .statNumber {
+    font-size: 1.5rem;
+  }
+}

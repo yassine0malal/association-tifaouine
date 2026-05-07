@@ -169,7 +169,7 @@ button[class*="isActive"]::before {
   transition: all 0.3s ease-in-out;
 }
 
-.navItem:hover svg,
+.navItem:hover .navLink svg,
 .navItem.open .navLink svg {
   rotate: -180deg;
 }

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Links from "./Links";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Aside from "./Aside";
 
 import styles from "./Navbar.module.css";
@@ -13,14 +13,19 @@ import logo from "../../../assets/images/logo.png";
 import { useTranslation } from "react-i18next";
 import { FaBarsStaggered } from "react-icons/fa6";
 
+const DOMAIN_NAME = "http://localhost:5173"
+
 export default function NavBar() {
   const { i18n, t } = useTranslation("nav");
   const currentLang = i18n.language;
   const [showAside, setShowAside] = useState(false);
-
+  const currentUrl = window.location.href;
   function changeLanguage(lang) {
     i18n.changeLanguage(lang);
   }
+
+  const { pathnme } = useLocation();
+  const isHome = /^\/[a-z]{2}$/.test(pathname);
 
   return (
     <>
