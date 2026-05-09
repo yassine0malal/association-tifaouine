@@ -15,7 +15,12 @@ i18n
         load: "languageOnly",
         
         debug: false,
-        ns: ["common", "home", "about", "contact"],
+        ns: [
+            "common", "home", "about", "contact", "nav", "footer", 
+            "domainsPage", "donationPage", "event_page", "events", 
+            "pagination", "partners", "project_page", "projects", 
+            "ressources", "volunteer_page"
+        ],
         defaultNs: "common",
         backend: {
             loadPath: "/locales/{{lng}}/{{ns}}.json"

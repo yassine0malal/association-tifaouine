@@ -4,8 +4,8 @@ import { fetchProjectsAPI, fetchProjectsForSelectAPI } from "./projectsService";
 // async thunk
 export const fetchProjects = createAsyncThunk(
   "projects/fetchProjects",
-  async ({ page, lang, filter }) => {
-    const data = await fetchProjectsAPI(page, filter, lang);
+  async ({ page, lang, filter, limit }) => {
+    const data = await fetchProjectsAPI(page, filter, lang, limit);
     return data;
   },
   {
@@ -113,7 +113,7 @@ const projectsSlice = createSlice({
       // success
       .addCase(fetchProjectsForSelect.fulfilled, (state, action) => {
         state.projectsForSelect.loading = false;
-        state.projectsForSelect.data = action.payload?.projects || ""
+        state.projectsForSelect.data = action.payload?.rows || [];
       })
 
       // error

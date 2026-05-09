@@ -1,72 +1,75 @@
-import styles from './about.module.css';
+import { Link } from "react-router-dom";
+import styles from "./about.module.css";
+import { useTranslation } from "react-i18next";
 
 const stats = [
-  { value: '10,000', suffix: '+', label: 'Happy Travelers' },
-  { value: '50', suffix: '+', label: 'Destinations' },
-  { value: '98', suffix: '%', label: 'Satisfaction Rate' },
-  { value: '15', suffix: '+', label: 'Years Experience' },
+  { value: "500", suffix: "+", label: "Beneficiaries Supported" },
+  { value: "25", suffix: "+", label: "Community Projects" },
+  { value: "15", suffix: "+", label: "Partner Organizations" },
+  { value: "10", suffix: "+", label: "Years of Community Impact" },
 ];
 
 export default function AboutUs() {
+  const { t } = useTranslation("home");
   return (
     <section className={styles.section}>
-      {/* Decorative background blobs */}
-      <div className={styles.blob1} />
-      <div className={styles.blob2} />
-
-      <div className={styles.container}>
-        {/* ── LEFT COLUMN ── */}
-        <div className={styles.content}>
-          <span className={styles.eyebrow}>Who We Are</span>
-          <h2 className={styles.heading}>About Us</h2>
-
-          <p className={styles.body}>
-            At <strong>Flygo</strong>, we believe travel is more than reaching a
-            destination — it's about the moments you collect along the way.
-            Whether you're seeking adventure, relaxation, or cultural immersion,
-            we design journeys around what truly matters to you.
-          </p>
-          <p className={styles.body}>
-            With expert planning, trusted global partners, and a passion for
-            exploration, we make travel effortless, inspiring, and unforgettable.
-          </p>
-
-          <a href="#more" className={styles.cta}>
-            More about
-            <span className={styles.ctaArrow}>→</span>
-          </a>
-        </div>
-
-        {/* ── RIGHT COLUMN — stacked photos ── */}
-        <div className={styles.imagery}>
-          <div className={styles.cardBack}>
-            <img
-              src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80"
-              alt="Mountain lake"
-              className={styles.cardImg}
-            />
-          </div>
-          <div className={styles.cardFront}>
-            <img
-              src="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=80"
-              alt="Desert traveler"
-              className={styles.cardImg}
-            />
-          </div>
-        </div>
+      {/* Decorative geometric background */}
+      <div className={styles.bgDecor} aria-hidden="true">
+        <div className={styles.bgCircle} />
+        <div className={styles.bgArc} />
+        <div className={styles.bgDots} />
       </div>
 
-      {/* ── STATS BAR ── */}
-      <div className={styles.statsBar}>
-        {stats.map(({ value, suffix, label }) => (
-          <div key={label} className={styles.statItem}>
-            <div className={styles.statNumber}>
-              {value}
-              <span className={styles.statSuffix}>{suffix}</span>
-            </div>
-            <span className={styles.statLabel}>{label}</span>
+      <div className={styles.container}>
+        <div className={styles.eyebrow}>
+          <span className={styles.eyebrowLine} />
+          <span className={styles.eyebrowText}>{t("about.eyebrow")}</span>
+        </div>
+
+        <div className={styles.row}>
+          {/* Left column */}
+          <div className={styles.col1}>
+            <h1 className={styles.heading}>
+              {t("about.title")}
+            </h1>
+            <p className={styles.body}>
+              {t("about.description")}
+            </p>
+            <Link to="#" className={styles.seeMore}>
+              {t("about.cta")}
+              <span className={styles.arrow} aria-hidden="true">→</span>
+            </Link>
           </div>
-        ))}
+
+          {/* Right column — images */}
+          <div className={styles.col2}>
+            <div className={styles.images}>
+              <div className={styles.imageAccent} aria-hidden="true" />
+              <div className={`${styles.image} ${styles.imageBack}`}>
+                <img src="https://picsum.photos/900/600?random=5" alt="Community members working together" />
+              </div>
+              <div className={`${styles.image} ${styles.imageFront}`}>
+                <img src="https://picsum.photos/900/600?random=4" alt="Youth education program" />
+              </div>
+              <div className={styles.imageBadge}>
+                <span className={styles.badgeNumber}>10</span>
+                <span className={styles.badgeLabel}>years of impact</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Stats */}
+        <div className={styles.statsGrid}>
+          {stats.map((stat, i) => (
+            <div className={styles.statItem} key={i} style={{ "--delay": `${i * 0.1}s` }}>
+              <div className={styles.statValue}>
+                {stat.value}<span className={styles.statSuffix}>{stat.suffix}</span>
+              </div>
+              <div className={styles.statLabel}>{stat.label}</div>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

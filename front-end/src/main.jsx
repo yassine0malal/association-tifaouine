@@ -50,8 +50,10 @@ import AdminBenevoleDetail from "./features/admin/Benevoles/AdminBenevoleDetail.
 import AdminDonsList from "./features/admin/Dons/AdminDonsList.jsx";
 import AdminDonDetail from "./features/admin/Dons/AdminDonDetail.jsx";
 import AdminMembersList from "./features/admin/Members/AdminMembersList.jsx";
+import AdminMemberDetail from "./features/admin/Members/AdminMemberDetail.jsx";
 import AdminProjetDetail from "./features/admin/Projets/SingleProject/AdminProjetDetail.jsx";
 import SubscriptionAdmin from "./features/admin/subscription/SubscriptionAdmin.jsx";
+import AdminProfile from "./features/admin/Profile/AdminProfile.jsx";
 
 createRoot(document.getElementById("root")).render(
   <Provider store={store}>
@@ -61,7 +63,9 @@ createRoot(document.getElementById("root")).render(
           {/* Main Route: Home */}
           <Route path="/" element={<App />}>
             {/* Default one  */}
-            <Route index index element={<Home />} />
+            <Route index element={<Home />} />
+
+            <Route path="/:lang"  element={<Home />} />
 
             {/* Redirect / vers /fr par défaut */}
             {/* <Route index element={<Navigate to="/fr" replace />} /> */}
@@ -145,7 +149,7 @@ createRoot(document.getElementById("root")).render(
 
               {/* Members*/}
               <Route path="membre" element={<AdminMembersList />} />
-              {/* <Route path="membre/:id" element={<AdminBenevoleDetail />} /> */}
+              <Route path="membre/:id" element={<AdminMemberDetail />} />
 
               {/* Dons */}
               <Route path="dons" element={<AdminDonsList />} />
@@ -160,6 +164,9 @@ createRoot(document.getElementById("root")).render(
 
               {/* Subscriptions */}
               <Route path="subscription" element={<SubscriptionAdmin />} />
+
+              {/* Profile */}
+              <Route path="profile" element={<AdminProfile />} />
             </Route>
           </Route>
         </Routes>

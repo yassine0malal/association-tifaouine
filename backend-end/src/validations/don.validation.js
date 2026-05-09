@@ -19,7 +19,8 @@ const donBaseSchema = {
             'any.required': "Un projet_id est requis pour un don spécifique."
         }),
         otherwise: Joi.number().integer().positive().optional().allow(null)
-    })
+    }),
+    message: Joi.string().max(1000).optional().allow('', null)
 };
 
 const createDonFinancierSchema = Joi.object({

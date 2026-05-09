@@ -1,4 +1,4 @@
-﻿const donService = require('../services/don.service');
+const donService = require('../services/don.service');
 const { buildPaginatedResponse } = require('../utils/paginate');
 
 class DonController {
@@ -10,7 +10,11 @@ class DonController {
      */
     async createFinancier(req, res) {
         try {
-            const don = await donService.createDonFinancier(req.body);
+            const data = { ...req.body };
+            if (req.file) {
+                data.recu = `/data/dons/recus/${req.file.filename}`;
+            }
+            const don = await donService.createDonFinancier(data);
             return res.status(201).json({
                 success: true,
                 message: "Votre don financier a été enregistré. Merci pour votre générosité.",

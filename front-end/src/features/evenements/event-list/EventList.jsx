@@ -10,19 +10,25 @@ import { useEffect } from "react";
 import { fetchEvents, setFilter, setPage } from "./eventsSlice";
 import { useTranslation } from "react-i18next";
 import i18n from "../../../i18n";
+import { label } from "framer-motion/client";
+
 
 function EventList() {
   const dispatch = useDispatch();
   const { t } = useTranslation("events");
   const { events, domains } = useSelector((state) => state);
-
+  
   const { loading, currentPage, totalPages, currentFilter, itemsPerPage } =
     events;
 
-  const filters = domains.data.map((domain) => ({
-    value: domain.id,
-    label: domain.label,
-  }));
+  const filters = [
+    { value: "all", label: t("all") },
+    ...domains.data.map((domain) => ({
+      value: domain.id,
+      label: domain.label,
+    })),
+  ];
+
   const currentLang = i18n.language || "fr";
 
   useEffect(() => {

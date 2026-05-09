@@ -24,7 +24,7 @@ const toProjetListDTO = (projet, lang) => ({
 
 const toProjetForDonListDTO = (project, lang)=> ({
     id : project.id,
-    titre : project[`titre_${lang}`] || null
+    title : project[`titre_${lang}`] || null
 });
 
 

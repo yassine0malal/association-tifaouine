@@ -1,0 +1,303 @@
+/* =============================================
+   projects.module.css
+   Matches the image layout — white background,
+   full-bleed photo cards with overlay text.
+   Uses brand CSS variables from global sheet.
+   ============================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Jost:wght@300;400;500;600;700&display=swap');
+
+/* ── Section ── */
+.section {
+  background: var(--bg);                  /* #fff */
+  padding: 100px 56px 112px;
+  font-family: 'Jost', system-ui, sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── Container ── */
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ── Header row ── */
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
+  margin-bottom: 56px;
+  flex-wrap: wrap;
+  animation: fadeUp .5s ease-out both;
+}
+
+.headerLeft {
+  flex: 1 1 400px;
+}
+
+/* ── Eyebrow ── */
+.eyebrow {
+  display: block;
+  font-size: 32px;
+  font-weight: 600;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--accent);                   /* #CB914F */
+  margin-bottom: 14px;
+}
+
+/* ── Title ── */
+.title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(28px, 4vw, 52px);
+  font-weight: 700;
+  color: var(--text-h);                   /* #08060d */
+  line-height: 1.15;
+  margin: 0;
+  letter-spacing: -.015em;
+}
+
+.titleItalic {
+  font-style: italic;
+  color: var(--accent-strong);            /* #845417 */
+  font-weight: 700;
+}
+
+/* ── View all link ── */
+.viewAll {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--accent-strong-v2);         /* #4e2d00 */
+  text-decoration: none;
+  border: 1.5px solid var(--accent-border); /* #F1904C */
+  border-radius: 40px;
+  padding: 12px 28px;
+  transition: background .25s, color .25s, gap .25s;
+  white-space: nowrap;
+  align-self: center;
+}
+
+.viewAll:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  gap: 16px;
+}
+
+.arrow { font-style: normal; }
+
+/* ── Grid ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+/* ── Card ── */
+.card {
+  position: relative;
+  display: block;
+  border-radius: 18px;
+  overflow: hidden;
+  aspect-ratio: 3 / 4;
+  text-decoration: none;
+  outline-offset: 4px;
+  animation: fadeUp .6s ease-out both;
+  animation-delay: calc(var(--i) * 0.1s + 0.1s);
+  background: var(--color-sec);           /* fallback while image loads */
+  /* lift on hover */
+  transition: transform .35s cubic-bezier(.22,.9,.4,1.05),
+              box-shadow .35s ease;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 32px 64px rgba(0,0,0,.18);
+}
+
+/* ── Image ── */
+.imgWrap {
+  position: absolute;
+  inset: 0;
+}
+
+.img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .6s ease;
+}
+
+.card:hover .img {
+  transform: scale(1.06);
+}
+
+/* Gradient overlay — bottom-heavy */
+.imgOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,.04) 0%,
+    rgba(0,0,0,.08) 40%,
+    rgba(0,0,0,.72) 75%,
+    rgba(0,0,0,.88) 100%
+  );
+  transition: opacity .35s;
+}
+
+.card:hover .imgOverlay {
+  opacity: .92;
+}
+
+/* ── Category badge ── */
+.badge {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  z-index: 2;
+  background: var(--accent);             /* #CB914F */
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border-radius: 40px;
+  line-height: 1;
+}
+
+/* ── Bottom info ── */
+.info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  padding: 28px 24px 28px;
+}
+
+.cardTitle {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(18px, 2.2vw, 26px);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.2;
+  margin: 0 0 12px;
+  letter-spacing: -.01em;
+  text-transform: uppercase;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+}
+
+.statLabel {
+  font-size: 12px;
+  font-weight: 400;
+  color: rgba(255,255,255,.65);
+  letter-spacing: .04em;
+}
+
+.statValue {
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: .02em;
+}
+
+/* ── Loading skeletons ── */
+.stateWrap {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.skeleton {
+  border-radius: 18px;
+  aspect-ratio: 3/4;
+  background: linear-gradient(90deg,
+    var(--color-border) 25%,
+    var(--bg-small)     50%,
+    var(--color-border) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ── Error / empty ── */
+.errorMsg,
+.empty {
+  font-size: 15px;
+  color: var(--paragraph-color);
+  text-align: center;
+  padding: 48px 0;
+  grid-column: 1 / -1;
+}
+
+/* ── Animations ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .section { padding: 80px 40px 96px; }
+  .grid    { gap: 16px; }
+}
+
+@media (max-width: 900px) {
+  .grid,
+  .stateWrap { grid-template-columns: repeat(2, 1fr); }
+
+  .skeleton:last-child,
+  .card:last-child { display: none; } /* hide 3rd on 2-col to stay clean */
+}
+
+@media (max-width: 640px) {
+  .section {
+    padding: 64px 20px 80px;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    margin-bottom: 40px;
+  }
+
+  .viewAll { align-self: flex-start; }
+
+  .grid,
+  .stateWrap { grid-template-columns: 1fr; }
+
+  /* show all 3 stacked on mobile */
+  .card:last-child,
+  .skeleton:last-child { display: block; }
+
+  .card { aspect-ratio: 4/3; }
+}
+
+@media (max-width: 400px) {
+  .section { padding: 48px 16px 64px; }
+  .card    { aspect-ratio: 3/2; }
+}

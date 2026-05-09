@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Links from "./Links";
 import { Link, useLocation } from "react-router-dom";
 import Aside from "./Aside";
@@ -13,7 +13,7 @@ import logo from "../../../assets/images/logo.png";
 import { useTranslation } from "react-i18next";
 import { FaBarsStaggered } from "react-icons/fa6";
 
-const DOMAIN_NAME = "http://localhost:5173"
+const DOMAIN_NAME = "http://localhost:5173";
 
 export default function NavBar() {
   const { i18n, t } = useTranslation("nav");
@@ -23,10 +23,21 @@ export default function NavBar() {
   function changeLanguage(lang) {
     i18n.changeLanguage(lang);
   }
-
   const { pathname } = useLocation();
-  const isHome = /^\/[a-z]{2}$/.test(pathname);
+  const isHome = /^\/([a-z]{2})?$/.test(pathname);
+  const [scrollY, setScrollY] = useState(0);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
   return (
     <>
       <div className={styles.upperNavbar}>
@@ -34,15 +45,15 @@ export default function NavBar() {
           <div className={styles.content}>
             <div className={styles.item}>
               <img src={email} alt="email" />
-              <p>tifaouine@gmail.com</p>
+              <p>{t("nav.contact.email")}</p>
             </div>
             <div className={styles.item}>
               <img src={tel} alt="telephone" />
-              <p>066 01 46 48</p>
+              <p>{t("nav.contact.phone")}</p>
             </div>
             <div className={styles.item}>
               <img src={map} alt="map" />
-              <p> douar asni lakdim 42150, Marrakech Al Haouz - Maroc </p>
+              <p>{t("nav.contact.address")}</p>
             </div>
           </div>
           <div className={styles.language}>
@@ -71,7 +82,9 @@ export default function NavBar() {
         </div>
       </div>
 
-      <div className={styles.navBarSection}>
+      <div
+        className={`${styles.navBarSection} ${isHome && scrollY <= 30 ? styles.home : ""}`}
+      >
         <div className={styles.container}>
           <div className={styles.logoContainer}>
             <Link to="/">
@@ -80,7 +93,7 @@ export default function NavBar() {
           </div>
 
           <div className={`${styles.link2} ${showAside ? styles.open : ""}`}>
-            <Links setShowAside={setShowAside}/>
+            <Links setShowAside={setShowAside} />
           </div>
 
           <div className={styles.navBtns}>
@@ -91,7 +104,10 @@ export default function NavBar() {
               {t("nav.participate")}
             </Link>
 
-            <div className={styles.sideBarMenuIcon} onClick={() => setShowAside(true)}>
+            <div
+              className={styles.sideBarMenuIcon}
+              onClick={() => setShowAside(true)}
+            >
               <FaBarsStaggered />
             </div>
           </div>
@@ -100,4 +116,3 @@ export default function NavBar() {
     </>
   );
 }
-

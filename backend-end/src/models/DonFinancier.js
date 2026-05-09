@@ -27,6 +27,10 @@ const DonFinancier = sequelize.define('DonFinancier', {
         type: DataTypes.STRING(100),
         allowNull: true,
         unique :true
+    },
+    recu: {
+        type: DataTypes.STRING(250),
+        allowNull: true
     }
 }, {
     tableName: 'don_financier',

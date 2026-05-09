@@ -5,14 +5,18 @@ import TestimonialSection from "./sections/TestimonialSection";
 import WorkProcessSection from "./sections/WorkProcessSection";
 import HeroSection from "./sections/HeroSection";
 import AboutUs from "./sections/About";
+import Mission from "./sections/Mission";
+import Projects from "./sections/ProjectsSection";
 
 export default function Home() {
     const { t } = useTranslation("home");
     // const { lang } = useParams();
     return (
         <div>
-            <HeroSection />
-            <AboutUs />
+            <HeroSection t={t}/>
+            <AboutUs t={t}/>
+            <Mission t={t}/>
+            <Projects t={t}/>
             <WorkProcessSection t={t} />
             <EventSection t={t} />
             <PartnerSection t={t} />

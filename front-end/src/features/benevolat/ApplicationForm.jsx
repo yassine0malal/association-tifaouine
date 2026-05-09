@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect, useMemo, useCallback } from "react";
 import { useTranslation } from "react-i18next";
+import axios from "axios";
 
 // ─────────────────────────────────────────────
 // Constants
@@ -19,10 +20,12 @@ const MAX_FILE_SIZE = {
   cv_doc: 10 * 1024 * 1024,       // 10 MB
 };
 
+const apiUrl = import.meta.env.VITE_BASE_BACK_END_URL;
+
 /** API endpoint per path */
 const API_ENDPOINTS = {
-  volunteer: "/api/volunteer",
-  member: "/api/member",
+  volunteer: `${apiUrl}/api/etre-benevole`,
+  member: `${apiUrl}/api/etre-membre`,
 };
 
 /** Initial blank form state */
@@ -59,6 +62,19 @@ function ApplicationForm({ path, styles }) {
   const photoRef = useRef();
   const identityRef = useRef();
   const cvRef = useRef();
+
+  // ─────────────────────────────────────────────
+  // Reset form on path or language change
+  // ─────────────────────────────────────────────
+  useEffect(() => {
+    setFormData(INITIAL_FORM_DATA);
+    setErrors({});
+    setHasSubmitted(false);
+    setSubmitStatus(null);
+    if (photoRef.current) photoRef.current.value = "";
+    if (identityRef.current) identityRef.current.value = "";
+    if (cvRef.current) cvRef.current.value = "";
+  }, [path, i18n.language]);
 
   // ─────────────────────────────────────────────
   // Validation rules (rebuilt when language changes)
@@ -302,18 +318,29 @@ function ApplicationForm({ path, styles }) {
         submitData.append(key, formData[key]);
       }
     });
+    // Add honeypot field to detect bots
+    submitData.append("website", "");
     submitData.append("path", path);
 
     // ── Choose endpoint based on path ──────────
     const endpoint = API_ENDPOINTS[path] ?? "/api/application";
 
     try {
-      const response = await fetch(endpoint, {
-        method: "POST",
-        body: submitData,
+      // 1. Fetch CSRF token
+      const csrfRes = await axios.get(`${endpoint}/csrf-token`, {
+        withCredentials: true,
+      });
+      const csrfToken = csrfRes.data.csrfToken;
+
+      // 2. Submit form
+      const response = await axios.post(endpoint, submitData, {
+        withCredentials: true,
+        headers: {
+          "x-csrf-token": csrfToken,
+        },
       });
 
-      if (response.ok) {
+      if (response.status === 200 || response.status === 201) {
         setSubmitStatus({
           type: "success",
           message: t("applicationForm.response.success"),

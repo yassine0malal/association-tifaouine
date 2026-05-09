@@ -2,6 +2,7 @@ import { useState, useCallback, useMemo, lazy, Suspense } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Keyboard, Autoplay } from "swiper/modules";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 // Lazy load images
 import carousel1 from '../../../../assets/images/home/carousel1.png';
@@ -23,51 +24,50 @@ const LoadingFallback = () => (
   </div>
 );
 
-const domains = [
-  {
-    id: "education",
-    label: "Education & Literacy",
-    title: "EDUCATION",
-    description:
-      "Promoting access to quality education through literacy programs, school support, and training initiatives for children and adults in rural communities.",
-    img: carousel1,
-    ctaLink: "/education",
-    ctaText: "Learn More →"
-  },
-  {
-    id: "health",
-    label: "Health & Well-being",
-    title: "HEALTH",
-    description:
-      "Improving community health through medical caravans, awareness campaigns, and access to basic healthcare services in underserved areas.",
-    img: carousel2,
-    ctaLink: "/health",
-    ctaText: "Learn More →"
-  },
-  {
-    id: "environment",
-    label: "Environment & Sustainability",
-    title: "SUSTAINABILITY",
-    description:
-      "Protecting natural resources by organizing environmental campaigns, promoting sustainable practices, and supporting local ecological initiatives.",
-    img: carousel3,
-    ctaLink: "/environment",
-    ctaText: "Learn More →"
-  },
-  {
-    id: "social",
-    label: "Social Development & Solidarity",
-    title: "SOLIDARITY",
-    description:
-      "Strengthening social cohesion by supporting vulnerable groups, organizing solidarity actions, and fostering community engagement and inclusion.",
-    img: carousel4,
-    ctaLink: "/social",
-    ctaText: "Learn More →"
-  }
-];
+// Removed static domains array since we use useTranslation inside the component
 
 function HeroSection() {
+  const { t } = useTranslation("home");
   const [activeIndex, setActiveIndex] = useState(0);
+
+  const domains = useMemo(() => [
+    {
+      id: "education",
+      label: t("hero.education.label"),
+      title: t("hero.education.title"),
+      description: t("hero.education.description"),
+      img: carousel1,
+      ctaLink: "/domaines",
+      ctaText: t("hero.education.cta")
+    },
+    {
+      id: "health",
+      label: t("hero.health.label"),
+      title: t("hero.health.title"),
+      description: t("hero.health.description"),
+      img: carousel2,
+      ctaLink: "/domaines",
+      ctaText: t("hero.health.cta")
+    },
+    {
+      id: "environment",
+      label: t("hero.environment.label"),
+      title: t("hero.environment.title"),
+      description: t("hero.environment.description"),
+      img: carousel3,
+      ctaLink: "/domaines",
+      ctaText: t("hero.environment.cta")
+    },
+    {
+      id: "social",
+      label: t("hero.social.label"),
+      title: t("hero.social.title"),
+      description: t("hero.social.description"),
+      img: carousel4,
+      ctaLink: "/domaines",
+      ctaText: t("hero.social.cta")
+    }
+  ], [t]);
 
   // Memoize swiper configuration
   const swiperConfig = useMemo(() => ({
@@ -77,7 +77,7 @@ function HeroSection() {
       enabled: true,
     },
     autoplay: {
-      delay: 5000,
+      delay: 3000,
       disableOnInteraction: false,
       pauseOnMouseEnter: true,
     },
@@ -98,13 +98,13 @@ function HeroSection() {
     img.src = src;
   }, []);
 
-  // Preload next and previous images
   const handlePreloadImages = useCallback((currentIndex) => {
+    if (domains.length === 0) return;
     const nextIndex = (currentIndex + 1) % domains.length;
     const prevIndex = (currentIndex - 1 + domains.length) % domains.length;
     preloadImage(domains[nextIndex].img);
     preloadImage(domains[prevIndex].img);
-  }, [preloadImage]);
+  }, [preloadImage, domains]);
 
   // Handle swiper initialization
   const handleSwiperInit = useCallback((swiper) => {
