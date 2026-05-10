@@ -10,7 +10,8 @@ const stats = [
 ];
 
 export default function AboutUs() {
-  const { t } = useTranslation("home");
+  const { t , i18n } = useTranslation("home");
+  const currentLang = i18n.language
   return (
     <section className={styles.section}>
       {/* Decorative geometric background */}
@@ -35,7 +36,7 @@ export default function AboutUs() {
             <p className={styles.body}>
               {t("about.description")}
             </p>
-            <Link to="#" className={styles.seeMore}>
+            <Link to={`/${currentLang}/nous`} className={styles.seeMore}>
               {t("about.cta")}
               <span className={styles.arrow} aria-hidden="true">→</span>
             </Link>

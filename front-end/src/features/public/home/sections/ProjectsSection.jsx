@@ -11,6 +11,7 @@ export default function Projects() {
   const { t, i18n } = useTranslation("home");
   const { lang } = useParams();
   const dispatch = useDispatch();
+  const currentLang = i18n.language
   
   const { data: projects, loading, error } = useSelector((state) => state.projects);
 
