@@ -36,7 +36,7 @@ const projectImagesSlice = createSlice({
 
       .addCase(fetchProjectImages.fulfilled, (state, action) => {
         state.loading = false;
-        const newImages = action.payload.images;
+        const newImages = action.payload?.images || [];
 
         // Remove duplicates based on id
         const existingIds = new Set(state.images.map((img) => img.id));

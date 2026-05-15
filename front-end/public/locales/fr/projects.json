@@ -5,7 +5,8 @@
             "all": "Tout",
             "completed": "Terminé",
             "inProgress": "En cours",
-            "pending": "En attente"
+            "pending": "En attente",
+            "planned": "Planifié"
         },
         "viewProjects": "Voir les projets",
         "noProjects": "Aucun projet trouvé."

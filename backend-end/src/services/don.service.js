@@ -13,7 +13,7 @@ class DonService {
      *          Statut initial : 'en_attente' (paiement à confirmer)
      */
     async createDonFinancier(data) {
-        const { email, nom_complet, telephone, type_destination, projet_id, montant, devise, ref_transaction } = data;
+        const { email, nom_complet, telephone, type_destination, projet_id, montant, devise, ref_transaction, message, recu } = data;
 
         if (!email || !nom_complet) {
             throw new Error("L'email et le nom complet sont obligatoires.");
@@ -37,6 +37,7 @@ class DonService {
                 type_destination,
                 projet_id:        type_destination === 'specifique' ? projet_id : null,
                 statut:           'en_attente',
+                message:          message || null,
                 date_reception:   new Date()
             }, { transaction: t });
 
@@ -44,7 +45,8 @@ class DonService {
                 don_id:          don.id,
                 montant:         Number(montant),
                 devise:          devise || 'MAD',
-                ref_transaction: ref_transaction || null
+                ref_transaction: ref_transaction || null,
+                recu:            recu || null
             }, { transaction: t });
 
             // Notification pour Admin

@@ -3,6 +3,8 @@ import projectImg from "../../assets/images/project.jpeg";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
+const apiUrl = import.meta.env.VITE_BASE_BACK_END_URL
+
 export default function ProjectCard({
   id,
   title,
@@ -12,11 +14,12 @@ export default function ProjectCard({
   image,
 }) {
 
-  const { t } = useTranslation('common')
+  const { t , i18n } = useTranslation('common')
+  const currentLang = i18n.language 
   return (
     <div className={styles.projectCard}>
       <div className={styles.cardImg}>
-        <img src={`${image}`} alt="" aria-label="loading"/>
+        <img src={`${apiUrl}${image}`} alt="" aria-label="loading"/>
       </div>
 
       <div className={styles.cardContent}>
@@ -34,7 +37,7 @@ export default function ProjectCard({
 
         <p className={styles.description}>{description}</p>
 
-        <Link to={`/project/${id}`}>
+        <Link to={`/${currentLang}/projets/${id}`}>
           <span>{t('projectCard.see_more')}</span>
           <svg
             xmlns="http://www.w3.org/2000/svg"

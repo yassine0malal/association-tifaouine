@@ -30,7 +30,7 @@ const projectSlice = createSlice({
       // success
       .addCase(fetchProject.fulfilled, (state, action) => {
         state.loading = false;
-        state.data = action.payload;
+        state.data = action.payload?.data;
       })
 
       // error

@@ -47,6 +47,10 @@ const Don = sequelize.define('Don', {
             isIn: [['general', 'specifique']]
         }
     },
+    message: {
+        type: DataTypes.TEXT,
+        allowNull: true
+    },
     date_reception: {
         type: DataTypes.DATE,
         allowNull: false,

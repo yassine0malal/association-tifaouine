@@ -28,6 +28,6 @@ export const fetchPartnerByIdAPI = async (id) => {
 // Mettre à jour un partenaire (multipart/form-data car le logo peut changer)
 export const updatePartnerAPI = async (id, partnerData) => {
     // partnerData est un FormData
-    const res = await protectedApi.put(`/api/partenariats/${id}`, partnerData);
+    const res = await protectedApi.put(`/api/partenariats/admin/${id}`, partnerData);
     return res.data;
 };
