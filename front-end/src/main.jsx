@@ -49,11 +49,14 @@ import AdminBenevolesList from "./features/admin/Benevoles/AdminBenevolesList.js
 import AdminBenevoleDetail from "./features/admin/Benevoles/AdminBenevoleDetail.jsx";
 import AdminDonsList from "./features/admin/Dons/AdminDonsList.jsx";
 import AdminDonDetail from "./features/admin/Dons/AdminDonDetail.jsx";
+import AdminDonMaterielCreate from "./features/admin/Dons/AdminDonMaterielCreate.jsx";
 import AdminMembersList from "./features/admin/Members/AdminMembersList.jsx";
 import AdminMemberDetail from "./features/admin/Members/AdminMemberDetail.jsx";
 import AdminProjetDetail from "./features/admin/Projets/SingleProject/AdminProjetDetail.jsx";
 import SubscriptionAdmin from "./features/admin/subscription/SubscriptionAdmin.jsx";
 import AdminProfile from "./features/admin/Profile/AdminProfile.jsx";
+import AdminBenevoleCreate from "./features/admin/Benevoles/AdminBenevoleCreate.jsx";
+import AdminMemberCreate from "./features/admin/Members/AdminMemberCreate.jsx";
 
 createRoot(document.getElementById("root")).render(
   <Provider store={store}>
@@ -145,14 +148,17 @@ createRoot(document.getElementById("root")).render(
 
               {/* Benevolat / Join Us */}
               <Route path="benevoles" element={<AdminBenevolesList />} />
+              <Route path="benevoles/create" element={<AdminBenevoleCreate />} />
               <Route path="benevoles/:id" element={<AdminBenevoleDetail />} />
 
               {/* Members*/}
-              <Route path="membre" element={<AdminMembersList />} />
-              <Route path="membre/:id" element={<AdminMemberDetail />} />
+              <Route path="membres" element={<AdminMembersList />} />
+              <Route path="membres/create" element={<AdminMemberCreate />} />
+              <Route path="membres/:id" element={<AdminMemberDetail />} />
 
               {/* Dons */}
               <Route path="dons" element={<AdminDonsList />} />
+              <Route path="dons/create-materiel" element={<AdminDonMaterielCreate />} />
               <Route path="dons/:id" element={<AdminDonDetail />} />
 
               {/* Contact (messages reçus) */}

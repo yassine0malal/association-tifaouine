@@ -1367,10 +1367,6 @@ input[type="number"] {
   .donationPage .transparency .container {
     grid-template-columns: 1fr;
   }
-
-  .donationPage .transparency .images {
-    aspect-ratio: 4 / 3;
-  }
 }
 
 @media (max-width: 900px) {
@@ -1463,7 +1459,7 @@ input[type="number"] {
 
 @media (max-width: 360px) {
   .donationPage .transparency .images {
-    columns: 1fr;
+    columns: 1;
     gap: 0.6rem;
   }
 }

@@ -15,12 +15,25 @@ export const fetchDonsAdmin = createAsyncThunk(
 
 export const updateDonStatus = createAsyncThunk(
   "donsAdmin/updateStatus",
-  async ({ id, status }, { rejectWithValue }) => {
+  async ({ id, statut }, { rejectWithValue }) => {
     try {
-      const response = await protectedApi.patch(`/api/dons/${id}/statut`, { status });
-      return response.data.data;
+      // Backend expects { statut } not { status }
+      const response = await protectedApi.patch(`/api/dons/${id}/statut`, { statut });
+      return { id, statut };
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || "Erreur de mise à jour");
+    }
+  }
+);
+
+export const createDonMateriel = createAsyncThunk(
+  "donsAdmin/createMateriel",
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await protectedApi.post("/api/dons/materiel", data);
+      return response.data.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || "Erreur de création");
     }
   }
 );
@@ -69,9 +82,10 @@ const donsAdminSlice = createSlice({
         state.error = action.payload;
       })
       .addCase(updateDonStatus.fulfilled, (state, action) => {
-        const updatedIndex = state.data.findIndex((d) => d.id === action.payload.id);
-        if (updatedIndex !== -1) {
-          state.data[updatedIndex] = action.payload;
+        const { id, statut } = action.payload;
+        const index = state.data.findIndex((d) => d.id === id);
+        if (index !== -1) {
+          state.data[index].statut = statut;
         }
       })
       .addCase(deleteDon.fulfilled, (state, action) => {

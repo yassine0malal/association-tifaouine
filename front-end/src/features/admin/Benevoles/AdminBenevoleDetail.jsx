@@ -5,6 +5,8 @@ import { fetchBenevoleById, updateBenevoleStatus, clearCurrentDetail } from "./b
 import styles from "./Benevoles.module.css";
 import { FaCheck, FaTimes, FaArrowLeft, FaDownload } from "react-icons/fa";
 import avatarPlaceholder from "../../../assets/images/admin/avatar_placeholder.png";
+import ImageUpload from "../../../components/admin/ImageUpload";
+import { protectedApi } from "../Login/authService";
 
 const BASE_BACK_END_URL = import.meta.env.VITE_BASE_BACK_END_URL;
 
@@ -31,6 +33,20 @@ export default function AdminBenevoleDetail() {
       } catch (error) {
         alert("Erreur: " + error);
       }
+    }
+  };
+
+  const handleFileUpdate = async (file, type) => {
+    if (!file) return;
+    const formData = new FormData();
+    formData.append(type, file);
+
+    try {
+      await protectedApi.patch(`/api/etre-benevole/admin/${id}/files`, formData);
+      alert("Fichier mis à jour avec succès.");
+      dispatch(fetchBenevoleById(id));
+    } catch (error) {
+      alert("Erreur lors de la mise à jour du fichier. Vérifiez si l'API est implémentée.");
     }
   };
 
@@ -98,22 +114,27 @@ export default function AdminBenevoleDetail() {
         </div>
 
         <div className={styles.detailSection}>
-          <h3>Documents Fournis</h3>
+          <h3>Documents & Photos</h3>
           <div className={styles.detailGrid}>
             <div className={styles.infoItem}>
-              <span className={styles.infoLabel}>Carte d'identité nationale</span>
-              {benevole.carte_identite ? (
-                <a 
-                  href={`${BASE_BACK_END_URL}${benevole.carte_identite}`} 
-                  target="_blank" 
-                  rel="noreferrer"
-                  className={styles.infoValue}
-                  style={{ color: "var(--accent-strong)", display: "flex", alignItems: "center", gap: "8px" }}
-                >
-                  <FaDownload /> Télécharger la CIN
+              <ImageUpload 
+                label="Photo de Profil"
+                onChange={(file) => handleFileUpdate(file, "photo_profile")}
+                existingImages={benevole.photo_profile ? [`${BASE_BACK_END_URL}${benevole.photo_profile}`] : []}
+                multiple={false}
+              />
+            </div>
+            <div className={styles.infoItem}>
+              <ImageUpload 
+                label="Carte d'identité"
+                onChange={(file) => handleFileUpdate(file, "carte_identite")}
+                existingImages={benevole.carte_identite ? [`${BASE_BACK_END_URL}${benevole.carte_identite}`] : []}
+                multiple={false}
+              />
+              {benevole.carte_identite && (
+                <a href={`${BASE_BACK_END_URL}${benevole.carte_identite}`} target="_blank" rel="noreferrer" className={styles.downloadLink}>
+                  <FaDownload /> Télécharger CIN
                 </a>
-              ) : (
-                <span className={styles.infoValue}>Non fournie</span>
               )}
             </div>
           </div>

@@ -2,6 +2,12 @@ import styles from "./donation-page.module.css";
 import mountainImg from "../../assets/images/tob9al_mountain.jpg";
 import PageHero from "../../components/common/PageHero";
 import contactImg from "../../assets/images/donation/contact_img.jpg";
+import transparency_img1 from "../../assets/images/donation/transpaerncy_img1.jpeg";
+import transparency_img2 from "../../assets/images/donation/transpaerncy_img2.jpeg";
+import transparency_img3 from "../../assets/images/donation/transpaerncy_img3.jpeg";
+import transparency_img4 from "../../assets/images/donation/transpaerncy_img4.jpeg";
+import transparency_img5 from "../../assets/images/donation/transpaerncy_img5.jpeg";
+
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
@@ -558,28 +564,28 @@ function TransparencySection({ t }) {
         <div className={styles.images}>
           <div className={styles.image}>
             <img
-              src="https://picsum.photos/900/600?random=3"
+              src={transparency_img1}
               alt=""
               aria-label="laoding"
             />
           </div>
           <div className={styles.image}>
             <img
-              src="https://picsum.photos/900/600?random=2"
+              src={transparency_img5}
               alt=""
               aria-label="laoding"
             />
           </div>
           <div className={styles.image}>
             <img
-              src="https://picsum.photos/900/600?random=1"
+              src={transparency_img3}
               alt=""
               aria-label="laoding"
             />
           </div>
           <div className={styles.image}>
             <img
-              src="https://picsum.photos/900/600?random=5"
+              src={transparency_img4}
               alt=""
               aria-label="laoding"
             />

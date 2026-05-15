@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import styles from "./about.module.css";
 import { useTranslation } from "react-i18next";
+import about_img1 from "./../../../../assets/images/home/about1.jpeg"
+import about_img2 from "./../../../../assets/images/home/about2.jpeg"
 
 const stats = [
   { value: "500", suffix: "+", label: "Beneficiaries Supported" },
@@ -47,10 +49,10 @@ export default function AboutUs() {
             <div className={styles.images}>
               <div className={styles.imageAccent} aria-hidden="true" />
               <div className={`${styles.image} ${styles.imageBack}`}>
-                <img src="https://picsum.photos/900/600?random=5" alt="Community members working together" />
+                <img src={about_img1} alt="Community members working together" />
               </div>
               <div className={`${styles.image} ${styles.imageFront}`}>
-                <img src="https://picsum.photos/900/600?random=4" alt="Youth education program" />
+                <img src={about_img2} alt="Youth education program" />
               </div>
               <div className={styles.imageBadge}>
                 <span className={styles.badgeNumber}>10</span>

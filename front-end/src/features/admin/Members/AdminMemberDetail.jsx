@@ -5,6 +5,8 @@ import { fetchMemberById, updateMemberStatus, clearCurrentDetail } from "./membe
 import styles from "./Members.module.css";
 import { FaCheck, FaTimes, FaArrowLeft, FaDownload } from "react-icons/fa";
 import avatarPlaceholder from "../../../assets/images/admin/avatar_placeholder.png";
+import ImageUpload from "../../../components/admin/ImageUpload";
+import { protectedApi } from "../Login/authService";
 
 const BASE_BACK_END_URL = import.meta.env.VITE_BASE_BACK_END_URL;
 
@@ -34,6 +36,20 @@ export default function AdminMemberDetail() {
     }
   };
 
+  const handleFileUpdate = async (file, type) => {
+    if (!file) return;
+    const formData = new FormData();
+    formData.append(type, file);
+
+    try {
+      await protectedApi.patch(`/api/membre/admin/${id}/files`, formData);
+      alert("Fichier mis à jour avec succès.");
+      dispatch(fetchMemberById(id));
+    } catch (error) {
+      alert("Erreur lors de la mise à jour du fichier. Vérifiez si l'API est implémentée.");
+    }
+  };
+
   if (detailLoading || !member) {
     return <div className={styles.container}><p style={{ padding: "20px" }}>Chargement des détails...</p></div>;
   }
@@ -57,7 +73,7 @@ export default function AdminMemberDetail() {
             </span>
             {member.poste && <p style={{ marginTop: '8px', color: 'var(--text)', fontWeight: '600' }}>Poste : {member.poste}</p>}
           </div>
-          <button className={styles.backBtn} onClick={() => navigate("/admin/membre")}>
+          <button className={styles.backBtn} onClick={() => navigate("/admin/membres")}>
             <FaArrowLeft /> Retour
           </button>
         </div>
@@ -95,38 +111,40 @@ export default function AdminMemberDetail() {
         </div>
 
         <div className={styles.detailSection}>
-          <h3>Documents Fournis</h3>
+          <h3>Documents & Photos</h3>
           <div className={styles.detailGrid}>
             <div className={styles.infoItem}>
-              <span className={styles.infoLabel}>Carte d'identité nationale</span>
-              {member.carte_identite ? (
-                <a 
-                  href={`${BASE_BACK_END_URL}${member.carte_identite}`} 
-                  target="_blank" 
-                  rel="noreferrer"
-                  className={styles.infoValue}
-                  style={{ color: "var(--accent-strong)", display: "flex", alignItems: "center", gap: "8px" }}
-                >
-                  <FaDownload /> Télécharger la CIN
+              <ImageUpload 
+                label="Photo de Profil"
+                onChange={(file) => handleFileUpdate(file, "photo_profile")}
+                existingImages={member.photo_profile && member.photo_profile !== 'null' ? [`${BASE_BACK_END_URL}${member.photo_profile}`] : []}
+                multiple={false}
+              />
+            </div>
+            <div className={styles.infoItem}>
+              <ImageUpload 
+                label="Carte d'identité"
+                onChange={(file) => handleFileUpdate(file, "carte_identite")}
+                existingImages={member.carte_identite ? [`${BASE_BACK_END_URL}${member.carte_identite}`] : []}
+                multiple={false}
+              />
+              {member.carte_identite && (
+                <a href={`${BASE_BACK_END_URL}${member.carte_identite}`} target="_blank" rel="noreferrer" className={styles.downloadLink}>
+                  <FaDownload /> Télécharger CIN
                 </a>
-              ) : (
-                <span className={styles.infoValue}>Non fournie</span>
               )}
             </div>
             <div className={styles.infoItem}>
-              <span className={styles.infoLabel}>Curriculum Vitae (CV)</span>
-              {member.cv ? (
-                <a 
-                  href={`${BASE_BACK_END_URL}${member.cv}`} 
-                  target="_blank" 
-                  rel="noreferrer"
-                  className={styles.infoValue}
-                  style={{ color: "var(--accent-strong)", display: "flex", alignItems: "center", gap: "8px" }}
-                >
-                  <FaDownload /> Télécharger le CV
+              <ImageUpload 
+                label="Curriculum Vitae"
+                onChange={(file) => handleFileUpdate(file, "cv")}
+                existingImages={member.cv ? [`${BASE_BACK_END_URL}${member.cv}`] : []}
+                multiple={false}
+              />
+              {member.cv && (
+                <a href={`${BASE_BACK_END_URL}${member.cv}`} target="_blank" rel="noreferrer" className={styles.downloadLink}>
+                  <FaDownload /> Télécharger CV
                 </a>
-              ) : (
-                <span className={styles.infoValue}>Non fourni</span>
               )}
             </div>
           </div>

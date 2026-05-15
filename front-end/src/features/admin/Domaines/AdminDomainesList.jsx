@@ -5,7 +5,7 @@ import { fetchDomainesAdmin, setPage, deleteDomaineAdmin } from "./domainesAdmin
 import styles from "./Domaines.module.css";
 import Pagination from "../../../components/common/Pagination";
 import ConfirmPopup from "../../../components/popup/ConfirmPopup";
-import { FaPlus, FaEdit, FaTrash } from "react-icons/fa";
+import { FaPlus, FaEdit, FaTrash, FaArrowLeft } from "react-icons/fa";
 
 const BASE_BACK_END_URL = import.meta.env.VITE_BASE_BACK_END_URL;
 
@@ -17,6 +17,7 @@ export default function AdminDomainesList() {
   );
 
   const [popup, setPopup] = useState({ open: false, id: null, title: "" });
+  const [message, setMessage] = useState(null);
 
   useEffect(() => {
     dispatch(fetchDomainesAdmin({ page: currentPage, limit: 10 }));
@@ -34,6 +35,8 @@ export default function AdminDomainesList() {
     try {
       await dispatch(deleteDomaineAdmin(popup.id)).unwrap();
       setPopup({ open: false, id: null, title: "" });
+      setMessage({ type: "success", text: "Domaine supprimé avec succès." });
+      setTimeout(() => setMessage(null), 3000);
       
       if (domaines.length === 1 && currentPage > 1) {
         dispatch(setPage(currentPage - 1));
@@ -41,30 +44,51 @@ export default function AdminDomainesList() {
         dispatch(fetchDomainesAdmin({ page: currentPage, limit: 10 }));
       }
     } catch (error) {
-      alert("Erreur: " + error);
+      // Handle FK constraint violation
+      const errorMsg = typeof error === 'string' ? error : error?.message || "Erreur inconnue";
+      if (errorMsg.includes("foreign key") || errorMsg.includes("constraint") || errorMsg.includes("projets") || errorMsg.includes("RESTRICT")) {
+        setMessage({ type: "error", text: "Impossible de supprimer ce domaine car il contient des projets ou événements liés. Veuillez d'abord supprimer ou réassigner les projets/événements associés." });
+      } else {
+        setMessage({ type: "error", text: "Erreur: " + errorMsg });
+      }
+      setPopup({ open: false, id: null, title: "" });
+      setTimeout(() => setMessage(null), 8000);
     }
   };
 
   return (
     <div className={styles.container}>
+      <button className={styles.backBtn} onClick={() => navigate("/admin")}>
+        <FaArrowLeft /> Retour au tableau de bord
+      </button>
+
       <header className={styles.header}>
-        <h1 className={styles.title}>Domaines d'action ({total})</h1>
+        <h1 className={styles.title}>Domaines d'action ({total ?? 0})</h1>
         <button className={styles.fab} onClick={() => navigate("/admin/domaines/create")}>
           <FaPlus /> Ajouter un domaine
         </button>
       </header>
 
+      {message && (
+        <div className={`${styles.message} ${message.type === "success" ? styles.msgSuccess : styles.msgError}`}>
+          {message.type === "success" ? "✓" : "✗"} {message.text}
+        </div>
+      )}
+
       <div className={styles.tableContainer}>
         {loading ? (
-          <p style={{ padding: "20px" }}>Chargement...</p>
+          <div style={{ display: "flex", justifyContent: "center", alignItems: "center", padding: "80px 20px", flexDirection: "column", gap: "16px" }}>
+            <div className={styles.spinner}></div>
+            <p style={{ color: "var(--paragraph-color)" }}>Chargement des domaines...</p>
+          </div>
         ) : (
           <table className={styles.table}>
             <thead>
               <tr>
                 <th>Icône</th>
-                <th>Titre (FR)</th>
-                <th>Titre (EN)</th>
-                <th>Titre (AR)</th>
+                <th>Nom (FR)</th>
+                <th>Nom (EN)</th>
+                <th>Nom (AR)</th>
                 <th>Projets</th>
                 <th>Actions</th>
               </tr>
@@ -74,13 +98,17 @@ export default function AdminDomainesList() {
                 <tr key={domaine.id}>
                   <td>
                     {domaine.icone && (
-                      <img src={`${BASE_BACK_END_URL}${domaine.icone}`} alt={domaine.titre_fr} />
+                      <img 
+                        src={`${BASE_BACK_END_URL}${domaine.icone}`} 
+                        alt={domaine.nom_fr}
+                        style={{ width: "40px", height: "40px", objectFit: "cover", borderRadius: "6px" }}
+                      />
                     )}
                   </td>
-                  <td>{domaine.titre_fr}</td>
-                  <td>{domaine.titre_en}</td>
-                  <td dir="rtl">{domaine.titre_ar}</td>
-                  <td>{domaine.projectsCount || 0}</td>
+                  <td>{domaine.nom_fr}</td>
+                  <td>{domaine.nom_en}</td>
+                  <td dir="rtl">{domaine.nom_ar}</td>
+                  <td>{domaine.nombre_projets_total ?? 0}</td>
                   <td>
                     <div className={styles.actionIcons}>
                       <button 
@@ -92,7 +120,7 @@ export default function AdminDomainesList() {
                       </button>
                       <button 
                         className={`${styles.actionBtn} ${styles.deleteBtn}`}
-                        onClick={() => handleDeleteClick(domaine.id, domaine.titre_fr)}
+                        onClick={() => handleDeleteClick(domaine.id, domaine.nom_fr)}
                         title="Supprimer"
                       >
                         <FaTrash />
@@ -129,7 +157,7 @@ export default function AdminDomainesList() {
         onConfirm={confirmDelete}
         variant="danger"
         title="Supprimer ce domaine ?"
-        description="Voulez-vous vraiment supprimer ce domaine ? Cette action est irréversible."
+        description="Voulez-vous vraiment supprimer ce domaine ? Cette action est irréversible. La suppression échouera si des projets ou événements sont liés."
         detailLabel="Domaine ciblé"
         detailValue={popup.title}
         confirmLabel="Supprimer"
