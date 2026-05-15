@@ -388,7 +388,7 @@ const CarouselCard = ({ item, styles }) => {
 
       <div className={styles.cardFooter}>
         <h3>{item.nom} - <span className={styles.poste}>{item.poste}</span></h3>
-        <p>{item.description.slice(0, 100)}</p>
+        <p>{item.description.slice(0, 200)}</p>
       </div>
     </div>
   );
