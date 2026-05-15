@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-const BACK_END_API = import.meta.env.VITE_BASE_BACK_END_URL
+const apiUrl = import.meta.env.VITE_BASE_BACK_END_URL
 
 // export const fetchProjectsAPI = async (
 //   page = 1,
@@ -19,22 +19,22 @@ const BACK_END_API = import.meta.env.VITE_BASE_BACK_END_URL
 
 export const fetchProjectsForSelectAPI = async (lang = "fr") => {
   try {
-    const res = await axios.get(`/api/${lang}/selectProjects.json`);
+    const res = await axios.get(`${apiUrl}/api/${lang}/project-for-don`);
     return res.data;
   } catch (err) {
-    console.log(err);
+        console.error("API Error:", err);
     throw err;
   }
 };
 
 
-export const fetchProjectsAPI = async (page = 1, filter = "all", lang = "fr") => {
+export const fetchProjectsAPI = async (page = 1, filter = "all", lang = "fr", limit = 8) => {
+  
     try {
         // Use the apiUrl variable you defined above
         const res = await axios.get(`${apiUrl}/api/${lang}/projets`, {
-            params: { page, filter } // Pass parameters properly
+            params: { page, statut:filter === "all" ? "" : filter, limit } // Pass parameters properly
         });
-        // console.warn("project $$$$$", res.data);
         return res.data;
     } catch (err) {
         console.error("API Error:", err);

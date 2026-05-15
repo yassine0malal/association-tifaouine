@@ -13,6 +13,12 @@ import adminResourceSlice from '../features/admin/Ressources/adminResourceSlice'
 import adminAbonnementReducer from '../features/admin/subscription/SubscriptionAdminSlice'
 import adminNotificationsReducer from '../features/admin/Notifications/adminNotificationsSlice'
 import dashboardReducer from '../features/admin/Dashboard/dashboardSlice'
+import domainesAdminReducer from '../features/admin/Domaines/domainesAdminSlice'
+import benevolesAdminReducer from '../features/admin/Benevoles/benevolesAdminSlice'
+import membersAdminReducer from '../features/admin/Members/membersAdminSlice'
+import eventsAdminReducer from '../features/admin/Evenements/eventsAdminSlice'
+import donsAdminReducer from '../features/admin/Dons/donsAdminSlice'
+import profileAdminReducer from '../features/admin/Profile/profileAdminSlice'
 
 import eventsReducer from '../features/evenements/event-list/eventsSlice'
 import eventReducer from '../features/evenements/event-page/eventSlice'
@@ -42,6 +48,12 @@ export const store = configureStore({
         adminResources: adminResourceSlice,
         adminSubscription: adminAbonnementReducer,
         adminNotifications: adminNotificationsReducer,
-        dashboard: dashboardReducer
+        dashboard: dashboardReducer,
+        domainesAdmin: domainesAdminReducer,
+        benevolesAdmin: benevolesAdminReducer,
+        membersAdmin: membersAdminReducer,
+        eventsAdmin: eventsAdminReducer,
+        donsAdmin: donsAdminReducer,
+        profileAdmin: profileAdminReducer
     },
 })

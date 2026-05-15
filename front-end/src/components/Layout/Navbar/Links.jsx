@@ -27,43 +27,26 @@ import {
 
 import { FaAngleDown, FaXmark } from "react-icons/fa6";
 
-const getIconForSubItem = (label) => {
+const getIconForSubItem = (id) => {
   const iconMap = {
-    "About Us": <FaUsers />,
-    Contact: <FaEnvelope />,
-    Projects: <FaProjectDiagram />,
-    Events: <FaCalendarAlt />,
-    Donate: <FaDonate />,
-    "Become a member": <FaUserPlus />,
-    "Become a volunteer": <FaHandsHelping />,
-    Reports: <FaChartLine />,
-    Partners: <FaHandshake />,
-    Resources: <FaBook />,
-    "See more": <FaGlobe />,
+    aboutUs: <FaUsers />,
+    contact: <FaEnvelope />,
+    projects: <FaProjectDiagram />,
+    events: <FaCalendarAlt />,
+    donate: <FaDonate />,
+    becomeMember: <FaUserPlus />,
+    becomeVolunteer: <FaHandsHelping />,
+    reports: <FaChartLine />,
+    partners: <FaHandshake />,
+    resources: <FaBook />,
+    seeMore: <FaGlobe />,
   };
 
-  return iconMap[label] || <FaGlobe />;
-};
-
-const getDescription = (label) => {
-  const descriptions = {
-    "About Us": "Learn more about our mission and values",
-    Contact: "Get in touch with our team",
-    Projects: "Discover our ongoing initiatives",
-    Events: "Join our upcoming gatherings",
-    Donate: "Support our cause financially",
-    "Become a member": "Join our community of changemakers",
-    "Become a volunteer": "Share your time and skills",
-    Reports: "View our annual reports and publications",
-    Partners: "Meet our collaborators and sponsors",
-    Resources: "Access our knowledge base",
-    "See more": "Explore all our domains",
-  };
-
-  return descriptions[label] || "Learn more about this topic";
+  return iconMap[id] || <FaGlobe />;
 };
 
 function NavItem({ item, id, handleDropDown, isOpen, setShowAside }) {
+  const { t } = useTranslation("nav");
   const handleClick = () => {
     handleDropDown(id);
   };
@@ -106,7 +89,7 @@ function NavItem({ item, id, handleDropDown, isOpen, setShowAside }) {
                           {subItem.label}
                         </h3>
                         <p className={styles.dropdownDescription}>
-                          {subItem.description || getDescription(subItem.label)}
+                          {subItem.description || t(`nav.descriptions.${subItem.id}`)}
                         </p>
                       </div>
                     </Link>
@@ -139,16 +122,14 @@ export default function Links({ setShowAside }) {
       to: null,
       subItems: [
         {
-          id: "About Us",
+          id: "aboutUs",
           label: t("nav.dropdown.about.us"),
           path: `/${i18n.language}/nous`,
-          description: "Discover our story and team",
         },
         {
-          id: "Contact",
+          id: "contact",
           label: t("nav.dropdown.about.contact"),
           path: `/${i18n.language}/contact`,
-          description: "Reach out to us anytime",
         },
       ],
     },
@@ -158,16 +139,14 @@ export default function Links({ setShowAside }) {
       to: null,
       subItems: [
         {
-          id: "Projects",
+          id: "projects",
           label: t("nav.dropdown.activities.projects"),
           path: `/${i18n.language}/projets`,
-          description: "Explore our impactful work",
         },
         {
-          id: "Events",
+          id: "events",
           label: t("nav.dropdown.activities.events"),
           path: `/${i18n.language}/evenements`,
-          description: "Calendar of upcoming activities",
         },
       ],
     },
@@ -177,44 +156,41 @@ export default function Links({ setShowAside }) {
       to: `/${i18n.language}/join-us`,
       subItems: [
         {
-          id: "Donate",
+          id: "donate",
           label: t("nav.dropdown.getInvolved.donate"),
-          path: `/${i18n.language}/Faire-un-don`,
-          description: "Make a difference today",
+          path: `/${i18n.language}/donate`,
         },
         {
-          id: "Become a member",
+          id: "becomeMember",
           label: t("nav.dropdown.getInvolved.becomeMember"),
           path: `/${i18n.language}/join-us/member`,
-          description: "Join our membership program",
         },
         {
-          id: "Become a volunteer",
+          id: "becomeVolunteer",
           label: t("nav.dropdown.getInvolved.becomeVolunteer"),
           path: `/${i18n.language}/join-us/volunteer`,
-          description: "Contribute your time and talents",
         },
       ],
     },
     {
       id: "domaines",
       title: t("nav.domains"),
-      to: `${i18n.language}/domains`,
+      to: `/${i18n.language}/domains`,
       subItems: (() => {
         if (!domains?.length) return [];
 
         const limitedDomains = domains.slice(0, 3).map((domain) => ({
+          id: "seeMore", // Use seeMore as a generic id for icon/desc if needed, or specific domain id
           label: domain.label,
           path: `/${i18n.language}/domains/${domain.id}`,
-          description: domain.description || "Explore this domain",
+          description: domain.description || t("nav.descriptions.seeMore"),
         }));
 
         if (domains.length > 3) {
           limitedDomains.push({
-            id: "See more",
+            id: "seeMore",
             label: t("nav.seeMore"),
             path: `/${i18n.language}/domains`,
-            description: "View all our focus areas",
           });
         }
 
@@ -227,16 +203,14 @@ export default function Links({ setShowAside }) {
       to: null,
       subItems: [
         {
-          id: "Reports",
+          id: "reports",
           label: t("nav.dropdown.resources.reports"),
           path: `/${i18n.language}/rapports`,
-          description: "Annual reports and studies",
         },
         {
-          id: "Partners",
+          id: "partners",
           label: t("nav.dropdown.resources.partners"),
           path: `/${i18n.language}/partenaires`,
-          description: "Our network of collaborators",
         },
       ],
     },

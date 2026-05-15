@@ -2,8 +2,6 @@ import { useTranslation } from "react-i18next";
 import styles from "./showMoreButton.module.css";
 
 function ShowMoreButton({ loading, currentPage, totalPages, onPageChange }) {
-
-  // console.log("iiii" , currentPage, totalPages)
   
   const { t } = useTranslation("common");
   if (!currentPage || !totalPages) return null;

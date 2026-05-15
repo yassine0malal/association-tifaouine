@@ -40,7 +40,7 @@ const eventSlice = createSlice({
         })
         .addCase(fetchEvent.fulfilled , (state , action) => {
             state.loading = false;
-            state.data = action.payload || {}
+            state.data = action.payload?.data || {}
         })
         .addCase(fetchEvent.rejected , (state , action) => {
             state.loading = false;

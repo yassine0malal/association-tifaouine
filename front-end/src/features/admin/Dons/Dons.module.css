@@ -1,0 +1,96 @@
+.container {
+  padding: 24px;
+  background-color: var(--color-background);
+  min-height: 100vh;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.title {
+  font-size: 24px;
+  color: var(--text-h);
+  font-weight: 600;
+}
+
+.tableContainer {
+  background-color: var(--bg-card);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th {
+  text-align: left;
+  padding: 16px;
+  background-color: var(--section-bg);
+  color: var(--text-h);
+  font-weight: 600;
+  border-bottom: 1px solid var(--border);
+}
+
+.table td {
+  padding: 16px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: middle;
+}
+
+.table tr:last-child td {
+  border-bottom: none;
+}
+
+.statusSelect {
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border-input);
+  background-color: var(--bg);
+  color: var(--text-h);
+  font-family: inherit;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.statusSelect:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.status-en_attente { color: #854d0e; }
+.status-recu { color: #166534; }
+.status-annule { color: #991b1b; }
+
+.actionBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 4px;
+  color: var(--text);
+  transition: all 0.2s;
+}
+
+.actionBtn:hover {
+  background-color: var(--color-sec);
+  color: var(--accent-strong);
+}
+
+.deleteBtn:hover {
+  color: #dc2626;
+  background-color: #fee2e2;
+}
+
+.paginationWrapper {
+  margin-top: 24px;
+  display: flex;
+  justify-content: center;
+}

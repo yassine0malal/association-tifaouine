@@ -417,8 +417,21 @@ const uploadEtreBenevole = multer({
     { name: 'photo', maxCount: 1 },
     { name: 'identity_card', maxCount: 1 }
 ]);
+// ─── 8. Upload formulaire "Don Financier" (Reçu) ────────────────────────────
+// fields: receipt (doc/image)
 
-
+const uploadDonFinancier = multer({
+    storage: multer.diskStorage({
+        destination: (req, file, cb) => {
+            const dest = path.join(__dirname, '../data/dons/recus');
+            ensureDir(dest);
+            cb(null, dest);
+        },
+        filename: makeFilename('recu')
+    }),
+    fileFilter: mediaFilter,
+    limits: { fileSize: 10 * 1024 * 1024 }
+}).single('receipt');
 module.exports = {
     uploadSimple,
     uploadProjetPrincipal,
@@ -428,5 +441,6 @@ module.exports = {
     uploadEvenementComplet,
     uploadRessources,
     uploadEtreMembre,
-    uploadEtreBenevole
+    uploadEtreBenevole,
+    uploadDonFinancier
 };

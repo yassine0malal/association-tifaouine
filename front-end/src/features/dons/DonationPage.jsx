@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { fetchProjectsForSelect } from "../projets/projects-list/projectsSlice";
+import axios from "axios";
 
 // ─── Validation helpers ───────────────────────────────────────────────────────
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -265,7 +266,6 @@ function DonateInfosSection({ t }) {
       </div>
     );
   }
-
   return (
     <section className={styles.donateInfos}>
       <div className={styles.container}>
@@ -890,71 +890,78 @@ function DonationFromSection({ t, i18n }) {
 
     try {
       const submitData = new FormData();
-      submitData.append("fullname", formData.fullname.trim());
+      submitData.append("nom_complet", formData.fullname.trim());
       submitData.append("email", formData.email.trim());
       submitData.append(
-        "amount",
+        "montant",
         formData.amount ? parseFloat(formData.amount) : 0,
       );
-      submitData.append("project", formData.project);
+      
+      const typeDest = formData.project && formData.project !== "none" ? "specifique" : "general";
+      submitData.append("type_destination", typeDest);
+      if (typeDest === "specifique") {
+        submitData.append("projet_id", formData.project);
+      }
+
       submitData.append("message", formData.message || "");
+      
+      // Honeypot field
+      submitData.append("website", "");
 
       if (formData.receipt) {
         submitData.append("receipt", formData.receipt);
       }
 
-      const API_URL =
-        process.env.REACT_APP_API_URL || "https://your-api.com/api/donations";
+      const API_URL = import.meta.env.VITE_BASE_BACK_END_URL || "http://localhost:5000";
 
-      const response = await fetch(`${API_URL}/submit-donation`, {
-        method: "POST",
+      // Fetch CSRF token
+      const csrfRes = await axios.get(`${API_URL}/api/dons/financier/csrf-token`, {
+        withCredentials: true,
+      });
+      const csrfToken = csrfRes.data.csrfToken;
+
+      const response = await axios.post(`${API_URL}/api/dons/financier`, submitData, {
+        withCredentials: true,
         headers: {
-          Accept: "application/json",
+          "x-csrf-token": csrfToken,
         },
-        body: submitData,
       });
 
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(
-          errorData.message || `Server error: ${response.status}`,
-        );
+      if (response.status === 200 || response.status === 201) {
+        setSubmitSuccess(true);
+        setFormData({
+          fullname: "",
+          email: "",
+          amount: "",
+          project: project_id || "",
+          receipt: null,
+          message: "",
+        });
+
+        // Reset touched states
+        setTouched({
+          fullname: false,
+          email: false,
+          amount: false,
+          project: false,
+          receipt: false,
+          message: false,
+        });
+
+        const fileInput = document.getElementById("receipt");
+        if (fileInput) fileInput.value = "";
+
+        // Auto hide success message after 5 seconds
+        setTimeout(() => {
+          setSubmitSuccess(false);
+        }, 5000);
+      } else {
+         throw new Error("Erreur serveur lors de la soumission");
       }
-
-      const result = await response.json();
-
-      setSubmitSuccess(true);
-      setFormData({
-        fullname: "",
-        email: "",
-        amount: "",
-        project: project_id || "",
-        receipt: null,
-        message: "",
-      });
-
-      // Reset touched states
-      setTouched({
-        fullname: false,
-        email: false,
-        amount: false,
-        project: false,
-        receipt: false,
-        message: false,
-      });
-
-      const fileInput = document.getElementById("receipt");
-      if (fileInput) fileInput.value = "";
-
-      // Auto hide success message after 5 seconds
-      setTimeout(() => {
-        setSubmitSuccess(false);
-      }, 5000);
     } catch (error) {
       console.error("Submission error:", error);
-      setSubmitError(
-        error.message || t("donationForm.errors.submissionFailed"),
-      );
+      const errorMsg = error.response?.data?.message || error.message || t("donationForm.errors.submissionFailed");
+      setSubmitError(errorMsg);
 
       // Auto hide error message after 5 seconds
       setTimeout(() => {

@@ -9,10 +9,7 @@ import MemberForm from "./components/forms/MemberForm.jsx";
 import Footer from "./components/Layout/Footer/Footer.jsx";
 import Projets from "./features/projets/projects-list/ProjetList.jsx";
 import AdminLogin from "./features/admin/Login/AdminLogin.jsx";
-import ProjectCard from "./components/common/ProjectCard.jsx";
-import Pagination from "./components/common/Pagination.jsx";
 import ProjectPage from "./features/projets/project-page/ProjetDetail.jsx";
-import ProjectCardSkeleton from "./components/common/ProjectCardSkeleton.jsx";
 import { Provider } from "react-redux";
 import { store } from './app/store.js';
 import About from "./features/public/about/About.jsx";
@@ -53,8 +50,10 @@ import AdminBenevoleDetail from "./features/admin/Benevoles/AdminBenevoleDetail.
 import AdminDonsList from "./features/admin/Dons/AdminDonsList.jsx";
 import AdminDonDetail from "./features/admin/Dons/AdminDonDetail.jsx";
 import AdminMembersList from "./features/admin/Members/AdminMembersList.jsx";
+import AdminMemberDetail from "./features/admin/Members/AdminMemberDetail.jsx";
 import AdminProjetDetail from "./features/admin/Projets/SingleProject/AdminProjetDetail.jsx";
 import SubscriptionAdmin from "./features/admin/subscription/SubscriptionAdmin.jsx";
+import AdminProfile from "./features/admin/Profile/AdminProfile.jsx";
 
 createRoot(document.getElementById("root")).render(
   <Provider store={store}>
@@ -64,10 +63,12 @@ createRoot(document.getElementById("root")).render(
           {/* Main Route: Home */}
           <Route path="/" element={<App />}>
             {/* Default one  */}
-            <Route path="/:lang" index element={<Home />} />
+            <Route index element={<Home />} />
+
+            <Route path="/:lang"  element={<Home />} />
 
             {/* Redirect / vers /fr par défaut */}
-            <Route index element={<Navigate to="/fr" replace />} />
+            {/* <Route index element={<Navigate to="/fr" replace />} /> */}
 
             {/* Main Route: A propos */}
             <Route path="/:lang">
@@ -78,8 +79,9 @@ createRoot(document.getElementById("root")).render(
             {/* Main Routes : Activites */}
             <Route path="/:lang">
               <Route path="projets" element={<Projets />} />
+              <Route path="projets/:id" element={<ProjectPage />} />
               <Route path="evenements" element={<EventList />} />
-              <Route path="actualites" element={<Footer />} />
+              <Route path="evenements/:id" element={<EventPage />} />
             </Route>
 
             {/* Main Routes : Participez */}
@@ -147,7 +149,7 @@ createRoot(document.getElementById("root")).render(
 
               {/* Members*/}
               <Route path="membre" element={<AdminMembersList />} />
-              {/* <Route path="membre/:id" element={<AdminBenevoleDetail />} /> */}
+              <Route path="membre/:id" element={<AdminMemberDetail />} />
 
               {/* Dons */}
               <Route path="dons" element={<AdminDonsList />} />
@@ -162,20 +164,11 @@ createRoot(document.getElementById("root")).render(
 
               {/* Subscriptions */}
               <Route path="subscription" element={<SubscriptionAdmin />} />
+
+              {/* Profile */}
+              <Route path="profile" element={<AdminProfile />} />
             </Route>
           </Route>
-
-
-
-
-          {/* test routes */}
-          <Route path="/projectCard" element={<ProjectCard />} />
-          <Route path="/projects" element={<Projets />} />
-          <Route path="/pagination" element={<Pagination />} />
-          <Route path="/project-page" element={<ProjectPage />} />
-          <Route path="/project/:id" element={<ProjectPage />} />
-          <Route path="/skelton" element={<ProjectCardSkeleton />} />
-          <Route path="/evenement/:id" element={<EventPage />} />
         </Routes>
 
       </BrowserRouter>

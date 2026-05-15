@@ -9,7 +9,7 @@ import lifeAtTifaouineImg2 from "../../assets/images/volunteers/lifeAttifaouine2
 import lifeAtTifaouineImg3 from "../../assets/images/volunteers/lifeAttifaouine3.jpg";
 import mainImage from "../../assets/images/volunteers/main_image.jpeg";
 import PageHero from "../../components/common/PageHero";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 
 function FocusAreasSection({ t }) {
   return (
@@ -457,7 +457,7 @@ function JoinUsPage() {
   const { t } = useTranslation("volunteer_page");
   const { contributor } = useParams();
   const sectionRef = useRef(null);
-
+  const location = useLocation();
   useEffect(() => {
     if (contributor === "member" || contributor === "volunteer") {
       sectionRef.current?.scrollIntoView({
@@ -465,7 +465,7 @@ function JoinUsPage() {
         block: "start",
       });
     }
-  }, []);
+  }, [location.key]);
 
   return (
     <>
