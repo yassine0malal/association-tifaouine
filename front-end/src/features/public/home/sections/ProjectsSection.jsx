@@ -20,11 +20,11 @@ export default function Projects() {
       page: 1, 
       lang: lang || i18n.language, 
       filter: "all", 
-      limit: 3 
+      limit: 6
     }));
   }, [dispatch, lang, i18n.language]);
 
-  const displayProjects = projects?.slice(0, 3) || [];
+  const displayProjects = projects?.slice(3, 6) || [];
 
   return (
     <section className={styles.section} aria-labelledby="projects-heading">

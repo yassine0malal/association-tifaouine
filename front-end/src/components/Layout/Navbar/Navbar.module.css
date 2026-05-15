@@ -218,6 +218,19 @@ button[class*="isActive"]::before {
   padding-top: 12px;
 }
 
+  .dropdownMenuContainer::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .dropdownMenuContainer::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 10px;
+  }
+
+  .dropdownMenuContainer::-webkit-scrollbar-thumb:hover {
+    background: #eee;
+  }
+
 [dir="rtl"] .dropdownMenuContainer {
   left: auto;
   right: 50%;
@@ -712,6 +725,10 @@ button[class*="isActive"]::before {
     width: 130px;
   }
 
+  .link2 {
+    top: -8px;
+  }
+
   .navBtns {
     display: flex;
     gap: 16px;
@@ -746,6 +763,10 @@ button[class*="isActive"]::before {
   }
   .logoContainer img {
     width: 100px;
+  }
+
+  .link2 {
+    top: -13px;
   }
 
   .participateBtn {

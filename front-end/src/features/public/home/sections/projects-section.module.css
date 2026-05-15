@@ -47,7 +47,6 @@
 
 /* ── Title ── */
 .title {
-  font-family: 'Playfair Display', Georgia, serif;
   font-size: clamp(28px, 4vw, 52px);
   font-weight: 700;
   color: var(--text-h);                   /* #08060d */
@@ -57,7 +56,6 @@
 }
 
 .titleItalic {
-  font-style: italic;
   color: var(--accent-strong);            /* #845417 */
   font-weight: 700;
 }
