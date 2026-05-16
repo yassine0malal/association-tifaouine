@@ -85,8 +85,18 @@ export default function AdminProjetsList() {
     return (
         <div className={styles.container}>
             {/* --- HEADER --- */}
+            <button className={styles.backBtn} onClick={() => navigate("/admin")}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ marginRight: "8px" }}>
+                    <path d="m15 18-6-6 6-6" />
+                </svg>
+                Retour au tableau de bord
+            </button>
+
             <header className={styles.header}>
-                <h1 className={styles.mainTitle}>Registre des Projets</h1>
+                <div className={styles.titleGroup}>
+                    <h1 className={styles.mainTitle}>Registre des Projets</h1>
+                    <p className={styles.subtitle}>Consultez et gérez tous les projets ({total || 0})</p>
+                </div>
                 <div className={styles.headerActions}></div>
             </header>
 

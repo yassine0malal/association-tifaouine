@@ -12,7 +12,7 @@ import i18n from "../../../i18n";
 import { fetchDomainsPage } from "./domainsPageSlice";
 import Loader from "../../../components/common/Loader";
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
+import { data, useLocation, useParams } from "react-router-dom";
 const BASE_BACK_END_URL = import.meta.env.VITE_BASE_BACK_END_URL;
 
 // getting the images from the json file
@@ -30,6 +30,7 @@ export default function Domain() {
     const { t } = useTranslation("domainsPage")
     const dispatch = useDispatch()
     const { data: domainsList, laoding } = useSelector((state) => state.domainsPage);
+    const location = useLocation();
     useEffect(() => {
         if (id && cardRefs.current[id]) {
 
@@ -40,7 +41,7 @@ export default function Domain() {
                 });
             }, 300);
         }
-    }, [id, domainsList]);
+    }, [id, domainsList , location.key]);
     // domainsList.map((element)=>(
     //     console.log("^^^^^^",BASE_BACK_END_URL+element.icone)
     // ))
@@ -50,7 +51,7 @@ export default function Domain() {
         dispatch(fetchDomainsPage(lang))
     }, [dispatch, i18n.language])
     if (laoding) return <Loader />
-
+console.log("----------domains---->",domainsList)
     return (
         <div className={styles.fullContainer}>
             <PageHero title={t("heroTitle")} heroImg={asni} />
@@ -84,7 +85,7 @@ export default function Domain() {
                                                 </svg>
                                             </div>
                                             <div className={styles.nbr}>
-                                                <p>{domaine.projets} {t("stats.projects")}</p>
+                                                <p>{domaine.total_projets} {t("stats.projects")}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -96,7 +97,7 @@ export default function Domain() {
                                                 </svg>
                                             </div>
                                             <div className={styles.nbr}>
-                                                <p>{domaine.evenements} {t("stats.events")}</p>
+                                                <p>{domaine.total_evenements} {t("stats.events")}</p>
                                             </div>
                                         </div>
                                     </div>

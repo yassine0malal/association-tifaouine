@@ -1,27 +1,39 @@
 import styles from "./event-page.module.css";
 import heroImg from "../../../assets/images/projects_hero.jpg";
 import PageHero from "../../../components/common/PageHero";
-import locationIcon from "../../../assets/icons/location.png";
-import dateIcon from "../../../assets/icons/date.png";
+import locationIcon from "../../../assets/icons/location2.png";
+import dateStartIcon from "../../../assets/icons/date.png";
+import dateEndIcon from "../../../assets/icons/time.png";
+import eventImg from "../../../assets/images/event_img.jpeg";
 
 // swiper
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchEvent } from "./eventSlice";
+import Loader from "../../../components/common/Loader";
+import { useTranslation } from "react-i18next";
+import i18n from "../../../i18n";
 
-function RelatedEvent() {
+
+
+const BACKEND_URL = import.meta.env.VITE_BASE_BACK_END_URL
+
+function LastEvent({ id, img, title, date }) {
+  const currentLang = i18n.language;
   return (
-    <Link className={styles.event}>
+    <Link to={`/${currentLang}/evenements/${id}`} className={styles.event}>
       <div className={styles.image}>
-        <img src="https://picsum.photos/300/200" alt="" aria-label="loading"/>
+        <img src={`${BACKEND_URL}${img}`} alt="" aria-label="loading" />
       </div>
 
       <div className={styles.details}>
-        <h3>Hol of the event</h3>
+        <h3>{title}</h3>
         <p>
-          <img src={dateIcon} />
-          <span>10 Avril, 2023</span>
+          <img src={dateStartIcon} />
+          <span>{date}</span>
         </p>
       </div>
       <button>
@@ -45,39 +57,96 @@ function RelatedEvent() {
   );
 }
 
+function CommonEvent({ id, img, domain, title }) {
+  const currentLang = i18n.language;
+  return (
+    <Link to={`/${currentLang}/evenements/${id}`} className={styles.event}>
+      <div className={styles.image}>
+        <img src={`${BACKEND_URL}${img}`} aria-label="loading" />
+      </div>
+
+      <div className={styles.content}>
+        <p>{domain}</p>
+        <p>{title}</p>
+      </div>
+    </Link>
+  );
+}
+
 function EventPage() {
   const [currentImage, setCurrentImage] = useState(0);
+  const dispatch = useDispatch();
+  const { id } = useParams();
+  const { data, loading } = useSelector((state) => state.event);
+  const { t } = useTranslation("event_page");
+  const currentLang = i18n.language || "fr";
+  const pageRef = useRef(null)
 
-  const generateImages = (max) => {
-    return Array.from(
-      { length: max },
-      (_, i) => `https://picsum.photos/900/600?random=${i}`,
-    );
+
+
+
+  useEffect(() => {
+    dispatch(fetchEvent({ id, lang: currentLang }));
+    pageRef.current.scrollIntoView({behavior: "smooth"})
+    setCurrentImage(0)
+  }, [dispatch, currentLang, id]);
+
+  const images = data?.images || [];
+  const LastEvents = data?.lasted_events || [];
+  const commonEvents = data?.related_events || [];
+
+  const renderLastEvents = () => {
+    return LastEvents.map((event) => <LastEvent key={event.id} {...event} />);
   };
 
-  const images = generateImages(10);
-
-  const swiperImages = () => {
-    return images.map((image, index) => (
-      <SwiperSlide
-        onClick={() => setCurrentImage(index)}
-        className={`${styles.slide} ${index === currentImage ? styles.active : ""}`}
-        key={index}
-      >
-        <img src={image} alt="" aria-label="loading"/>
-      </SwiperSlide>
+  const renderCommonEvents = () => {
+    return commonEvents.map((event) => (
+      <CommonEvent key={event.id} {...event} />
     ));
   };
 
+  const renderImages = () => {
+    if (images.length > 0) {
+      return images.map((image, index) => (
+        <SwiperSlide
+          onClick={() => setCurrentImage(index)}
+          className={`${styles.slide} ${
+            index === currentImage ? styles.active : ""
+          }`}
+          key={index}
+        >
+          <img src={`${BACKEND_URL}${image.src}`} alt="" aria-label="loading" />
+        </SwiperSlide>
+      ));
+    }
+
+    return Array.from({ length: 10 }, (_, i) => (
+      <SwiperSlide
+        onClick={() => setCurrentImage(i)}
+        className={`${styles.slide} ${i === currentImage ? styles.active : ""}`}
+        key={i}
+      >
+        <img src="" alt="" aria-label="loading" />
+      </SwiperSlide>
+    ));
+  };
+  if (loading) {
+    return <Loader />;
+  }
+
+  if (!data) {
+    return null;
+  }
+
   return (
-    <div className={styles.eventPage}>
-      <PageHero title="Details de l’evenment" heroImg={heroImg} />
+    <div className={styles.eventPage}  ref={pageRef}>
+      <PageHero title={data.title} heroImg={heroImg} />
 
       <div className={styles.eventContentContainer}>
-        <div className={styles.row1}>
+        <section className={styles.row1}>
           <div className={styles.imagesContainer}>
             <div className={styles.mainImage}>
-              <img src={images[currentImage]} aria-label="loading" />
+              <img src={`${BACKEND_URL}${images[currentImage]?.src}` || ""} aria-label="loading" />
             </div>
             <div className={styles.imageCarousil}>
               <Swiper
@@ -85,13 +154,13 @@ function EventPage() {
                 spaceBetween={30}
                 className={styles.imgSwiper}
               >
-                {swiperImages()}
+                {renderImages()}
               </Swiper>
             </div>
           </div>
 
           <div className={styles.details}>
-            <h2>Details</h2>
+            <h2>{t("event.details")}</h2>
 
             <div className={styles.infos}>
               <div className={`${styles.location} ${styles.infoWrapper}`}>
@@ -99,88 +168,69 @@ function EventPage() {
                   <img src={locationIcon} />
                 </div>
                 <div>
-                  <h3>Location</h3>
-                  <p>Doar asni , Al lhouz, Marrakech</p>
+                  <h3>{t("event.location")}</h3>
+                  <p>{data.location}</p>
                 </div>
               </div>
 
               <div className={`${styles.date} ${styles.infoWrapper}`}>
                 <div>
-                  <img src={dateIcon} />
+                  <img src={dateStartIcon} />
                 </div>
                 <div>
-                  <h3>12 Avril</h3>
-                  <p>2025 , 7:00 AM</p>
+                  <h3>{t("event.date_start")}</h3>
+                  <p>{data.date_start}</p>
+                </div>
+              </div>
+
+              <div className={`${styles.date} ${styles.infoWrapper}`}>
+                <div>
+                  <img src={dateEndIcon} />
+                </div>
+                <div>
+                  <h3>{t("event.date_end")}</h3>
+                  <p>{data.date_end}</p>
                 </div>
               </div>
             </div>
 
-            <div className={styles.locationCard}>
-              <iframe
-                width="100%"
-                height="200"
-                loading="lazy"
-                src="https://www.google.com/maps?q=31.6295,-7.9811&z=14&output=embed"
-              ></iframe>
+            <div
+              className={styles.eventAddImg}
+              style={{ backgroundImage: `url(${eventImg})` }}
+            >
+              <Link to={`/${currentLang}/join-us`}>
+                {t("event.benevole_btn")}
+              </Link>
             </div>
           </div>
-        </div>
+        </section>
 
-        <div className={styles.row2}>
+        <section className={styles.row2}>
           <div className={styles.col1}>
-            <h2 className={styles.title}>
-              LA CONSTRUCTION D’UN STATATION D’EAU
-            </h2>
+            <h2 className={styles.title}>{data.title}</h2>
             <p className={styles.categorie}>
-              Catégorie : Le projet de develepement durable
+              {t("event.category")} : {data.category}
             </p>
-            <p className={styles.description}>
-              Ce projet representing your event images, this approach allows you
-              to highlight key moments by mixing different photo aspect ratios
-              and sizes, adding depth and narrative to the gallery section. The
-              use of generous whitespace and a clean, professional color palette
-              (like deep teal and warm accents shown here) further enhances the
-              beauty and readability of the interface. When representing your
-              event images, this approach allows you to highlight key moments by
-              mixing different photo aspect ratios and sizes, adding depth and
-              narrative to the gallery section. The use of generous whitespace
-              and a clean, professional color palette (like deep teal and warm
-              accents shown here) further enhances the beauty and readability of
-              the interface. Ce projet representing your event images, this
-              approach allows you to highlight key moments by mixing different
-              photo aspect ratios and sizes, adding depth and narrative to the
-              gallery section. The use of generous whitespace and a clean,
-              professional color palette (like deep teal and warm accents shown
-              here) further enhances the beauty and readability of the
-              interface. When representing your event images, this approach
-              allows you to highlight key moments by mixing different photo
-              aspect ratios and sizes, adding depth and narrative to the gallery
-              section. The use of generous whitespace and a clean, professional
-              color palette (like deep teal and warm accents shown here) further
-              enhances the beauty and readability of the interface.
-            </p>
+            <p className={styles.description}>{data.description}</p>
+
+            <h2 className={styles.commonEventsTitle}>
+              {t("event.common_events")}
+            </h2>
+            <div className={styles.commonEvents}>{renderCommonEvents()}</div>
           </div>
           <div className={styles.col2}>
             <div className={styles.wrapper}>
-              <h3>Dernière Posts</h3>
-              <div className={styles.relatedEvents}>
-                <RelatedEvent />
-                <RelatedEvent />
-                <RelatedEvent />
-              </div>
+              <h3>{t("event.last_posts")}</h3>
+              <div className={styles.lastEvents}>{renderLastEvents()}</div>
             </div>
 
             <div className={styles.wrapper}>
-              <h3>Contribuer</h3>
-              <p>
-                Votre soutien peut faire la différence. Chaque don, même le plus
-                petit, contribue à améliorer des vies et à construire un avenir
-                meilleur. Rejoignez-nous dans cette mission solidaire.
-              </p>
-              <Link className={styles.btn}>Faire une don</Link>
+              <h3>{t("event.contribute")}</h3>
+              <p>{t("event.contribute_text")}</p>
+              <Link className={styles.btn}>{t("event.donate_btn")}</Link>
             </div>
           </div>
-        </div>
+        </section>
       </div>
     </div>
   );

@@ -85,5 +85,106 @@
     "step1": "Listening to community needs on the ground",
     "step2": "Co-building impactful solidarity actions",
     "step3": "Ensuring project success through our team's commitment"
+  },
+  "hero": {
+    "education": {
+      "title": "EDUCATION",
+      "description": "Promoting access to quality education through literacy programs, school support, and training initiatives for children and adults in rural communities.",
+      "cta": "Learn More",
+      "label": "Education & Literacy"
+    },
+    "health": {
+      "title": "HEALTH",
+      "description": "Improving community health through medical caravans, awareness campaigns, and access to basic healthcare services in underserved areas.",
+      "cta": "Learn More",
+      "label": "Health & Well-being"
+    },
+    "environment": {
+      "title": "SUSTAINABILITY",
+      "description": "Protecting natural resources by organizing environmental campaigns, promoting sustainable practices, and supporting local ecological initiatives.",
+      "cta": "Learn More",
+      "label": "Environment & Sustainability"
+    },
+    "social": {
+      "title": "SOLIDARITY",
+      "description": "Strengthening social cohesion by supporting vulnerable groups, organizing solidarity actions, and fostering community engagement and inclusion.",
+      "cta": "Learn More",
+      "label": "Social Development & Solidarity"
+    }
+  },
+  "about": {
+    "eyebrow": "Empowering the Future",
+    "title": "A Legacy of Solidarity",
+    "description": "Since 2010, Tifaouine Association has been dedicated to uplifting rural communities in the High Atlas region. Through grassroots initiatives in education, health, and sustainable development, we strive to create lasting positive change.",
+    "commitmentTitle": "Our commitment",
+    "commitmentDesc": "Working hand in hand with locals to build resilient and self-sustaining communities.",
+    "cta": "Read More",
+    "imageBadge": "years of impact",
+    "stats": [
+      { "label": "Beneficiaries Supported" },
+      { "label": "Community Projects" },
+      { "label": "Partner Organizations" },
+      { "label": "Years of Community Impact" }
+    ]
+  },
+  "mission": {
+    "eyebrow": "Our Mission",
+    "title": "A Commitment to Development",
+    "description": "At Tifaouine, we believe in the power of collective action. Our mission is to bridge the gap in rural areas by providing essential resources, education, and healthcare. We envision a future where every individual has the opportunity to thrive and contribute to their community's prosperity.",
+    "cta": "Explore Our Work",
+    "subtitle": "Tifaouine Assni Association is a non-profit organization dedicated to empowering people and building stronger communities.",
+    "titleAccent": "Our Commitment to a Better Future",
+    "values": [
+      {
+        "title": "Community First",
+        "desc": "We work hand in hand with local families, youth, and volunteers to understand needs and create lasting impact."
+      },
+      {
+        "title": "Education for All",
+        "desc": "We promote access to education, literacy programs, and school support to help children and youth build a brighter future."
+      },
+      {
+        "title": "Social Solidarity",
+        "desc": "We support vulnerable groups through humanitarian actions and initiatives that strengthen dignity and inclusion."
+      },
+      {
+        "title": "Sustainable Development",
+        "desc": "We implement environmental and community projects that protect our region and promote a sustainable future."
+      },
+      {
+        "title": "Partnership & Collaboration",
+        "desc": "We believe in the power of teamwork. We collaborate with partners and donors to maximize our positive impact."
+      },
+      {
+        "title": "Transparency & Commitment",
+        "desc": "We are committed to transparency, honesty, and responsible action in everything we do for our community."
+      }
+    ]
+  },
+  "projects": {
+    "eyebrow": "Our Impact",
+    "title": "Transforming Communities",
+    "titleItalic": "through dedicated action.",
+    "viewAll": "View All Projects",
+    "errorMsg": "Could not load projects. Please try again later.",
+    "empty": "No projects to display at the moment.",
+    "categoryDefault": "Project",
+    "list": [
+      {
+        "title": "Igran d'Asni Project",
+        "domain": "Agricultural Development",
+        "state": "Completed"
+      },
+      {
+        "title": "Drinking water supply for the environmental museum",
+        "domain": "Environmental Protection",
+        "state": "Completed"
+      },
+      {
+        "title": "Kindergarten and Quranic school",
+        "domain": "Education and training",
+        "state": "Completed"
+      }
+    ]
   }
 }

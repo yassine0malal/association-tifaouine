@@ -1,7 +1,6 @@
 {
   "title": "Bienvenue",
   "description": "Nous soutenons les communautés rurales.",
-
   "event": {
     "title": "Nos Événements",
     "subtitle": "Découvrez nos derniers événements",
@@ -12,18 +11,15 @@
       "done": "Terminé"
     }
   },
-
   "partner": {
     "title": "Nos Partenaires",
     "subtitle": "Ils nous font confiance",
     "label": "Partenaires"
   },
-
   "testimonial": {
     "title": "Témoignages",
     "subtitle": "Ce que disent nos bénévoles"
   },
-
   "testimonials": [
     {
       "rating": 5,
@@ -46,7 +42,6 @@
       "author": "Khadija L., Tinghir"
     }
   ],
-
   "events": [
     {
       "id": 1,
@@ -85,11 +80,111 @@
       "statut": "upcoming"
     }
   ],
-
   "workProcess": {
     "title": "LE CYCLE DE VIE DE NOTRE PROJET",
     "step1": "Être à l’écoute des besoins des communautés sur le terrain",
     "step2": "Co-construire des actions solidaires porteuses de changement",
     "step3": "Assurer la réussite du projet grâce à l’engagement de nos équipes"
+  },
+  "hero": {
+    "education": {
+      "title": "ÉDUCATION",
+      "description": "Promouvoir l'accès à une éducation de qualité par des programmes d'alphabétisation, du soutien scolaire et des initiatives de formation pour les enfants et les adultes.",
+      "cta": "En savoir plus",
+      "label": "Éducation & Alphabétisation"
+    },
+    "health": {
+      "title": "SANTÉ",
+      "description": "Améliorer la santé communautaire grâce à des caravanes médicales, des campagnes de sensibilisation et l'accès aux soins de santé de base dans les zones mal desservies.",
+      "cta": "En savoir plus",
+      "label": "Santé & Bien-être"
+    },
+    "environment": {
+      "title": "DURABILITÉ",
+      "description": "Protéger les ressources naturelles en organisant des campagnes environnementales, en promouvant des pratiques durables et en soutenant des initiatives écologiques locales.",
+      "cta": "En savoir plus",
+      "label": "Environnement & Durabilité"
+    },
+    "social": {
+      "title": "SOLIDARITÉ",
+      "description": "Renforcer la cohésion sociale en soutenant les groupes vulnérables, en organisant des actions de solidarité et en favorisant l'engagement et l'inclusion.",
+      "cta": "En savoir plus",
+      "label": "Développement Social & Solidarité"
+    }
+  },
+  "about": {
+    "eyebrow": "Renforcer l'avenir",
+    "title": "Un héritage de solidarité",
+    "description": "Depuis 2010, l'Association Tifaouine se consacre à l'amélioration des communautés rurales de la région du Haut Atlas. À travers des initiatives locales dans l'éducation, la santé et le développement durable, nous nous efforçons de créer un changement positif durable.",
+    "commitmentTitle": "Notre engagement",
+    "commitmentDesc": "Travailler main dans la main avec les habitants pour bâtir des communautés résilientes et autonomes.",
+    "cta": "Lire la suite",
+    "imageBadge": "ans d'impact",
+    "stats": [
+      { "label": "Bénéficiaires soutenus" },
+      { "label": "Projets communautaires" },
+      { "label": "Organisations partenaires" },
+      { "label": "Années d'impact communautaire" }
+    ]
+  },
+  "mission": {
+    "eyebrow": "Notre Mission",
+    "title": "Un engagement pour le développement",
+    "description": "Chez Tifaouine, nous croyons au pouvoir de l'action collective. Notre mission est de réduire les inégalités dans les zones rurales en fournissant des ressources essentielles, de l'éducation et des soins de santé. Nous envisageons un avenir où chaque individu a la possibilité de s'épanouir et de contribuer à la prospérité de sa communauté.",
+    "cta": "Explorer notre travail",
+    "subtitle": "L'association Tifaouine Assni est une organisation à but non lucratif dédiée à l'autonomisation des personnes et au renforcement des communautés.",
+    "titleAccent": "Notre engagement pour un avenir meilleur",
+    "values": [
+      {
+        "title": "La communauté d'abord",
+        "desc": "Nous travaillons main dans la main avec les familles locales, les jeunes et les bénévoles pour comprendre les besoins et créer un impact durable."
+      },
+      {
+        "title": "L'éducation pour tous",
+        "desc": "Nous promouvons l'accès à l'éducation, les programmes d'alphabétisation et le soutien scolaire pour aider les enfants et les jeunes à se bâtir un avenir meilleur."
+      },
+      {
+        "title": "Solidarité sociale",
+        "desc": "Nous soutenons les groupes vulnérables à travers des actions humanitaires et des initiatives qui renforcent la dignité et l'inclusion."
+      },
+      {
+        "title": "Développement durable",
+        "desc": "Nous mettons en œuvre des projets environnementaux et communautaires qui protègent notre région et promeuvent un avenir durable."
+      },
+      {
+        "title": "Partenariat & Collaboration",
+        "desc": "Nous croyons au pouvoir du travail d'équipe. Nous collaborons avec des partenaires et des donateurs pour maximiser notre impact positif."
+      },
+      {
+        "title": "Transparence & Engagement",
+        "desc": "Nous nous engageons à la transparence, l'honnêteté et l'action responsable dans tout ce que nous faisons pour notre communauté."
+      }
+    ]
+  },
+  "projects": {
+    "eyebrow": "Notre Impact",
+    "title": "Transformer les communautés",
+    "titleItalic": "par des actions dévouées.",
+    "viewAll": "Voir tous les projets",
+    "errorMsg": "Impossible de charger les projets. Veuillez réessayer plus tard.",
+    "empty": "Aucun projet à afficher pour le moment.",
+    "categoryDefault": "Projet",
+    "list": [
+      {
+        "title": "Projet Igran d'Asni",
+        "domain": "Développement agricole",
+        "state": "Terminé"
+      },
+      {
+        "title": "Alimentation en eau potable du musée environnemental",
+        "domain": "Protection de l'environnement",
+        "state": "Terminé"
+      },
+      {
+        "title": "Jardin d'enfants et école coranique",
+        "domain": "Éducation et formation",
+        "state": "Terminé"
+      }
+    ]
   }
 }
