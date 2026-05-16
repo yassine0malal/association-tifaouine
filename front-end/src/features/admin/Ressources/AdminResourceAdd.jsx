@@ -784,7 +784,7 @@ export default function AdminResourceAdd() {
                             placeholder="Description required (Max 120 characters)" 
                         />
                         {errors.description_en && <p style={{ color: 'red', marginTop: '4px', fontSize: '0.8rem' }}>{errors.description_en}</p>}
-                    </div>
+                    </div> 
                 </section>
 
                 <div className={styles.actions}>

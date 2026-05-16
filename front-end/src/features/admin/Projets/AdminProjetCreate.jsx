@@ -39,6 +39,13 @@ export default function AdminProjetCreate() {
 
 
     const VITE_BASE_BACK_END_URL = import.meta.env.VITE_BASE_BACK_END_URL
+    
+    const formatSize = (bytes) => {
+        if (!bytes) return "Taille inconnue";
+        if (bytes < 1024) return bytes + " B";
+        if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " KB";
+        return (bytes / (1024 * 1024)).toFixed(1) + " MB";
+    };
 
 
     // Récupération des données depuis Redux
@@ -361,14 +368,24 @@ export default function AdminProjetCreate() {
                                 <div className={styles.galleryItem}>
                                     <img src={imagePrincipale.url} alt="miniature-principale" />
                                     <span className={styles.mainBadge}>Principale</span>
+                                    {imagePrincipale.file && (
+                                        <div className={styles.imageDetails}>
+                                            <span className={styles.imageName} title={imagePrincipale.file.name}>{imagePrincipale.file.name}</span>
+                                            <span className={styles.imageSize}>{formatSize(imagePrincipale.file.size)}</span>
+                                        </div>
+                                    )}
                                 </div>
                             )}
                             {extraImages.map((img, i) => (
                                 <div key={i} className={styles.galleryItem}>
                                     <img src={img.url} alt={`extra-${i}`} />
-                                    <button type="button" className={styles.removeBtn} onClick={() => removeExtra(i)}>
+                                    <button type="button" className={styles.removeBtn} onClick={() => removeExtra(i)} title="Supprimer">
                                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M18 6 6 18M6 6l12 12" /></svg>
                                     </button>
+                                    <div className={styles.imageDetails}>
+                                        <span className={styles.imageName} title={img.file ? img.file.name : "Image existante"}>{img.file ? img.file.name : "Image existante"}</span>
+                                        <span className={styles.imageSize}>{img.file ? formatSize(img.file.size) : ""}</span>
+                                    </div>
                                 </div>
                             ))}
                             <div className={styles.addMoreBtn} onClick={() => extraFileRef.current.click()}>
@@ -415,7 +432,10 @@ export default function AdminProjetCreate() {
                                             <path d="M18 6 6 18M6 6l12 12" />
                                         </svg>
                                     </button>
-                                    <span className={styles.videoName}>{v.file.name}</span>
+                                    <div className={styles.videoDetails}>
+                                        <span className={styles.videoName} title={v.file.name}>{v.file.name}</span>
+                                        <span className={styles.videoSize}>{formatSize(v.file.size)}</span>
+                                    </div>
                                 </div>
                             ))}
                         </div>
