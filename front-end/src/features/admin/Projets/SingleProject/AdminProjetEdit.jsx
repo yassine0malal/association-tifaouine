@@ -254,7 +254,7 @@ export default function AdminProjetEdit() {
     return (
         <div className={styles.page}>
             <div className={styles.pageHeader}>
-                <BackButton label="Retour aux projets" />
+                <BackButton />
                 <h1 className={styles.pageTitle}>Modifier le Projet #{id}</h1>
                 <p className={styles.pageSub}>
                     Mettez à jour les informations de <strong>{formData.titre_fr || "ce projet"}</strong>.

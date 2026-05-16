@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { createMember } from "./membersAdminSlice";
 import styles from "./Members.module.css";
 import ImageUpload from "../../../components/admin/ImageUpload";
-import { FaArrowLeft } from "react-icons/fa";
+import BackButton from "../../../components/common/admin/BackButton";
 
 export default function AdminMemberCreate() {
   const dispatch = useDispatch();
@@ -65,9 +65,7 @@ export default function AdminMemberCreate() {
         </div>
       )}
 
-      <button className={styles.backBtn} onClick={() => navigate("/admin/membres")}>
-        <FaArrowLeft /> Retour aux membres
-      </button>
+      <BackButton />
 
       <header className={styles.header}>
         <h1 className={styles.title}>Ajouter un nouveau membre</h1>

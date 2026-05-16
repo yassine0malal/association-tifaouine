@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { createDonMateriel } from "./donsAdminSlice";
 import { protectedApi } from "../Login/authService";
 import styles from "./Dons.module.css";
-import { FaArrowLeft } from "react-icons/fa";
+import BackButton from "../../../components/common/admin/BackButton";
 
 export default function AdminDonMaterielCreate() {
   const dispatch = useDispatch();
@@ -20,7 +20,7 @@ export default function AdminDonMaterielCreate() {
     quantite: 1,
     date_decision: ""
   });
-  
+
   const [projets, setProjets] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState(null);
@@ -46,11 +46,11 @@ export default function AdminDonMaterielCreate() {
     setIsSubmitting(true);
     setMessage(null);
 
-    const payload = { 
+    const payload = {
       ...formData,
       quantite: parseInt(formData.quantite, 10) || 1
     };
-    
+
     // Clean up payload
     if (payload.type_destination === 'general') {
       delete payload.projet_id;
@@ -61,7 +61,7 @@ export default function AdminDonMaterielCreate() {
     if (!payload.date_decision) {
       delete payload.date_decision;
     }
-    
+
     if (!payload.telephone) delete payload.telephone;
 
     try {
@@ -82,9 +82,7 @@ export default function AdminDonMaterielCreate() {
         </div>
       )}
 
-      <button className={styles.backBtn} onClick={() => navigate("/admin/dons")}>
-        <FaArrowLeft /> Retour aux dons
-      </button>
+      <BackButton />
 
       <header className={styles.header}>
         <h1 className={styles.title}>Enregistrer un don matériel</h1>
@@ -103,7 +101,7 @@ export default function AdminDonMaterielCreate() {
               <label>Email du donateur *</label>
               <input type="email" name="email" value={formData.email} onChange={handleChange} required />
             </div>
-            
+
             <div className={styles.formGroup}>
               <label>Nom complet *</label>
               <input type="text" name="nom_complet" value={formData.nom_complet} onChange={handleChange} required />

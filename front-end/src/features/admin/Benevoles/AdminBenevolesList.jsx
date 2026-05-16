@@ -5,7 +5,8 @@ import { fetchBenevolesAdmin, setPage, deleteBenevole } from "./benevolesAdminSl
 import styles from "./Benevoles.module.css";
 import Pagination from "../../../components/common/Pagination";
 import ConfirmPopup from "../../../components/popup/ConfirmPopup";
-import { FaEye, FaTrash, FaArrowLeft, FaPlus } from "react-icons/fa";
+import BackButton from "../../../components/common/admin/BackButton";
+import { FaEye, FaTrash, FaPlus } from "react-icons/fa";
 import avatarPlaceholder from "../../../assets/images/admin/avatar_placeholder.png";
 
 const BASE_BACK_END_URL = import.meta.env.VITE_BASE_BACK_END_URL;
@@ -42,7 +43,7 @@ export default function AdminBenevolesList() {
       setPopup({ open: false, id: null, name: "" });
       setMessage({ type: "success", text: "Bénévole supprimé avec succès." });
       setTimeout(() => setMessage(null), 3000);
-      
+
       if (benevoles.length === 1 && currentPage > 1) {
         dispatch(setPage(currentPage - 1));
       } else {
@@ -56,9 +57,7 @@ export default function AdminBenevolesList() {
 
   return (
     <div className={styles.container}>
-      <button className={styles.backBtn} onClick={() => navigate("/admin")}>
-        <FaArrowLeft /> Retour au tableau de bord
-      </button>
+      <BackButton />
 
       <header className={styles.header}>
         <h1 className={styles.title}>Candidatures & Bénévoles ({total ?? 0})</h1>
@@ -97,10 +96,10 @@ export default function AdminBenevolesList() {
                 return (
                   <tr key={benevole.id}>
                     <td>
-                      <img 
-                        src={benevole.photo_profile ? `${BASE_BACK_END_URL}${benevole.photo_profile}` : avatarPlaceholder} 
-                        alt={benevole.nom} 
-                        className={styles.avatar} 
+                      <img
+                        src={benevole.photo_profile ? `${BASE_BACK_END_URL}${benevole.photo_profile}` : avatarPlaceholder}
+                        alt={benevole.nom}
+                        className={styles.avatar}
                       />
                     </td>
                     <td>{benevole.nom || "N/A"}</td>
@@ -114,14 +113,14 @@ export default function AdminBenevolesList() {
                     </td>
                     <td>
                       <div className={styles.actionIcons}>
-                        <button 
-                          className={styles.actionBtn} 
+                        <button
+                          className={styles.actionBtn}
                           onClick={() => navigate(`/admin/benevoles/${benevole.id}`)}
                           title="Voir les détails"
                         >
                           <FaEye />
                         </button>
-                        <button 
+                        <button
                           className={`${styles.actionBtn} ${styles.deleteBtn}`}
                           onClick={() => handleDeleteClick(benevole.id, benevole.nom)}
                           title="Supprimer"

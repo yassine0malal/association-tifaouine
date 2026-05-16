@@ -86,7 +86,7 @@ export default function AdminContactsList() {
             />
 
             <header className={styles.header}>
-                <BackButton/>
+                <BackButton />
                 <h1 className={styles.title}>GESTION DES MESSAGES</h1>
                 <p className={styles.subtitle}>Gérez les demandes de contact.</p>
             </header>
@@ -132,10 +132,10 @@ export default function AdminContactsList() {
 
                             <div className={styles.actions}>
                                 <button className={`${styles.actionBtn} ${msg.lu ? styles.readIcon : ''}`} onClick={(e) => handleToggleRead(e, msg)}>
-                                    {msg.lu ? 
-                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M7 12L11.9497 16.9497L22.5572 6.34326M2.0498 12.0503L6.99955 17M17.606 6.39355L12.3027 11.6969" stroke="#2ecc71" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                                        : 
-                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M7 12L11.9497 16.9497L22.5572 6.34326M2.0498 12.0503L6.99955 17M17.606 6.39355L12.3027 11.6969" stroke="#bbb" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                                    {msg.lu ?
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M7 12L11.9497 16.9497L22.5572 6.34326M2.0498 12.0503L6.99955 17M17.606 6.39355L12.3027 11.6969" stroke="#2ecc71" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                                        :
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M7 12L11.9497 16.9497L22.5572 6.34326M2.0498 12.0503L6.99955 17M17.606 6.39355L12.3027 11.6969" stroke="#bbb" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
                                     }
                                 </button>
                                 <button className={styles.deleteBtn} onClick={(e) => triggerDeletePopup(e, msg)}>

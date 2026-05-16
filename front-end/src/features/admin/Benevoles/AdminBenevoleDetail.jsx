@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { fetchBenevoleById, updateBenevoleStatus, clearCurrentDetail } from "./benevolesAdminSlice";
 import styles from "./Benevoles.module.css";
-import { FaCheck, FaTimes, FaArrowLeft, FaDownload } from "react-icons/fa";
+import BackButton from "../../../components/common/admin/BackButton";
+import { FaCheck, FaTimes, FaDownload } from "react-icons/fa";
 import avatarPlaceholder from "../../../assets/images/admin/avatar_placeholder.png";
 import ImageUpload from "../../../components/admin/ImageUpload";
 import { protectedApi } from "../Login/authService";
@@ -60,10 +61,10 @@ export default function AdminBenevoleDetail() {
     <div className={styles.container}>
       <div className={styles.detailCard}>
         <div className={styles.detailHeader}>
-          <img 
-            src={benevole.photo_profile ? `${BASE_BACK_END_URL}${benevole.photo_profile}` : avatarPlaceholder} 
-            alt="Profil" 
-            className={styles.detailAvatar} 
+          <img
+            src={benevole.photo_profile ? `${BASE_BACK_END_URL}${benevole.photo_profile}` : avatarPlaceholder}
+            alt="Profil"
+            className={styles.detailAvatar}
           />
           <div className={styles.detailInfo}>
             <h2>{user.nom || "N/A"}</h2>
@@ -72,9 +73,7 @@ export default function AdminBenevoleDetail() {
               {benevole.status.replace("_", " ")}
             </span>
           </div>
-          <button className={styles.backBtn} onClick={() => navigate("/admin/benevoles")}>
-            <FaArrowLeft /> Retour
-          </button>
+          <BackButton />
         </div>
 
         <div className={styles.detailSection}>
@@ -117,7 +116,7 @@ export default function AdminBenevoleDetail() {
           <h3>Documents & Photos</h3>
           <div className={styles.detailGrid}>
             <div className={styles.infoItem}>
-              <ImageUpload 
+              <ImageUpload
                 label="Photo de Profil"
                 onChange={(file) => handleFileUpdate(file, "photo_profile")}
                 existingImages={benevole.photo_profile ? [`${BASE_BACK_END_URL}${benevole.photo_profile}`] : []}
@@ -125,7 +124,7 @@ export default function AdminBenevoleDetail() {
               />
             </div>
             <div className={styles.infoItem}>
-              <ImageUpload 
+              <ImageUpload
                 label="Carte d'identité"
                 onChange={(file) => handleFileUpdate(file, "carte_identite")}
                 existingImages={benevole.carte_identite ? [`${BASE_BACK_END_URL}${benevole.carte_identite}`] : []}
@@ -141,15 +140,15 @@ export default function AdminBenevoleDetail() {
         </div>
 
         <div className={styles.actionsBar}>
-          <button 
-            className={styles.acceptBtn} 
+          <button
+            className={styles.acceptBtn}
             onClick={() => handleStatusChange("actif")}
             disabled={benevole.status === "actif"}
           >
             <FaCheck /> Accepter la candidature
           </button>
-          <button 
-            className={styles.refuseBtn} 
+          <button
+            className={styles.refuseBtn}
             onClick={() => handleStatusChange("inactif")}
             disabled={benevole.status === "inactif"}
           >

@@ -5,7 +5,8 @@ import { fetchDonsAdmin, setPage, updateDonStatus, deleteDon } from "./donsAdmin
 import styles from "./Dons.module.css";
 import Pagination from "../../../components/common/Pagination";
 import ConfirmPopup from "../../../components/popup/ConfirmPopup";
-import { FaTrash, FaDownload, FaEye, FaPlus, FaArrowLeft } from "react-icons/fa";
+import BackButton from "../../../components/common/admin/BackButton";
+import { FaTrash, FaDownload, FaEye, FaPlus } from "react-icons/fa";
 
 const BASE_BACK_END_URL = import.meta.env.VITE_BASE_BACK_END_URL;
 
@@ -48,7 +49,7 @@ export default function AdminDonsList() {
       setPopup({ open: false, id: null, title: "" });
       setMessage({ type: "success", text: "Don supprimé avec succès." });
       setTimeout(() => setMessage(null), 3000);
-      
+
       if (dons.length === 1 && currentPage > 1) {
         dispatch(setPage(currentPage - 1));
       } else {
@@ -62,9 +63,7 @@ export default function AdminDonsList() {
 
   return (
     <div className={styles.container}>
-      <button className={styles.backBtn} onClick={() => navigate("/admin")}>
-        <FaArrowLeft /> Retour au tableau de bord
-      </button>
+      <BackButton />
 
       <header className={styles.header}>
         <h1 className={styles.title}>Dons ({total ?? 0})</h1>
@@ -104,13 +103,13 @@ export default function AdminDonsList() {
                 <tr key={don.id}>
                   <td>
                     {don.nom_complet || "Inconnu"}
-                    {don.email && <div style={{fontSize: '12px', color: 'var(--color-text-light)'}}>{don.email}</div>}
+                    {don.email && <div style={{ fontSize: '12px', color: 'var(--color-text-light)' }}>{don.email}</div>}
                   </td>
                   <td>{don.type_don === 'financier' ? 'Financier' : 'Matériel'}</td>
                   <td>{new Date(don.date_reception).toLocaleDateString("fr-FR")}</td>
                   <td>
-                    {don.type_don === 'financier' 
-                      ? <span style={{fontWeight: '600', color: 'var(--accent-strong)'}}>{don.DonFinancier?.montant} {don.DonFinancier?.devise || 'MAD'}</span> 
+                    {don.type_don === 'financier'
+                      ? <span style={{ fontWeight: '600', color: 'var(--accent-strong)' }}>{don.DonFinancier?.montant} {don.DonFinancier?.devise || 'MAD'}</span>
                       : don.DonMateriel?.description || "-"}
                   </td>
                   <td>{don.Projet ? don.Projet.titre_fr : "Général"}</td>
@@ -122,7 +121,7 @@ export default function AdminDonsList() {
                     ) : "-"}
                   </td>
                   <td>
-                    <select 
+                    <select
                       className={`${styles.statusSelect} ${styles[`status-${don.statut}`]}`}
                       value={don.statut}
                       onChange={(e) => handleStatusChange(don.id, e.target.value)}
@@ -134,14 +133,14 @@ export default function AdminDonsList() {
                   </td>
                   <td>
                     <div className={styles.actionIcons}>
-                      <button 
-                        className={styles.actionBtn} 
+                      <button
+                        className={styles.actionBtn}
                         onClick={() => navigate(`/admin/dons/${don.id}`)}
                         title="Voir les détails"
                       >
                         <FaEye />
                       </button>
-                      <button 
+                      <button
                         className={`${styles.actionBtn} ${styles.deleteBtn}`}
                         onClick={() => handleDeleteClick(don.id, don.type_don === 'financier' ? `${don.DonFinancier?.montant} MAD` : don.DonMateriel?.description)}
                         title="Supprimer"

@@ -17,6 +17,7 @@ import { fetchPartners, deletePartner } from "./adminPartnerSlice";
 import PartnerDetailPopup from "./PartnerDetailPopup";
 import ConfirmPopup from "../../../components/popup/ConfirmPopup";
 import Loader from "../../../components/common/Loader";
+import BackButton from "../../../components/common/admin/BackButton";
 
 export default function AdminPartnerList() {
     const dispatch = useDispatch();
@@ -105,6 +106,7 @@ export default function AdminPartnerList() {
             {/* EN-TÊTE */}
             <header className={styles.header}>
                 <div className={styles.headerLeft}>
+                    <BackButton />
                     {/* <span className={styles.surtitle}>NOS PARTENAIRES</span> */}
                     <h1>Gestion des Partenaires</h1>
                     <p>Centralisez et gérez les collaborations stratégiques de la fondation Tifaouine à travers le monde.</p>

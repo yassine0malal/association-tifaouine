@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { createBenevole } from "./benevolesAdminSlice";
 import styles from "./Benevoles.module.css";
 import ImageUpload from "../../../components/admin/ImageUpload";
-import { FaArrowLeft } from "react-icons/fa";
+import BackButton from "../../../components/common/admin/BackButton";
 
 export default function AdminBenevoleCreate() {
   const dispatch = useDispatch();
@@ -62,9 +62,7 @@ export default function AdminBenevoleCreate() {
         </div>
       )}
 
-      <button className={styles.backBtn} onClick={() => navigate("/admin/benevoles")}>
-        <FaArrowLeft /> Retour aux bénévoles
-      </button>
+      <BackButton />
 
       <header className={styles.header}>
         <h1 className={styles.title}>Ajouter un nouveau bénévole</h1>

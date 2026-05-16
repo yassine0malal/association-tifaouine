@@ -25,6 +25,10 @@
   overflow: hidden;
 }
 
+[dir="rtl"] .section * {
+  font-family: var(--ar-lang);
+}
+
 /* ── Background decoration ── */
 .bgDecor { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
 

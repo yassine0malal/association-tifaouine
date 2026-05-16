@@ -44,7 +44,7 @@ export default function AdminProjetDetail() {
 
       {/* ── Header ── */}
       <div className={styles.pageHeader}>
-        <BackButton to="/admin/projets" label="Retour aux projets" />
+        <BackButton />
         <div className={styles.headerActions}>
           <button
             className={styles.editBtn}

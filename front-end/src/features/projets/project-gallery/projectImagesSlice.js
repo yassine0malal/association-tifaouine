@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
 import { projectImagesAPI } from "./projectImagesService";
 
 export const fetchProjectImages = createAsyncThunk(
@@ -6,7 +6,7 @@ export const fetchProjectImages = createAsyncThunk(
   async ({ project, page }) => {
     const data = await projectImagesAPI(project, page);
     return data;
-  },
+  }
 );
 
 const projectImagesSlice = createSlice({
@@ -15,6 +15,7 @@ const projectImagesSlice = createSlice({
     images: [],
     loading: false,
     error: null,
+    currentProject:null,
     currentPage: 1,
     totalPages: 1,
     nextPage: 2,
@@ -35,6 +36,7 @@ const projectImagesSlice = createSlice({
       })
 
       .addCase(fetchProjectImages.fulfilled, (state, action) => {
+        
         state.loading = false;
         const newImages = action.payload?.images || [];
 

@@ -153,7 +153,7 @@ export default function AdminPartnerEdit() {
                 confirmLabel="Retour à la liste"
             />
 
-            <BackButton to={"/admin/partenaires/"} label="Retour aux partenaires" />
+            <BackButton />
 
             <header className={styles.header}>
                 <h1>Modifier le Partenaire</h1>

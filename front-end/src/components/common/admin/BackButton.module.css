@@ -13,6 +13,8 @@
     cursor: pointer;
     transition: all 0.2s ease;
     font-family: inherit;
+    margin-top: 16px;
+    margin-bottom: 32px;
 }
 .backBtn:hover {
     background: #f5f0e8;

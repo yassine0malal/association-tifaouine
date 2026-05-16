@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAdminProfile, updateAdminProfile } from "./profileAdminSlice";
 import styles from "./Profile.module.css";
+import BackButton from "../../../components/common/admin/BackButton";
 
 export default function AdminProfile() {
   const dispatch = useDispatch();
@@ -62,6 +63,7 @@ export default function AdminProfile() {
 
   return (
     <div className={styles.container}>
+      <BackButton />
       <header className={styles.header}>
         <h1 className={styles.title}>Mon Profil Administrateur</h1>
       </header>

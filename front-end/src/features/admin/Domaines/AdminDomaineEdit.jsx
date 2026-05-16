@@ -5,7 +5,7 @@ import { updateDomaineAdmin } from "./domainesAdminSlice";
 import { protectedApi } from "../Login/authService";
 import styles from "./Domaines.module.css";
 import ImageUpload from "../../../components/admin/ImageUpload";
-import { FaArrowLeft } from "react-icons/fa";
+import BackButton from "../../../components/common/admin/BackButton";
 
 const BASE_BACK_END_URL = import.meta.env.VITE_BASE_BACK_END_URL;
 
@@ -33,7 +33,7 @@ export default function AdminDomaineEdit() {
       try {
         const response = await protectedApi.get(`/api/domaines/admin/${id}`);
         const data = response.data.data;
-        
+
         setFormData({
           nom_fr: data.nom_fr || "",
           nom_en: data.nom_en || "",
@@ -67,7 +67,7 @@ export default function AdminDomaineEdit() {
       const val = formData[key] ? formData[key].toString().trim() : "";
       data.append(key, val);
     });
-    
+
     if (icone) {
       data.append("icone", icone);
     } else if (currentIcone) {
@@ -103,9 +103,7 @@ export default function AdminDomaineEdit() {
         </div>
       )}
 
-      <button className={styles.backBtn} onClick={() => navigate("/admin/domaines")}>
-        <FaArrowLeft /> Retour aux domaines
-      </button>
+      <BackButton />
 
       <header className={styles.header}>
         <h1 className={styles.title}>Modifier le domaine</h1>
@@ -121,9 +119,9 @@ export default function AdminDomaineEdit() {
         <form onSubmit={handleSubmit}>
           <div className={styles.formGrid}>
             <div className={styles.fullWidth}>
-              <ImageUpload 
-                label="Icône (Image)" 
-                onChange={(file) => setIcone(file)} 
+              <ImageUpload
+                label="Icône (Image)"
+                onChange={(file) => setIcone(file)}
                 existingImages={currentIcone ? [{
                   id: 'icone',
                   url: currentIcone.startsWith('http') ? currentIcone : `${BASE_BACK_END_URL}${currentIcone}`
