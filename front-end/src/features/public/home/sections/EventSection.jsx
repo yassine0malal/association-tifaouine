@@ -1,6 +1,7 @@
 import styles from './EventSection.module.css';
 import { Link } from 'react-router-dom';
 import i18n from '../../../../i18n'; // chemin à adapter selon ton projet
+import { useTranslation } from 'react-i18next';
 
 // Import des images statiques
 import eventImg1 from '../../../../assets/images/home/event2.jpg';
@@ -17,7 +18,8 @@ const ArrowIcon = () => (
 );
 
 export default function EventSection({ t }) {
-    const rawEvents = t("events", { returnObjects: true });
+    const { t: tEvents } = useTranslation('events');
+    const rawEvents = tEvents("events.items", { returnObjects: true });
 
     // Attribuer l'image statique et le statut 'done' à tous les événements
     const events = rawEvents.map((ev, index) => ({
