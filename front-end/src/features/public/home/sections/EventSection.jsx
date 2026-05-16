@@ -2,6 +2,14 @@ import styles from './EventSection.module.css';
 import { Link } from 'react-router-dom';
 import i18n from '../../../../i18n'; // chemin à adapter selon ton projet
 
+// Import des images statiques
+import eventImg1 from '../../../../assets/images/home/event2.jpg';
+import eventImg2 from '../../../../assets/images/home/event1.jpeg';
+import eventImg3 from '../../../../assets/images/home/espane.png';
+import eventImg4 from '../../../../assets/images/home/event3.png';
+
+const staticImages = [eventImg1, eventImg2, eventImg3, eventImg4];
+
 const ArrowIcon = () => (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
         <path d="M5 12h14M12 5l7 7-7 7" />
@@ -9,7 +17,14 @@ const ArrowIcon = () => (
 );
 
 export default function EventSection({ t }) {
-    const events = t("events", { returnObjects: true });
+    const rawEvents = t("events", { returnObjects: true });
+
+    // Attribuer l'image statique et le statut 'done' à tous les événements
+    const events = rawEvents.map((ev, index) => ({
+        ...ev,
+        statut: "done",
+        image: staticImages[index % staticImages.length]
+    }));
 
     const [featured, ...rest] = events;
 

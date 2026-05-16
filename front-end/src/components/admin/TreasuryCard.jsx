@@ -22,7 +22,7 @@ export default function TreasuryCard({ totalDons, totalBudget, totalBeneficiaire
                             {loading ? '…' : formatMoney(totalBudget ?? 0)}
                         </span>
                         <span className={styles.currency}>MAD</span>
-                        <span className={styles.label}>Total des Dons</span>
+                        <span className={styles.label}>Le cumul des budgets de projets</span>
                     </div>
 
                     {/* <div className={styles.secondaryBalance}>

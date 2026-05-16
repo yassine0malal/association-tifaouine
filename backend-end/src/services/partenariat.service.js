@@ -56,22 +56,13 @@ class PartenariatService {
     /**
      * Récupérer tous les partenariats avec statistiques et pagination
      */
-    async getAllPartenariatsWithStats(page = 1, limit = 10) {
-        const offset = (page - 1) * limit;
+    async getAllPartenariatsWithStats() {
         
-        const result = await partenariatRepository.findAllWithStats({ 
-            limit: parseInt(limit), 
-            offset: parseInt(offset) 
-        });
+        const result = await partenariatRepository.findAllWithStats();
         
         return {
             partenariats: result.rows,
-            pagination: {
-                total: result.count,
-                page: parseInt(page),
-                limit: parseInt(limit),
-                totalPages: Math.ceil(result.count / limit)
-            }
+        
         };
     }
 

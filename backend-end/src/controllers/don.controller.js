@@ -52,9 +52,9 @@ class DonController {
      */
     async getAll(req, res) {
         try {
-            const { type_don, statut, type_destination, projet_id } = req.query;
+            const { type_don, statut, type_destination, projet_id, search } = req.query;
             const { page, limit, offset } = req.pagination;
-            const result = await donService.getAllDons({ type_don, statut, type_destination, projet_id, limit, offset });
+            const result = await donService.getAllDons({ type_don, statut, type_destination, projet_id, search, limit, offset });
             return res.status(200).json({
                 success: true,
                 ...buildPaginatedResponse(result, page, limit)
@@ -86,9 +86,6 @@ class DonController {
     async updateStatut(req, res) {
         try {
             const { statut } = req.body;
-            if (!statut) {
-                return res.status(400).json({ success: false, message: "Le champ 'statut' est obligatoire." });
-            }
             const updated = await donService.updateStatutDon(req.params.id, statut);
             return res.status(200).json({
                 success: true,

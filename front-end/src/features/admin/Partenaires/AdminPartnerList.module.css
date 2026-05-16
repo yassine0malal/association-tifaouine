@@ -278,3 +278,9 @@
     color: var(--accent);
     position: relative;
 }
+.stats{
+    margin: 0 0 30px 0;
+}
+.stats p{
+    padding: 6px;
+}

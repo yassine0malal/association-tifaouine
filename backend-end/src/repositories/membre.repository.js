@@ -6,11 +6,15 @@ class MembreRepository {
      * @param   {Object} filters - { status, limit, offset }
      */
     async findAll(filters = {}) {
-        const membreWhere = filters.status ? { status: filters.status } : {};
+        const { limit, offset, status } = filters;
+        const membreWhere = status ? { status } : {};
 
         return await Utilisateur.findAndCountAll({
             where:   { type: 'membre' },
             include: [{ model: membre, required: true, where: membreWhere }],
+            limit:   limit  ? parseInt(limit)  : 9,
+            offset:  offset ? parseInt(offset) : 0,
+            order: [['created_at', 'DESC']]
         });
     }
 

@@ -2,10 +2,14 @@ const express = require('express');
 const router = express.Router();
 const benevoleController = require('../controllers/benevole.controller');
 const { verifyToken, isAdmin } = require('../middlewares/auth.middleware');
-const { uploadSimple } = require('../middlewares/upload.middleware');
+const { uploadSimple, uploadEtreBenevole } = require('../middlewares/upload.middleware');
 const { validate } = require('../middlewares/validate.middleware');
 const { paginate } = require('../middlewares/pagination.middleware');
 const { createBenevoleSchema, updateBenevoleSchema } = require('../validations/benevole.validation');
+
+// --- TOUTES LES ROUTES CI-DESSOUS SONT RÉSERVÉES À L'ADMIN ---
+router.use(verifyToken);
+router.use(isAdmin);
 
 router.get('/', paginate, benevoleController.getAll);
 
@@ -15,22 +19,17 @@ router.get('/', paginate, benevoleController.getAll);
  */
 router.get('/:id', benevoleController.getById);
 
-
-// --- ROUTES PRIVÉES (Admin seulement) ---
-router.use(verifyToken);
-router.use(isAdmin);
-
 /**
  * @route   POST /api/benevoles
  * @desc    Créer un ou plusieurs bénévoles
  */
-router.post('/', uploadSimple('benevoles', 'photo_profile'), validate(createBenevoleSchema), benevoleController.create);
+router.post('/', uploadEtreBenevole, validate(createBenevoleSchema), benevoleController.create);
 
 /**
  * @route   PUT /api/benevoles/:id
  * @desc    Mettre à jour un bénévole
  */
-router.put('/:id', uploadSimple('benevoles', 'photo_profile'), validate(updateBenevoleSchema), benevoleController.update);
+router.put('/:id', uploadEtreBenevole, validate(updateBenevoleSchema), benevoleController.update);
 
 /**
  * @route   DELETE /api/benevoles/:id

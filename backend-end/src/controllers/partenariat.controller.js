@@ -77,15 +77,12 @@ class PartenariatController {
      */
     async getAllWithStats(req, res) {
         try {
-            const page = parseInt(req.query.page) || 1;
-            const limit = parseInt(req.query.limit) || 10;
-            
-            const result = await partenariatService.getAllPartenariatsWithStats(page, limit);
+
+            const result = await partenariatService.getAllPartenariatsWithStats();
             
             return res.status(200).json({
                 success: true,
-                data: result.partenariats,
-                pagination: result.pagination
+                data: result.partenariats
             });
         } catch (error) {
             console.error('[ERROR] getAllWithStats:', error.message);

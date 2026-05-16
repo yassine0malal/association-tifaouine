@@ -218,12 +218,19 @@ module.exports = {
         i => ({ fr: `${cfg.label.fr} - photo ${i}`, ar: `${cfg.label.ar} - صورة ${i}`, en: `${cfg.label.en} - photo ${i}` })
       );
 
-      addFromDir(
-        path.join(IMAGES_BASE, cfg.dir, 'principal'),
-        `${urlBase}/principal`,
-        null, eid,
-        () => ({ fr: `${cfg.label.fr} - image principale`, ar: `${cfg.label.ar} - الصورة الرئيسية`, en: `${cfg.label.en} - main image` })
-      );
+      // Image principale - Mise à jour de la table evenement
+      if (eid) {
+        const imagePrincipale = getImagePrincipale(
+          path.join(IMAGES_BASE, cfg.dir, 'principal'),
+          `${urlBase}/principal`
+        );
+        if (imagePrincipale) {
+          await queryInterface.sequelize.query(
+            `UPDATE evenement SET image_principale = ? WHERE id = ?`,
+            { replacements: [imagePrincipale, eid] }
+          );
+        }
+      }
     }
 
     // ════════════════════════════════════════════════════════════════════════
