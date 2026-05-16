@@ -6,6 +6,7 @@ import { fetchDomains } from "../../domains/domainsSlice";
 import styles from "./Evenements.module.css";
 import { FaTrash } from "react-icons/fa";
 import { protectedApi } from "../Login/authService";
+import BackButton from "../../../components/common/admin/BackButton";
 
 const BASE_BACK_END_URL = import.meta.env.VITE_BASE_BACK_END_URL;
 
@@ -42,7 +43,7 @@ export default function AdminEventCreate() {
     // Use the existing public admin route for project list
     protectedApi.get("/api/fr/projet-admin?limit=200")
       .then(res => setProjects(res.data?.data || []))
-      .catch(() => {});
+      .catch(() => { });
   }, [dispatch]);
 
   const handleChange = (e) => {
@@ -89,11 +90,11 @@ export default function AdminEventCreate() {
         data.append(key, formData[key]);
       }
     });
-    
+
     if (imagePrincipale) {
       data.append("imagePrincipale", imagePrincipale);
     }
-    
+
     extraImages.forEach((img) => {
       data.append("extraImages", img);
     });
@@ -109,12 +110,7 @@ export default function AdminEventCreate() {
 
   return (
     <div className={styles.container}>
-      <button className={styles.backBtn} onClick={() => navigate("/admin/evenements")}>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ marginRight: "8px" }}>
-          <path d="m15 18-6-6 6-6" />
-        </svg>
-        Retour à la liste
-      </button>
+      <BackButton />
 
       <header className={styles.header}>
         <div className={styles.titleGroup}>
@@ -202,7 +198,7 @@ export default function AdminEventCreate() {
             {imagePreview && (
               <div className={`${styles.formGroup} ${styles.fullWidth}`}>
                 <div className={styles.galleryPreview}>
-                  <div style={{position: 'relative'}}>
+                  <div style={{ position: 'relative' }}>
                     <img src={imagePreview} alt="Aperçu principal" />
                     <button type="button" onClick={removePrincipal}>
                       <FaTrash size={10} />
@@ -223,7 +219,7 @@ export default function AdminEventCreate() {
               <div className={`${styles.formGroup} ${styles.fullWidth}`}>
                 <div className={styles.galleryPreview}>
                   {extraPreviews.map((preview, i) => (
-                    <div key={i} style={{position: 'relative'}}>
+                    <div key={i} style={{ position: 'relative' }}>
                       <img src={preview} alt={`Galerie ${i + 1}`} />
                       <button type="button" onClick={() => removeExtraImage(i)}>
                         <FaTrash size={10} />

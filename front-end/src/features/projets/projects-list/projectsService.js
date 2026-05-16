@@ -28,7 +28,7 @@ export const fetchProjectsForSelectAPI = async (lang = "fr") => {
 };
 
 
-export const fetchProjectsAPI = async (page = 1, filter = "all", lang = "fr", limit = 8) => {
+export const fetchProjectsAPI = async (page = 1, filter = "all", lang = "fr", limit = 6) => {
   
     try {
         // Use the apiUrl variable you defined above

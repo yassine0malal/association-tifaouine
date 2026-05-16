@@ -4,8 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { fetchMembersAdmin, setPage, deleteMember } from "./membersAdminSlice";
 import styles from "./Members.module.css";
 import Pagination from "../../../components/common/Pagination";
+import BackButton from "../../../components/common/admin/BackButton";
 import ConfirmPopup from "../../../components/popup/ConfirmPopup";
-import { FaEye, FaTrash, FaArrowLeft, FaPlus } from "react-icons/fa";
+import { FaEye, FaTrash, FaPlus } from "react-icons/fa";
 import avatarPlaceholder from "../../../assets/images/admin/avatar_placeholder.png";
 
 const BASE_BACK_END_URL = import.meta.env.VITE_BASE_BACK_END_URL;
@@ -42,7 +43,7 @@ export default function AdminMembersList() {
       setPopup({ open: false, id: null, name: "" });
       setMessage({ type: "success", text: "Membre supprimé avec succès." });
       setTimeout(() => setMessage(null), 3000);
-      
+
       if (members.length === 1 && currentPage > 1) {
         dispatch(setPage(currentPage - 1));
       } else {
@@ -56,9 +57,7 @@ export default function AdminMembersList() {
 
   return (
     <div className={styles.container}>
-      <button className={styles.backBtn} onClick={() => navigate("/admin")}>
-        <FaArrowLeft /> Retour au tableau de bord
-      </button>
+      <BackButton />
 
       <header className={styles.header}>
         <h1 className={styles.title}>Candidatures & Membres ({total ?? 0})</h1>
@@ -97,10 +96,10 @@ export default function AdminMembersList() {
                 return (
                   <tr key={member.id}>
                     <td>
-                      <img 
-                        src={member.photo_profile ? `${BASE_BACK_END_URL}${member.photo_profile}` : avatarPlaceholder} 
-                        alt={member.nom} 
-                        className={styles.avatar} 
+                      <img
+                        src={member.photo_profile ? `${BASE_BACK_END_URL}${member.photo_profile}` : avatarPlaceholder}
+                        alt={member.nom}
+                        className={styles.avatar}
                       />
                     </td>
                     <td>{member.nom || "N/A"}</td>
@@ -114,14 +113,14 @@ export default function AdminMembersList() {
                     </td>
                     <td>
                       <div className={styles.actionIcons}>
-                        <button 
-                          className={styles.actionBtn} 
+                        <button
+                          className={styles.actionBtn}
                           onClick={() => navigate(`/admin/membres/${member.id}`)}
                           title="Voir les détails"
                         >
                           <FaEye />
                         </button>
-                        <button 
+                        <button
                           className={`${styles.actionBtn} ${styles.deleteBtn}`}
                           onClick={() => handleDeleteClick(member.id, member.nom)}
                           title="Supprimer"

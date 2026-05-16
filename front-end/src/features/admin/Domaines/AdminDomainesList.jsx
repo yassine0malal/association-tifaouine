@@ -6,6 +6,7 @@ import styles from "./Domaines.module.css";
 import Pagination from "../../../components/common/Pagination";
 import ConfirmPopup from "../../../components/popup/ConfirmPopup";
 import { FaPlus, FaEdit, FaTrash, FaArrowLeft } from "react-icons/fa";
+import BackButton from "../../../components/common/admin/BackButton";
 
 const BASE_BACK_END_URL = import.meta.env.VITE_BASE_BACK_END_URL;
 
@@ -58,9 +59,8 @@ export default function AdminDomainesList() {
 
   return (
     <div className={styles.container}>
-      <button className={styles.backBtn} onClick={() => navigate("/admin")}>
-        <FaArrowLeft /> Retour au tableau de bord
-      </button>
+
+      <BackButton />
 
       <header className={styles.header}>
         <h1 className={styles.title}>Domaines d'action ({total ?? 0})</h1>

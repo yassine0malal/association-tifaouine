@@ -7,6 +7,7 @@ import { protectedApi } from "../Login/authService";
 import styles from "./Evenements.module.css";
 import Loader from "../../../components/common/Loader";
 import { FaTrash } from "react-icons/fa";
+import BackButton from "../../../components/common/admin/BackButton";
 
 const BASE_BACK_END_URL = import.meta.env.VITE_BASE_BACK_END_URL;
 
@@ -48,7 +49,7 @@ export default function AdminEventEdit() {
     // Use the existing public admin route for project list
     protectedApi.get("/api/fr/projet-admin?limit=200")
       .then(res => setProjects(res.data?.data || []))
-      .catch(() => {});
+      .catch(() => { });
 
     return () => {
       dispatch(clearCurrentDetail());
@@ -142,7 +143,7 @@ export default function AdminEventEdit() {
         data.append(key, val);
       }
     });
-    
+
     // New principal image (if user selected a new one)
     if (newPrincipalFile) {
       data.append("imagePrincipale", newPrincipalFile);
@@ -154,7 +155,7 @@ export default function AdminEventEdit() {
     if (!newPrincipalFile && event?.image_principale) {
       data.append("existingImagePrincipale", event.image_principale);
     }
-    
+
     // New gallery images
     newExtraFiles.forEach((img) => {
       data.append("extraImages", img);
@@ -187,12 +188,7 @@ export default function AdminEventEdit() {
 
   return (
     <div className={styles.container}>
-      <button className={styles.backBtn} onClick={() => navigate("/admin/evenements")}>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ marginRight: "8px" }}>
-          <path d="m15 18-6-6 6-6" />
-        </svg>
-        Retour à la liste
-      </button>
+      <BackButton />
 
       <header className={styles.header}>
         <div className={styles.titleGroup}>
@@ -276,7 +272,7 @@ export default function AdminEventEdit() {
               {principalPreview && (
                 <img src={principalPreview} alt="Principal" className={styles.imagePreview} />
               )}
-              <input type="file" accept="image/*" onChange={handlePrincipalChange} style={{marginTop: '12px'}} />
+              <input type="file" accept="image/*" onChange={handlePrincipalChange} style={{ marginTop: '12px' }} />
               <small>Laissez vide pour conserver l'image actuelle.</small>
             </div>
 
@@ -286,7 +282,7 @@ export default function AdminEventEdit() {
               <div className={styles.galleryPreview}>
                 {/* Existing server images */}
                 {existingGallery.map(img => (
-                  <div key={img.id} style={{position: 'relative'}}>
+                  <div key={img.id} style={{ position: 'relative' }}>
                     <img src={`${BASE_BACK_END_URL}${img.url}`} alt="Galerie" />
                     <button type="button" onClick={() => removeExistingImage(img.url)}>
                       <FaTrash size={10} />
@@ -295,18 +291,18 @@ export default function AdminEventEdit() {
                 ))}
                 {/* New upload previews */}
                 {newExtraPreviews.map((preview, i) => (
-                  <div key={`new-${i}`} style={{position: 'relative'}}>
-                    <img src={preview} alt={`Nouveau ${i + 1}`} style={{border: '2px solid var(--accent)'}} />
+                  <div key={`new-${i}`} style={{ position: 'relative' }}>
+                    <img src={preview} alt={`Nouveau ${i + 1}`} style={{ border: '2px solid var(--accent)' }} />
                     <button type="button" onClick={() => removeNewExtraImage(i)}>
                       <FaTrash size={10} />
                     </button>
                   </div>
                 ))}
                 {existingGallery.length === 0 && newExtraPreviews.length === 0 && (
-                  <p style={{color: 'var(--color-text-light)', margin: 0}}>Aucune image dans la galerie.</p>
+                  <p style={{ color: 'var(--color-text-light)', margin: 0 }}>Aucune image dans la galerie.</p>
                 )}
               </div>
-              <label style={{marginTop: '16px'}}>Ajouter de nouvelles images</label>
+              <label style={{ marginTop: '16px' }}>Ajouter de nouvelles images</label>
               <input type="file" accept="image/*" multiple onChange={handleExtraImagesChange} />
             </div>
           </div>

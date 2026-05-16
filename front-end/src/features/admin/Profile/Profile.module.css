@@ -12,7 +12,6 @@
   background-image:
     radial-gradient(ellipse at 10% 0%, rgba(203, 145, 79, 0.08) 0%, transparent 60%),
     radial-gradient(ellipse at 90% 100%, rgba(132, 84, 23, 0.06) 0%, transparent 60%);
-  font-family: 'DM Sans', sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -27,7 +26,6 @@
 }
 
 .title {
-  font-family: 'Playfair Display', Georgia, serif;
   font-size: clamp(1.6rem, 3vw, 2.4rem);
   font-weight: 700;
   color: var(--accent-strong-v2);
@@ -94,7 +92,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Playfair Display', Georgia, serif;
   font-size: 2.2rem;
   font-weight: 700;
   margin-bottom: 12px;
@@ -153,7 +150,6 @@
   border-radius: 14px;
   background-color: var(--bg);
   color: var(--text-h);
-  font-family: 'DM Sans', sans-serif;
   font-size: 0.95rem;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
@@ -171,7 +167,6 @@
 
 /* ── Section Title ───────────────────────────────────────── */
 .sectionTitle {
-  font-family: 'Playfair Display', Georgia, serif;
   font-size: 1.1rem;
   font-weight: 600;
   color: var(--text-h);
@@ -204,7 +199,6 @@
   color: #fff;
   border: none;
   border-radius: 50px;
-  font-family: 'DM Sans', sans-serif;
   font-size: 0.95rem;
   font-weight: 600;
   cursor: pointer;

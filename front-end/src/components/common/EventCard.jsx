@@ -4,12 +4,14 @@ import { useTranslation } from "react-i18next";
 
 const BACKEND_URL = import.meta.env.VITE_BASE_BACK_END_URL
 
-function EventCard( { id ,title , img , date , domain } ) {
+function EventCard( { id ,title , image_principale , date , domain } ) {
   const { i18n } = useTranslation();
   const currentLang = i18n.language;
+  console.log(image_principale);
+  
   return (
     <Link to={`/${currentLang}/evenements/${id}`} className={styles.eventCard}>
-      <div style={{ backgroundImage: `url(${BACKEND_URL}${img})`}} className={styles.cardBody}>
+      <div style={{ backgroundImage: `url(${encodeURI(BACKEND_URL + image_principale)})`}} className={styles.cardBody}>
         <div className={styles.content}>
             <div className={styles.meta}>
                 <span className={styles.domain}>{domain}</span>

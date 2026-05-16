@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { FaArrowLeft, FaDownload, FaFileAlt, FaCalendarAlt, FaUser, FaEnvelope, FaPhone, FaTag, FaInfoCircle, FaCheckCircle, FaExclamationTriangle } from "react-icons/fa";
+import { FaDownload, FaFileAlt, FaCalendarAlt, FaUser, FaTag, FaInfoCircle, FaCheckCircle, FaExclamationTriangle } from "react-icons/fa";
 import styles from "./Dons.module.css";
 import { protectedApi } from "../Login/authService";
+import BackButton from "../../../components/common/admin/BackButton";
 
 const BASE_BACK_END_URL = import.meta.env.VITE_BASE_BACK_END_URL;
 
@@ -63,9 +64,7 @@ export default function AdminDonDetail() {
       )}
 
       <header className={styles.header}>
-        <button className={styles.backBtn} onClick={() => navigate("/admin/dons")}>
-          <FaArrowLeft /> Retour aux dons
-        </button>
+        <BackButton />
         <h1 className={styles.title}>Fiche du Don #{don.id}</h1>
       </header>
 
@@ -116,7 +115,7 @@ export default function AdminDonDetail() {
             <div className={styles.detailItem}>
               <span className={styles.detailLabel}>Date de réception</span>
               <span className={styles.detailValue}>
-                <FaCalendarAlt size={12} style={{marginRight: '6px', color: 'var(--accent)'}} />
+                <FaCalendarAlt size={12} style={{ marginRight: '6px', color: 'var(--accent)' }} />
                 {new Date(don.date_reception).toLocaleDateString("fr-FR", { day: 'numeric', month: 'long', year: 'numeric' })}
               </span>
             </div>
@@ -140,17 +139,17 @@ export default function AdminDonDetail() {
                   <span className={styles.detailValue}>{don.DonFinancier.ref_transaction || "N/A"}</span>
                 </div>
               </div>
-              
+
               <hr className={styles.divider} />
-              
+
               <div className={styles.receiptSection}>
-                <span className={styles.detailLabel} style={{alignSelf: 'center', marginBottom: '8px'}}>Justificatif / Reçu</span>
+                <span className={styles.detailLabel} style={{ alignSelf: 'center', marginBottom: '8px' }}>Justificatif / Reçu</span>
                 {don.DonFinancier.recu ? (
                   <div className={styles.currentReceipt}>
-                    <p style={{marginBottom: '15px', color: 'var(--paragraph-color)'}}>Un justificatif a été téléversé pour ce don.</p>
-                    <a 
-                      href={`${BASE_BACK_END_URL}${don.DonFinancier.recu}`} 
-                      target="_blank" 
+                    <p style={{ marginBottom: '15px', color: 'var(--paragraph-color)' }}>Un justificatif a été téléversé pour ce don.</p>
+                    <a
+                      href={`${BASE_BACK_END_URL}${don.DonFinancier.recu}`}
+                      target="_blank"
                       rel="noreferrer"
                       className={styles.downloadBtn}
                     >
@@ -202,24 +201,24 @@ export default function AdminDonDetail() {
             <FaCheckCircle /> <h3>Gestion du Statut</h3>
           </div>
           <div className={styles.detailBody}>
-            <p className={styles.detailLabel} style={{marginBottom: '10px'}}>Statut actuel : <span className={`${styles.statusBadge} ${styles[`status-${don.statut}`]}`}>{don.statut}</span></p>
+            <p className={styles.detailLabel} style={{ marginBottom: '10px' }}>Statut actuel : <span className={`${styles.statusBadge} ${styles[`status-${don.statut}`]}`}>{don.statut}</span></p>
             <div className={styles.actionButtons}>
-              <button 
-                onClick={() => handleStatusChange("traite")} 
+              <button
+                onClick={() => handleStatusChange("traite")}
                 className={`${styles.statusBtn} ${styles.btnTraite}`}
                 disabled={don.statut === "traite"}
               >
                 Marquer comme Traité
               </button>
-              <button 
-                onClick={() => handleStatusChange("recu")} 
+              <button
+                onClick={() => handleStatusChange("recu")}
                 className={`${styles.statusBtn} ${styles.btnRecu}`}
                 disabled={don.statut === "recu"}
               >
                 Marquer comme Reçu
               </button>
-              <button 
-                onClick={() => handleStatusChange("en_attente")} 
+              <button
+                onClick={() => handleStatusChange("en_attente")}
                 className={`${styles.statusBtn} ${styles.btnAttente}`}
                 disabled={don.statut === "en_attente"}
               >

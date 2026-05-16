@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { fetchMemberById, updateMemberStatus, clearCurrentDetail } from "./membersAdminSlice";
 import styles from "./Members.module.css";
-import { FaCheck, FaTimes, FaArrowLeft, FaDownload } from "react-icons/fa";
+import BackButton from "../../../components/common/admin/BackButton";
+import { FaCheck, FaTimes, FaDownload } from "react-icons/fa";
 import avatarPlaceholder from "../../../assets/images/admin/avatar_placeholder.png";
 import ImageUpload from "../../../components/admin/ImageUpload";
 import { protectedApi } from "../Login/authService";
@@ -60,10 +61,10 @@ export default function AdminMemberDetail() {
     <div className={styles.container}>
       <div className={styles.detailCard}>
         <div className={styles.detailHeader}>
-          <img 
-            src={member.photo_profile && member.photo_profile !== 'null' ? `${BASE_BACK_END_URL}${member.photo_profile}` : avatarPlaceholder} 
-            alt="Profil" 
-            className={styles.detailAvatar} 
+          <img
+            src={member.photo_profile && member.photo_profile !== 'null' ? `${BASE_BACK_END_URL}${member.photo_profile}` : avatarPlaceholder}
+            alt="Profil"
+            className={styles.detailAvatar}
           />
           <div className={styles.detailInfo}>
             <h2>{user.nom || "N/A"}</h2>
@@ -73,9 +74,7 @@ export default function AdminMemberDetail() {
             </span>
             {member.poste && <p style={{ marginTop: '8px', color: 'var(--text)', fontWeight: '600' }}>Poste : {member.poste}</p>}
           </div>
-          <button className={styles.backBtn} onClick={() => navigate("/admin/membres")}>
-            <FaArrowLeft /> Retour
-          </button>
+          <BackButton />
         </div>
 
         <div className={styles.detailSection}>
@@ -114,7 +113,7 @@ export default function AdminMemberDetail() {
           <h3>Documents & Photos</h3>
           <div className={styles.detailGrid}>
             <div className={styles.infoItem}>
-              <ImageUpload 
+              <ImageUpload
                 label="Photo de Profil"
                 onChange={(file) => handleFileUpdate(file, "photo_profile")}
                 existingImages={member.photo_profile && member.photo_profile !== 'null' ? [`${BASE_BACK_END_URL}${member.photo_profile}`] : []}
@@ -122,7 +121,7 @@ export default function AdminMemberDetail() {
               />
             </div>
             <div className={styles.infoItem}>
-              <ImageUpload 
+              <ImageUpload
                 label="Carte d'identité"
                 onChange={(file) => handleFileUpdate(file, "carte_identite")}
                 existingImages={member.carte_identite ? [`${BASE_BACK_END_URL}${member.carte_identite}`] : []}
@@ -135,7 +134,7 @@ export default function AdminMemberDetail() {
               )}
             </div>
             <div className={styles.infoItem}>
-              <ImageUpload 
+              <ImageUpload
                 label="Curriculum Vitae"
                 onChange={(file) => handleFileUpdate(file, "cv")}
                 existingImages={member.cv ? [`${BASE_BACK_END_URL}${member.cv}`] : []}
@@ -151,15 +150,15 @@ export default function AdminMemberDetail() {
         </div>
 
         <div className={styles.actionsBar}>
-          <button 
-            className={styles.acceptBtn} 
+          <button
+            className={styles.acceptBtn}
             onClick={() => handleStatusChange("actif")}
             disabled={member.status === "actif"}
           >
             <FaCheck /> Accepter l'adhésion
           </button>
-          <button 
-            className={styles.refuseBtn} 
+          <button
+            className={styles.refuseBtn}
             onClick={() => handleStatusChange("inactif")}
             disabled={member.status === "inactif"}
           >

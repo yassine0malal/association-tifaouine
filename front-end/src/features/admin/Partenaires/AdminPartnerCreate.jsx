@@ -110,7 +110,7 @@ export default function AdminPartnerCreate() {
                 confirmLabel="Voir la liste"
             />
 
-            <BackButton label="Retour aux partenaires" />
+            <BackButton />
 
             <header className={styles.header}>
                 <h1>Ajouter un Partenaire</h1>

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { createDomaineAdmin } from "./domainesAdminSlice";
 import styles from "./Domaines.module.css";
 import ImageUpload from "../../../components/admin/ImageUpload";
-import { FaArrowLeft } from "react-icons/fa";
+import BackButton from "../../../components/common/admin/BackButton";
 
 export default function AdminDomaineCreate() {
   const dispatch = useDispatch();
@@ -60,9 +60,7 @@ export default function AdminDomaineCreate() {
         </div>
       )}
 
-      <button className={styles.backBtn} onClick={() => navigate("/admin/domaines")}>
-        <FaArrowLeft /> Retour aux domaines
-      </button>
+      <BackButton />
 
       <header className={styles.header}>
         <h1 className={styles.title}>Créer un nouveau domaine</h1>
@@ -76,9 +74,9 @@ export default function AdminDomaineCreate() {
         )}
 
         <form onSubmit={handleSubmit}>
-          <ImageUpload 
-            label="Icône (Image)" 
-            onChange={(file) => setIcone(file)} 
+          <ImageUpload
+            label="Icône (Image)"
+            onChange={(file) => setIcone(file)}
           />
 
           <div className={styles.formGroup}>

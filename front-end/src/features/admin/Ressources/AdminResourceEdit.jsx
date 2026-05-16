@@ -7,15 +7,15 @@ import { fetchResourceById, updateResource, resetStatus } from "./adminResourceS
 // Components
 import Loader from "../../../components/common/Loader";
 import Info from "../../../components/popup/Info";
+import BackButton from "../../../components/common/admin/BackButton";
 import {
-    ArrowLeft,
-    Edit2,
     FileText,
     Type,
     AlignLeft,
     Loader2,
     Save,
-    Upload
+    Upload,
+    Image as ImageIcon
 } from "lucide-react";
 
 /**
@@ -186,9 +186,7 @@ export default function AdminResourceEdit() {
             />
 
             <header className={styles.header}>
-                <button type="button" className={styles.backBtn} onClick={() => navigate("/admin/ressources")}>
-                    <ArrowLeft size={24} />
-                </button>
+            <BackButton />
                 <div>
                     <h1>Modifier la Ressource</h1>
                 </div>

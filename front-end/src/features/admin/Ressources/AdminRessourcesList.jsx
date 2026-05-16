@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./AdminResourcesList.module.css";
 import Loader from "../../../components/common/Loader";
 import Pagination from "../../../components/common/Pagination";
+import BackButton from "../../../components/common/admin/BackButton";
 import {
     Plus,
     Search,
@@ -11,7 +12,6 @@ import {
     Pencil,
     Trash2,
     Loader2,
-    LayoutGrid,
     FileSearch,
     ExternalLink,
     BookOpen,
@@ -27,7 +27,7 @@ export default function AdminResourcesList() {
 
     // Accessing resources and pagination metadata from Redux
     const { resources, pagination, loading, error } = useSelector((state) => state.adminResources);
-    
+
     const [searchTerm, setSearchTerm] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const [deleteConfig, setDeleteConfig] = useState({ isOpen: false, id: null, titre: "" });
@@ -40,9 +40,9 @@ export default function AdminResourcesList() {
     // 2. ADDED: Local filter logic. This only searches through the data currently on the page.
     const filteredResources = useMemo(() => {
         if (!searchTerm) return resources;
-        
+
         const lowerSearch = searchTerm.toLowerCase();
-        return resources?.filter((resource) => 
+        return resources?.filter((resource) =>
             resource.titre_fr?.toLowerCase().includes(lowerSearch) ||
             resource.titre_ar?.toLowerCase().includes(lowerSearch) ||
             resource.type?.toLowerCase().includes(lowerSearch)
@@ -53,9 +53,9 @@ export default function AdminResourcesList() {
         if (deleteConfig.id) dispatch(deleteResource(deleteConfig.id));
         setDeleteConfig({ isOpen: false, id: null, titre: "" });
     };
-    
+
     const VITE_BASE_BACK_END_URL = import.meta.env.VITE_BASE_BACK_END_URL;
-    
+
     const handlePageChange = (page) => {
         setCurrentPage(page);
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -92,7 +92,8 @@ export default function AdminResourcesList() {
                 description={`Voulez-vous vraiment supprimer "${deleteConfig.titre}" ?`}
                 variant="danger"
             />
-    
+
+            <BackButton />
             <header className={styles.header}>
                 <div className={styles.headerLeft}>
                     <div className={styles.ibdaaa}>
@@ -121,7 +122,7 @@ export default function AdminResourcesList() {
             {loading ? (
                 <div className={styles.loaderContainer}>
                     <Loader2 className={styles.spinner} size={40} />
-                    <Loader/>
+                    <Loader />
                 </div>
             ) : error ? (
                 <div className={styles.errorBanner}>{error}</div>
@@ -184,10 +185,10 @@ export default function AdminResourcesList() {
 
                     {pagination && pagination.totalPages > 1 && (
                         <div className={styles.paginationWrapper}>
-                            <Pagination 
-                                currentPage={pagination.page} 
-                                totalPages={pagination.totalPages} 
-                                onPageChange={handlePageChange} 
+                            <Pagination
+                                currentPage={pagination.page}
+                                totalPages={pagination.totalPages}
+                                onPageChange={handlePageChange}
                             />
                         </div>
                     )}

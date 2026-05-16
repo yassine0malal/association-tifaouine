@@ -5,6 +5,7 @@ import { fetchDomains } from "../../domains/domainsSlice";
 import { fetchPartenaires } from "../../public/about/partnerSlice";
 import axios from "axios";
 import { protectedApi } from "../Login/authService";
+import BackButton from "../../../components/common/admin/BackButton";
 
 
 
@@ -39,7 +40,7 @@ export default function AdminProjetCreate() {
 
 
     const VITE_BASE_BACK_END_URL = import.meta.env.VITE_BASE_BACK_END_URL
-    
+
     const formatSize = (bytes) => {
         if (!bytes) return "Taille inconnue";
         if (bytes < 1024) return bytes + " B";
@@ -213,7 +214,7 @@ export default function AdminProjetCreate() {
             videoFiles.forEach((v) => {
                 dataToSend.append("extraVideos", v.file);
             });
-            console.log("se nd",dataToSend)
+            console.log("se nd", dataToSend)
             const response = await protectedApi.post("/api/projets/complet", dataToSend);
             // ...
 
@@ -237,6 +238,7 @@ export default function AdminProjetCreate() {
 
     return (
         <div className={styles.page}>
+            <BackButton />
             <div className={styles.pageHeader}>
                 <h1 className={styles.pageTitle}>Ajouter un Projet</h1>
                 <p className={styles.pageSub}>

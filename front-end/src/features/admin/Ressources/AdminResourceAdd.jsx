@@ -381,8 +381,8 @@ import { createResource, resetStatus } from "./adminResourceSlice";
 
 // Components
 import Info from "../../../components/popup/Info";
+import BackButton from "../../../components/common/admin/BackButton";
 import {
-    ArrowLeft,
     FileText,
     Type,
     AlignLeft,
@@ -569,9 +569,7 @@ export default function AdminResourceAdd() {
             />
 
             <header className={styles.header}>
-                <button type="button" className={styles.backBtn} onClick={() => navigate("/admin/ressources")}>
-                    <ArrowLeft size={24} />
-                </button>
+            <BackButton />
                 <div>
                     <h1>Ajouter une Ressource</h1>
                 </div>
@@ -724,7 +722,7 @@ export default function AdminResourceAdd() {
                 {/* SECTION: DESCRIPTIONS */}
                 <section className={styles.transparentSection}>
                     <h2 className={styles.sectionHeader}><AlignLeft size={20} /> Descriptions</h2>
-                    
+
                     {/* Description FR */}
                     <div className={styles.inputGroup}>
                         <div style={{ display: 'flex', justifyContent: 'between', alignItems: 'center' }}>
@@ -733,14 +731,14 @@ export default function AdminResourceAdd() {
                                 {formData.description_fr.length}/120
                             </span>
                         </div>
-                        <textarea 
-                            name="description_fr" 
-                            value={formData.description_fr} 
-                            onChange={handleInputChange} 
-                            rows="4" 
-                            maxLength="120" 
-                            className={styles.textarea} 
-                            placeholder="Description obligatoire (Max 120 caractères)" 
+                        <textarea
+                            name="description_fr"
+                            value={formData.description_fr}
+                            onChange={handleInputChange}
+                            rows="4"
+                            maxLength="120"
+                            className={styles.textarea}
+                            placeholder="Description obligatoire (Max 120 caractères)"
                         />
                         {errors.description_fr && <p style={{ color: 'red', marginTop: '4px', fontSize: '0.8rem' }}>{errors.description_fr}</p>}
                     </div>
@@ -753,15 +751,15 @@ export default function AdminResourceAdd() {
                                 {formData.description_ar.length}/120
                             </span>
                         </div>
-                        <textarea 
-                            dir="rtl" 
-                            name="description_ar" 
-                            value={formData.description_ar} 
-                            onChange={handleInputChange} 
-                            rows="4" 
-                            maxLength="120" 
-                            className={`${styles.textareaRtl} ${styles.arabic}`} 
-                            placeholder="الوصف إجباري (الحد الأقصى 120 حرفًا)" 
+                        <textarea
+                            dir="rtl"
+                            name="description_ar"
+                            value={formData.description_ar}
+                            onChange={handleInputChange}
+                            rows="4"
+                            maxLength="120"
+                            className={`${styles.textareaRtl} ${styles.arabic}`}
+                            placeholder="الوصف إجباري (الحد الأقصى 120 حرفًا)"
                         />
                         {errors.description_ar && <p style={{ color: 'red', marginTop: '4px', fontSize: '0.8rem' }}>{errors.description_ar}</p>}
                     </div>
@@ -774,17 +772,17 @@ export default function AdminResourceAdd() {
                                 {formData.description_en.length}/120
                             </span>
                         </div>
-                        <textarea 
-                            name="description_en" 
-                            value={formData.description_en} 
-                            onChange={handleInputChange} 
-                            rows="4" 
-                            maxLength="120" 
-                            className={styles.textarea} 
-                            placeholder="Description required (Max 120 characters)" 
+                        <textarea
+                            name="description_en"
+                            value={formData.description_en}
+                            onChange={handleInputChange}
+                            rows="4"
+                            maxLength="120"
+                            className={styles.textarea}
+                            placeholder="Description required (Max 120 characters)"
                         />
                         {errors.description_en && <p style={{ color: 'red', marginTop: '4px', fontSize: '0.8rem' }}>{errors.description_en}</p>}
-                    </div> 
+                    </div>
                 </section>
 
                 <div className={styles.actions}>
