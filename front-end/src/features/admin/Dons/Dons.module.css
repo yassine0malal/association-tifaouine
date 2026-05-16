@@ -317,6 +317,193 @@
   transform: translateX(-3px);
 }
 
+/* ── Detail View Grid ───────────────────────────────────── */
+.detailGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  animation: slideUp 0.4s ease both;
+}
+
+.detailCard {
+  background: var(--bg-card);
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  padding: 28px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.detailCard .cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 4px;
+}
+
+.detailCard .cardHeader h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-h);
+  margin: 0;
+}
+
+.detailCard .cardHeader svg {
+  color: var(--accent);
+  font-size: 1.1rem;
+}
+
+.detailBody {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.detailItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.detailLabel {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--paragraph-color);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.detailValue {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-h);
+}
+
+.amountValue {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent-strong);
+  font-family: 'Playfair Display', serif;
+}
+
+.badge {
+  display: inline-block;
+  padding: 4px 12px;
+  background: var(--accent-very-light);
+  color: var(--accent-strong);
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.divider {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin: 8px 0;
+}
+
+/* ── Receipt Section ────────────────────────────────────── */
+.receiptSection {
+  background: var(--bg);
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px dashed var(--accent-light);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+}
+
+.downloadBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 24px;
+  background: var(--text-h);
+  color: #fff;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.downloadBtn:hover {
+  background: var(--accent-strong-v2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.noReceipt {
+  color: #991b1b;
+  font-size: 0.9rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ── Status Actions ──────────────────────────────────────── */
+.actionButtons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+}
+
+.statusBtn {
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.statusBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.btnTraite {
+  background: #dbeafe;
+  color: #1e40af;
+}
+.btnTraite:hover:not(:disabled) {
+  background: #1e40af;
+  color: #fff;
+}
+
+.btnRecu {
+  background: #dcfce7;
+  color: #166534;
+}
+.btnRecu:hover:not(:disabled) {
+  background: #166534;
+  color: #fff;
+}
+
+.btnAttente {
+  background: #fef9c3;
+  color: #854d0e;
+}
+.btnAttente:hover:not(:disabled) {
+  background: #854d0e;
+  color: #fff;
+}
+
 /* ── Form Styles (Create/Edit) ───────────────────────────── */
 .formContainer {
   background: var(--bg-card);
@@ -520,6 +707,7 @@
   .container { padding: 28px 20px 48px; }
   .table tbody { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px; }
   .formContainer { padding: 24px 18px; }
+  .detailGrid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 600px) {
@@ -528,4 +716,5 @@
   .table tbody { grid-template-columns: 1fr; gap: 16px; }
   .formActions { flex-direction: column; }
   .submitBtn, .cancelBtn { width: 100%; justify-content: center; }
+  .detailCard { padding: 20px; }
 }

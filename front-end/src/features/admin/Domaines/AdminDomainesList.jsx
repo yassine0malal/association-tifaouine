@@ -101,7 +101,6 @@ export default function AdminDomainesList() {
                       <img 
                         src={`${BASE_BACK_END_URL}${domaine.icone}`} 
                         alt={domaine.nom_fr}
-                        style={{ width: "40px", height: "40px", objectFit: "cover", borderRadius: "6px" }}
                       />
                     )}
                   </td>

@@ -66,69 +66,99 @@ export default function AdminDonDetail() {
         <button className={styles.backBtn} onClick={() => navigate("/admin/dons")}>
           <FaArrowLeft /> Retour aux dons
         </button>
-        <h1 className={styles.title}>Détails du Don #{don.id}</h1>
+        <h1 className={styles.title}>Fiche du Don #{don.id}</h1>
       </header>
 
       <div className={styles.detailGrid}>
         {/* Informations Donateur */}
-        <div className={styles.card}>
+        <div className={styles.detailCard}>
           <div className={styles.cardHeader}>
             <FaUser /> <h3>Donateur</h3>
           </div>
-          <div className={styles.cardBody}>
-            <p><strong><FaUser /> Nom:</strong> {don.nom_complet}</p>
-            <p><strong><FaEnvelope /> Email:</strong> {don.email}</p>
-            <p><strong><FaPhone /> Téléphone:</strong> {don.telephone || "N/A"}</p>
+          <div className={styles.detailBody}>
+            <div className={styles.detailItem}>
+              <span className={styles.detailLabel}>Nom complet</span>
+              <span className={styles.detailValue}>{don.nom_complet}</span>
+            </div>
+            <div className={styles.detailItem}>
+              <span className={styles.detailLabel}>Adresse E-mail</span>
+              <span className={styles.detailValue}>{don.email}</span>
+            </div>
+            <div className={styles.detailItem}>
+              <span className={styles.detailLabel}>Téléphone</span>
+              <span className={styles.detailValue}>{don.telephone || "Non renseigné"}</span>
+            </div>
           </div>
         </div>
 
         {/* Détails du Don */}
-        <div className={styles.card}>
+        <div className={styles.detailCard}>
           <div className={styles.cardHeader}>
-            <FaTag /> <h3>Informations du Don</h3>
+            <FaTag /> <h3>Détails du Don</h3>
           </div>
-          <div className={styles.cardBody}>
-            <p><strong>Type:</strong> <span className={styles.badge}>{don.type_don === 'financier' ? 'Financier' : 'Matériel'}</span></p>
-            <p><strong>Destination:</strong> {don.type_destination === 'general' ? 'Général' : 'Spécifique'}</p>
-            {don.type_destination === 'specifique' && (
-              <p><strong>Projet:</strong> {don.Projet?.titre_fr || "Inconnu"}</p>
-            )}
-            <p><strong><FaCalendarAlt /> Date:</strong> {new Date(don.date_reception).toLocaleDateString()}</p>
-            <p><strong>Statut:</strong> 
-              <span className={`${styles.statusBadge} ${styles[`status-${don.statut}`]}`}>
-                {don.statut}
+          <div className={styles.detailBody}>
+            <div className={styles.detailItem}>
+              <span className={styles.detailLabel}>Nature du don</span>
+              <span className={styles.detailValue}>
+                <span className={styles.badge}>{don.type_don === 'financier' ? 'Financier' : 'Matériel'}</span>
               </span>
-            </p>
+            </div>
+            <div className={styles.detailItem}>
+              <span className={styles.detailLabel}>Type de destination</span>
+              <span className={styles.detailValue}>{don.type_destination === 'general' ? 'Fonds Général' : 'Projet Spécifique'}</span>
+            </div>
+            {don.type_destination === 'specifique' && (
+              <div className={styles.detailItem}>
+                <span className={styles.detailLabel}>Projet ciblé</span>
+                <span className={styles.detailValue}>{don.Projet?.titre_fr || "Inconnu"}</span>
+              </div>
+            )}
+            <div className={styles.detailItem}>
+              <span className={styles.detailLabel}>Date de réception</span>
+              <span className={styles.detailValue}>
+                <FaCalendarAlt size={12} style={{marginRight: '6px', color: 'var(--accent)'}} />
+                {new Date(don.date_reception).toLocaleDateString("fr-FR", { day: 'numeric', month: 'long', year: 'numeric' })}
+              </span>
+            </div>
           </div>
         </div>
 
         {/* Don Financier specifics */}
         {don.type_don === 'financier' && don.DonFinancier && (
-          <div className={`${styles.card} ${styles.fullWidth}`}>
+          <div className={`${styles.detailCard} ${styles.fullWidth}`}>
             <div className={styles.cardHeader}>
-              <FaFileAlt /> <h3>Détails Financiers & Reçu</h3>
+              <FaFileAlt /> <h3>Détails Financiers</h3>
             </div>
-            <div className={styles.cardBody}>
-              <p><strong>Montant:</strong> <span style={{fontWeight: '600', color: 'var(--accent-strong)', fontSize: '18px'}}>{don.DonFinancier.montant} {don.DonFinancier.devise || 'MAD'}</span></p>
-              <p><strong>Référence transaction:</strong> {don.DonFinancier.ref_transaction || "N/A"}</p>
+            <div className={styles.detailBody}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '20px' }}>
+                <div className={styles.detailItem}>
+                  <span className={styles.detailLabel}>Montant du don</span>
+                  <span className={styles.amountValue}>{don.DonFinancier.montant} {don.DonFinancier.devise || 'MAD'}</span>
+                </div>
+                <div className={styles.detailItem}>
+                  <span className={styles.detailLabel}>Référence Transaction</span>
+                  <span className={styles.detailValue}>{don.DonFinancier.ref_transaction || "N/A"}</span>
+                </div>
+              </div>
               
               <hr className={styles.divider} />
               
               <div className={styles.receiptSection}>
+                <span className={styles.detailLabel} style={{alignSelf: 'center', marginBottom: '8px'}}>Justificatif / Reçu</span>
                 {don.DonFinancier.recu ? (
                   <div className={styles.currentReceipt}>
-                    <p>Un reçu est associé à ce don.</p>
+                    <p style={{marginBottom: '15px', color: 'var(--paragraph-color)'}}>Un justificatif a été téléversé pour ce don.</p>
                     <a 
                       href={`${BASE_BACK_END_URL}${don.DonFinancier.recu}`} 
                       target="_blank" 
                       rel="noreferrer"
                       className={styles.downloadBtn}
                     >
-                      <FaDownload /> Télécharger le reçu
+                      <FaDownload /> Voir le document
                     </a>
                   </div>
                 ) : (
-                  <p className={styles.noReceipt}><FaExclamationTriangle /> Aucun reçu disponible pour ce don.</p>
+                  <p className={styles.noReceipt}><FaExclamationTriangle /> Aucun justificatif disponible.</p>
                 )}
               </div>
             </div>
@@ -137,34 +167,42 @@ export default function AdminDonDetail() {
 
         {/* Don Materiel specifics */}
         {don.type_don === 'materiel' && don.DonMateriel && (
-          <div className={`${styles.card} ${styles.fullWidth}`}>
+          <div className={`${styles.detailCard} ${styles.fullWidth}`}>
             <div className={styles.cardHeader}>
-              <FaInfoCircle /> <h3>Détails du Matériel</h3>
+              <FaInfoCircle /> <h3>Spécifications du Matériel</h3>
             </div>
-            <div className={styles.cardBody}>
-              <p><strong>Description:</strong> {don.DonMateriel.description}</p>
-              <p><strong>Quantité:</strong> {don.DonMateriel.quantite}</p>
-              <p><strong>Date de décision:</strong> {don.DonMateriel.date_decision ? new Date(don.DonMateriel.date_decision).toLocaleDateString() : "N/A"}</p>
+            <div className={styles.detailBody}>
+              <div className={styles.detailItem}>
+                <span className={styles.detailLabel}>Description des articles</span>
+                <span className={styles.detailValue}>{don.DonMateriel.description}</span>
+              </div>
+              <div className={styles.detailItem}>
+                <span className={styles.detailLabel}>Quantité estimée</span>
+                <span className={styles.detailValue}>{don.DonMateriel.quantite}</span>
+              </div>
             </div>
           </div>
         )}
 
         {/* Message */}
-        <div className={`${styles.card} ${styles.fullWidth}`}>
+        <div className={`${styles.detailCard} ${styles.fullWidth}`}>
           <div className={styles.cardHeader}>
-            <FaInfoCircle /> <h3>Message / Commentaire</h3>
+            <FaInfoCircle /> <h3>Message du donateur</h3>
           </div>
-          <div className={styles.cardBody}>
-            <p>{don.message || "Aucun message laissé par le donateur."}</p>
+          <div className={styles.detailBody}>
+            <p style={{ fontStyle: don.message ? 'normal' : 'italic', color: don.message ? 'inherit' : 'var(--paragraph-color)' }}>
+              {don.message || "Aucun message particulier n'a été laissé."}
+            </p>
           </div>
         </div>
 
         {/* Actions sur le statut */}
-        <div className={`${styles.card} ${styles.fullWidth}`}>
+        <div className={`${styles.detailCard} ${styles.fullWidth}`}>
           <div className={styles.cardHeader}>
-            <FaCheckCircle /> <h3>Actions sur le Statut</h3>
+            <FaCheckCircle /> <h3>Gestion du Statut</h3>
           </div>
-          <div className={styles.cardBody}>
+          <div className={styles.detailBody}>
+            <p className={styles.detailLabel} style={{marginBottom: '10px'}}>Statut actuel : <span className={`${styles.statusBadge} ${styles[`status-${don.statut}`]}`}>{don.statut}</span></p>
             <div className={styles.actionButtons}>
               <button 
                 onClick={() => handleStatusChange("traite")} 
@@ -185,7 +223,7 @@ export default function AdminDonDetail() {
                 className={`${styles.statusBtn} ${styles.btnAttente}`}
                 disabled={don.statut === "en_attente"}
               >
-                Mettre en Attente
+                Remettre en Attente
               </button>
             </div>
           </div>

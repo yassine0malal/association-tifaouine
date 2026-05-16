@@ -1631,7 +1631,7 @@ function DonationPage() {
   return (
     <div className={styles.donationPage}>
       {/* page hero section */}
-      <PageHero title="Hope Starts With You" heroImg={mountainImg} />
+      <PageHero title={t("hero.title")} heroImg={mountainImg} />
 
       {/* current needs section */}
       <CurrentNeeds t={t} />

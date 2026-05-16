@@ -95,7 +95,7 @@ const eventsAdminSlice = createSlice({
         state.loading = false;
         state.data = action.payload?.data || [];
         state.totalPages = action.payload?.pagination?.totalPages || 1;
-        state.total = action.payload?.pagination?.totalItems || 0;
+        state.total = action.payload?.pagination?.total || 0;
       })
       .addCase(fetchEventsAdmin.rejected, (state, action) => {
         state.loading = false;

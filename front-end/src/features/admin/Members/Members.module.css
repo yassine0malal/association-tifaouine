@@ -156,8 +156,8 @@
 }
 
 .avatar {
-  width: 72px;
-  height: 72px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   object-fit: cover;
   border: 3px solid var(--accent-light, rgba(203,145,79,0.3));

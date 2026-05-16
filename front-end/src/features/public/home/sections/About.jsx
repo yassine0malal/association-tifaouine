@@ -56,7 +56,7 @@ export default function AboutUs() {
               </div>
               <div className={styles.imageBadge}>
                 <span className={styles.badgeNumber}>10</span>
-                <span className={styles.badgeLabel}>years of impact</span>
+                <span className={styles.badgeLabel}>{t("about.imageBadge")}</span>
               </div>
             </div>
           </div>
@@ -64,14 +64,21 @@ export default function AboutUs() {
 
         {/* Stats */}
         <div className={styles.statsGrid}>
-          {stats.map((stat, i) => (
-            <div className={styles.statItem} key={i} style={{ "--delay": `${i * 0.1}s` }}>
-              <div className={styles.statValue}>
-                {stat.value}<span className={styles.statSuffix}>{stat.suffix}</span>
+          {stats.map((stat, i) => {
+            const statsTranslated = t("about.stats", { returnObjects: true });
+            const label = Array.isArray(statsTranslated) && statsTranslated[i] 
+              ? statsTranslated[i].label 
+              : stat.label;
+
+            return (
+              <div className={styles.statItem} key={i} style={{ "--delay": `${i * 0.1}s` }}>
+                <div className={styles.statValue}>
+                  {stat.value}<span className={styles.statSuffix}>{stat.suffix}</span>
+                </div>
+                <div className={styles.statLabel}>{label}</div>
               </div>
-              <div className={styles.statLabel}>{stat.label}</div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
