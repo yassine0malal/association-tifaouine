@@ -27,7 +27,8 @@ const LoadingFallback = () => (
 // Removed static domains array since we use useTranslation inside the component
 
 function HeroSection() {
-  const { t } = useTranslation("home");
+  const { t , i18n } = useTranslation("home");
+  const currentLang = i18n.language
   const [activeIndex, setActiveIndex] = useState(0);
 
   const domains = useMemo(() => [
@@ -37,7 +38,7 @@ function HeroSection() {
       title: t("hero.education.title"),
       description: t("hero.education.description"),
       img: carousel1,
-      ctaLink: "/domaines",
+      ctaLink: "/domains",
       ctaText: t("hero.education.cta")
     },
     {
@@ -46,7 +47,7 @@ function HeroSection() {
       title: t("hero.health.title"),
       description: t("hero.health.description"),
       img: carousel2,
-      ctaLink: "/domaines",
+      ctaLink: "/domains",
       ctaText: t("hero.health.cta")
     },
     {
@@ -55,7 +56,7 @@ function HeroSection() {
       title: t("hero.environment.title"),
       description: t("hero.environment.description"),
       img: carousel3,
-      ctaLink: "/domaines",
+      ctaLink: "/domains",
       ctaText: t("hero.environment.cta")
     },
     {
@@ -64,7 +65,7 @@ function HeroSection() {
       title: t("hero.social.title"),
       description: t("hero.social.description"),
       img: carousel4,
-      ctaLink: "/domaines",
+      ctaLink: "/domains",
       ctaText: t("hero.social.cta")
     }
   ], [t]);
@@ -130,7 +131,7 @@ function HeroSection() {
                   <h1 className={styles.title}>{domain.title}</h1>
                   <p className={styles.description}>{domain.description}</p>
                   <Link 
-                    to={domain.ctaLink} 
+                    to={`/${currentLang}/${domain.ctaLink}`} 
                     className={styles.ctaButton}
                     aria-label={`Learn more about ${domain.label}`}
                   >

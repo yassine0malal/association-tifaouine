@@ -22,27 +22,6 @@
   direction: rtl;
 }
 
-/* Adjust navigation buttons for RTL */
-[dir="rtl"] :global(.swiper-button-next) {
-  left: 16px !important;
-  right: auto !important;
-}
-
-[dir="rtl"] :global(.swiper-button-prev) {
-  right: calc(100% - 148px) !important;
-  left: auto !important;
-}
-
-:global(.swiper-button-prev),
-:global(.swiper-button-next) {
-  rotate: 180deg;
-}
-
-[dir="rtl"] :global(.swiper-button-prev),
-[dir="rtl"] :global(.swiper-button-next) {
-  rotate: 0deg;
-}
-
 /* Flip the next/prev icons in RTL mode */
 [dir="rtl"] :global(.swiper-button-next::after) {
   content: '' !important;
@@ -117,9 +96,9 @@
   letter-spacing: clamp(0.25rem, 1vw, 1.25rem);
   background: linear-gradient(
     to bottom,
-    #fff 20%,
-    rgba(255, 255, 255, 0.6) 60%,
-    rgba(255, 255, 255, 0.2)
+    #fff 60%,
+    rgba(255, 255, 255, 0.4) 70%,
+    rgba(255, 255, 255, 0.1)
   );
   background-clip: text;
   -webkit-background-clip: text;
@@ -180,21 +159,16 @@
   height: 32px !important;
   border-radius: 17px;
   transition: all 0.3s ease;
-  top: calc(100% - 40px) !important;
-  /* Ensure buttons are visible on small screens */
   opacity: 0.9;
+  top: calc(100% - 50px) !important;
   backdrop-filter: blur(4px);
 }
 
-/* Default positions (LTR) */
 :global(.swiper-button-next) {
-  right: 16px !important;
-  left: auto !important;
+  left: 10px !important;
 }
-
 :global(.swiper-button-prev) {
-  left: calc(100% - 148px) !important;
-  right: auto !important;
+  right: 10px !important;
 }
 
 :global(.swiper-button-next svg),
@@ -250,31 +224,6 @@
     padding: 0.75rem 1.5rem;
     font-size: 0.9rem;
   }
-
-  /* Show navigation on tablets but adjust positioning */
-  :global(.swiper-button-next),
-  :global(.swiper-button-prev) {
-    width: 48px !important;
-    height: 28px !important;
-    top: calc(100% - 50px) !important;
-  }
-  
-  :global(.swiper-button-next) {
-    right: 12px !important;
-  }
-  
-  :global(.swiper-button-prev) {
-    left: calc(100% - 112px) !important;
-  }
-  
-  /* RTL adjustments for tablet */
-  [dir="rtl"] :global(.swiper-button-next) {
-    left: 12px !important;
-  }
-  
-  [dir="rtl"] :global(.swiper-button-prev) {
-    right: calc(100% - 112px) !important;
-  }
 }
 
 /* Mobile devices */
@@ -299,38 +248,8 @@
     padding: 0.7rem 1.3rem;
     font-size: 0.85rem;
   }
-  
-  /* Keep navigation buttons on mobile (many users expect them) 
-     but make them smaller and more subtle */
-  :global(.swiper-button-next),
-  :global(.swiper-button-prev) {
-    width: 40px !important;
-    height: 26px !important;
-    top: calc(100% - 45px) !important;
-    background: rgba(255, 255, 255, 0.25);
-  }
-  
-  :global(.swiper-button-next) {
-    right: 8px !important;
-  }
-  
-  :global(.swiper-button-prev) {
-    left: calc(100% - 88px) !important;
-  }
-  
-  :global(.swiper-button-next::after),
-  :global(.swiper-button-prev::after) {
-    font-size: 0.4rem !important;
-  }
-  
-  /* RTL adjustments for mobile */
-  [dir="rtl"] :global(.swiper-button-next) {
-    left: 8px !important;
-  }
-  
-  [dir="rtl"] :global(.swiper-button-prev) {
-    right: calc(100% - 88px) !important;
-  }
+
+
 }
 
 /* Very small devices (e.g., iPhone SE, Galaxy Fold) */
@@ -357,14 +276,6 @@
     width: 36px !important;
     height: 24px !important;
   }
-  
-  :global(.swiper-button-prev) {
-    left: calc(100% - 74px) !important;
-  }
-  
-  [dir="rtl"] :global(.swiper-button-prev) {
-    right: calc(100% - 74px) !important;
-  }
 }
 
 /* Performance optimization */
@@ -389,13 +300,7 @@
   .ctaButton:hover {
     transform: none;
   }
-  
-  /* Better touch targets for navigation on touch devices */
-  :global(.swiper-button-next),
-  :global(.swiper-button-prev) {
-    width: 44px !important;
-    height: 32px !important;
-  }
+
 }
 
 /* Landscape orientation adjustments for mobile */

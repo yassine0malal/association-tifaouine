@@ -357,9 +357,12 @@ function ApplicationForm({ path, styles }) {
         throw new Error("Submission failed");
       }
     } catch (error) {
+      const backendMessage = error.response?.data?.message 
+        || error.response?.data?.errors?.join(', ') 
+        || null;
       setSubmitStatus({
         type: "error",
-        message: t("applicationForm.response.error"),
+        message: backendMessage || t("applicationForm.response.error"),
       });
     } finally {
       setIsSubmitting(false);

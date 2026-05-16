@@ -107,7 +107,6 @@
 }
 
 .heading {
-  font-family: 'Playfair Display', Georgia, serif;
   font-size: clamp(36px, 5.5vw, 64px);
   font-weight: 700;
   color: var(--charcoal);
@@ -134,7 +133,6 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  font-family: 'Jost', sans-serif;
   font-size: 14px;
   font-weight: 600;
   letter-spacing: .08em;
@@ -155,6 +153,11 @@
   font-style: normal;
   transition: transform .25s;
 }
+
+[dir="rtl"] .arrow {
+  rotate: 180deg;
+}
+
 
 .seeMore:hover .arrow {
   transform: translateX(4px);

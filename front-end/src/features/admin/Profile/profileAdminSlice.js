@@ -6,7 +6,7 @@ export const fetchAdminProfile = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await protectedApi.get("/api/auth/profile");
-      return response.data.data;
+      return response.data.user;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || "Erreur de chargement du profil");
     }
@@ -18,7 +18,7 @@ export const updateAdminProfile = createAsyncThunk(
   async (formData, { rejectWithValue }) => {
     try {
       const response = await protectedApi.put("/api/auth/profile", formData);
-      return response.data.data;
+      return response.data.user;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || "Erreur de mise à jour du profil");
     }

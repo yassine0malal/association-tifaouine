@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { fetchBenevolesAdmin, setPage } from "./benevolesAdminSlice";
+import { fetchBenevolesAdmin, setPage, deleteBenevole } from "./benevolesAdminSlice";
 import styles from "./Benevoles.module.css";
 import Pagination from "../../../components/common/Pagination";
-import { FaEye } from "react-icons/fa";
+import ConfirmPopup from "../../../components/popup/ConfirmPopup";
+import { FaEye, FaTrash, FaArrowLeft, FaPlus } from "react-icons/fa";
 import avatarPlaceholder from "../../../assets/images/admin/avatar_placeholder.png";
 
 const BASE_BACK_END_URL = import.meta.env.VITE_BASE_BACK_END_URL;
@@ -15,6 +16,9 @@ export default function AdminBenevolesList() {
   const { data: benevoles, loading, currentPage, totalPages, total } = useSelector(
     (state) => state.benevolesAdmin
   );
+
+  const [popup, setPopup] = useState({ open: false, id: null, name: "" });
+  const [message, setMessage] = useState(null);
 
   useEffect(() => {
     dispatch(fetchBenevolesAdmin({ page: currentPage, limit: 10 }));
@@ -28,15 +32,53 @@ export default function AdminBenevolesList() {
     return styles[`status-${status}`] || styles.statusBadge;
   };
 
+  const handleDeleteClick = (id, name) => {
+    setPopup({ open: true, id, name });
+  };
+
+  const confirmDelete = async () => {
+    try {
+      await dispatch(deleteBenevole(popup.id)).unwrap();
+      setPopup({ open: false, id: null, name: "" });
+      setMessage({ type: "success", text: "Bénévole supprimé avec succès." });
+      setTimeout(() => setMessage(null), 3000);
+      
+      if (benevoles.length === 1 && currentPage > 1) {
+        dispatch(setPage(currentPage - 1));
+      } else {
+        dispatch(fetchBenevolesAdmin({ page: currentPage, limit: 10 }));
+      }
+    } catch (error) {
+      setMessage({ type: "error", text: "Erreur lors de la suppression: " + error });
+      setTimeout(() => setMessage(null), 5000);
+    }
+  };
+
   return (
     <div className={styles.container}>
+      <button className={styles.backBtn} onClick={() => navigate("/admin")}>
+        <FaArrowLeft /> Retour au tableau de bord
+      </button>
+
       <header className={styles.header}>
-        <h1 className={styles.title}>Candidatures Bénévoles ({total})</h1>
+        <h1 className={styles.title}>Candidatures & Bénévoles ({total ?? 0})</h1>
+        <button className={styles.fab} onClick={() => navigate("/admin/benevoles/create")}>
+          <FaPlus /> Ajouter un bénévole
+        </button>
       </header>
+
+      {message && (
+        <div className={`${styles.message} ${message.type === "success" ? styles.msgSuccess : styles.msgError}`}>
+          {message.type === "success" ? "✓" : "✗"} {message.text}
+        </div>
+      )}
 
       <div className={styles.tableContainer}>
         {loading ? (
-          <p style={{ padding: "20px" }}>Chargement...</p>
+          <div style={{ display: "flex", justifyContent: "center", alignItems: "center", padding: "80px 20px", flexDirection: "column", gap: "16px" }}>
+            <div className={styles.spinner}></div>
+            <p style={{ color: "var(--paragraph-color)" }}>Chargement des bénévoles...</p>
+          </div>
         ) : (
           <table className={styles.table}>
             <thead>
@@ -52,33 +94,41 @@ export default function AdminBenevolesList() {
             </thead>
             <tbody>
               {benevoles.map((benevole) => {
-                const user = benevole;
                 return (
                   <tr key={benevole.id}>
                     <td>
                       <img 
                         src={benevole.photo_profile ? `${BASE_BACK_END_URL}${benevole.photo_profile}` : avatarPlaceholder} 
-                        alt={user.nom} 
+                        alt={benevole.nom} 
                         className={styles.avatar} 
                       />
                     </td>
-                    <td>{user.nom || "N/A"}</td>
-                    <td>{user.email || "N/A"}</td>
+                    <td>{benevole.nom || "N/A"}</td>
+                    <td>{benevole.email || "N/A"}</td>
                     <td>{benevole.telephone || "N/A"}</td>
                     <td>{new Date(benevole.date_adhesion).toLocaleDateString("fr-FR")}</td>
                     <td>
                       <span className={`${styles.statusBadge} ${getStatusClass(benevole.status)}`}>
-                        {benevole.status.replace("_", " ")}
+                        {benevole.status?.replace("_", " ") || "en attente"}
                       </span>
                     </td>
                     <td>
-                      <button 
-                        className={styles.actionBtn} 
-                        onClick={() => navigate(`/admin/benevoles/${benevole.id}`)}
-                        title="Voir les détails"
-                      >
-                        <FaEye />
-                      </button>
+                      <div className={styles.actionIcons}>
+                        <button 
+                          className={styles.actionBtn} 
+                          onClick={() => navigate(`/admin/benevoles/${benevole.id}`)}
+                          title="Voir les détails"
+                        >
+                          <FaEye />
+                        </button>
+                        <button 
+                          className={`${styles.actionBtn} ${styles.deleteBtn}`}
+                          onClick={() => handleDeleteClick(benevole.id, benevole.nom)}
+                          title="Supprimer"
+                        >
+                          <FaTrash />
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 );
@@ -104,6 +154,19 @@ export default function AdminBenevolesList() {
           />
         </div>
       )}
+
+      <ConfirmPopup
+        isOpen={popup.open}
+        onClose={() => setPopup({ open: false, id: null, name: "" })}
+        onConfirm={confirmDelete}
+        variant="danger"
+        title="Supprimer ce bénévole ?"
+        description="Voulez-vous vraiment supprimer ce bénévole ? Cette action est irréversible."
+        detailLabel="Bénévole"
+        detailValue={popup.name}
+        confirmLabel="Supprimer"
+        cancelLabel="Annuler"
+      />
     </div>
   );
 }

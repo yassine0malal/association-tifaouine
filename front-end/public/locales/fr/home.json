@@ -118,7 +118,14 @@
     "description": "Depuis 2010, l'Association Tifaouine se consacre à l'amélioration des communautés rurales de la région du Haut Atlas. À travers des initiatives locales dans l'éducation, la santé et le développement durable, nous nous efforçons de créer un changement positif durable.",
     "commitmentTitle": "Notre engagement",
     "commitmentDesc": "Travailler main dans la main avec les habitants pour bâtir des communautés résilientes et autonomes.",
-    "cta": "Lire la suite"
+    "cta": "Lire la suite",
+    "imageBadge": "ans d'impact",
+    "stats": [
+      { "label": "Bénéficiaires soutenus" },
+      { "label": "Projets communautaires" },
+      { "label": "Organisations partenaires" },
+      { "label": "Années d'impact communautaire" }
+    ]
   },
   "mission": {
     "eyebrow": "Notre Mission",
@@ -161,6 +168,23 @@
     "viewAll": "Voir tous les projets",
     "errorMsg": "Impossible de charger les projets. Veuillez réessayer plus tard.",
     "empty": "Aucun projet à afficher pour le moment.",
-    "categoryDefault": "Projet"
+    "categoryDefault": "Projet",
+    "list": [
+      {
+        "title": "Projet Igran d'Asni",
+        "domain": "Développement agricole",
+        "state": "Terminé"
+      },
+      {
+        "title": "Alimentation en eau potable du musée environnemental",
+        "domain": "Protection de l'environnement",
+        "state": "Terminé"
+      },
+      {
+        "title": "Jardin d'enfants et école coranique",
+        "domain": "Éducation et formation",
+        "state": "Terminé"
+      }
+    ]
   }
 }

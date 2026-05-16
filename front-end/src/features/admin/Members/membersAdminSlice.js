@@ -49,6 +49,18 @@ export const deleteMember = createAsyncThunk(
   }
 );
 
+export const createMember = createAsyncThunk(
+  "membersAdmin/create",
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await protectedApi.post("/api/membres", data);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || "Erreur lors de la création");
+    }
+  }
+);
+
 const membersAdminSlice = createSlice({
   name: "membersAdmin",
   initialState: {
@@ -107,6 +119,9 @@ const membersAdminSlice = createSlice({
       .addCase(deleteMember.fulfilled, (state, action) => {
         state.data = state.data.filter((m) => m.id !== action.payload);
         if (state.total > 0) state.total -= 1;
+      })
+      .addCase(createMember.fulfilled, (state) => {
+        if (state.total !== null) state.total += 1;
       });
   },
 });

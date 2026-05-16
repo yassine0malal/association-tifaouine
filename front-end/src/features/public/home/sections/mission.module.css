@@ -68,7 +68,6 @@
 }
 
 .title {
-  font-family: 'Playfair Display', Georgia, serif;
   font-size: clamp(28px, 4.5vw, 52px);
   font-weight: 700;
   line-height: 1.15;

@@ -118,7 +118,14 @@
     "description": "Since 2010, Tifaouine Association has been dedicated to uplifting rural communities in the High Atlas region. Through grassroots initiatives in education, health, and sustainable development, we strive to create lasting positive change.",
     "commitmentTitle": "Our commitment",
     "commitmentDesc": "Working hand in hand with locals to build resilient and self-sustaining communities.",
-    "cta": "Read More"
+    "cta": "Read More",
+    "imageBadge": "years of impact",
+    "stats": [
+      { "label": "Beneficiaries Supported" },
+      { "label": "Community Projects" },
+      { "label": "Partner Organizations" },
+      { "label": "Years of Community Impact" }
+    ]
   },
   "mission": {
     "eyebrow": "Our Mission",
@@ -161,6 +168,23 @@
     "viewAll": "View All Projects",
     "errorMsg": "Could not load projects. Please try again later.",
     "empty": "No projects to display at the moment.",
-    "categoryDefault": "Project"
+    "categoryDefault": "Project",
+    "list": [
+      {
+        "title": "Igran d'Asni Project",
+        "domain": "Agricultural Development",
+        "state": "Completed"
+      },
+      {
+        "title": "Drinking water supply for the environmental museum",
+        "domain": "Environmental Protection",
+        "state": "Completed"
+      },
+      {
+        "title": "Kindergarten and Quranic school",
+        "domain": "Education and training",
+        "state": "Completed"
+      }
+    ]
   }
 }

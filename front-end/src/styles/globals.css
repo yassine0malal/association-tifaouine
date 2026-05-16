@@ -59,5 +59,6 @@ img[aria-label="loading"] {
 
 /* Once images load, remove animation */
 img[loaded] {
-    animation: none;
+    animation: unset;
+    /* background: unset; */
 }

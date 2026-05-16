@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import styles from "./about.module.css";
 import { useTranslation } from "react-i18next";
+import about_img1 from "./../../../../assets/images/home/about1.jpeg"
+import about_img2 from "./../../../../assets/images/home/about2.jpeg"
 
 const stats = [
   { value: "500", suffix: "+", label: "Beneficiaries Supported" },
@@ -10,7 +12,8 @@ const stats = [
 ];
 
 export default function AboutUs() {
-  const { t } = useTranslation("home");
+  const { t , i18n } = useTranslation("home");
+  const currentLang = i18n.language
   return (
     <section className={styles.section}>
       {/* Decorative geometric background */}
@@ -35,7 +38,7 @@ export default function AboutUs() {
             <p className={styles.body}>
               {t("about.description")}
             </p>
-            <Link to="#" className={styles.seeMore}>
+            <Link to={`/${currentLang}/nous`} className={styles.seeMore}>
               {t("about.cta")}
               <span className={styles.arrow} aria-hidden="true">→</span>
             </Link>
@@ -46,14 +49,14 @@ export default function AboutUs() {
             <div className={styles.images}>
               <div className={styles.imageAccent} aria-hidden="true" />
               <div className={`${styles.image} ${styles.imageBack}`}>
-                <img src="https://picsum.photos/900/600?random=5" alt="Community members working together" />
+                <img src={about_img1} alt="Community members working together" />
               </div>
               <div className={`${styles.image} ${styles.imageFront}`}>
-                <img src="https://picsum.photos/900/600?random=4" alt="Youth education program" />
+                <img src={about_img2} alt="Youth education program" />
               </div>
               <div className={styles.imageBadge}>
                 <span className={styles.badgeNumber}>10</span>
-                <span className={styles.badgeLabel}>years of impact</span>
+                <span className={styles.badgeLabel}>{t("about.imageBadge")}</span>
               </div>
             </div>
           </div>
@@ -61,14 +64,21 @@ export default function AboutUs() {
 
         {/* Stats */}
         <div className={styles.statsGrid}>
-          {stats.map((stat, i) => (
-            <div className={styles.statItem} key={i} style={{ "--delay": `${i * 0.1}s` }}>
-              <div className={styles.statValue}>
-                {stat.value}<span className={styles.statSuffix}>{stat.suffix}</span>
+          {stats.map((stat, i) => {
+            const statsTranslated = t("about.stats", { returnObjects: true });
+            const label = Array.isArray(statsTranslated) && statsTranslated[i] 
+              ? statsTranslated[i].label 
+              : stat.label;
+
+            return (
+              <div className={styles.statItem} key={i} style={{ "--delay": `${i * 0.1}s` }}>
+                <div className={styles.statValue}>
+                  {stat.value}<span className={styles.statSuffix}>{stat.suffix}</span>
+                </div>
+                <div className={styles.statLabel}>{label}</div>
               </div>
-              <div className={styles.statLabel}>{stat.label}</div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

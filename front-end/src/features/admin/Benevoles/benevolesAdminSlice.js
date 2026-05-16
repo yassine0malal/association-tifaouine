@@ -49,6 +49,18 @@ export const deleteBenevole = createAsyncThunk(
   }
 );
 
+export const createBenevole = createAsyncThunk(
+  "benevolesAdmin/create",
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await protectedApi.post("/api/benevoles", data);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || "Erreur lors de la création");
+    }
+  }
+);
+
 const benevolesAdminSlice = createSlice({
   name: "benevolesAdmin",
   initialState: {
@@ -107,6 +119,11 @@ const benevolesAdminSlice = createSlice({
       .addCase(deleteBenevole.fulfilled, (state, action) => {
         state.data = state.data.filter((b) => b.id !== action.payload);
         if (state.total > 0) state.total -= 1;
+      })
+      .addCase(createBenevole.fulfilled, (state, action) => {
+        // Optionnel: on pourrait ajouter le nouveau bénévole au state, 
+        // mais souvent on redirige vers la liste qui refetch.
+        if (state.total !== null) state.total += 1;
       });
   },
 });
