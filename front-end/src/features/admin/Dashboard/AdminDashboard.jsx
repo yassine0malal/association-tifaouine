@@ -23,18 +23,18 @@ const formatDate = (isoString) => {
 
 const getRoleBadgeClass = (type) => {
     switch (type?.toLowerCase()) {
-        case 'admin':    return styles.roleAdmin;
-        case 'membre':   return styles.roleMembre;
+        case 'admin': return styles.roleAdmin;
+        case 'membre': return styles.roleMembre;
         case 'benevole': return styles.roleBenevole;
-        default:         return styles.roleMembre;
+        default: return styles.roleMembre;
     }
 };
 
 // ─── Component ─────────────────────────────────────────────
 
 const AdminDashboard = () => {
-    const dispatch  = useDispatch();
-    const navigate  = useNavigate();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const { stats, loading, error } = useSelector((state) => state.dashboard);
 
     useEffect(() => {
@@ -44,41 +44,41 @@ const AdminDashboard = () => {
     // Build stats cards from live data
     const statsData = [
         {
-            title:       "Total Projets",
-            value:       loading ? '…' : stats.total_projets,
-            trend:       "+ 5%",
+            title: "Total Projets",
+            value: loading ? '…' : stats.total_projets,
+            trend: "+ 5%",
             description: "Augmentation ce mois",
-            icon:        "arrow-up-right",
-            highlight:   true,
+            icon: "arrow-up-right",
+            highlight: true,
         },
         {
-            title:       "Total Événements",
-            value:       loading ? '…' : stats.total_evenements,
-            trend:       "+ 3%",
+            title: "Total Événements",
+            value: loading ? '…' : stats.total_evenements,
+            trend: "+ 3%",
             description: "Augmentation ce mois",
-            icon:        "calendar",
+            icon: "calendar",
         },
         {
-            title:       "Total Domaines",
-            value:       loading ? '…' : stats.total_domaines,
-            trend:       "+ 3%",
+            title: "Total Domaines",
+            value: loading ? '…' : stats.total_domaines,
+            trend: "+ 3%",
             description: "Augmentation ce mois",
-            icon:        "news",
+            icon: "news",
         },
         {
-            title:       "Total Dons",
-            value:       loading ? '…' : formatMoney(stats.total_dons_financiers),
-            trend:       "+ 8%",
+            title: "Total Dons",
+            value: loading ? '…' : formatMoney(stats.total_dons_financiers),
+            trend: "+ 8%",
             description: "Augmentation ce mois",
-            icon:        "money",
+            icon: "money",
         },
     ];
 
     const iconMap = {
         "arrow-up-right": <ArrowUpRightIcon />,
-        "calendar":       <CalendarIcon />,
-        "news":           <NewsIcon />,
-        "money":          <MoneyIcon />,
+        "calendar": <CalendarIcon />,
+        "news": <NewsIcon />,
+        "money": <MoneyIcon />,
     };
 
     return (
@@ -153,38 +153,40 @@ const AdminDashboard = () => {
                             Chargement…
                         </p>
                     ) : (
-                        <table className={styles.requestsTable}>
-                            <thead>
-                                <tr>
-                                    <th>Nom</th>
-                                    <th>Email</th>
-                                    <th>Rôle</th>
-                                    <th>Date d'inscription</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {(stats.recent_users ?? []).map((user) => (
-                                    <tr key={user.id}>
-                                        <td>{user.nom}</td>
-                                        <td>{user.email}</td>
-                                        <td>
-                                            <span className={`${styles.statusBadge} ${getRoleBadgeClass(user.type)}`}>
-                                                {user.type}
-                                            </span>
-                                        </td>
-                                        <td>{formatDate(user.created_at)}</td>
-                                    </tr>
-                                ))}
-
-                                {!loading && stats.recent_users?.length === 0 && (
+                        <div className={styles.tableWrapper}>
+                            <table className={styles.requestsTable}>
+                                <thead>
                                     <tr>
-                                        <td colSpan={4} style={{ textAlign: 'center', color: '#a09585', fontFamily: 'sans-serif', fontSize: '0.85rem' }}>
-                                            Aucun utilisateur récent.
-                                        </td>
+                                        <th>Nom</th>
+                                        <th>Email</th>
+                                        <th>Rôle</th>
+                                        <th>Date d'inscription</th>
                                     </tr>
-                                )}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    {(stats.recent_users ?? []).map((user) => (
+                                        <tr key={user.id}>
+                                            <td data-label="Nom">{user.nom}</td>
+                                            <td data-label="Email">{user.email}</td>
+                                            <td data-label="Rôle">
+                                                <span className={`${styles.statusBadge} ${getRoleBadgeClass(user.type)}`}>
+                                                    {user.type}
+                                                </span>
+                                            </td>
+                                            <td data-label="Date">{formatDate(user.created_at)}</td>
+                                        </tr>
+                                    ))}
+
+                                    {!loading && stats.recent_users?.length === 0 && (
+                                        <tr>
+                                            <td colSpan={4} style={{ textAlign: 'center', color: '#a09585', fontFamily: 'sans-serif', fontSize: '0.85rem' }}>
+                                                Aucun utilisateur récent.
+                                            </td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
                     )}
                 </section>
 

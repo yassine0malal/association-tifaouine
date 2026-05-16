@@ -11,6 +11,13 @@ import BackButton from "../../../../components/common/admin/BackButton";
 
 const BASE_BACK_END_URL = import.meta.env.VITE_BASE_BACK_END_URL;
 
+const formatSize = (bytes) => {
+    if (!bytes) return "Taille inconnue";
+    if (bytes < 1024) return bytes + " B";
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " KB";
+    return (bytes / (1024 * 1024)).toFixed(1) + " MB";
+};
+
 export default function AdminProjetEdit() {
     const { id } = useParams();
     const navigate = useNavigate();
@@ -365,14 +372,30 @@ export default function AdminProjetEdit() {
                                 <div className={styles.galleryItem}>
                                     <img src={imagePrincipale.url} alt="miniature-principale" />
                                     <span className={styles.mainBadge}>Principale</span>
+                                    <div className={styles.imageDetails}>
+                                        <span className={styles.imageName} title={imagePrincipale.file ? imagePrincipale.file.name : imagePrincipale.url.split('/').pop()}>
+                                            {imagePrincipale.file ? imagePrincipale.file.name : imagePrincipale.url.split('/').pop()}
+                                        </span>
+                                        <span className={styles.imageSize}>
+                                            {imagePrincipale.file ? formatSize(imagePrincipale.file.size) : "Image existante"}
+                                        </span>
+                                    </div>
                                 </div>
                             )}
                             {extraImages.map((img, i) => (
                                 <div key={i} className={styles.galleryItem}>
                                     <img src={img.url} alt={`extra-${i}`} />
-                                    <button type="button" className={styles.removeBtn} onClick={() => removeExtra(i)}>
+                                    <button type="button" className={styles.removeBtn} onClick={() => removeExtra(i)} title="Supprimer">
                                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M18 6 6 18M6 6l12 12" /></svg>
                                     </button>
+                                    <div className={styles.imageDetails}>
+                                        <span className={styles.imageName} title={img.file ? img.file.name : img.url.split('/').pop()}>
+                                            {img.file ? img.file.name : img.url.split('/').pop()}
+                                        </span>
+                                        <span className={styles.imageSize}>
+                                            {img.file ? formatSize(img.file.size) : "Image existante"}
+                                        </span>
+                                    </div>
                                 </div>
                             ))}
                             <div className={styles.addMoreBtn} onClick={() => extraFileRef.current.click()}>
@@ -411,7 +434,14 @@ export default function AdminProjetEdit() {
                                             <path d="M18 6 6 18M6 6l12 12" />
                                         </svg>
                                     </button>
-                                    <span className={styles.videoName}>{v.file?.name || "Vidéo existante"}</span>
+                                    <div className={styles.videoDetails}>
+                                        <span className={styles.videoName} title={v.file ? v.file.name : (typeof v.url === 'string' ? v.url.split('/').pop() : 'Vidéo')}>
+                                            {v.file ? v.file.name : (typeof v.url === 'string' ? v.url.split('/').pop() : 'Vidéo existante')}
+                                        </span>
+                                        <span className={styles.videoSize}>
+                                            {v.file ? formatSize(v.file.size) : "Vidéo existante"}
+                                        </span>
+                                    </div>
                                 </div>
                             ))}
                         </div>

@@ -342,3 +342,45 @@
   font-weight: 600;
   text-transform: capitalize;
 }
+
+@media (max-width: 600px) {
+    /* Hide the table headers */
+    .requestsTable thead {
+        display: none;
+    }
+
+    /* Make each row look like a card */
+    .requestsTable tr {
+        display: block;
+        margin-bottom: 15px;
+        border: 1px solid #eee;
+        border-radius: 12px;
+        padding: 10px;
+        background: #fff;
+    }
+
+    /* Make each cell display on a new line with its label */
+    .requestsTable td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-align: right;
+        padding: 8px 5px;
+        border-bottom: 1px solid #f9f9f9;
+        font-size: 13px;
+    }
+
+    .requestsTable td:last-child {
+        border-bottom: none;
+    }
+
+    /* Inject the label from the data-label attribute */
+    .requestsTable td::before {
+        content: attr(data-label);
+        font-weight: 700;
+        color: #888;
+        text-transform: uppercase;
+        font-size: 11px;
+        text-align: left;
+    }
+}

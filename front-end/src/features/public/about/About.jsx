@@ -39,29 +39,31 @@ import i18n from 'i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchMembres } from './membresSlice';
 
-
 const BASE_BACK_END_URL = import.meta.env.VITE_BASE_BACK_END_URL;
 
-
-
 const About = () => {
-
   const { membres: teamData, loading, error } = useSelector((state) => state.membres);
   const { partenaires: partners, loading: partenairesLoading } = useSelector((state) => state.partenaires);
   const dispatch = useDispatch();
+  
   const [trackWidth, setTrackWidth] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-  const trackRef = useRef(null);
-  const x = useMotionValue(0);
+  const [isHovered, setIsHovered] = useState(false);
   const [index, setIndex] = useState(0);
   const [visibleItems, setVisibleItems] = useState(4);
   const { t } = useTranslation("about");
   const [isRTL, setIsRTL] = useState(i18n.language === "ar");
   const isRTLRef = useRef(i18n.language === "ar");
-  const lang = i18n.language
-  //Refferences
-  const tiltRefs = useRef(new Map())
+  const lang = i18n.language;
 
+  const trackRef = useRef(null);
+  const x = useMotionValue(0);
+  const tiltRefs = useRef(new Map());
+
+  // Refs for custom drag tracking and inertia physics
+  const isDraggingRef = useRef(false);
+  const lastPointerXRef = useRef(0);
+  const lastTimeRef = useRef(0);
+  const velocityRef = useRef(0);
 
   const infiniteData = [...teamData, ...teamData, ...teamData];
 
@@ -94,20 +96,13 @@ const About = () => {
     dispatch(fetchPartenaires({ lang }));
   }, [lang]);
 
-
-
   useEffect(() => {
     const updateDirection = (lng) => {
-
       const rtl = lng === "ar";
       isRTLRef.current = rtl;
       setIsRTL(rtl);
       setIndex(0);
-
-      if (trackWidth > 0) {
-        x.set(0); //  reset simple à zéro
-      } else {
-      }
+      x.set(0);
     };
 
     i18n.on("languageChanged", updateDirection);
@@ -117,7 +112,6 @@ const About = () => {
   useEffect(() => {
     const updateWidth = () => {
       if (trackRef.current) {
-        // With 3 copies, the width of one copy = scrollWidth / 3
         const measured = trackRef.current.scrollWidth / 3;
         setTrackWidth(measured);
       }
@@ -125,23 +119,13 @@ const About = () => {
     updateWidth();
     window.addEventListener('resize', updateWidth);
     return () => window.removeEventListener('resize', updateWidth);
-  }, []);
+  }, [teamData]);
 
-  const handleDragEnd = () => {
-    setIsPaused(false);
-    let currentX = x.get();
-
-    if (isRTLRef.current) {
-      // RTL: wrap within [0, trackWidth]
-      while (currentX > trackWidth) currentX -= trackWidth;
-      while (currentX < 0) currentX += trackWidth;
-    } else {
-      // LTR: wrap within [-trackWidth, 0]
-      while (currentX < -trackWidth) currentX += trackWidth;
-      while (currentX > 0) currentX -= trackWidth;
+  useEffect(() => {
+    if (trackWidth > 0) {
+      x.set(0);
     }
-    x.set(currentX);
-  };
+  }, [trackWidth]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -158,34 +142,82 @@ const About = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  useEffect(() => {
-    if (trackWidth > 0) {
-      x.set(0); // toujours 0, quelle que soit la langue
+  // Custom unified pointer handlers for ultra-smooth tracking
+  const handlePointerDown = (e) => {
+    isDraggingRef.current = true;
+    lastPointerXRef.current = e.clientX;
+    lastTimeRef.current = performance.now();
+    velocityRef.current = 0;
+    e.currentTarget.setPointerCapture(e.pointerId);
+  };
+
+  const handlePointerMove = (e) => {
+    if (!isDraggingRef.current || trackWidth === 0) return;
+
+    const currentTime = performance.now();
+    const timeDelta = currentTime - lastTimeRef.current;
+    const currentPointerX = e.clientX;
+    const pointerDeltaX = currentPointerX - lastPointerXRef.current;
+
+    // Calculate drag velocity scaled to standard ~60fps frames
+    if (timeDelta > 0) {
+      const instantVelocity = (pointerDeltaX / timeDelta) * 16.666;
+      velocityRef.current = velocityRef.current * 0.6 + instantVelocity * 0.4; // smooth velocity jitter
     }
-  }, [trackWidth]);
 
-  useAnimationFrame((t, delta) => {
-    if (isPaused || trackWidth === 0) return;
+    let newX = x.get() + pointerDeltaX;
 
-    const direction = isRTLRef.current ? 1 : -1;
-    const moveBy = direction * 0.05 * delta;
-    let newX = x.get() + moveBy;
-
-    // Symmetric rebound for LTR and RTL
+    // Instant seamless wrapping DURING manual drag tracking
     if (isRTLRef.current) {
-      // RTL: keep x between 0 and trackWidth
-      if (newX > trackWidth) newX -= trackWidth;
-      else if (newX < 0) newX += trackWidth;
+      while (newX > trackWidth) newX -= trackWidth;
+      while (newX < 0) newX += trackWidth;
     } else {
-      // LTR: keep x between -trackWidth and 0
-      if (newX < -trackWidth) newX += trackWidth;
-      else if (newX > 0) newX -= trackWidth;
+      while (newX < -trackWidth) newX += trackWidth;
+      while (newX > 0) newX -= trackWidth;
     }
 
     x.set(newX);
-  });
 
-  console.log("0000",)
+    lastPointerXRef.current = currentPointerX;
+    lastTimeRef.current = currentTime;
+  };
+
+  const handlePointerUp = (e) => {
+    if (!isDraggingRef.current) return;
+    isDraggingRef.current = false;
+    e.currentTarget.releasePointerCapture(e.pointerId);
+  };
+
+  // High performance unified loop for auto-scroll + momentum deceleration
+  useAnimationFrame((t, delta) => {
+    if (trackWidth === 0 || isDraggingRef.current) return;
+
+    let currentX = x.get();
+
+    if (Math.abs(velocityRef.current) > 0.1) {
+      // Apply smooth momentum coasting after release
+      currentX += velocityRef.current * (delta / 16.666);
+      velocityRef.current *= 0.95; // Friction value
+    } else {
+      // Apply clean auto-scroll if idle
+      if (!isHovered) {
+        const direction = isRTLRef.current ? 1 : -1;
+        const moveBy = direction * 0.05 * delta;
+        currentX += moveBy;
+      }
+    }
+
+    // Seamless wrapper guard rails
+    if (isRTLRef.current) {
+      while (currentX > trackWidth) currentX -= trackWidth;
+      while (currentX < 0) currentX += trackWidth;
+    } else {
+      while (currentX < -trackWidth) currentX += trackWidth;
+      while (currentX > 0) currentX -= trackWidth;
+    }
+
+    x.set(currentX);
+  });
 
   return (
     <>
@@ -193,17 +225,13 @@ const About = () => {
       <div className={styles.AboutSection}>
 
         <div className={styles.associationDescription}>
-
-          {/* ----First section of the definition of the association-----  */}
           <div className={styles.imageWrapper}>
             <img src={association} alt="tifaouine" />
           </div>
           <div className={styles.description}>
             <p>{t('intro.question')}</p>
             <h2>{t('intro.title')}</h2>
-            <p>
-              {t('intro.description')}
-            </p>
+            <p>{t('intro.description')}</p>
 
             <div className={styles.options}>
               <div className={styles.optionWarper}>
@@ -228,39 +256,36 @@ const About = () => {
                   <p className="phoneNumber">{t('actions.phone')}</p>
                 </div>
               </div>
-
-
             </div>
-
           </div>
-
-
         </div>
 
         <div className={styles.hashtage}>
           <h3>{t('stats.title')}</h3>
-
           <p>{t('stats.list')}</p>
         </div>
 
-        {/* Carousel Card */}
+        {/* Improved Interactive Carousel Wrapper */}
         <div className={styles.carouselWrapper}>
           <h2>{t('team.title')}</h2>
           <motion.div
             ref={trackRef}
             className={styles.carouselTrack}
-            drag="x"
-            style={{ x }}
-            onDragStart={() => setIsPaused(true)}
-            onDragEnd={handleDragEnd}   // ← use the new handler
-            onMouseEnter={() => setIsPaused(true)}
-            onMouseLeave={() => setIsPaused(false)}
+            style={{ x, touchAction: 'none', cursor: isDraggingRef.current ? 'grabbing' : 'grab' }}
+            onPointerDown={handlePointerDown}
+            onPointerMove={handlePointerMove}
+            onPointerUp={handlePointerUp}
+            onPointerCancel={handlePointerUp}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => {
+              setIsHovered(false);
+              isDraggingRef.current = false;
+            }}
           >
             {infiniteData.map((item, index) => (
               <CarouselCard key={index} item={item} styles={styles} />
             ))}
           </motion.div>
-
         </div>
 
         {/* ----- Numbers Section ---- */}
@@ -272,7 +297,6 @@ const About = () => {
             {t('impact.items', { returnObjects: true }).map((item, index) => (
               <article key={index} ref={(el) => setTitlRef(el, index + 1)}>
                 <div className={styles.cercle}>
-                  {/* Les icônes SVG peuvent rester inchangées ou être aussi gérées dynamiquement */}
                   {index === 0 && (
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" width="35" height="35">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
@@ -305,38 +329,19 @@ const About = () => {
 
         {/* ----- Gallery of association ---- */}
         <section className={styles.gallery}>
-
           <h1>Gallery</h1>
-
           <div className={styles.content}>
-            <article>
-              <img src={centre} alt="" />
-            </article>
-
-            <article>
-              <img src={children} alt="" />
-            </article>
-
-            <article>
-              <img src={energy} alt="" />
-            </article>
-
-            <article>
-              <img src={nature} alt="" />
-            </article>
-
-            <article>
-              <img src={science} alt="" />
-            </article>
+            <article><img src={centre} alt="" /></article>
+            <article><img src={children} alt="" /></article>
+            <article><img src={energy} alt="" /></article>
+            <article><img src={nature} alt="" /></article>
+            <article><img src={science} alt="" /></article>
           </div>
-
         </section>
 
         <div className={styles.partenaires}>
           <h2>{t('partners.title')}</h2>
-          <div
-            className={styles.slide}
-          >
+          <div className={styles.slide}>
             <motion.div
               animate={{
                 x: isRTL
@@ -346,18 +351,15 @@ const About = () => {
               transition={{ type: "spring", stiffness: 80, damping: 20 }}
               className={styles.partenairesImages}
             >
-
               {partners.map((p) => (
                 <div
                   key={p.id}
                   className={styles.partnerCard}
                   style={{ minWidth: `${100 / visibleItems}%` }}
                 >
-
-                  <img src={p.image ? `${BASE_BACK_END_URL}${p.image}` : defaultPartner} alt={p.name} />
+                  <img src={p.image ? `${BASE_BACK_END_URL}${p.image}` : defaultPartner} alt={p.name} title={p.name} />
                 </div>
               ))}
-
             </motion.div>
           </div>
 
@@ -365,8 +367,6 @@ const About = () => {
             <button onClick={prev} > <img src={arrow} /> </button>
             <button onClick={next} > <img src={arrow} /> </button>
           </div>
-
-
         </div>
 
       </div >
@@ -374,21 +374,17 @@ const About = () => {
   );
 }
 
-
-
 const CarouselCard = ({ item, styles }) => {
   return (
     <div className={styles.cardGroup}>
-      <motion.div
-        className={styles.carouselCard}
-        whileTap={{ cursor: "grabbing" }}
-      >
+      <div className={styles.carouselCard}>
+        {/* Set draggable to false to prevent default browser image ghost dragging */}
         <img src={`${BASE_BACK_END_URL}${item.photo}`} alt={item.nom} draggable="false" />
-      </motion.div>
+      </div>
 
       <div className={styles.cardFooter}>
         <h3>{item.nom} - <span className={styles.poste}>{item.poste}</span></h3>
-        <p>{item.description.slice(0, 100)}</p>
+        <p>{item.description.slice(0, 200)}</p>
       </div>
     </div>
   );

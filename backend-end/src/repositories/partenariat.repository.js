@@ -70,12 +70,10 @@ class PartenariatRepository {
      * Recuperer tous les partenariats avec statistiques et pagination
      */
     async findAllWithStats(filters = {}) {
-        const { limit, offset } = filters;
         
         const partenariats = await Partenariat.findAndCountAll({
             order: [['created_at', 'DESC']],
-            limit: limit || 10,
-            offset: offset || 0
+  
         });
 
         const partenariatsAvecStats = await Promise.all(

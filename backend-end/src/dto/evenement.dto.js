@@ -7,7 +7,7 @@ const toEvenementListDTO = (eve, lang) => ({
     title:  eve[`titre_${lang}`],
     domain: eve.Domaine ? eve.Domaine[`nom_${lang}`] : null,
     date:   eve.date_debut,
-    img:    eve.image_principale || null
+    image_principale:    eve.image_principale || null
 });
 
 /**
