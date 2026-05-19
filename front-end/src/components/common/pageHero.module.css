@@ -1,7 +1,8 @@
 /* Hero Section - Enhanced */
 .hero {
+    /* position: absolute; */
     width: 100%;
-    height: 450px;
+    height: 500px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -20,7 +21,7 @@
     right: 0;
     bottom: 0;
     content: "";
-    background: linear-gradient(135deg, rgba(6, 30, 34, 0.85) 0%, rgba(6, 30, 34, 0.75) 100%);
+    background: linear-gradient(135deg, rgba(6, 30, 34, 0.45) 0%, rgba(6, 30, 34, 0.35) 100%);
     z-index: 1;
 }
 
@@ -37,7 +38,7 @@
 }
 
 .hero h1 {
-    color: var(--accent, #CB914F);
+    color: #F0C36D;
     font-size: 4rem;
     font-weight: 800;
     z-index: 2;

@@ -1,34 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=El+Messiri:wght@400..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 
 :root {
-    --text: #6b6375;
-    --text-h: #08060d;
-    --bg: #fff;
-    --border: #e5e4e7;
-    --code-bg: #f4f3ec;
-    --accent: #CB914F;
-    --accent-light: #cb914f89;
-    --accent-bg: rgba(170, 59, 255, 0.1);
-    --accent-border: #F1904C;
-    --second-buttons-bg: #2EB431;
-    --icons-color: #4BAF47;
-    --upper-footer-bg: #061E22;
-    --text-color: #20251E;
-    --paragraph-color: #908F89;
-    --section-bg: #F8F8F3;
-    --color-text: #374151;
-    --color-text-light: #6B7280;
-    --color-border: #E5E7EB;
-    --color-background: #F9FAFB;
-    /* fin me */
-    --social-bg: rgba(244, 243, 236, 0.5);
-    --shadow: rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
-    /* --informative-color:#EF3E23; */
+  --text: #6b6375;
+  --text-h: #08060d;
+  --bg: #fff;
+  --bg-card: #ffffff;
+  --bg-small: #ffddbb;
+  --accent-strong: #845417;
+  --accent-strong-v3: #845417;
+  --accent-strong-v2: #4e2d00;
+  --border-input: #E3E3E3;
+  --border: #e5e4e7;
+  --code-bg: #f4f3ec;
+  --accent: #CB914F;
+  --accent-light: #cb914f89;
+  --accent-very-light: #F8F7F0;
+  --accent-src: #FCF9F2;
+  --accent-hover: #cb914f4e;
+  --accent-bg: rgba(170, 59, 255, 0.1);
+  --accent-border: #F1904C;
+  --second-buttons-bg: #2EB431;
+  --icons-color: #4BAF47;
+  --icons-color-light: #4aaf4772;
+  --dark-green-color: #006e0f;
+  --text-green-color: #CCE2CF;
+  --upper-footer-bg: #061E22;
+  --text-color: #20251E;
+  --paragraph-color: #908F89;
+  --section-bg: #F8F8F3;
+  --color-text: #374151;
+  --color-text-light: #6B7280;
+  --color-border: #E5E7EB;
+  --color-border-v2: #837567;
+  --color-background: #F9FAFB;
+  --color-sec: #f6f3ec;
+  --color-partner: #F0EEE7;
+  --color-contact-btn: #4E2D00;
+  --color-title-btn: #1B1C18;
+  --footer-section-bg: #F3ECE6;
+  --sidebar-color:#f5f5f5;
+  /* fin me */
+  --social-bg: rgba(244, 243, 236, 0.5);
+  --shadow: rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  --ar-lang: "El Messiri", "sans-serif";
 
 }
-  /* For dark mode  */
 
-  /* @media (prefers-color-scheme: dark) {
+/* For dark mode  */
+
+/* @media (prefers-color-scheme: dark) {
   :root {
     --text: #9ca3af;
     --text-h: #f3f4f6;
@@ -47,9 +68,19 @@
 
 
 body {
-    font-family: "Manrope", sans-serif;
-    background-color: var(--first-color);
-    background-color: var(--color-border);
-    margin: 0;
-    overflow-x: hidden;
+  font-family: "Manrope", sans-serif;
+  background-color: var(--first-color);
+  background-color: var(--color-border);
+  margin: 0;
+  overflow-x: hidden;
+}
+
+body.ar {
+  font-family: "El Messiri", sans-serif;
+  direction: rtl;
+}
+
+::selection {
+  background-color: var(--accent);
+  color: var(--accent-src);
 }

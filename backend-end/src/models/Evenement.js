@@ -16,6 +16,10 @@ const Evenement = sequelize.define('Evenement', {
         type: DataTypes.INTEGER,
         allowNull: true,
     },
+    image_principale: {
+        type: DataTypes.STRING(500),
+        allowNull: true,
+    },
     titre_fr: {
         type: DataTypes.STRING(255),
         allowNull: false,

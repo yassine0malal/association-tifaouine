@@ -1,0 +1,29 @@
+/* BackButton.module.css */
+.backBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 10px;
+    border: 1px solid #e8e0cc;
+    background: transparent;
+    color: #7a6a4a;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+    margin-top: 16px;
+    margin-bottom: 32px;
+}
+.backBtn:hover {
+    background: #f5f0e8;
+    border-color: #c4a050;
+    color: #b87e2a;
+}
+.backBtn:hover svg {
+    transform: translateX(-3px);
+}
+.backBtn svg {
+    transition: transform 0.2s ease;
+}

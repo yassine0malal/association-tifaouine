@@ -1,0 +1,330 @@
+.heroSection {
+  height: calc(100vh - 50px);
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+[dir="rtl"] .heroSection * {
+  font-family: var(--ar-lang);
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper {
+  width: 100%;
+  height: 100%;
+  /* Enable RTL mode */
+  direction: rtl;
+}
+
+/* RTL-specific Swiper overrides */
+[dir="rtl"] .swiper {
+  direction: rtl;
+}
+
+/* Flip the next/prev icons in RTL mode */
+[dir="rtl"] :global(.swiper-button-next::after) {
+  content: '' !important;
+}
+
+[dir="rtl"] :global(.swiper-button-prev::after) {
+  content: '' !important;
+}
+
+/* Ensure slide content respects RTL text alignment */
+[dir="rtl"] .title,
+[dir="rtl"] .description {
+  text-align: center;
+  /* For any potential future text, direction is set */
+  direction: rtl;
+}
+
+.swiperSlide {
+  width: 100%;
+  height: 100%;
+}
+
+.slideContent {
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  padding: 2rem;
+  position: relative;
+}
+
+/* Overlay for better text readability */
+.slideContent::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.3),
+    rgba(0, 0, 0, 0.6)
+  );
+  z-index: 1;
+}
+
+.slideContent > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* 
+  Title is now always large and prominent on all screens.
+  Removed clamp() for min size. Using viewport units 
+  with a large minimum ensures it never becomes small.
+*/
+.title {
+  text-align: center;
+  /* 
+    Large minimum size (3.5rem on small screens, scaling up to 7rem on large)
+    Maintains impact on mobile without being too overwhelming.
+  */
+  font-size: clamp(3rem, 10vw, 7rem);
+  font-weight: 900;
+  letter-spacing: clamp(0.25rem, 1vw, 1.25rem);
+  background: linear-gradient(
+    to bottom,
+    #fff 60%,
+    rgba(255, 255, 255, 0.4) 70%,
+    rgba(255, 255, 255, 0.1)
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0;
+  text-transform: uppercase;
+  animation: fadeInUp 0.8s ease-out;
+  /* Ensure text is always readable on all backgrounds */
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.description {
+  max-width: min(600px, 90%);
+  font-weight: 600;
+  font-size: clamp(1rem, 2.6vw, 1.25rem);
+  line-height: 1.6;
+  text-align: center;
+  color: #ffffffad;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  margin: 0;
+  animation: fadeInUp 0.8s ease-out 0.2s backwards;
+}
+
+.ctaButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  background: linear-gradient(135deg, #fff, #f0f0f0);
+  color: #333;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: 50px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  animation: fadeInUp 0.8s ease-out 0.4s backwards;
+}
+
+.ctaButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, #fff, #e8e8e8);
+  gap: 0.75rem;
+}
+
+.ctaButton:active {
+  transform: translateY(0);
+}
+
+/* Custom Navigation Styles - Enhanced for RTL and responsiveness */
+:global(.swiper-button-next),
+:global(.swiper-button-prev) {
+  color: #fff !important;
+  background: rgba(255, 255, 255, 0.2);
+  width: 58px !important;
+  height: 32px !important;
+  border-radius: 17px;
+  transition: all 0.3s ease;
+  opacity: 0.9;
+  top: calc(100% - 50px) !important;
+  backdrop-filter: blur(4px);
+}
+
+:global(.swiper-button-next) {
+  left: 10px !important;
+}
+:global(.swiper-button-prev) {
+  right: 10px !important;
+}
+
+:global(.swiper-button-next svg),
+:global(.swiper-button-prev svg) {
+  width: 20px;
+  height: 20px;
+}
+
+:global(.swiper-button-next:hover),
+:global(.swiper-button-prev:hover) {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+:global(.swiper-button-next::after),
+:global(.swiper-button-prev::after) {
+  font-size: 0.5rem !important;
+  font-weight: bold;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Enhanced Responsive Design */
+/* Tablet and below */
+@media (max-width: 768px) {
+  .slideContent {
+    gap: 2rem;
+    padding: 1.5rem;
+  }
+
+  /* Keep title very prominent even on tablets */
+  .title {
+    font-size: clamp(2.8rem, 12vw, 5rem);
+    letter-spacing: 0.5rem;
+  }
+  
+  .description {
+    max-width: 85%;
+    font-size: 1rem;
+  }
+
+  .ctaButton {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* Mobile devices */
+@media (max-width: 640px) {
+  .slideContent {
+    gap: 1.75rem;
+    padding: 1rem;
+  }
+  
+  /* Title remains big even on mobile */
+  .title {
+    font-size: clamp(2.5rem, 10vw, 3.5rem);
+    letter-spacing: 0.3rem;
+  }
+  
+  .description {
+    font-size: 0.95rem;
+    max-width: 95%;
+  }
+  
+  .ctaButton {
+    padding: 0.7rem 1.3rem;
+    font-size: 0.85rem;
+  }
+
+
+}
+
+/* Very small devices (e.g., iPhone SE, Galaxy Fold) */
+@media (max-width: 380px) {
+  .title {
+    font-size: clamp(2rem, 8vw, 2.8rem);
+    letter-spacing: 0.2rem;
+  }
+  
+  .description {
+    font-size: 0.85rem;
+    line-height: 1.4;
+  }
+  
+  .ctaButton {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.8rem;
+  }
+  
+  /* Navigation becomes optional at extremely small widths 
+     but remains available for users who need it */
+  :global(.swiper-button-next),
+  :global(.swiper-button-prev) {
+    width: 36px !important;
+    height: 24px !important;
+  }
+}
+
+/* Performance optimization */
+.slideContent {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Lazy loading optimization */
+:global(.swiper-lazy) {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+:global(.swiper-lazy-loaded) {
+  opacity: 1;
+}
+
+/* Touch device optimizations */
+@media (hover: none) {
+  .ctaButton:hover {
+    transform: none;
+  }
+
+}
+
+/* Landscape orientation adjustments for mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+  .heroSection {
+    height: auto;
+    min-height: 100vh;
+  }
+  
+  .slideContent {
+    justify-content: center;
+    gap: 1rem;
+    padding: 1rem;
+  }
+  
+  .title {
+    font-size: clamp(2rem, 8vh, 3.5rem);
+  }
+  
+  .description {
+    max-width: 70%;
+  }
+}

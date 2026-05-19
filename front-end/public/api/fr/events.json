@@ -1,0 +1,51 @@
+{
+  "events": [
+    {
+      "id": 1,
+      "title": "Comment le travail d’équipe améliore le design",
+      "domain": "Eau et environnement",
+      "date": "14 avril 2024",
+      "img": "https://picsum.photos/300/200?random=1"
+    },
+    {
+      "id": 2,
+      "title": "Créer de meilleurs designers grâce à la collaboration",
+      "domain": "Eau et environnement",
+      "date": "14 avril 2024",
+      "img": "https://picsum.photos/300/200?random=2"
+    },
+    {
+      "id": 3,
+      "title": "La puissance du travail collaboratif en design",
+      "domain": "Eau et environnement",
+      "date": "14 avril 2024",
+      "img": "https://picsum.photos/300/200?random=3"
+    },
+    {
+      "id": 4,
+      "title": "Évolution du design par la collaboration",
+      "domain": "Eau et environnement",
+      "date": "14 avril 2024",
+      "img": "https://picsum.photos/300/200?random=4"
+    },
+    {
+      "id": 5,
+      "title": "Pourquoi la collaboration est essentielle en design",
+      "domain": "Eau et environnement",
+      "date": "14 avril 2024",
+      "img": "https://picsum.photos/300/200?random=5"
+    },
+    {
+      "id": 6,
+      "title": "Innovation design portée par les équipes",
+      "domain": "Eau et environnement",
+      "date": "14 avril 2024",
+      "img": "https://picsum.photos/300/200?random=6"
+    }
+  ],
+  "currentPage": 9,
+  "nextPage": 10,
+  "prevPage": 8,
+  "totalPages": 10,
+  "itemsPerPage": 8
+}

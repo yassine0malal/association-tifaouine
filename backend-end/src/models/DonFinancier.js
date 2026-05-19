@@ -25,6 +25,11 @@ const DonFinancier = sequelize.define('DonFinancier', {
     },
     ref_transaction: {
         type: DataTypes.STRING(100),
+        allowNull: true,
+        unique :true
+    },
+    recu: {
+        type: DataTypes.STRING(250),
         allowNull: true
     }
 }, {

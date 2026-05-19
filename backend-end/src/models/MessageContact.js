@@ -20,8 +20,8 @@ const MessageContact = sequelize.define('MessageContact', {
         }
     },
     objet: {
-        type: DataTypes.STRING(200),
-        allowNull: true,
+        type: DataTypes.ENUM('DEMANDE_PARTENARIAT', 'DEMANDE_SERVICE', 'DEMANDE_INFORMATION'),
+        allowNull: false,
     },
     message: {
         type: DataTypes.TEXT,

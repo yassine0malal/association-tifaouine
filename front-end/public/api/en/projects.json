@@ -1,0 +1,81 @@
+{
+  "projects": [
+    {
+      "id": 1,
+      "title": "Bill Walsh Leadership Lessons",
+      "description": "Discover the secrets to transforming a team into a true success story.",
+      "state": "Completed",
+      "date": "2026-03-12",
+      "image": "https://picsum.photos/300/200?random=1"
+    },
+    {
+      "id": 2,
+      "title": "Modern Web Architecture",
+      "description": "Learn how to design scalable web applications.",
+      "state": "In Progress",
+      "date": "2026-02-28",
+      "image": "https://picsum.photos/300/200?random=2"
+    },
+    {
+      "id": 3,
+      "title": "Modern Web Architecture",
+      "description": "Learn how to design scalable and maintainable web applications using modern tools.",
+      "state": "En cours",
+      "date": "2026-02-28",
+      "image": "https://picsum.photos/300/200?random=3"
+    },
+    {
+      "id": 4,
+      "title": "Modern Web Architecture",
+      "description": "Learn how to design scalable and maintainable web applications using modern tools.",
+      "state": "En cours",
+      "date": "2026-02-28",
+      "image": "https://picsum.photos/300/200?random=4"
+    },
+    {
+      "id": 5,
+      "title": "Modern Web Architecture",
+      "description": "Learn how to design scalable and maintainable web applications using modern tools.",
+      "state": "En cours",
+      "date": "2026-02-28",
+      "image": "https://picsum.photos/300/200?random=5"
+    },
+    {
+      "id": 6,
+      "title": "Modern Web Architecture",
+      "description": "Learn how to design scalable and maintainable web applications using modern tools.",
+      "state": "En cours",
+      "date": "2026-02-28",
+      "image": "https://picsum.photos/300/200?random=6"
+    },
+    {
+      "id": 7,
+      "title": "Modern Web Architecture",
+      "description": "Learn how to design scalable and maintainable web applications using modern tools.",
+      "state": "En cours",
+      "date": "2026-02-28",
+      "image": "https://picsum.photos/300/200?random=7"
+    },
+    {
+      "id": 8,
+      "title": "Modern Web Architecture",
+      "description": "Learn how to design scalable and maintainable web applications using modern tools.",
+      "state": "En cours",
+      "date": "2026-02-28",
+      "image": "https://picsum.photos/300/200?random=8"
+    },
+    {
+      "id": 9,
+      "title": "Modern Web Architecture",
+      "description": "Learn how to design scalable and maintainable web applications using modern tools.",
+      "state": "En cours",
+      "date": "2026-02-28",
+      "image": "https://picsum.photos/300/200?random=9"
+    }
+  ],
+  "currentPage": 9,
+  "nextPage":10,
+  "prevPage":8,
+  "totalPages": 10,
+  "itemsPerPage":8
+}

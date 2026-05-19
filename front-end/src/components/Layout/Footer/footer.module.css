@@ -1,42 +1,110 @@
 .warper {
-    background-color: var(--upper-footer-bg);
+    background-color: var(--footer-section-bg);
     color: var(--text-footer);
     box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
 
     /* position: relative; ((((((((((((((())))))))))))))))))) */
+}
+
+.warper .heroFooter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.warper .heroFooter .card .textContent a {
+    all: unset;
+    cursor: pointer;
+}
+
+.warper .heroFooter .card:nth-child(2) {
+    flex-grow: 2;
+}
+
+.warper .heroFooter .card {
+    display: flex;
+    padding: 40px 50px;
+    border-bottom: 1px solid rgba(75, 175, 71, 0.1882352941);
+    border-left: 1px solid rgba(75, 175, 71, 0.1882352941);
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+
+}
+
+.warper .heroFooter .card .icon {
+
+    width: 70px;
+    height: 70px;
+    background-color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 24;
+    flex-shrink: 0;
+    overflow: hidden;
+
+}
+
+.warper .heroFooter .card:is(:first-child) {
+    border-left: none;
 }
 
 
 .footerSection {
     padding: 30px;
-
-    /* height: 400px; */
-    background-color: var(--upper-footer-bg);
-    color: var(--color-background);
-    display: flex;
-    justify-content: center;
-    /* align-items: center; */
-    gap: 20px;
+    background-color: var(--footer-section-bg);
+    color: var(--color-text);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    justify-content: space-between;
+    gap: 60px;
 }
 
-/* ---------Style of the send input ---------*/
 .company {
     display: flex;
     flex-direction: column;
     gap: 14px;
 }
 
+.footerSection .company img {
+    width: 200px;
+}
+
+.footerSection .company p {
+    max-width: 300px;
+    line-height: 35px;
+}
+
+/* ---------Style of the send input ---------*/
+.footerSection .send input[type="email"]:-webkit-autofill,
+.footerSection .send input[type="email"]:-webkit-autofill:hover,
+.footerSection .send input[type="email"]:-webkit-autofill:focus,
+.footerSection .send input[type="email"]:-webkit-autofill:active {
+    /* Garde le fond de la couleur de votre thème */
+    -webkit-box-shadow: 0 0 0px 1000px var(--bg) inset !important; 
+    
+    /* Applique la bonne couleur au texte (sans 'inset') */
+    -webkit-text-fill-color: var(--color-text) !important; 
+    
+    /* Maintient l'astuce de transition */
+    transition: background-color 5000s ease-in-out 0s;
+    
+    /* Arrondis */
+    border-radius: 8px;
+}
+
+
 .footerSection .send {
-    border: #FAFAFA 1.5px solid;
-    width: 237px;
+    border: var(--upper-footer-bg) 1.5px solid;
     height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     box-sizing: border-box;
-    padding: 0 5px;
-    gap: 2px;
-    margin-left: 12px;
+    padding: 10px 0;
     position: relative;
     border-radius: 8px;
 }
@@ -45,53 +113,67 @@
     background: none;
     border: none;
     outline: none;
-    color: var(--color-background);
-    padding: 23px;
+    color: var(--color-text);
+}
+[dir="rtl"] .footerSection .send input {
+    padding-inline-start: 12px;
 }
 
-.footerSection .send img {
-    width: 20px;
-    height: 18px;
+.footerSection .send .sendIcon {
+    all: unset;
+    width: 30px;
+
+    height: 30px;
     position: absolute;
-    right: 10px;
-    transition: 0.4s all ease-in-out;
-    color: #FAFAFA;
+    inset-inline-end: 0;
+    transition: 0.3s all ease-in-out;
+    color: var(--upper-footer-bg);
 
 }
 
-.footerSection .send img:active {
+.footerSection .send .sendIcon:active>svg {
     scale: 1.2;
-    rotate: -63deg;
-    translate: 23px;
 }
 
 /* ---------Style of the links ---------*/
 
+.siteMap {
+    padding-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    justify-content: flex-start;
+}
+
 .siteMap nav {
     display: flex;
     flex-direction: column;
-    padding: 12px;
-
+    align-items: flex-start;
 }
 
 .siteMap nav ::first-letter {
     text-transform: uppercase;
 }
 
-.siteMap nav a {
+.footerSection nav a {
     transition: 0.3s ease-in-out;
     position: relative;
     text-decoration: none;
     padding-bottom: 5px;
-    margin-bottom: 18px;
+    margin-bottom: 10px;
+    width: fit-content;
+    text-align: left;
+    padding-left: 0;
+    font-weight: 500;
+    color: var(--color-text);
 
 }
 
-.siteMap nav a::after {
+.footerSection nav a::after {
     content: "";
     position: absolute;
     bottom: 0;
-    left: 0;
+    inset-inline-start: 0;
     width: 0;
     height: 2px;
     background-color: var(--icons-color);
@@ -99,16 +181,51 @@
 
 }
 
-.siteMap nav :hover {
+.footerSection nav :hover {
     transform: scale(1.1);
 }
 
-.siteMap nav a:hover::after {
+.footerSection nav a:hover::after {
     width: 100%;
 }
 
+/* ----------------style of support------------- */
+
+.footerSection .support {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding-top: 40px;
+    line-height: 35px;
+}
+
+.footerSection .support .personnelle .compte {
+    margin-top: 20px;
+}
+
+
+.footerSection .support .personnelle {
+    max-width: 300px;
+}
+
+/* ----------------style of quickLinks------------- */
+.footerSection .quickLinks {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding-top: 40px;
+}
+
+.footerSection .quickLinks nav {
+    flex-direction: column;
+    display: flex;
+    padding-bottom: 5px;
+    margin-bottom: 18px;
+
+}
+
 /* ----------------style of network------------- */
-.socialNetwork img {
+.socialNetwork svg {
     width: 35px;
     height: 35px;
     background-color: #ffffff80;
@@ -116,7 +233,7 @@
     transition: 0.3s ease-in-out;
 }
 
-.socialNetwork img:hover {
+.socialNetwork svg:hover {
     background-color: #fff;
     transform: scale(1.2);
 }
@@ -127,21 +244,97 @@
     gap: 25px;
 }
 
+
+
+
+
+
+
 /* ----------------style of copyrights------------- */
-hr {
-    position: absolute;
+.warper .devider {
+    margin-top: 20px;
     width: 100%;
-    left: 0;
-    border: 1px solid #ffffff08;
+    height: 1px;
+    background-color: var(--accent);
 }
 
 .copyrights {
-    color: #ffffff80;
+    color: var(--color-text);
     display: flex;
     box-sizing: border-box;
     justify-content: center;
     align-items: center;
+    padding: 10px;
 }
+
+
+
+
+
+.footerSection .send {
+    /* border: var(--upper-footer-bg) 1.5px solid; */
+    height: 48px;
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding: 0 0 0 10px;
+    gap: 6px;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: var(--bg);
+}
+
+.footerSection .send .sendIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 48px;
+    background-color: var(--accent);
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+.footerSection .send .sendIcon svg {
+    transition: 0.3s all ease-in-out;
+}
+
+[dir="rtl"] .footerSection .send .sendIcon svg {
+    rotate: 180deg;
+
+}
+
+.footerSection .send .sendIcon:hover svg {
+    opacity: 1.1;
+}
+
+.footerSection .send .sendIcon:active svg {
+    scale: 1.2;
+    translate: 12px;
+}
+
+[dir="rtl"] .footerSection .send .sendIcon:active svg {
+    translate: -12px;
+}
+
+.footerSection .send .sendIcon svg {
+    width: 20px;
+    height: 20px;
+}
+
+
+
+/* -----------arabic one-----  */
+
+/* [dir="rtl"] .footerSection .support .personnelle p{
+    direction: ltr;
+
+} */
+
+
+
+
 
 
 /* --------------------- Responsive Design ----------------- */
@@ -152,38 +345,18 @@ hr {
         padding-top: 0px;
         /* margin-top: 12px; */
         text-align: center;
-
     }
-
-    hr {
-
-        position: relative;
-        width: 100%;
-        left: 0;
-        border: 1px solid #ffffff08;
-    }
-
-    .siteMap nav a::after {
-        left: 50px;
-    }
-
-
 
 }
 
 /* tablet  */
 @media(max-width:1024px) {
     .footerSection {
-        flex-direction: column;
-        /* height: 100vh; */
-        text-align: center  ;
-        z-index: -1;
+        flex-wrap: wrap;
     }
 
-    .siteMap nav a:hover::after {
-        width: 25%;
-    }
-    .footerSection .send{
+
+    .footerSection .send {
         display: flex;
         justify-content: center;
         text-align: center;
@@ -192,7 +365,95 @@ hr {
 }
 
 /* standard desktop */
-@media(max-width:1440px) {}
+@media(max-width:1225px) {
+    .warper .heroFooter .card {
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding-left: 20px;
+        padding-right: 20px;
+        flex-direction: column;
+    }
+}
 
-/* large desktop */
-@media(min-width:1441px) {}
+
+@media (max-width:1230px) {
+    .warper .footerSection {
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 100px;
+    }
+
+}
+
+@media(max-width:796px) {
+    .warper .heroFooter {
+        flex-direction: column;
+        align-items: flex-start;
+
+    }
+
+    .warper .heroFooter .textContent {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        flex-grow: 2;
+
+    }
+
+    .warper .heroFooter .card .icon {
+        width: 60px;
+        height: 60px;
+    }
+
+    .warper .heroFooter .card {
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        text-align: start;
+        gap: 20px;
+        width: 100%;
+        flex-wrap: nowrap;
+        border-inline-start: 1px solid rgba(75, 175, 71, 0.1882352941);
+    }
+
+    .warper .heroFooter {
+        width: 100%;
+
+    }
+
+    .warper .heroFooter .card:nth-child(1) {
+        border-inline-start: none;
+    }
+
+    .warper .footerSection {
+        grid-template-columns: 1fr 1fr;
+        column-gap: 40px;
+        row-gap: 10px;
+        width: 100%;
+    }
+
+    .innerWraper {
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+
+    .footerSection .send {
+        justify-content: flex-start;
+    }
+}
+
+@media screen and (min-width:796px) and (max-width:1025px) {
+    .footerSection .send {
+        font-size: 12px;
+    }
+}
+@media (max-width:550px) {
+    .warper .footerSection  {
+        grid-template-columns: 1fr;
+        gap: 2px;
+    }
+
+    .warper .footerSection .card {
+        padding-top: 0px;
+    }
+}

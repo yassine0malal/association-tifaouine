@@ -6,16 +6,11 @@ const { Utilisateur, admin, TokenBlacklist } = require('../models');
  */
 const verifyToken = async (req, res, next) => {
     try {
-        const authHeader = req.headers.authorization;
-        let token;
-
-        if (authHeader && authHeader.startsWith('Bearer ')) {
-            token = authHeader.split(' ')[1];
-        } else if (req.cookies && req.cookies.token) {
-            token = req.cookies.token;
-        }
+        const token = req.cookies?.accessToken;
 
         if (!token) {
+                    console.log("adddmin")
+
             return res.status(401).json({
                 success: false,
                 message: 'Accès non autorisé : Token manquant'

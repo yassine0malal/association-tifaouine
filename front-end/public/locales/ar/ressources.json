@@ -1,0 +1,19 @@
+{
+    "ressources": {
+        "heroTitle": "مواردنا",
+        "featuredInsights": "أبرز التقارير",
+        "ourBestProject": "أفضل مشروع لدينا",
+        "download": "تحميل",
+        "guide": "دليل",
+        "collaborationText": "تعاون: اكتشف كيف نعمل",
+        "rightSideTitle": "تقرير حالة حفظ التراث لعام 2024",
+        "rightSideDescription": "اكتشف كيف تحافظ مبادرات جمعيتنا الشعبية على الحكمة الثقافية عبر الأجيال وتبني مجتمعات أقوى وأكثر ترابطًا.",
+        "readFullReport": "قراءة التقرير كاملاً",
+        "resourceLibrary": "مكتبة الموارد",
+        "showingItems": "عرض {{count}} من أصل {{total}} عنصر",
+        "loadingResources": "جاري تحميل الموارد...",
+        "errorMessage": "خطأ: {{error}}",
+        "report": "تقرير",
+        "document": "مستند"
+    }
+}

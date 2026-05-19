@@ -1,0 +1,242 @@
+[dir="rtl"] .eventListPage * {
+    font-family: var(--ar-lang);
+}
+
+.eventListPage {
+    background-color: var(--bg);
+}
+
+.eventListContainer {
+    padding: 60px 24px;
+    max-width: 1440px;
+    margin: auto;
+}
+
+.eventListContainer .filtersContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 2rem;
+    text-align: center;
+}
+
+.eventListContainer .filtersContainer h2 {
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
+    font-weight: 700;
+    margin: 0;
+    position: relative;
+    display: inline-block;
+}
+
+.eventListContainer .filtersContainer h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent-border), var(--accent));
+    border-radius: 3px;
+    transition: width 0.3s ease;
+}
+
+.eventListContainer .filtersContainer:hover h2::after {
+    width: 100px;
+}
+
+.eventList {
+    padding: 3rem 0 2rem 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(300px, 1fr));
+    align-items: stretch;
+    gap: 1.5rem;
+    animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Design */
+/* Tablet Landscape */
+@media (max-width: 1024px) {
+    .eventList {
+        grid-template-columns: repeat(2, minmax(280px, 1fr));
+        gap: 1.5rem;
+    }
+    
+    .eventListContainer {
+        padding: 50px 20px;
+    }
+}
+
+/* Tablet Portrait */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .eventListContainer {
+        padding: 50px 20px;
+    }
+    
+    .eventListContainer .filtersContainer {
+        gap: 1.5rem;
+    }
+    
+    .eventList {
+        grid-template-columns: repeat(2, minmax(280px, 1fr));
+        gap: 1.5rem;
+        padding: 2.5rem 0;
+    }
+}
+
+/* Mobile Large */
+@media (max-width: 640px) {
+    .eventListContainer {
+        padding: 40px 16px;
+    }
+    
+    .eventListContainer .filtersContainer {
+        gap: 1.2rem;
+    }
+    
+    .eventList {
+        grid-template-columns: repeat(1, 1fr);
+        gap: 1rem;
+        padding: 2rem 0;
+    }
+}
+
+/* Mobile Small */
+@media (max-width: 480px) {
+    .eventListContainer {
+        padding: 30px 16px;
+    }
+    
+    .eventListContainer .filtersContainer {
+        gap: 2rem;
+        margin-bottom: 1rem;
+    }
+    
+    .eventList {
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
+        padding: 1.5rem 0;
+    }
+}
+
+/* Extra Small Devices */
+@media (max-width: 360px) {
+    .eventListContainer {
+        padding: 25px 12px;
+    }
+    
+    .eventList {
+        gap: 1rem;
+    }
+}
+
+/* Optional: Add smooth scroll behavior */
+.eventListContainer {
+    scroll-margin-top: 20px;
+}
+
+/* Optional: Loading animation for grid items */
+.eventList > * {
+    animation: cardAppear 0.5s ease-out backwards;
+    animation-delay: calc(var(--index, 0) * 0.1s);
+}
+
+@keyframes cardAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Optional: Stagger animation for cards (add this to your JSX) */
+/* 
+   {events.map((event, index) => (
+     <div key={event.id} style={{ '--index': index }}>
+       <EventCard />
+     </div>
+   ))}
+*/
+
+/* Optional: Container hover effect */
+.eventListContainer {
+    transition: all 0.3s ease;
+}
+
+/* Optional: Better spacing for FilterButtons component */
+.filtersContainer > div {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+/* Optional: Gradient border for the container on scroll */
+.eventListContainer {
+    position: relative;
+}
+
+.eventListContainer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #667eea, #764ba2, transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.eventListContainer:hover::before {
+    opacity: 0.5;
+}
+
+/* High-end Desktop Screens */
+@media (min-width: 1920px) {
+    .eventListContainer {
+        max-width: 1440px;
+        padding: 80px 32px;
+    }
+    
+    .eventList {
+        gap: 2.5rem;
+        padding: 4rem 0;
+    }
+}
+
+/* Print styles */
+@media print {
+    .eventListContainer {
+        padding: 20px;
+    }
+    
+    .filtersContainer {
+        display: none;
+    }
+    
+    .eventList {
+        display: block;
+    }
+    
+    .eventList > * {
+        margin-bottom: 20px;
+        break-inside: avoid;
+    }
+}

@@ -1,4 +1,8 @@
 /* projectList.module.css */
+[dir="rtl"] .projectList *{
+    font-family: var(--ar-lang);
+}
+
 
 .projectList {
     background-color: var(--bg, #fff);
@@ -8,7 +12,7 @@
 /* Projects Container */
 .projectsContainer {
     padding: 60px 24px;
-    max-width: 1280px;
+    max-width: 1440px;
     margin: auto;
 }
 
@@ -34,52 +38,10 @@
 }
 
 
-.filterContainer .filter {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-}
-
-.filterContainer .filter button {
-    background: var(--bg, #fff);
-    color: var(--text, #6b6375);
-    padding: 0.6rem 1.5rem;
-    text-align: center;
-    display: block;
-    border-radius: 2rem;
-    border: 1px solid var(--border, #e5e4e7);
-    cursor: pointer;
-    font-weight: 500;
-    font-size: 0.9rem;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.filterContainer .filter button:hover,
-.filterContainer .filter button:active
- {
-    border-color: var(--accent, #CB914F);
-    color: var(--accent, #CB914F);
-    transform: translateY(-2px);
-}
-
-.filterContainer .filter button:active {
-    transform: translateY(0);
-}
-
-/* Active Filter Button */
-.filterContainer .filter button.active {
-    background: var(--accent, #CB914F);
-    color: var(--bg, #fff);
-    border-color: var(--accent, #CB914F);
-    box-shadow: 0 4px 12px rgba(203, 145, 79, 0.3);
-}
-
 /* Projects Grid - Enhanced */
 .projects {
     display: grid;
-    grid-template-columns: repeat(3, minmax(320px, 1fr));
+    grid-template-columns: repeat(3, minmax(300px, 1fr));
     gap: 2rem;
     animation: fadeIn 0.6s ease-out;
 }
@@ -164,15 +126,6 @@
         bottom: -6px;
         width: 40px;
     }
-    
-    .filterContainer .filter {
-        gap: 10px;
-    }
-    
-    .filterContainer .filter button {
-        padding: 0.5rem 1.25rem;
-        font-size: 0.85rem;
-    }
 }
 
 /* Phones */
@@ -200,11 +153,6 @@
     
     .filterContainer .header {
         font-size: 1.35rem;
-    }
-    
-    .filterContainer .filter button {
-        padding: 0.4rem 1rem;
-        font-size: 0.8rem;
     }
 }
 

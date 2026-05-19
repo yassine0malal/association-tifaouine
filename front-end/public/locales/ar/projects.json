@@ -1,0 +1,14 @@
+{
+    "projects": {
+        "heroTitle": "اكتشف مشاريعنا",
+        "filters": {
+            "all": "الكل",
+            "completed": "مكتمل",
+            "inProgress": "قيد الإنجاز",
+            "pending": "في الانتظار",
+            "planned": "مخطط"
+        },
+        "viewProjects": "عرض المشاريع",
+        "noProjects": "لم يتم العثور على أي مشروع."
+    }
+}

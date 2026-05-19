@@ -3,7 +3,7 @@ const rateLimit = require('express-rate-limit');
 
 const apiLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 100, // Limite chaque IP à 100 requêtes par fenêtre de 15 min
+    max: 10000,  // l'augmentation de nombre de requete dans la partie de navigation
     message: {
         success: false,
         message: "Trop de requêtes effectuées depuis cette adresse IP, veuillez réessayer plus tard."
@@ -24,7 +24,43 @@ const authLimiter = rateLimit({
     legacyHeaders: false,
 });
 
+const refreshLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 10, // 10 refresh max par IP par 15 min
+    message: {
+        success: false,
+        message: "Trop de tentatives de rafraîchissement. Veuillez réessayer dans 15 minutes."
+    },
+    standardHeaders: true,
+    legacyHeaders: false,
+});
+
+const etreMembre = rateLimit({
+    windowMs: 60 * 60 * 1000, // 1 heure
+    max: 5,
+    message: {
+        success: false,
+        message: "Trop de demandes d'adhésion depuis cette adresse IP. Veuillez réessayer dans 1 heure."
+    },
+    standardHeaders: true,
+    legacyHeaders: false,
+});
+
+const etreBenevole = rateLimit({
+    windowMs: 60 * 60 * 1000,
+    max: 5,
+    message: {
+        success: false,
+        message: "Trop de demandes de bénévolat depuis cette adresse IP. Veuillez réessayer dans 1 heure."
+    },
+    standardHeaders: true,
+    legacyHeaders: false,
+});
+
 module.exports = {
     apiLimiter,
-    authLimiter
+    authLimiter,
+    refreshLimiter,
+    etreMembre,
+    etreBenevole
 };

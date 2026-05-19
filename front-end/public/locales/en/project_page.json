@@ -1,0 +1,17 @@
+{
+  "project": {
+    "peopleHelped": "PEOPLE HELPED",
+    "target_region": "TARGET REGION",
+    "status": "STATUS",
+    "completion": "Completion",
+    "partners": "Partners",
+    "domain": "Domain",
+    "vol_btn": "BECOME A VOLUNTEER",
+    "donate_btn": "DONATE TO SIMILAR PROJECTS",
+    "default": {
+      "completion": "Not defined",
+      "partners": "No partners",
+      "domain": "Employment & Social Economy"
+    }
+  }
+}

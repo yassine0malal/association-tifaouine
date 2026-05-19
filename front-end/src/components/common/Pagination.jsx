@@ -1,7 +1,9 @@
+import { useTranslation } from "react-i18next";
 import styles from "./pagination.module.css";
 
 export default function Pagination({ currentPage, totalPages, onPageChange }) {
-  
+  const { t } = useTranslation('pagination')
+  if(!currentPage || !totalPages) return null
   const getPages = () => {
     if (totalPages <= 5) {
       return Array.from({ length: totalPages }, (_, i) => i + 1);
@@ -76,7 +78,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
             </g>
           </g>
         </svg>
-        <span>Précédent</span>
+        <span>{t('prev')}</span>
       </button>
 
       <div className={styles.pageNumbers}>
@@ -104,7 +106,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
         className={`${styles.pageButton} ${styles.prevNext}`}
         disabled={currentPage >= totalPages}
       >
-        <span>Suivant</span>
+        <span>{t('next')}</span>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink"

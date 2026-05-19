@@ -1,36 +1,30 @@
-
-.layout{
+.layout {
     margin-left: auto;
     margin-right: auto;
     display: flex;
     flex-direction: column;
-    background-color:var(--bg);
+    background-color: var(--bg);
     margin: 0;
 }
 
+main {
+    /* display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%; */
+}
 
 /*------------- Responsive design -------- */
 
 /* phone  */
-@media(max-width:480px){
-    nav{
-        display: none;
-    }
-    
+@media(max-width:480px) {
 }
- 
+
 /* tablet  */
-@media(max-width:1024px){
-   
-    
-}
+@media(max-width:1024px) {}
+
 /* standard desktop */
-@media(max-width:1440px){
-   
-    
-}
+@media(max-width:1440px) {}
+
 /* large desktop */
-@media(min-width:1441px){
-   
-    
-}
+@media(min-width:1441px) {}

@@ -1,0 +1,111 @@
+{
+    "featuredInsight": {
+        "imageUrl": "../../assets/images/library.png",
+        "category": "تقرير",
+        "title": "تقرير حالة حفظ التراث لعام 2024",
+        "description": "تحليل شامل لجهود الحفاظ على التراث الثقافي عبر ثلاث قارات، مع التركيز على الإدماج المجتمعي المستدام والأرشفة الرقمية.",
+        "fileSize": "14.2 MB",
+        "fileType": "PDF"
+    },
+    "resourceLibrary": {
+        "currentPage": 2,
+        "nextPage": 3,
+        "prevPage": 1,
+        "totalPages": 10,
+        "itemsPerPage": 4,
+        "showingItems": 4,
+        "totalItems": 124,
+        "resources": [
+            {
+                "id": 1,
+                "imageUrl": "https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=300&h=400&fit=crop",
+                "title": "معايير الأرشفة الرقمية الإصدار 2.0",
+                "description": "إطار عالمي لإدارة الأصول الرقمية من أجل الحفاظ على التراث.",
+                "fileSize": "14.2 ميغابايت",
+                "fileType": "PDF",
+                "category": "تقرير",
+                "downloadUrl": "/resources/digital-archiving-standards.pdf"
+            },
+            {
+                "id": 2,
+                "imageUrl": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=300&h=400&fit=crop",
+                "title": "نموذج مقترح منحة",
+                "description": "نموذج جاهز للاستخدام لتقديم طلبات تمويل المشاريع الثقافية.",
+                "fileSize": "8.5 ميغابايت",
+                "fileType": "DOCX",
+                "category": "وثيقة",
+                "downloadUrl": "/resources/grant-proposal-template.docx"
+            },
+            {
+                "id": 3,
+                "imageUrl": "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=300&h=400&fit=crop",
+                "title": "تحليل الأثر المجتمعي",
+                "description": "منهجية وأدوات لقياس الأثر الاجتماعي للمبادرات الريفية.",
+                "fileSize": "12.3 ميغابايت",
+                "fileType": "PDF",
+                "category": "عقد",
+                "downloadUrl": "/resources/community-impact-analysis.pdf"
+            },
+            {
+                "id": 4,
+                "imageUrl": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=300&h=400&fit=crop",
+                "title": "ورشة عمل توثيق تاريخ الحبوب",
+                "description": "دليل لتوثيق المعارف والممارسات الزراعية التقليدية.",
+                "fileSize": "22.7 ميغابايت",
+                "fileType": "MP4",
+                "category": "مالية",
+                "downloadUrl": "/resources/grain-history-masterclass.mp4"
+            },
+            {
+                "id": 5,
+                "imageUrl": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=300&h=400&fit=crop",
+                "title": "نموذج اتفاقية شراكة",
+                "description": "نموذج قانوني للتعاون مع المنظمات غير الحكومية والسلطات المحلية.",
+                "fileSize": "5.8 ميغابايت",
+                "fileType": "DOCX",
+                "category": "تقرير",
+                "downloadUrl": "/resources/partnership-agreement.docx"
+            },
+            {
+                "id": 6,
+                "imageUrl": "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=300&h=400&fit=crop",
+                "title": "إرشادات صيانة المواقع",
+                "description": "أفضل الممارسات للحفاظ على البنية التحتية للمياه والزراعة.",
+                "fileSize": "9.1 ميغابايت",
+                "fileType": "PDF",
+                "category": "وثيقة",
+                "downloadUrl": "/resources/site-maintenance-guidelines.pdf"
+            },
+            {
+                "id": 7,
+                "imageUrl": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=300&h=400&fit=crop",
+                "title": "ورشة عمل توثيق تاريخ الحبوب",
+                "description": "دليل لتوثيق المعارف والممارسات الزراعية التقليدية.",
+                "fileSize": "22.7 ميغابايت",
+                "fileType": "MP4",
+                "category": "مالية",
+                "downloadUrl": "/resources/grain-history-masterclass.mp4"
+            },
+            {
+                "id": 8,
+                "imageUrl": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=300&h=400&fit=crop",
+                "title": "نموذج اتفاقية شراكة",
+                "description": "نموذج قانوني للتعاون مع المنظمات غير الحكومية والسلطات المحلية.",
+                "fileSize": "5.8 ميغابايت",
+                "fileType": "DOCX",
+                "category": "تقرير",
+                "downloadUrl": "/resources/partnership-agreement.docx"
+            },
+            {
+                "id": 9,
+                "imageUrl": "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=300&h=400&fit=crop",
+                "title": "إرشادات صيانة المواقع",
+                "description": "أفضل الممارسات للحفاظ على البنية التحتية للمياه والزراعة.",
+                "fileSize": "9.1 ميغابايت",
+                "fileType": "PDF",
+                "category": "وثيقة",
+                "downloadUrl": "/resources/site-maintenance-guidelines.pdf"
+            }
+        ]
+    }
+}

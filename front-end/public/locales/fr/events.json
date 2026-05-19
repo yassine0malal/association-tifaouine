@@ -1,0 +1,39 @@
+{
+    "events":{
+        "hero":{
+            "title":"Ne manquez rien de nos nouveautés"
+        },
+        "section_title":"Au cœur de l’action",
+        "all":"Tout",
+        "items": [
+          {
+            "id": 1,
+            "titre": "Échanges de visites entre associations et organisations partenaires",
+            "description": "Échanges répétés de visites entre l'association Tifaouine et les associations et organisations partenaires nationales et internationales pour partager les expériences.",
+            "date": "2024-01-01",
+            "lieu": "Maroc et international"
+          },
+          {
+            "id": 2,
+            "titre": "Accueil de délégations de la société civile nationale et internationale",
+            "description": "Accueil multiple de délégations de la société civile nationale et internationale pour découvrir l'expérience de l'association Tifaouine en matière de développement rural.",
+            "date": "2024-01-01",
+            "lieu": "Siège de l'association, Asni"
+          },
+          {
+            "id": 3,
+            "titre": "Visite du Ministre de l'Agriculture espagnol et du Gouverneur d'Andalousie",
+            "description": "Visite officielle internationale du Ministre de l'Agriculture espagnol et du Gouverneur d'Andalousie au siège de l'association Tifaouine dans le cadre de la coopération internationale.",
+            "date": "2024-01-01",
+            "lieu": "Siège de l'association, Asni"
+          },
+          {
+            "id": 4,
+            "titre": "Campagnes de sensibilisation sanitaire",
+            "description": "Campagnes de sensibilisation répétées dans le domaine de la santé ciblant la population de la région d'Asni pour les sensibiliser à l'hygiène et à la prévention.",
+            "date": "2024-01-01",
+            "lieu": "Région d'Asni"
+          }
+        ]
+    }
+}

@@ -6,6 +6,7 @@ class AuthController {
      * @route   POST /api/auth/login
      * @desc    Connexion de l'administrateur
      */
+
     async login(req, res) {
         try {
             const { email, password } = req.body;
@@ -22,14 +23,29 @@ class AuthController {
             res.cookie('refreshToken', data.refreshToken, {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
-                sameSite: 'Strict', // Protection CSRF
-                maxAge: 7 * 24 * 60 * 60 * 1000 // 7 jours
+                sameSite: process.env.NODE_ENV === 'production' ? 'Strict' : 'Lax',
+                maxAge: 7 * 24 * 60 * 60 * 1000
             });
+            // res.cookie('refreshToken', data.refreshToken, {
+            //     httpOnly: true,
+            //     secure: process.env.NODE_ENV === 'production',
+            //     sameSite: 'Strict',
+            //     maxAge: rememberMe ? 30 * 24 * 60 * 60 * 1000   // 30 days
+            //         : 7 * 24 * 60 * 60 * 1000    // 7 days
+            // });
+
+            res.cookie('accessToken', data.accessToken, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                sameSite: 'Strict', 
+                maxAge:  60 * 60 * 1000 
+            });
+
 
             return res.status(200).json({
                 success: true,
                 message: "Connexion réussie.",
-                accessToken: data.accessToken,
+                //  accessToken: data.accessToken,
                 user: data.user
             });
 
@@ -60,9 +76,16 @@ class AuthController {
 
             const data = await authService.refreshAdminToken(refreshToken);
 
+            res.cookie('accessToken', data.accessToken, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                sameSite: 'Strict',
+                maxAge: 60 * 60 * 1000  // 1h — aligné avec JWT_ACCESS_EXPIRATION
+            });
+
             return res.status(200).json({
                 success: true,
-                accessToken: data.accessToken
+                message: "Token rafraîchi avec succès."
             });
         } catch (error) {
             return res.status(401).json({
@@ -84,6 +107,18 @@ class AuthController {
             await authService.logoutAdmin(accessToken, refreshToken);
 
             res.clearCookie('refreshToken', {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                sameSite: process.env.NODE_ENV === 'production' ? 'Strict' : 'Lax',
+            });
+
+            res.clearCookie('accessToken', {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                sameSite: process.env.NODE_ENV === 'production' ? 'Strict' : 'Lax',
+            });
+
+            res.clearCookie('accessToken', {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
                 sameSite: 'Strict'
@@ -132,10 +167,10 @@ class AuthController {
     }
 
     /**
-     * @route   PATCH /api/auth/update-profile
-     * @desc    Mettre à jour le profil admin
+     * @route   PUT /api/auth/profile
+     * @desc    Mettre à jour le profil admin (nom, email, password)
      */
-    async updateProfile(req, res) {
+    async updateProfileFull(req, res) {
         try {
             const userId = req.user.id;
             const { nom, email, password } = req.body;
@@ -149,7 +184,45 @@ class AuthController {
             });
 
         } catch (error) {
-            console.error("Erreur updateProfile controller : ", error.message);
+            console.error('[ERROR PUT PROFILE]:', error.message);
+            return res.status(400).json({
+                success: false,
+                message: error.message
+            });
+        }
+    }
+
+    /**
+     * @route   DELETE /api/auth/profile
+     * @desc    Supprimer le compte admin
+     */
+    async deleteProfile(req, res) {
+        try {
+            const userId = req.user.id;
+
+            // Supprimer le profil
+            await authService.deleteAdminProfile(userId);
+
+            // Nettoyer les cookies
+            res.clearCookie('refreshToken', {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                sameSite: process.env.NODE_ENV === 'production' ? 'Strict' : 'Lax',
+            });
+
+            res.clearCookie('accessToken', {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                sameSite: 'Strict'
+            });
+
+            return res.status(200).json({
+                success: true,
+                message: "Compte supprimé avec succès."
+            });
+
+        } catch (error) {
+            console.error('[ERROR DELETE PROFILE]:', error.message);
             return res.status(400).json({
                 success: false,
                 message: error.message

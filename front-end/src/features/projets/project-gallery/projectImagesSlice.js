@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
 import { projectImagesAPI } from "./projectImagesService";
 
 export const fetchProjectImages = createAsyncThunk(
@@ -6,7 +6,7 @@ export const fetchProjectImages = createAsyncThunk(
   async ({ project, page }) => {
     const data = await projectImagesAPI(project, page);
     return data;
-  },
+  }
 );
 
 const projectImagesSlice = createSlice({
@@ -15,11 +15,12 @@ const projectImagesSlice = createSlice({
     images: [],
     loading: false,
     error: null,
+    currentProject:null,
     currentPage: 1,
     totalPages: 1,
     nextPage: 2,
     prevPage: 0,
-    itemPerPage: 0,
+    itemsPerPage: 0,
   },
   reducers: {
     setImagesPage: (state, action) => {
@@ -35,8 +36,9 @@ const projectImagesSlice = createSlice({
       })
 
       .addCase(fetchProjectImages.fulfilled, (state, action) => {
+        
         state.loading = false;
-        const newImages = action.payload.images;
+        const newImages = action.payload?.images || [];
 
         // Remove duplicates based on id
         const existingIds = new Set(state.images.map((img) => img.id));
@@ -45,11 +47,10 @@ const projectImagesSlice = createSlice({
           (img) => !existingIds.has(img.id),
         );
         state.images.push(...filteredImages);
-        state.currentPage = action.payload.currentPage;
         state.totalPages = action.payload.totalPages;
         state.nextPage = action.payload.nextPage;
         state.prevPage = action.payload.prevPage;
-        state.itemPerPage = action.payload.itemPerPage;
+        state.itemsPerPage = action.payload.itemsPerPage;
       })
 
       .addCase(fetchProjectImages.rejected, (state, action) => {

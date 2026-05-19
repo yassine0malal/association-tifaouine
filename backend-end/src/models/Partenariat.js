@@ -8,9 +8,19 @@ const Partenariat = sequelize.define('Partenariat', {
         primaryKey: true,
         allowNull: false,
     },
-    nom: {
+    nom_fr: {
         type: DataTypes.STRING(200),
         allowNull: false,
+    },
+    nom_ar: {
+        type: DataTypes.STRING(200),
+        allowNull: false,
+        defaultValue: ''
+    },
+    nom_en: {
+        type: DataTypes.STRING(200),
+        allowNull: false,
+        defaultValue: ''
     },
     logo: {
         type: DataTypes.STRING(500),
@@ -32,7 +42,8 @@ const Partenariat = sequelize.define('Partenariat', {
         type: DataTypes.STRING(255),
         allowNull: true,
     }
-}, {
+}, 
+{
     tableName: 'partenariat',
     timestamps: true,
     createdAt: 'created_at',

@@ -1,0 +1,39 @@
+{
+  "events": {
+    "hero": {
+      "title": "Don’t miss any of our latest updates"
+    },
+    "section_title": "In the action",
+    "all": "All",
+    "items": [
+      {
+        "id": 1,
+        "titre": "Exchange visits between partner associations and organisations",
+        "description": "Repeated exchange visits between Tifaouine association and national and international partner associations and organisations to share experiences.",
+        "date": "2024-01-01",
+        "lieu": "Morocco and international"
+      },
+      {
+        "id": 2,
+        "titre": "Reception of national and international civil society delegations",
+        "description": "Multiple receptions of national and international civil society delegations to discover the Tifaouine association's experience in rural development.",
+        "date": "2024-01-01",
+        "lieu": "Association headquarters, Asni"
+      },
+      {
+        "id": 3,
+        "titre": "Visit of the Spanish Minister of Agriculture and Governor of Andalusia",
+        "description": "International official visit of the Spanish Minister of Agriculture and Governor of Andalusia to the Tifaouine association headquarters within the framework of international cooperation.",
+        "date": "2024-01-01",
+        "lieu": "Association headquarters, Asni"
+      },
+      {
+        "id": 4,
+        "titre": "Health awareness campaigns",
+        "description": "Repeated health awareness campaigns targeting the population of the Asni region to raise awareness of hygiene and disease prevention.",
+        "date": "2024-01-01",
+        "lieu": "Asni Region"
+      }
+    ]
+  }
+}

@@ -1,0 +1,55 @@
+{
+    "contact": {
+        "hero": {
+            "title": "Contact"
+        },
+        "info": {
+            "heading": "Votre voix compte",
+            "subheading": "Remplissez le formulaire ci-dessous ou planifiez un rendez-vous selon vos disponibilités. Nous avons hâte d'échanger avec vous.",
+            "cards": {
+                "email": {
+                    "title": "Addresse Email",
+                    "value": "contact@tifaouine.org"
+                },
+                "phone": {
+                    "title": "Numéro de Téléphone",
+                    "value": "+212 655146069"
+                },
+                "location": {
+                    "title": "Adresse / Location",
+                    "value": "douar asni lakdim 42150, Marrakech Al Haouz - Maroc"
+                }
+            }
+        },
+        "form": {
+            "heading": "À votre écoute",
+            "subheading": "Vous avez une question ?",
+            "placeholders": {
+                "fullName": "Nom & Prénom",
+                "email": "Email",
+                "phone": "Téléphone",
+                "subject": "Objet",
+                "message": "Message (Le message doit comporter plus de 10 caractères)",
+                "send": "Envoyer",
+                "send-what": "Contactez-nous sur WhatsApp"
+            },
+            "object": {
+                "partenariat": "Demande de Partenariat",
+                "benevole": "Demande de Bénévolat",
+                "membre": "Demande d'Adhésion",
+                "service": "Demande de Service",
+                "information": "Demande d'Information"
+            }
+        },
+        "validation": {
+            "fullNameRequired": "Le nom complet est requis",
+            "emailRequired": "L'email est requis",
+            "emailInvalid": "L'adresse email est invalide",
+            "phoneRequired": "Le numéro de téléphone est requis",
+            "phoneInvalid": "Le numéro de téléphone est invalide",
+            "subjectRequired": "Le sujet est requis",
+            "messageRequired": "Le message est requis",
+            "submitError": "Une erreur est survenue. Veuillez réessayer plus tard."
+        }
+    }
+}

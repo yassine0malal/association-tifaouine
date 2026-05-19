@@ -1,0 +1,439 @@
+.contactUs {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    padding: 60px 20px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.contactUsSection {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    padding: 40px 10px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    align-items: flex-start;
+    align-items: stretch;
+    /* background-color: var(--accent-src); */
+    border-radius: 8px;
+
+}
+
+[dir="rtl"] .contactUsSection {
+    flex-direction: row-reverse;
+}
+
+.contactUs .info {
+    text-align: center;
+
+}
+
+.info h1 {
+    font-size: 47px;
+    color: var(--accent);
+    position: relative;
+}
+
+.info h1::before {
+    position: absolute;
+    content: "";
+    width: 8%;
+    height: 5%;
+    background-color: var(--accent);
+    font-size: 47px;
+    color: var(--accent);
+    bottom: 40px;
+
+}
+
+[dir="rtl"].info h1::before {
+    left: auto;
+    right: 0;
+}
+
+.info p {
+    color: var(--text);
+}
+
+.info h1,
+.info p {
+    padding: 40px;
+    padding-top: 0px;
+}
+
+/* Map Logic */
+.carte {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+}
+
+.carte iframe {
+    width: 100%;
+    border-radius: 0px;
+    display: block;
+    height: 640px;
+}
+
+/* Form Logic */
+.form {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.inputsWarper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+
+[dir="rtl"] input[type="tel"] {
+    direction: ltr;
+    text-align: right;
+}
+
+::placeholder,
+textarea::placeholder {
+    font-weight: lighter;
+    font-size: 14px;
+}
+
+.inputs input,
+textarea {
+    width: 100%;
+    font-size: 16px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    outline: none;
+    color: var(--paragraph-color);
+    font-size: 16px;
+    font-weight: 300;
+}
+
+[dir="rtl"] input,
+[dir="rtl"] textarea {
+    text-align: right;
+    font-family: "El Messiri", sans-serif;
+}
+
+textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+/* Button & Lottie size */
+.submitBtn {
+    all: unset;
+    cursor: pointer;
+    width: 180px;
+    margin-top: 10px;
+    transition: transform 0.2s ease;
+}
+
+
+
+.submitBtn:hover {
+    transform: scale(1.05);
+}
+
+.form h1 {
+    color: var(--accent);
+    font-size: 49px;
+}
+
+.form h3 {
+    padding-inline-start: 0;
+    padding-inline-end: 25px;
+    padding-block: 25px;
+}
+
+/* The Animation Button */
+.form .sendButton button {
+    all: unset;
+    cursor: pointer;
+    width: 200px;
+    height: auto;
+    text-align: center;
+    align-self: center;
+    transition: transform 0.3s ease;
+    background-color: var(--accent);
+    padding: 20px 30px;
+    color: var(--bg);
+    font-weight: 600;
+    border-radius: 8px;
+    width: 90%;
+}
+
+.form button:active {
+    transform: scale(1.1);
+}
+
+.sendAnimation {
+    width: 120px;
+    align-self: center;
+    animation: send 3s infinite;
+}
+
+.form .sendButton button a {
+    all: unset;
+}
+
+.form .sendButton button:last-child img {
+    width: 20px;
+}
+
+.form .sendButton button:last-child {
+    background-color: var(--second-buttons-bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+}
+
+.form .sendButton {
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form .sendButton button {
+    background: linear-gradient(135deg, var(--accent) 50%, var(--accent-strong) 50%);
+    background-size: 250% 250%;
+    background-position: top left;
+    transition: background-position 0.4s ease, scale 0.3s ease-in-out;
+}
+
+.form .sendButton button:hover {
+    color: var(--bg);
+    background-position: bottom right
+}
+
+[dir="rtl"] .carte {
+    direction: ltr;
+}
+
+
+@keyframes send {
+    0% {
+        transform: translateY(10px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+
+    100% {
+        transform: translateY(10px);
+    }
+
+}
+
+
+.contactUs .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 70px;
+    margin-bottom: 100px;
+
+}
+
+.contactUs .cards .card {
+    position: relative;
+    border: 1px solid var(--border);
+    box-shadow: 0 8px 32px 0 rgba(100, 110, 255, 0.15);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    padding: 30px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    text-align: start;
+    gap: 20px;
+    flex: 1;
+    min-width: 0;
+}
+
+
+
+.contactUs .cards .card p {
+    color: var(--text);
+    padding-inline-start: 0;
+    margin-inline-start: 0;
+    padding-inline-end: 20px;
+}
+
+.contactUs .cards .card p[class*="phoneNumber"] {
+    direction: ltr;
+    unicode-bidi: isolate;
+    display: inline-block;
+    color: aquamarine;
+}
+
+.contactUs .cards .card::before {
+    position: absolute;
+    height: 10px;
+    width: 100%;
+    content: "";
+    bottom: 0px;
+    left: 0;
+    background-image:
+        linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+        url("../../../assets/images/projects_hero.jpg");
+    background-color: var(--accent);
+    background-size: cover;
+    background-position: center;
+    opacity: 1;
+    z-index: -1;
+    transition: height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.contactUs .cards .card::after {
+    content: "";
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 10px;
+    position: absolute;
+    background-color: var(--accent);
+}
+
+.contactUs .cards .card:hover::before {
+    height: 100%;
+    filter: brightness(0.5) grayscale(0.3);
+}
+
+.contactUs .cards .card:hover>* {
+    color: var(--bg);
+}
+
+.contactUs .cards .card img {
+    width: 50px;
+}
+
+
+
+.contactUs .field input:focus,.contactUs .field textarea:focus{
+    border-color: var(--accent);
+    border-width: 1px;
+    box-shadow: 0 0 0 1px rgba(231, 76, 60, 0.3);
+}
+.contactUs .field {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.contactUs .formError {
+    color: #e74c3c;
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 0.9rem;
+    background: rgba(231, 76, 60, 0.1);
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.contactUs .field .error {
+    color: #e74c3c;
+    font-size: 0.75;
+    margin-top: 2px;
+    padding-inline-start: 5px;
+    text-align: start;
+    line-height: 1.3;
+}
+
+
+/* Add this after your existing input/textarea styles */
+.contactUs .field select {
+    width: 100%;
+    font-size: 16px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    outline: none;
+    color: var(--paragraph-color);
+    font-weight: 300;
+    background-color: var(--bg);
+    appearance: none; /* Removes default browser arrow */
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 16px;
+    cursor: pointer;
+}
+
+/* RTL support for select */
+[dir="rtl"] .contactUs .field select {
+    text-align: right;
+    font-family: "El Messiri", sans-serif;
+    background-position: left 15px center;
+}
+
+/* Focus state matching inputs/textarea */
+.contactUs .field select:focus {
+    border-color: var(--accent);
+    border-width: 1px;
+    box-shadow: 0 0 0 1px rgba(231, 76, 60, 0.3);
+}
+
+/* Optional: Add a hover effect */
+.contactUs .field select:hover {
+    border-color: var(--accent);
+}
+
+
+
+/* --- MOBILE RESPONSIVE --- */
+@media (max-width: 850px) {
+    .contactUsSection {
+        flex-direction: column;
+        align-items: center;
+        padding: 0px;
+
+    }
+
+    [dir="rtl"] .contactUsSection {
+        flex-direction: column;
+    }
+
+    .carte,
+    .form {
+        width: 100%;
+        padding: 3px;
+    }
+
+    .inputs {
+        grid-template-columns: 1fr;
+    }
+
+    .carte iframe {
+        height: 350px;
+
+    }
+
+    .cards {
+        flex-direction: column;
+    }
+
+    .contactUs .cards {
+        margin-bottom: 0px;
+
+    }
+}

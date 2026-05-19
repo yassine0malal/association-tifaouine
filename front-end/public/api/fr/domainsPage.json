@@ -1,0 +1,49 @@
+{
+    "domainsList": [
+        {
+            "id": 1,
+            "category": "Exceptional Domain",
+            "title": "The Heritage Estate",
+            "description": "A unique terroir nestled in the heart of the valley, shaped by generations of farmers who have preserved ancestral gestures and the richness of the soil.",
+            "projets": 50,
+            "image": "../../../assets/images/domains/agriculture.png",
+            "evenements": 1200
+        },
+        {
+            "id": 2,
+            "category": "Vital Resource",
+            "title": "The Springs of the Atlas",
+            "description": "A unique terroir nestled in the heart of the valley, where sustainable agriculture and respect for natural cycles give birth to products of exceptional quality.",
+            "projets": 30,
+            "image": "../../../assets/images/domains/sante.jpg",
+            "evenements": 8
+        },
+        {
+            "id": 3,
+            "category": "Knowledge & Transmission",
+            "title": "The School of the Peaks",
+            "description": "A unique terroir nestled in the heart of the valley, benefiting from an ideal microclimate and generous sunshine that give the harvests all their typicity.",
+            "projets": 25,
+            "image": "../../../assets/images/domains/water.jpg",
+            "evenements": 15
+        },
+        {
+            "id": 4,
+            "category": "Craftsmanship & Empowerment",
+            "title": "The Women's Workshop of the High Atlas",
+            "description": "A space dedicated to creation and the transmission of ancestral know-how. Weaving, sewing, and promotion of local products to offer women sustainable economic independence.",
+            "projets": 18,
+            "image": "../../../assets/images/domains/sante.jpg",
+            "evenements": 22
+        },
+        {
+            "id": 5,
+            "category": "Environment & Reforestation",
+            "title": "The Forest for Future Generations",
+            "description": "A vast program for planting fruit trees and protecting mountain ecosystems. Each planted tree is a further step towards the climate resilience of the douars and the preservation of biodiversity.",
+            "projets": 40,
+            "image": "../../../assets/images/domains/water.jpg",
+            "evenements": 30
+        }
+    ]
+}

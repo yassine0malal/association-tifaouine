@@ -1,0 +1,328 @@
+:root {
+  --bg-dark: #1e1e1e;
+  --card-bg: #f5f3ee;
+
+  --primary: #c28b4e;
+  --primary-light: #e0b967;
+
+  --text-dark: #1a1a1a;
+  --text-muted: #6b6b6b;
+
+  --input-bg: #efe8dc;
+  --input-border: #d6c3a5;
+
+  --white: #ffffff;
+}
+
+/* OUTER BACKGROUND */
+.container {
+  min-height: 100vh;
+  display: flex;
+  background: var(--code-bg);
+  align-items: center;
+  justify-content: center;
+}
+
+/* MAIN CARD */
+.loginContainer {
+  width: 90%;
+  max-width: 1200px;
+  display: flex;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.loginContainer>.loginTitle {
+  display: none;
+}
+
+/* LEFT IMAGE */
+.imageContainer {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  background: linear-gradient(to left, var(--accent), var(--accent-light));
+}
+
+.imageContainer img {
+  width: 100%;
+  max-width: 450px;
+  object-fit: contain;
+  animation: float 3s ease-in-out infinite;
+}
+
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-20px);
+  }
+
+}
+
+/* RIGHT FORM */
+.loginForm {
+  flex: 1;
+  padding: 60px 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  background-color: #ffffff4b;
+}
+
+/* VERTICAL LINE
+.loginForm::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 15%;
+  height: 70%;
+  width: 3px;
+  background: var(--primary-light);
+} */
+
+/* TITLE */
+.loginTitle {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 40px;
+  line-height: 1.2;
+  position: relative;
+}
+
+/* small underline */
+.loginTitle::after {
+  position: absolute;
+  bottom: -5px;
+  left: 15px;
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  background-color: var(--accent);
+  margin-top: 10px;
+}
+
+.loginTitle::before {
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  content: "";
+  display: block;
+  width: 10px;
+  height: 4px;
+  background-color: var(--accent);
+}
+
+/* INPUT WRAPPER */
+.inputWrap {
+  display: flex;
+  align-items: center;
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 20px;
+  gap: 10px;
+}
+
+.inputWrap img {
+  width: 20px;
+  opacity: 0.7;
+}
+
+.inputWrap input {
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 100%;
+  font-size: 14px;
+  color: var(--text-dark);
+  background: var(--input-bg) !important;
+}
+
+/* REMEMBER ME */
+
+/* Hide native checkbox and style the custom one */
+.rememberMe {
+  margin-bottom: 1.5rem;
+}
+
+.customCheckbox {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: var(--color-text-light, #6B7280);
+  user-select: none;
+}
+
+.customCheckbox input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.customCheckbox span {
+  position: relative;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background: var(--input-bg);
+  border: 2px solid var(--primary);
+  border-radius: 4px;
+  margin-right: 0.75rem;
+  transition: all 0.3s ease;
+}
+
+.customCheckbox input:checked~span {
+  background: var(--accent, #CB914F);
+  border-color: var(--accent, #CB914F);
+}
+
+.customCheckbox input:checked~span::after {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 2px;
+  width: 5px;
+  height: 10px;
+  border: solid var(--bg, #fff);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+
+/* BUTTON */
+.btn {
+  background: linear-gradient(to left, var(--accent), var(--accent-light));
+  color: var(--white);
+  border: none;
+  padding: 14px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  width: 180px;
+  margin: auto;
+}
+
+.btn:hover {
+  transform: scale(1.1);
+}
+
+.btn:active {
+  transform: scale(1);
+}
+
+/* error handling  */
+.error {
+  color: #e74c3c;
+  background: #fdecea;
+  padding: 0.75rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px var(--input-bg) inset !important;
+  box-shadow: 0 0 0 1000px var(--input-bg) inset !important;
+  -webkit-text-fill-color: var(--text-dark) !important;
+  transition: background-color 9999s ease-in-out 0s;
+}
+
+@media (max-width: 900px) {
+  .loginContainer {
+    width: 95%;
+  }
+}
+
+@media (max-width: 768px) {
+  .loginContainer {
+    flex-direction: column;
+    box-shadow: none;
+  }
+
+  /* FORM FIRST (better UX) */
+  .loginForm {
+    padding: 40px 25px;
+    background-color: transparent;
+  }
+
+  .loginForm .loginTitle {
+    display: none;
+  }
+
+  .loginContainer>.loginTitle {
+    display: block;
+  }
+
+  .imageContainer {
+    border-radius: 8px;
+    padding: 0 30px;
+    background: transparent;
+  }
+
+  /* .imageContainer img {
+    max-width: 200px;
+  } */
+
+  /* REMOVE vertical line */
+  .loginForm::before {
+    display: none;
+  }
+
+  /* CENTER TITLE */
+  .loginTitle {
+    text-align: left;
+    padding: 0 25px;
+    width: 270px;
+  }
+
+  .loginTitle::after {
+    left: 40px;
+  }
+
+  .loginTitle::before {
+    left: 25px;
+  }
+
+  /* FULL WIDTH BUTTON */
+  .btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 500px) {
+  .loginContainer {
+    width: 95%;
+  }
+
+  .loginTitle {
+    font-size: 28px;
+  }
+
+  .inputWrap {
+    padding: 10px;
+  }
+
+  .inputWrap input {
+    font-size: 13px;
+  }
+}

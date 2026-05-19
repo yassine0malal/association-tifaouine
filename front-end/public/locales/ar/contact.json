@@ -1,0 +1,55 @@
+{
+  "contact": {
+    "hero": {
+      "title": "اتصل بنا"
+    },
+    "info": {
+      "heading": "تواصل معنا",
+      "subheading": "املأ النموذج أدناه أو حدد موعدًا للاجتماع بنا حسب ما يناسبك.",
+      "cards": {
+        "email": {
+          "title": "البريد الإلكتروني",
+          "value": "contact@tifaouine.org"
+        },
+        "phone": {
+          "title": "رقم الهاتف",
+          "value": "\u200E+212 655146069"
+        },
+        "location": {
+          "title": "العنوان / الموقع",
+          "value": "دوار أسني القديم 42150، مراكش الحوز - المغرب"
+        }
+      }
+    },
+    "form": {
+      "heading": "لنتشارك الرؤية",
+      "subheading": "هل لديك سؤال؟",
+      "placeholders": {
+        "fullName": "الاسم الكامل",
+        "email": "البريد الإلكتروني",
+        "phone": "الهاتف",
+        "subject": "الموضوع",
+        "message": "الرسالة (يجب أن تكون الرسالة أكثر من 10 أحرف)",
+        "send": "إرسال",
+        "send-what": "تواصل معنا عبر واتساب"
+      },
+      "object": {
+        "partenariat": "طلب شراكة",
+        "benevole": "طلب تطوع",
+        "membre": "طلب عضوية",
+        "service": "طلب خدمة",
+        "information": "طلب معلومات"
+      }
+    },
+    "validation": {
+      "fullNameRequired": "الاسم الكامل مطلوب",
+      "emailRequired": "البريد الإلكتروني مطلوب",
+      "emailInvalid": "عنوان البريد الإلكتروني غير صالح",
+      "phoneRequired": "رقم الهاتف مطلوب",
+      "phoneInvalid": "رقم الهاتف غير صالح",
+      "subjectRequired": "الموضوع مطلوب",
+      "messageRequired": "الرسالة مطلوبة",
+      "submitError": "حدث خطأ ما. الرجاء معاودة المحاولة لاحقاً."
+    }
+  }
+}

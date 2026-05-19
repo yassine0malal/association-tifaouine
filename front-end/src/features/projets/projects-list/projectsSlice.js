@@ -1,34 +1,81 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { fetchProjectsAPI } from "./projectsService";
+import { fetchProjectsAPI, fetchProjectsForSelectAPI } from "./projectsService";
 
 // async thunk
 export const fetchProjects = createAsyncThunk(
   "projects/fetchProjects",
-  async ({ page, filter }) => {
-    console.log(page , filter);
-    
-    const data = await fetchProjectsAPI(page, filter);
+  async ({ page, lang, filter, limit }) => {
+    const data = await fetchProjectsAPI(page, filter, lang, limit);
     return data;
   },
+  {
+    condition: ({ page, lang , filter }, { getState }) => {
+      const { projects } = getState();
+      // 🚫 don't fetch if already loading
+      if (projects.loading) return false;
+
+      // 🚫 don't fetch same page + same filter again
+      // if (projects.currentPage === page && projects.currentFilter === filter) {
+      //   return false;
+      // }
+
+      return true;
+    },
+  },
 );
+
+
+
+// async thunk
+export const fetchProjectsForSelect = createAsyncThunk(
+  "projects/fetchProjectsForSelect",
+  async ({ lang }) => {
+    const data = await fetchProjectsForSelectAPI(lang);
+    return data;
+  },
+  {
+    condition: ({lang}, { getState }) => {
+      const { projects } = getState();
+      // 🚫 don't fetch if already loading
+      if (projects.projectsForSelect.loading) return false;
+
+      // 🚫 don't fetch same page + same filter again
+      // if (projects.currentPage === page && projects.currentFilter === filter) {
+      //   return false;
+      // }
+
+      return true;
+    },
+  },
+);
+
+
+
 
 const projectsSlice = createSlice({
   name: "projects",
   initialState: {
     data: [],
+    projectsForSelect:{
+      data:[],
+      loading:false,
+      error:null
+    },
     loading: false,
     error: null,
-    currentfilter: "All",
+    currentFilter: "all",
     currentPage: 1,
-    totalPages: 10,
+    totalPages: null,
+    itemsPerPage: 8,
   },
   reducers: {
     setPage: (state, action) => {
       state.currentPage = action.payload;
     },
     setFilter: (state, action) => {
-      state.currentfilter = action.payload;
+      state.currentFilter = action.payload;
       state.currentPage = 1;
+      state.data = []
     },
   },
   extraReducers: (builder) => {
@@ -42,18 +89,37 @@ const projectsSlice = createSlice({
       // success
       .addCase(fetchProjects.fulfilled, (state, action) => {
         state.loading = false;
-        state.data = action.payload.projects;
-        state.currentPage = action.payload.currentPage;
-        state.totalPages = action.payload.totalPages;
-        state.nextPage = action.payload.nextPage;
-        state.prevPage = action.payload.prevPage;
-        state.itemPerPage = action.payload.itemPerPage;
+        state.data = action.payload?.data || [];
+// console.log()
+        // state.currentPage = action.payload.currentPage;
+        state.totalPages = action.payload.pagination.totalPages;
+        state.nextPage = action.payload.pagination.nextPage;
+        state.prevPage = action.payload.pagination.prevPage;
+        state.itemsPerPage = action.payload.pagination.itemsPerPage;
       })
 
       // error
       .addCase(fetchProjects.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
+      })
+
+      // loading
+      .addCase(fetchProjectsForSelect.pending, (state) => {
+        state.projectsForSelect.loading = true;
+        state.projectsForSelect.error = null;
+      })
+
+      // success
+      .addCase(fetchProjectsForSelect.fulfilled, (state, action) => {
+        state.projectsForSelect.loading = false;
+        state.projectsForSelect.data = action.payload?.rows || [];
+      })
+
+      // error
+      .addCase(fetchProjectsForSelect.rejected, (state, action) => {
+        state.projectsForSelect.loading = false;
+        state.projectsForSelect.error = action?.error || "";
       });
   },
 });

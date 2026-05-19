@@ -1,278 +1,301 @@
 /* Pagination Container */
+
+[dir="rtl"] .pagination * {
+  font-family: var(--ar-lang);
+}
+
 .pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-    margin-top: 3rem;
-    padding: 2rem 1rem;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: thin;
-    scrollbar-color: var(--accent, #CB914F) var(--border, #e5e4e7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 3rem;
+  padding: 2rem 1rem;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent, #cb914f) var(--border, #e5e4e7);
 }
 
 /* Page Numbers Container */
 .pageNumbers {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    flex-wrap: nowrap;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: nowrap;
+  justify-content: center;
 }
 
 /* Individual Page Number */
 .pageNumber {
-    min-width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--bg, #fff);
-    color: var(--text, #6b6375);
-    border: 1px solid var(--border, #e5e4e7);
-    border-radius: 8px;
-    font-size: 0.9rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    padding: 0 0.5rem;
-    flex-shrink: 0;
-    white-space: nowrap;
+  min-width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg, #fff);
+  color: var(--text, #6b6375);
+  border: 1px solid var(--border, #e5e4e7);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0 0.5rem;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .pageNumber:hover,
-.pageNumber.active 
-{
-    border-color: var(--accent, #CB914F);
-    color: var(--accent, #CB914F);
+.pageNumber.active {
+  border-color: var(--accent, #cb914f);
+  color: var(--accent, #cb914f);
 }
 
 .pageNumber.active {
-    background: var(--accent, #CB914F);
-    color: var(--bg, #fff);
-    border-color: var(--accent, #CB914F);
-    box-shadow: 0 4px 12px rgba(203, 145, 79, 0.3);
+  background: var(--accent, #cb914f);
+  color: var(--bg, #fff);
+  border-color: var(--accent, #cb914f);
+  box-shadow: 0 4px 12px rgba(203, 145, 79, 0.3);
 }
 
 /* Previous/Next Buttons */
 .pageButton {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    height: 40px;
-    padding: 0.6rem 1.25rem;
-    background: var(--bg, #fff);
-    color: var(--text, #6b6375);
-    border: 1px solid var(--border, #e5e4e7);
-    border-radius: 8px;
-    font-size: 0.9rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    flex-shrink: 0;
-    white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  height: 40px;
+  padding: 0.6rem 1.25rem;
+  background: var(--bg, #fff);
+  color: var(--text, #6b6375);
+  border: 1px solid var(--border, #e5e4e7);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .pageButton:disabled {
-    opacity: 0.6;
+  opacity: 0.6;
 }
 
 .pageButton svg path {
-    fill: var(--text, #6b6375);
-    filter: drop-shadow(0 0 2px var(--text, #6b6375));
+  fill: var(--text, #6b6375);
+  filter: drop-shadow(0 0 2px var(--text, #6b6375));
 }
 
 .pageButton:not(:disabled):hover {
-    background: var(--accent, #CB914F);
-    color: var(--bg, #fff);
-    border-color: var(--accent, #CB914F);
-    box-shadow: 0 4px 12px rgba(203, 145, 79, 0.3);
+  background: var(--accent, #cb914f);
+  color: var(--bg, #fff);
+  border-color: var(--accent, #cb914f);
+  box-shadow: 0 4px 12px rgba(203, 145, 79, 0.3);
 }
 
-.pageButton:not(:disabled):hover  svg path {
-    fill: var(--bg, #fff);
-    filter: drop-shadow(0 0 2px var(--bg, #fff));
+.pageButton:not(:disabled):hover svg path {
+  fill: var(--bg, #fff);
+  filter: drop-shadow(0 0 2px var(--bg, #fff));
 }
 
 .pageButton:first-child svg {
-    rotate: 180deg;
+  rotate: 180deg;
 }
 
+[dir="rtl"] .pageButton:last-child svg {
+  rotate: 180deg;
+}
+[dir="rtl"] .pageButton:first-child svg {
+  rotate: 0deg;
+}
 /* Dots */
 .dots {
-    color: var(--paragraph-color, #908F89);
-    font-size: 1.2rem;
-    letter-spacing: 2px;
-    padding: 0 0.25rem;
-    flex-shrink: 0;
+  color: var(--paragraph-color, #908f89);
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+  padding: 0 0.25rem;
+  flex-shrink: 0;
 }
 
 /* Responsive Design - All Devices */
 
 /* Tablets (768px and below) */
 @media (max-width: 768px) {
-    .pagination {
-        gap: 0.75rem;
-        margin-top: 2rem;
-        padding: 1.5rem 0.75rem;
-        justify-content: center;
-    }
-    
-    .pageNumber {
-        min-width: 36px;
-        height: 36px;
-        font-size: 0.85rem;
-    }
-    
-    .pageButton {
-        padding: 0.5rem 1rem;
-        font-size: 0.85rem;
-        height: 36px;
-    }
-    
-    .pageButton svg {
-        width: 12px;
-        height: 12px;
-    }
-    
-    .dots {
-        font-size: 1rem;
-    }
+  .pagination {
+    gap: 0.75rem;
+    margin-top: 2rem;
+    padding: 1.5rem 0.75rem;
+    justify-content: center;
+  }
+
+  .pageNumber {
+    min-width: 36px;
+    height: 36px;
+    font-size: 0.85rem;
+  }
+
+  .pageButton {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    height: 36px;
+  }
+
+  .pageButton svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .dots {
+    font-size: 1rem;
+  }
 }
 
 /* Mobile Landscape (640px and below) */
 @media (max-width: 640px) {
-    .pagination {
-        padding: 1.25rem 0.5rem;
-    }
-    
-    .pageNumber {
-        min-width: 32px;
-        height: 32px;
-        font-size: 0.85rem;
-    }
-    
-    .pageButton {
-        padding: 0.4rem 0.65rem;
-        font-size: 0.75rem;
-        height: 32px;
-        margin: 0 0.3rem;
-        min-width: auto;
-    }
+  .pagination {
+    padding: 1.25rem 0.5rem;
+  }
 
-    .pageButton svg {
-        width: 11px;
-        height: 11px;
-    }
+  .pageNumber {
+    min-width: 32px;
+    height: 32px;
+    font-size: 0.85rem;
+  }
 
-    .pageButton span {
-        display: none;
-    }
-    
-    .pageButton svg {
-        width: 10px;
-        height: 10px;
-    }
-    
-    .dots {
-        font-size: 0.9rem;
-        letter-spacing: 1px;
-    }
+  .pageButton {
+    padding: 0.4rem 0.65rem;
+    font-size: 0.75rem;
+    height: 32px;
+    margin: 0 0.3rem;
+    min-width: auto;
+  }
+
+  .pageButton svg {
+    width: 11px;
+    height: 11px;
+  }
+
+  .pageButton span {
+    display: none;
+  }
+
+  .pageButton svg {
+    width: 10px;
+    height: 10px;
+  }
+
+  .dots {
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+  }
 }
 
 /* Mobile Portrait (480px and below) */
 @media (max-width: 480px) {
-    .pagination {
-        gap: 0.4rem;
-        padding: 1rem 0.4rem;
-    }
-    
-    .pageNumbers {
-        gap: 0.25rem;
-    }
-    
-    .pageNumber {
-        min-width: 30px;
-        height: 30px;
-        font-size: 0.8rem;
-    }
+  .pagination {
+    gap: 0.4rem;
+    padding: 1rem 0.4rem;
+  }
 
-    .pageButton {
-        padding: 0.35rem 0.55rem;
-        height: 30px;
-        font-size: 0.7rem;
-        margin: 0 0.25rem;
-    }
+  .pageNumbers {
+    gap: 0.25rem;
+  }
 
-    .pageButton svg {
-        width: 10px;
-        height: 10px;
-    }
-    
-    .dots {
-        font-size: 0.8rem;
-        letter-spacing: 1px;
-        padding: 0 0.15rem;
-    }
+  .pageNumber {
+    min-width: 30px;
+    height: 30px;
+    font-size: 0.8rem;
+  }
+
+  .pageButton {
+    padding: 0.35rem 0.55rem;
+    height: 30px;
+    font-size: 0.7rem;
+    margin: 0 0.25rem;
+  }
+
+  .pageButton svg {
+    width: 10px;
+    height: 10px;
+  }
+
+  .dots {
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    padding: 0 0.15rem;
+  }
 }
 
 /* Small Mobile (380px and below) */
-@media (max-width: 380px) {
-    .pagination {
-        gap: 0.3rem;
-        padding: 0.75rem 0.3rem;
-    }
-    
-    .pageNumbers {
-        gap: 0.2rem;
-    }
 
 @media (max-width: 380px) {
-    .pageNumber {
-        min-width: 28px;
-        height: 28px;
-        font-size: 0.75rem;
-    }
+  .pagination {
+    gap: 0.3rem;
+    padding: 0.75rem 0.3rem;
+  }
 
-    .pageButton {
-        padding: 0.3rem 0.45rem;
-        height: 28px;
-        font-size: 0.65rem;
-        margin: 0 0.2rem;
-    }
+  .pageNumbers {
+    gap: 0.2rem;
+  }
+  .pageNumber {
+    min-width: 28px;
+    height: 28px;
+    font-size: 0.75rem;
+  }
 
-    .pageButton svg {
-        width: 9px;
-        height: 9px;
-    }
+  .pageButton {
+    padding: 0.3rem 0.45rem;
+    height: 28px;
+    font-size: 0.65rem;
+    margin: 0 0.2rem;
+  }
+
+  .pageButton svg {
+    width: 9px;
+    height: 9px;
+  }
 }
-    
-    /* Hide text on very small screens, show only icons */
-    .pageButton .button-text {
-        display: none;
-    }
-    
-    .dots {
-        font-size: 0.7rem;
-    }
+
+/* Hide text on very small screens, show only icons */
+.pageButton .button-text {
+  display: none;
+}
+
+.dots {
+  font-size: 0.7rem;
+}
+
+@media (max-width: 310px) {
+  .pageNumber {
+    min-width: 24px;
+    height: 24px;
+    font-size: 0.7rem;
+  }
+
+  .pageButton {
+    padding: 0.3rem 0.45rem;
+    height: 24px;
+    font-size: 0.6rem;
+    margin: 0 0.2rem;
+  }
 }
 
 /* Touch-friendly adjustments for mobile */
 @media (hover: none) and (pointer: coarse) {
-    .pageNumber, 
-    .pageButton {
-        cursor: default;
-        -webkit-tap-highlight-color: transparent;
-    }
-    
-    .pageNumber:active {
-        transform: scale(0.95);
-    }
-    
-    .pageButton:active {
-        transform: scale(0.98);
-    }
+  .pageNumber,
+  .pageButton {
+    cursor: default;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .pageNumber:active {
+    transform: scale(0.95);
+  }
+
+  .pageButton:active {
+    transform: scale(0.98);
+  }
 }

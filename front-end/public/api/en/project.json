@@ -1,0 +1,16 @@
+{
+  "id": 2,
+  "title": "CLEAN WATER INITIATIVE - TIFAOUINE",
+  "img": "https://picsum.photos/300/200",
+  "status": {
+    "peopleHelped": "800+ FAMILIES",
+    "targetRegion": "DOUAR ASNI",
+    "projectStatus": "COMPLETED"
+  },
+  "description": "This initiative aims to provide clean and sustainable water access to rural communities in Tifaouine. The project has significantly improved daily life by ensuring reliable water sources for hundreds of families, supporting both health and local development.",
+  "meta": {
+    "completion": 2023,
+    "partners": "Moroccan Water",
+    "domain": "Water"
+  }
+}

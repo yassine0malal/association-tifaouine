@@ -1,0 +1,20 @@
+{
+  "domains": [
+    {
+      "id": 1,
+      "label": "Water"
+    },
+    {
+      "id": 2,
+      "label": "Agriculture"
+    },
+    {
+      "id": 3,
+      "label": "Education"
+    },
+    {
+      "id": 4,
+      "label": "Women"
+    }
+  ]
+}

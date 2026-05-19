@@ -1,0 +1,15 @@
+{
+  "event": {
+    "details": "Details",
+    "location": "Location",
+    "date_start": "Start Date",
+    "date_end": "End Date",
+    "benevole_btn": "Become a Volunteer",
+    "last_posts": "Latest Posts",
+    "contribute": "Contribute",
+    "contribute_text": "Your support can make a difference. Every donation, no matter how small, helps improve lives and build a better future. Join us in this mission of solidarity.",
+    "donate_btn": "Donate",
+    "category": "Category",
+    "common_events": "Similar Events"
+  }
+}

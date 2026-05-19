@@ -1,0 +1,142 @@
+.partnerContainer {
+    padding: 60px 0;
+    overflow: hidden;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+.header  h2{
+    font-size: 38px;
+    color: var(--accent);
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+.partnerSection {
+    display: flex;
+    align-items: center;
+    background: #f9f9f9; /* Couleur de fond légère */
+    padding: 20px 0;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+}
+
+.textLabel {
+    padding: 0 40px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #333;
+    white-space: nowrap;
+    border-right: 2px solid #ddd;
+    z-index: 10;
+    background: #f9f9f9;
+}
+
+.sliderWrapper {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Gradient pour masquer l'entrée et la sortie des logos */
+.sliderWrapper::before,
+.sliderWrapper::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 100px;
+    height: 100%;
+    z-index: 2;
+}
+
+.sliderWrapper::before {
+    left: 0;
+    background: linear-gradient(to right, #f9f9f9, transparent);
+}
+
+.sliderWrapper::after {
+    right: 0;
+    background: linear-gradient(to left, #f9f9f9, transparent);
+}
+
+.sliderTrack {
+    display: flex;
+    width: fit-content;
+}
+
+.partnerLogo {
+    flex-shrink: 0;
+    width: 200px; /* Largeur de chaque logo */
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 30px;
+}
+
+.partnerLogo img {
+    max-width: 100%;
+    max-height: 100%;
+    filter: grayscale(100%); /* Optionnel : logos en gris */
+    opacity: 0.6;
+    transition: all 0.3s ease;
+}
+
+.partnerLogo img:hover {
+    filter: grayscale(0%);
+    opacity: 1;
+}
+
+.wrapper {
+    width: 90%;
+    margin: 50px auto;
+    margin-bottom: 200px;
+    background-color: #fff;
+    text-align: center;
+    border-radius: 40px;
+}
+
+/* Positionnement des flèches de navigation */
+.navBtn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    /* ... reste du style ... */
+}
+
+/* UTILISEZ CES PROPRIÉTÉS LOGIQUES */
+.left {
+    /* "start" est à gauche en LTR et à droite en RTL */
+    inset-inline-start: 40px; 
+}
+
+.right {
+    /* "end" est à droite en LTR et à gauche en RTL */
+    inset-inline-end: 40px;
+}
+
+.textLabel {
+    padding: 0 40px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: var(--accent);
+    white-space: nowrap;
+    /* Bordure qui s'adapte à la langue */
+    border-inline-end: 2px solid #ddd; 
+    z-index: 10;
+    background: #f9f9f9;
+}
+
+/* Inversion des dégradés du ruban */
+.sliderWrapper::before {
+    inset-inline-start: 0;
+    background: linear-gradient(to var(--direction-start, right), #f9f9f9, transparent);
+}
+
+/* Astuce pour les dégradés en RTL */
+:global([dir="rtl"]) .sliderWrapper::before {
+    background: linear-gradient(to left, #f9f9f9, transparent);
+}

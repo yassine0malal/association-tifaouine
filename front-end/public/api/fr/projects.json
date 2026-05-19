@@ -1,0 +1,73 @@
+{
+  "projects": [
+    {
+      "id": 1,
+      "title": "Leçons de leadership de Bill Walsh",
+      "description": "Découvrez les secrets pour transformer une équipe en véritable succès.",
+      "state": "Terminé",
+      "date": "2026-03-12",
+      "image": "https://picsum.photos/300/200"
+    },
+    {
+      "id": 2,
+      "title": "Architecture Web moderne",
+      "description": "Apprenez à concevoir des applications web évolutives.",
+      "state": "En cours",
+      "date": "2026-02-28",
+      "image": "https://picsum.photos/300/200"
+    },
+    {
+      "id": 3,
+      "title": "Système de chatbot IA",
+      "description": "Création d’un chatbot intelligent avec le NLP.",
+      "state": "Planifié",
+      "date": "2026-04-10",
+      "image": "https://picsum.photos/300/200"
+    },
+    {
+      "id": 4,
+      "title": "Plateforme e-commerce",
+      "description": "Application complète avec paiement intégré.",
+      "state": "Terminé",
+      "date": "2025-12-05",
+      "image": "https://picsum.photos/300/200"
+    },
+    {
+      "id": 5,
+      "title": "Application de chat en temps réel",
+      "description": "Messagerie instantanée avec WebSockets.",
+      "state": "En cours",
+      "date": "2026-01-20",
+      "image": "https://picsum.photos/300/200"
+    },
+    {
+      "id": 6,
+      "title": "Site portfolio",
+      "description": "Portfolio personnel moderne et responsive.",
+      "state": "Terminé",
+      "date": "2025-11-15",
+      "image": "https://picsum.photos/300/200"
+    },
+    {
+      "id": 7,
+      "title": "Système de gestion de tâches",
+      "description": "Outil pour organiser tâches et projets.",
+      "state": "Planifié",
+      "date": "2026-05-01",
+      "image": "https://picsum.photos/300/200"
+    },
+    {
+      "id": 8,
+      "title": "Dashboard Machine Learning",
+      "description": "Visualisation des performances des modèles ML.",
+      "state": "En cours",
+      "date": "2026-03-05",
+      "image": "https://picsum.photos/300/200"
+    }
+  ],
+  "currentPage": 9,
+  "nextPage": 10,
+  "prevPage": 8,
+  "totalPages": 10,
+  "itemsPerPage": 8
+}

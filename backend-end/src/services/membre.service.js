@@ -1,4 +1,4 @@
-const { sequelize, Utilisateur, membre } = require('../models');
+const { sequelize, Utilisateur, membre, AdminNotification } = require('../models');
 const membreRepository = require('../repositories/membre.repository');
 const fs = require('fs');
 const path = require('path');
@@ -16,7 +16,7 @@ class MembreService {
             const createdResults = [];
 
             for (const item of membersData) {
-                const { nom, email, poste, photo_profile, status, date_adhesion } = item;
+                const { nom, email, poste, photo_profile, carte_identite, cv, status, date_adhesion, description_poste_fr, description_poste_ar, description_poste_en, telephone, competences, adresse, motivation } = item;
 
                 // 1. Vérifier si l'email existe déjà
                 const existingUser = await membreRepository.findByEmail(email);
@@ -35,9 +35,25 @@ class MembreService {
                 const memberProfile = await membre.create({
                     utilisateur_id: user.id,
                     poste: poste || 'membre',
+                    description_poste_fr: description_poste_fr || null,
+                    description_poste_ar: description_poste_ar || null,
+                    description_poste_en: description_poste_en || null,
                     photo_profile: photo_profile || null,
+                    carte_identite: carte_identite || null,
+                    cv: cv || null,
+                    telephone: telephone || null,
+                    competences: competences || null,
+                    adresse: adresse || null,
+                    motivation: motivation || null,
                     status: status || 'actif',
                     date_adhesion: date_adhesion || new Date()
+                }, { transaction: t });
+
+                // 4. Créer la notification Admin
+                await AdminNotification.create({
+                    type: 'NOUVEAU_MEMBRE',
+                    entity_id: user.id,
+                    message: `Nouvelle inscription membre: ${nom} (${email})`
                 }, { transaction: t });
 
                 createdResults.push({
@@ -46,6 +62,9 @@ class MembreService {
                     email: user.email,
                     poste: memberProfile.poste,
                     status: memberProfile.status,
+                    photo_profile: memberProfile.photo_profile,
+                    carte_identite: memberProfile.carte_identite,
+                    cv: memberProfile.cv,
                     created_at: user.created_at
                 });
             }
@@ -57,19 +76,14 @@ class MembreService {
     /**
      * @desc    Récupérer la liste complète des membres
      */
-    async getAllMembers() {
-        const members = await membreRepository.findAll();
-        return members.map(m => ({
-            id: m.id,
-            nom: m.nom,
-            email: m.email,
-            poste: m.membre.poste,
-            status: m.membre.status,
-            photo_profile: m.membre.photo_profile,
-            date_adhesion: m.membre.date_adhesion
-        }));
+    async getAllMembers(filters ={}) {
+        const result = await membreRepository.findAll(filters);
+        return { rows: result.rows.map(m => this._formatMember(m)), count: result.count };
     }
 
+    async getAllMembresWithProfile(filters = {}) {
+        return await membreRepository.findAll(filters);
+    }
     /**
      * @desc    Récupérer un membre par son Email
      */
@@ -101,7 +115,7 @@ class MembreService {
      * @desc    Mettre à jour un membre (Admin seul)
      */
     async updateMember(id, updateData) {
-        const { nom, email, poste, photo_profile, status } = updateData;
+        const { nom, email, poste, photo_profile, carte_identite, cv, status, date_adhesion, description_poste_fr, description_poste_ar, description_poste_en, telephone, competences, adresse, motivation } = updateData;
 
         return await sequelize.transaction(async (t) => {
             const user = await membreRepository.findById(id);
@@ -114,7 +128,15 @@ class MembreService {
             }
 
             if (nom) user.nom = nom;
-            if (poste) user.membre.poste = poste;
+            if (poste !== undefined) user.membre.poste = poste;
+            if (description_poste_fr !== undefined) user.membre.description_poste_fr = description_poste_fr;
+            if (description_poste_ar !== undefined) user.membre.description_poste_ar = description_poste_ar;
+            if (description_poste_en !== undefined) user.membre.description_poste_en = description_poste_en;
+            if (telephone !== undefined) user.membre.telephone = telephone;
+            if (competences !== undefined) user.membre.competences = competences;
+            if (adresse !== undefined) user.membre.adresse = adresse;
+            if (motivation !== undefined) user.membre.motivation = motivation;
+            if (date_adhesion !== undefined) user.membre.date_adhesion = date_adhesion;
             
             // Si une nouvelle photo est fournie, supprimer l'ancienne
             if (photo_profile && photo_profile !== user.membre.photo_profile) {
@@ -129,6 +151,28 @@ class MembreService {
                     }
                 }
                 user.membre.photo_profile = photo_profile;
+            }
+
+            // Fichier: carte_identite
+            if (carte_identite && carte_identite !== user.membre.carte_identite) {
+                if (user.membre.carte_identite && user.membre.carte_identite !== 'null') {
+                    try {
+                        const oldPath = path.join(__dirname, '..', user.membre.carte_identite);
+                        if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
+                    } catch (err) {}
+                }
+                user.membre.carte_identite = carte_identite;
+            }
+
+            // Fichier: cv
+            if (cv && cv !== user.membre.cv) {
+                if (user.membre.cv && user.membre.cv !== 'null') {
+                    try {
+                        const oldPath = path.join(__dirname, '..', user.membre.cv);
+                        if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
+                    } catch (err) {}
+                }
+                user.membre.cv = cv;
             }
 
             if (status) user.membre.status = status;
@@ -147,18 +191,18 @@ class MembreService {
         const user = await membreRepository.findById(id);
         if (!user) throw new Error("Membre non trouvé.");
 
-        // Supprimer la photo du disque si elle existe
-        if (user.membre && user.membre.photo_profile && user.membre.photo_profile !== 'null') {
-            try {
-                // Le chemin en base est /data/membres/... 
-                // On doit le mapper au chemin physique src/data/membres/...
-                const filePath = path.join(__dirname, '..', user.membre.photo_profile);
-                if (fs.existsSync(filePath)) {
-                    fs.unlinkSync(filePath);
+        // Supprimer les fichiers du disque s'ils existent
+        const fileFields = ['photo_profile', 'carte_identite', 'cv'];
+        for (const field of fileFields) {
+            if (user.membre && user.membre[field] && user.membre[field] !== 'null') {
+                try {
+                    const filePath = path.join(__dirname, '..', user.membre[field]);
+                    if (fs.existsSync(filePath)) {
+                        fs.unlinkSync(filePath);
+                    }
+                } catch (err) {
+                    console.error(`Erreur lors de la suppression du fichier ${field} : `, err.message);
                 }
-            } catch (err) {
-                console.error("Erreur lors de la suppression de la photo : ", err.message);
-                // On continue quand même la suppression en base
             }
         }
 
@@ -175,8 +219,17 @@ class MembreService {
             nom: m.nom,
             email: m.email,
             poste: m.membre.poste,
+            description_poste_fr: m.membre.description_poste_fr,
+            description_poste_ar: m.membre.description_poste_ar,
+            description_poste_en: m.membre.description_poste_en,
+            telephone: m.membre.telephone,
+            adresse: m.membre.adresse,
+            competences: m.membre.competences,
+            motivation: m.membre.motivation,
             status: m.membre.status,
             photo_profile: m.membre.photo_profile,
+            carte_identite: m.membre.carte_identite,
+            cv: m.membre.cv,
             date_adhesion: m.membre.date_adhesion,
             created_at: m.created_at
         };

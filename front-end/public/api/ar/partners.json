@@ -1,0 +1,74 @@
+{
+  "partners": [
+    {
+      "id": 1,
+      "image": "../../assets/images/partenaires/agriculture.png",
+      "name": "معهد الدراسات الشرقية",
+      "description": "مؤسسة مكرسة للبحث ونشر المعرفة التاريخية في منطقة الشرق الأوسط وشمال أفريقيا.",
+      "link": "https://www.google.com/"
+    },
+    {
+      "id": 2,
+      "image": "../../assets/images/partenaires/agriculture.png",
+      "name": "الوكالة الوطنية لإنعاش التشغيل والكفاءات (أنابيك)",
+      "description": "مؤسسة عمومية تدعم الإدماج المهني وتطوير المهارات.",
+      "link": "https://www.anapec.org/"
+    },
+    {
+      "id": 3,
+      "image": "../../assets/images/partenaires/agriculture.png",
+      "name": "وزارة الفلاحة",
+      "description": "شريك استراتيجي في التنمية القروية والمشاريع الفلاحية المستدامة.",
+      "link": "https://www.agriculture.gov.ma/"
+    },
+    {
+      "id": 4,
+      "image": "../../assets/images/partenaires/agriculture.png",
+      "name": "التعاون الوطني",
+      "description": "فاعل رئيسي في الأعمال الاجتماعية ودعم الفئات الهشة.",
+      "link": "https://www.entraide.ma/"
+    },
+    {
+      "id": 5,
+      "image": "../../assets/images/partenaires/agriculture.png",
+      "name": "وزارة التجهيز والماء",
+      "description": "تساهم في تطوير البنيات التحتية والتدبير المستدام للموارد المائية.",
+      "link": "https://www.equipement.gov.ma/"
+    },
+    {
+      "id": 6,
+      "image": "../../assets/images/partenaires/agriculture.png",
+      "name": "وزارة الأوقاف والشؤون الإسلامية",
+      "description": "شريك في تثمين التراث الثقافي والديني.",
+      "link": "https://www.habous.gov.ma/"
+    },
+    {
+      "id": 7,
+      "image": "../../assets/images/partenaires/agriculture.png",
+      "name": "إقليم الحوز",
+      "description": "يدعم المبادرات المحلية والتنمية الترابية المستدامة.",
+      "link": "https://www.alhaouz.ma/"
+    },
+    {
+      "id": 8,
+      "image": "../../assets/images/partenaires/agriculture.png",
+      "name": "منظمة العمل الدولية",
+      "description": "منظمة دولية تعزز حقوق العمل والفرص الاقتصادية.",
+      "link": "https://www.ilo.org/"
+    },
+    {
+      "id": 9,
+      "image": "../../assets/images/partenaires/agriculture.png",
+      "name": "اليونسكو",
+      "description": "شريك عالمي لحماية التراث الثقافي وتعزيز التعليم.",
+      "link": "https://www.unesco.org/"
+    },
+    {
+      "id": 10,
+      "image": "../../assets/images/partenaires/agriculture.png",
+      "name": "وكالة التنمية الاجتماعية",
+      "description": "تدعم مشاريع التنمية البشرية والإدماج الاجتماعي في المغرب.",
+      "link": "https://www.ads.ma/"
+    }
+  ]
+}

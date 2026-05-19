@@ -1,18 +1,15 @@
 const membreService = require('../services/membre.service');
+const { buildPaginatedResponse } = require('../utils/paginate');
+const { toMembreListDTO } = require('../dto/membre.dto');
 
 class MembreController {
-    /**
-     * @route   POST /api/membres
-     * @desc    Créer un ou plusieurs membres
-     * @access  Private (Admin)
-     */
     async create(req, res) {
         try {
-            // Si une photo est uploadée, on récupère son chemin relatif
-            if (req.file) {
-                req.body.photo_profile = `/data/membres/${req.file.filename}`;
+            if (req.files) {
+                if (req.files.photo) req.body.photo_profile = `/data/membres/photos/${req.files.photo[0].filename}`;
+                if (req.files.identity_card) req.body.carte_identite = `/data/membres/identites/${req.files.identity_card[0].filename}`;
+                if (req.files.cv_doc) req.body.cv = `/data/membres/cvs/${req.files.cv_doc[0].filename}`;
             }
-
             const result = await membreService.createMembers(req.body);
             return res.status(201).json({
                 success: true,
@@ -20,114 +17,70 @@ class MembreController {
                 data: result
             });
         } catch (error) {
-            console.error("Erreur creation membre controller : ", error.message);
-            return res.status(400).json({
-                success: false,
-                message: error.message
-            });
+            return res.status(400).json({ success: false, message: error.message });
         }
     }
 
-    /**
-     * @route   GET /api/membres
-     * @desc    Récupérer tous les membres
-     * @access  Public 
-    */
     async getAll(req, res) {
         try {
-            const members = await membreService.getAllMembers();
-            return res.status(200).json({
-                success: true,
-                count: members.length,
-                data: members
-            });
+            const { page, limit, offset } = req.pagination;
+            const { status } = req.query;
+            const result = await membreService.getAllMembers({ limit, offset, status });
+            return res.status(200).json({ success: true, ...buildPaginatedResponse(result, page, limit) });
         } catch (error) {
-            console.error("Erreur getAll membres controller : ", error.message);
-            return res.status(500).json({
-                success: false,
-                message: "Impossible de récupérer les membres."
-            });
+            return res.status(500).json({ success: false, message: "Impossible de récupérer les membres." });
         }
     }
 
     /**
-     * @route   GET /api/membres/:id
-     * @desc    Récupérer un membre par ID (ou par Nom/Email via query)
-     * @access  Public
+     * @route   GET /api/:lang/membres
      */
+    async getAllByLang(req, res) {
+        try {
+            const { lang } = req;
+            const { status } = req.query;
+            const result = await membreService.getAllMembresWithProfile({ status });
+            const data = result.rows.map(m => toMembreListDTO(m, lang));
+            return res.status(200).json({ success: true, data });
+        } catch (error) {
+            return res.status(500).json({ success: false, message: error.message });
+        }
+    }
+
     async getById(req, res) {
         try {
             const { id } = req.params;
             const { name, email } = req.query;
-
             let member;
-            if (name) {
-                member = await membreService.getMemberByName(name);
-            } else if (email) {
-                member = await membreService.getMemberByEmail(email);
-            } else {
-                member = await membreService.getMemberById(id);
-            }
-
-            return res.status(200).json({
-                success: true,
-                data: member
-            });
+            if (name)       member = await membreService.getMemberByName(name);
+            else if (email) member = await membreService.getMemberByEmail(email);
+            else            member = await membreService.getMemberById(id);
+            return res.status(200).json({ success: true, data: member });
         } catch (error) {
-            console.error("Erreur get membre controller : ", error.message);
-            return res.status(404).json({
-                success: false,
-                message: error.message
-            });
+            return res.status(404).json({ success: false, message: error.message });
         }
     }
 
-    /**
-     * @route   PUT /api/membres/:id
-     * @desc    Mettre à jour un membre
-     * @access  Private (Admin)
-     */
     async update(req, res) {
         try {
-            const { id } = req.params;
-            
-            // Nouveau fichier ?
-            if (req.file) {
-                req.body.photo_profile = `/data/membres/${req.file.filename}`;
+            if (req.files) {
+                if (req.files.photo) req.body.photo_profile = `/data/membres/photos/${req.files.photo[0].filename}`;
+                if (req.files.identity_card) req.body.carte_identite = `/data/membres/identites/${req.files.identity_card[0].filename}`;
+                if (req.files.cv_doc) req.body.cv = `/data/membres/cvs/${req.files.cv_doc[0].filename}`;
             }
-
-            const updated = await membreService.updateMember(id, req.body);
-            return res.status(200).json({
-                success: true,
-                message: "Membre mis à jour avec succès.",
-                data: updated
-            });
+            const updated = await membreService.updateMember(req.params.id, req.body);
+            return res.status(200).json({ success: true, message: "Membre mis à jour avec succès.", data: updated });
         } catch (error) {
-            return res.status(400).json({
-                success: false,
-                message: error.message
-            });
+            return res.status(400).json({ success: false, message: error.message });
         }
     }
 
-    /**
-     * @route   DELETE /api/membres/:id
-     * @desc    Supprimer un membre
-     * @access  Private (Admin)
-     */
     async delete(req, res) {
         try {
-            const { id } = req.params;
-            await membreService.deleteMember(id);
-            return res.status(200).json({
-                success: true,
-                message: "Membre supprimé avec succès."
-            });
+            await membreService.deleteMember(req.params.id);
+            return res.status(200).json({ success: true, message: "Membre supprimé avec succès." });
         } catch (error) {
-            return res.status(400).json({
-                success: false,
-                message: error.message
-            });
+            return res.status(400).json({ success: false, message: error.message });
         }
     }
 }

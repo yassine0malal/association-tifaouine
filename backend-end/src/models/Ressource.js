@@ -10,7 +10,11 @@ const Ressource = sequelize.define('Ressource', {
     },
     projet_id: {
         type: DataTypes.INTEGER,
-        allowNull: true, // NULL = Ressource générale de l'association
+        allowNull: true,
+    },
+    evenement_id: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
     },
     type: {
         type: DataTypes.STRING(20),
@@ -23,6 +27,10 @@ const Ressource = sequelize.define('Ressource', {
         type: DataTypes.STRING(500),
         allowNull: false,
     },
+    nom_original: {
+        type: DataTypes.STRING(255),
+        allowNull: true, // nom du fichier tel qu'envoyé par le client
+    },
     titre_fr: {
         type: DataTypes.STRING(255),
         allowNull: true,
@@ -34,6 +42,35 @@ const Ressource = sequelize.define('Ressource', {
     titre_en: {
         type: DataTypes.STRING(255),
         allowNull: true,
+    },
+    description_fr: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+    },
+    description_ar: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+    },
+    description_en: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+    },
+    file_size: {
+        type: DataTypes.INTEGER, // octets
+        allowNull: true,
+    },
+    file_type: {
+        type: DataTypes.STRING(10),
+        allowNull: true,
+    },
+    image_couverture: {
+        type: DataTypes.STRING(500),
+        allowNull: true,
+    },
+    is_featured: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
     }
 }, {
     tableName: 'ressource',

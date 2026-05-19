@@ -1,0 +1,54 @@
+{
+  "nav": {
+    "about": "About",
+    "activities": "Activities",
+    "getInvolved": "Get Involved",
+    "participate":"Get Involved",
+    "domains": "Fields",
+    "resources": "Resources",
+    "seeMore":"See more →",
+    "dropdown": {
+      "about": {
+        "us": "Us",
+        "contact": "Contact"
+      },
+      "activities": {
+        "projects": "Projects",
+        "events": "Events",
+        "news": "News"
+      },
+      "getInvolved": {
+        "donate": "Make a donation",
+        "becomeMember": "Become a member",
+        "becomeVolunteer": "Become a volunteer"
+      },
+      "domains": {
+        "education": "Education",
+        "water": "Water",
+        "agriculture": "Agriculture"
+      },
+      "resources": {
+        "reports": "Reports",
+        "partners": "Partners"
+      }
+    },
+    "contact": {
+      "email": "tifaouine@gmail.com",
+      "phone": "066 01 46 48",
+      "address": "douar asni lakdim 42150, Marrakech Al Haouz - Morocco"
+    },
+    "descriptions": {
+      "aboutUs": "Discover our story and team",
+      "contact": "Reach out to us anytime",
+      "projects": "Explore our impactful work",
+      "events": "Calendar of upcoming activities",
+      "donate": "Support our cause financially",
+      "becomeMember": "Join our membership program",
+      "becomeVolunteer": "Contribute your time and talents",
+      "reports": "Annual reports and publications",
+      "partners": "Meet our collaborators and sponsors",
+      "resources": "Access our knowledge base",
+      "seeMore": "Explore all our focus areas"
+    }
+  }
+}

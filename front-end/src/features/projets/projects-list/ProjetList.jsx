@@ -1,29 +1,45 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import ProjectCard from "../../../components/common/ProjectCard";
 import ProjectCardSkeleton from "../../../components/common/ProjectCardSkeleton";
 import PageHero from "../../../components/common/PageHero";
 import Pagination from "../../../components/common/Pagination";
+import FilterButtons from "../../../components/common/FilterButtons";
 
 import styles from "./projectList.module.css";
 import heroImg from "../../../assets/images/projects_hero.jpg";
 
 import { fetchProjects, setPage, setFilter } from "./projectsSlice";
+import { useTranslation } from "react-i18next";
 
 export default function Projets() {
   const dispatch = useDispatch();
+  const { t , i18n} = useTranslation("projects");
+  const projectsRef = useRef(null);
+  const currentLang = i18n.language
+  const {
+    data,
+    loading,
+    currentPage,
+    totalPages,
+    currentFilter,
+    itemsPerPage,
+  } = useSelector((state) => state.projects);
 
-  const { data, loading, currentPage, totalPages, currentfilter } = useSelector(
-    (state) => state.projects,
-  );
-
-  const filters = ["All", "Terminé", "En cours", "En attente"];
+  const filters = [
+    { label: "all", value: "all" },
+    { label: "completed", value: "termine" },
+    { label: "inProgress", value: "en_cours" },
+    { label: "pending", value: "suspendu" },
+    { label: "planned", value: "planifie" },
+  ];
+  
 
   // 🔹 Fetch projects when page OR filter changes
   useEffect(() => {
-    dispatch(fetchProjects({ page: currentPage, filter: currentfilter }));
-  }, [dispatch, currentPage, currentfilter]);
+    dispatch(fetchProjects({ page: currentPage, filter: currentFilter , lang:currentLang }));
+  }, [dispatch, currentPage, currentFilter ,currentLang]);
 
   // 🔹 Handlers
   const handleFilterChange = (filter) => {
@@ -31,45 +47,38 @@ export default function Projets() {
   };
 
   const handlePageChange = (page) => {
+    projectsRef.current.scrollIntoView({ behavior: "smooth" });
     dispatch(setPage(page));
   };
-
-  // 🔹 Render Filters
-  const renderFilters = () =>
-    filters.map((filter) => (
-      <button
-        key={filter}
-        onClick={() => handleFilterChange(filter)}
-        className={currentfilter === filter ? styles.active : ""}
-      >
-        {filter}
-      </button>
-    ));
 
   // 🔹 Render Project Cards
   const renderProjects = () => {
     if (loading) {
-      return Array.from({ length: 6 }, (_, i) => (
+      return Array.from({ length: 9 }, (_, i) => (
         <ProjectCardSkeleton key={`skeleton-${i}`} />
       ));
     }
 
     if (!data || data.length === 0) {
-      return <p>No projects found.</p>;
+      return <p style={{ alignItems: "center" }}>{t("projects.noProjects")}</p>;
     }
 
     return data.map((project) => <ProjectCard key={project.id} {...project} />);
   };
 
   return (
-    <div className={styles.projectList}>
-      <PageHero heroImg={heroImg} title="Découvrir nos projets" />
+    <div className={styles.projectList} ref={projectsRef}>
+      <PageHero heroImg={heroImg} title={t("projects.heroTitle")} />
 
       <div className={styles.projectsContainer}>
         {/* 🔹 Filters */}
         <div className={styles.filterContainer}>
-          <h2 className={styles.header}>Voir les projets</h2>
-          <div className={styles.filter}>{renderFilters()}</div>
+          <h2 className={styles.header}>{t("projects.viewProjects")}</h2>
+          <FilterButtons
+            currentFilter={currentFilter}
+            filters={filters}
+            handleFilterChange={handleFilterChange}
+          />
         </div>
 
         {/* 🔹 Projects */}

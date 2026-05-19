@@ -1,0 +1,269 @@
+.container {
+  padding: 2rem;
+  min-height: 100vh;
+  background-color: #f5f0e8;
+  /* font-family: 'Georgia', 'Times New Roman', serif; */
+}
+
+/* ─── Header ─────────────────────────────────────────────── */
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.headerLeft { flex: 1; }
+
+.title {
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  letter-spacing: 0.04em;
+  margin: 0 0 0.4rem;
+  margin-top: 30px;
+}
+
+.subtitle {
+  font-size: 0.88rem;
+  color: #6b6558;
+  /* font-family: 'Helvetica Neue', Arial, sans-serif; */
+  max-width: 380px;
+  line-height: 1.55;
+  margin: 0;
+}
+
+.exportBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1.1rem;
+  border: 1.5px solid #c8bfae;
+  border-radius: 8px;
+  background: #fff;
+  color: #3a3530;
+  font-size: 0.85rem;
+  /* font-family: 'Helvetica Neue', Arial, sans-serif; */
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.18s, border-color 0.18s;
+  flex-shrink: 0;
+}
+
+.exportBtn:hover {
+  background: #ede8de;
+  border-color: #b0a898;
+}
+
+/* ─── Stats ───────────────────────────────────────────────── */
+.statsRow {
+  display: grid;
+  grid-template-columns: 1fr 220px;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.statCard {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.accentCard { background: #c9a96e; }
+
+.statLabel {
+  font-size: 0.68rem;
+  /* font-family: 'Helvetica Neue', Arial, sans-serif; */
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #9c8f7e;
+}
+
+.accentCard .statLabel { color: #6b4f20; }
+
+.statValue {
+  font-size: 2.6rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  line-height: 1.1;
+}
+
+.statSub {
+  font-size: 0.8rem;
+  /* font-family: 'Helvetica Neue', Arial, sans-serif; */
+  color: #7a6e5f;
+  line-height: 1.45;
+}
+
+.accentCard .statSub { color: #5a3f10; }
+
+/* ─── Table Head ──────────────────────────────────────────── */
+.tableHead {
+  display: grid;
+  grid-template-columns: 1fr 200px 200px;
+  padding: 0.65rem 1.25rem;
+  border-bottom: 1px solid #e0d9cd;
+}
+
+.tableHead span {
+  font-size: 0.68rem;
+  /* font-family: 'Helvetica Neue', Arial, sans-serif; */
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #9c8f7e;
+}
+
+.tableHead span:last-child { text-align: right; }
+
+/* ─── List & Cards ────────────────────────────────────────── */
+.list {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.empty, .error {
+  padding: 3rem;
+  text-align: center;
+  /* font-family: 'Helvetica Neue', Arial, sans-serif; */
+  color: #9c8f7e;
+  font-size: 0.9rem;
+}
+
+.error { color: #c0392b; }
+
+.card {
+  display: grid;
+  grid-template-columns: 1fr 200px 200px;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid #f0ebe0;
+  transition: background 0.15s;
+}
+
+.card:last-child { border-bottom: none; }
+.card:hover { background: #faf8f4; }
+
+/* ─── Subscriber Info ─────────────────────────────────────── */
+.subscriberInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #e8dfd0;
+  color: #5a4f42;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  font-weight: 700;
+  /* font-family: 'Helvetica Neue', Arial, sans-serif; */
+  flex-shrink: 0;
+  text-transform: uppercase;
+}
+
+.emailText {
+  font-size: 0.88rem;
+  /* font-family: 'Helvetica Neue', Arial, sans-serif; */
+  font-weight: 500;
+  color: #1a1a1a;
+  margin: 0;
+  word-break: break-all;
+}
+
+.idLabel {
+  font-size: 0.72rem;
+  /* font-family: 'Helvetica Neue', Arial, sans-serif; */
+  color: #a09585;
+  margin: 2px 0 0;
+}
+
+/* ─── Date Cell ───────────────────────────────────────────── */
+.dateCell {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.dateCell span {
+  font-size: 0.72rem;
+  /* font-family: 'Helvetica Neue', Arial, sans-serif; */
+  color: #a09585;
+}
+
+.dateCell strong {
+  font-size: 0.85rem;
+  /* font-family: 'Helvetica Neue', Arial, sans-serif; */
+  font-weight: 500;
+  color: #3a3530;
+}
+
+/* ─── Actions ─────────────────────────────────────────────── */
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.emailBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.42rem 0.85rem;
+  border: none;
+  border-radius: 7px;
+  background: #2d5a27;
+  color: #fff;
+  font-size: 0.78rem;
+  /* font-family: 'Helvetica Neue', Arial, sans-serif; */
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+  white-space: nowrap;
+}
+
+.emailBtn:hover {
+  background: #234820;
+  transform: translateY(-1px);
+}
+
+.deleteBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 7px;
+  background: transparent;
+  color: #c0392b;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+  flex-shrink: 0;
+}
+
+.deleteBtn:hover {
+  background: #fdecea;
+  transform: translateY(-1px);
+}
+
+/* ─── Responsive ──────────────────────────────────────────── */
+@media (max-width: 700px) {
+  .statsRow { grid-template-columns: 1fr; }
+  .tableHead { display: none; }
+  .card { grid-template-columns: 1fr; gap: 0.75rem; }
+  .actions { justify-content: flex-start; }
+}

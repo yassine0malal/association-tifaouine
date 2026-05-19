@@ -1,0 +1,54 @@
+{
+  "nav": {
+    "about": "عن الجمعية",
+    "activities": "الأنشطة",
+    "getInvolved": "شاركوا",
+    "participate":"شارك معنا",
+    "domains": "المجالات",
+    "resources": "الموارد",
+    "seeMore":"عرض المزيد ←",
+    "dropdown": {
+      "about": {
+        "us": "من نحن",
+        "contact": "اتصل بنا"
+      },
+      "activities": {
+        "projects": "المشاريع",
+        "events": "الأحداث",
+        "news": "الأخبار"
+      },
+      "getInvolved": {
+        "donate": "تبرع الآن",
+        "becomeMember": "كن عضوًا",
+        "becomeVolunteer": "كن متطوعًا"
+      },
+      "domains": {
+        "education": "التعليم",
+        "water": "الماء",
+        "agriculture": "الفلاحة"
+      },
+      "resources": {
+        "reports": "التقارير",
+        "partners": "الشركاء"
+      }
+    },
+    "contact": {
+      "email": "tifaouine@gmail.com",
+      "phone": "066 01 46 48",
+      "address": "دوار أسني القديم 42150، مراكش الحوز - المغرب"
+    },
+    "descriptions": {
+      "aboutUs": "اكتشف قصتنا وفريقنا",
+      "contact": "اتصل بنا في أي وقت",
+      "projects": "استكشف أعمالنا المؤثرة",
+      "events": "تقويم الأنشطة القادمة",
+      "donate": "ادعم قضيتنا مالياً",
+      "becomeMember": "انضم إلى برنامج العضوية لدينا",
+      "becomeVolunteer": "ساهم بوقتك ومواهبك",
+      "reports": "التقارير السنوية والمنشورات",
+      "partners": "تعرف على متعاونينا وشركائنا",
+      "resources": "الوصول إلى قاعدة المعرفة لدينا",
+      "seeMore": "استكشف جميع مجالات تركيزنا"
+    }
+  }
+}

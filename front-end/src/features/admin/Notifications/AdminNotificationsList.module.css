@@ -1,0 +1,234 @@
+/* AdminNotificationsList.module.css */
+
+.container {
+  padding: 2rem;
+  min-height: 100vh;
+  background-color: #f5f0e8;
+  /* font-family: 'Georgia', 'Times New Roman', serif; */
+  /* max-width: 680px; */
+}
+
+/* ─── Header ─────────────────────────────────────────────── */
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.headerLeft { flex: 1; }
+
+.title {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 30px 0 0.3rem;
+
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 5px;
+  border-radius: 99px;
+  background: #c9a96e;
+  color: #fff;
+  font-size: 0.72rem;
+  /* font-family: 'Helvetica Neue', Arial, sans-serif; */
+  font-weight: 700;
+  line-height: 1;
+}
+
+.subtitle {
+  font-size: 0.88rem;
+  color: #6b6558;
+  /* font-family: 'Helvetica Neue', Arial, sans-serif; */
+  margin: 0;
+  line-height: 1.5;
+}
+
+.markAllBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: #c9a96e;
+  font-size: 0.82rem;
+  /* font-family: 'Helvetica Neue', Arial, sans-serif; */
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.markAllBtn:hover {
+  background: #f0e8d8;
+}
+
+/* ─── States ──────────────────────────────────────────────── */
+.loadingText, .empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 4rem 2rem;
+  text-align: center;
+  /* font-family: 'Helvetica Neue', Arial, sans-serif; */
+  color: #9c8f7e;
+  font-size: 0.9rem;
+}
+
+.error {
+  padding: 1rem 1.25rem;
+  border-radius: 10px;
+  background: #fdecea;
+  color: #c0392b;
+  /* font-family: 'Helvetica Neue', Arial, sans-serif; */
+  font-size: 0.85rem;
+  margin-bottom: 1.5rem;
+}
+
+/* ─── Sections ────────────────────────────────────────────── */
+.section {
+  margin-bottom: 2rem;
+}
+
+.sectionTitle {
+  font-size: 0.7rem;
+  /* font-family: 'Helvetica Neue', Arial, sans-serif; */
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #9c8f7e;
+  margin: 0 0 0.75rem 0.25rem;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* ─── Card ────────────────────────────────────────────────── */
+.card {
+  display: grid;
+  grid-template-columns: 44px 1fr 12px;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 1rem 1.1rem;
+  border-radius: 12px;
+  background: #fff;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.12s, box-shadow 0.15s;
+  position: relative;
+}
+
+.card:hover {
+  background: #fefcf8;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+}
+
+.card.unread {
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+
+.card.unread::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 60%;
+  border-radius: 0 3px 3px 0;
+  background: var(--accent, #c9a96e);
+}
+
+/* ─── Icon ────────────────────────────────────────────────── */
+.iconWrap {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* ─── Content ─────────────────────────────────────────────── */
+.content {
+  min-width: 0;
+}
+
+.cardTop {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.3rem;
+  flex-wrap: wrap;
+}
+
+.typeBadge {
+  font-size: 0.65rem;
+  /* font-family: 'Helvetica Neue', Arial, sans-serif; */
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 99px;
+}
+
+.time {
+  font-size: 0.75rem;
+  /* font-family: 'Helvetica Neue', Arial, sans-serif; */
+  color: #a09585;
+  margin-left: auto;
+}
+
+.message {
+  font-size: 0.88rem;
+  /* font-family: 'Helvetica Neue', Arial, sans-serif; */
+  color: #2a2420;
+  margin: 0;
+  line-height: 1.45;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.card.unread .message {
+  font-weight: 500;
+  color: #1a1a1a;
+}
+
+/* ─── Dot ─────────────────────────────────────────────────── */
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  justify-self: end;
+}
+
+/* ─── Responsive ──────────────────────────────────────────── */
+@media (max-width: 500px) {
+  .container { padding: 1.25rem; }
+  .title { font-size: 1.5rem; }
+  .card { grid-template-columns: 38px 1fr 10px; gap: 0.65rem; }
+  .iconWrap { width: 38px; height: 38px; border-radius: 10px; }
+  .message { white-space: normal; }
+}
