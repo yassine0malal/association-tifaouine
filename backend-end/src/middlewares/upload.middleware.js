@@ -417,6 +417,7 @@ const uploadEtreBenevole = multer({
     { name: 'photo', maxCount: 1 },
     { name: 'identity_card', maxCount: 1 }
 ]);
+
 // ─── 8. Upload formulaire "Don Financier" (Reçu) ────────────────────────────
 // fields: receipt (doc/image)
 
@@ -432,6 +433,7 @@ const uploadDonFinancier = multer({
     fileFilter: mediaFilter,
     limits: { fileSize: 10 * 1024 * 1024 }
 }).single('receipt');
+
 module.exports = {
     uploadSimple,
     uploadProjetPrincipal,
