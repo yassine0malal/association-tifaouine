@@ -15,9 +15,10 @@ import { useTranslation } from "react-i18next";
 
 export default function Projets() {
   const dispatch = useDispatch();
-  const { t , i18n} = useTranslation("projects");
+  const { t, i18n } = useTranslation("projects");
   const projectsRef = useRef(null);
-  const currentLang = i18n.language
+  const firstRender = useRef(true);
+  const currentLang = i18n.language;
   const {
     data,
     loading,
@@ -34,12 +35,23 @@ export default function Projets() {
     { label: "pending", value: "suspendu" },
     { label: "planned", value: "planifie" },
   ];
-  
 
   // 🔹 Fetch projects when page OR filter changes
   useEffect(() => {
-    dispatch(fetchProjects({ page: currentPage, filter: currentFilter , lang:currentLang }));
-  }, [dispatch, currentPage, currentFilter ,currentLang]);
+    dispatch(
+      fetchProjects({
+        page: currentPage,
+        filter: currentFilter,
+        lang: currentLang,
+      }),
+    );
+    // scroll to projects section
+    if(firstRender.current) {
+      window.scrollTo(0,500);
+      firstRender.current = false;
+    }
+
+  }, [dispatch, currentPage, currentFilter, currentLang]);
 
   // 🔹 Handlers
   const handleFilterChange = (filter) => {

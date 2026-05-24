@@ -350,10 +350,7 @@
     gap: 64px;
   }
 
-  .col1 { text-align: center; }
   .body { max-width: 100%; }
-
-  .eyebrow { justify-content: center; }
 
   .seeMore {
     margin: 0 auto;

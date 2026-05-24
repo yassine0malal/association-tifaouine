@@ -6,7 +6,7 @@ import heroImg from "../../../assets/images/heros/hero2.jpeg";
 import { useDispatch, useSelector } from "react-redux";
 import Pagination from "../../../components/common/Pagination";
 import EventCardSkeleton from "../../../components/common/EventCardSkeleton";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { fetchEvents, setFilter, setPage } from "./eventsSlice";
 import { useTranslation } from "react-i18next";
 import i18n from "../../../i18n";
@@ -17,6 +17,7 @@ function EventList() {
   const dispatch = useDispatch();
   const { t } = useTranslation("events");
   const { events, domains } = useSelector((state) => state);
+  const firstRender = useRef(true);
   
   const { loading, currentPage, totalPages, currentFilter, itemsPerPage } =
     events;
@@ -40,7 +41,12 @@ function EventList() {
       }),
     );
 
-    window.scrollTo(0,500)
+    // scroll to events section
+    if(firstRender.current) {
+      window.scrollTo(0,500);
+      firstRender.current = false;
+    }
+
   }, [dispatch, currentPage, currentFilter, currentLang]);
 
   const renderEvents = () => {
