@@ -11,6 +11,7 @@ async function verifyEventImages() {
     const events = await Evenement.findAll();
     let eventsSansImages = 0;
     let eventsAvecImages = 0;
+    
 
     for (const ev of events) {
       console.log(`Événement : ${ev.titre_fr}`);
