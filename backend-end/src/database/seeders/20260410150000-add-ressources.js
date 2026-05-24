@@ -151,12 +151,10 @@ module.exports = {
           path.join(IMAGES_BASE, cfg.dir, 'principal'),
           `${urlBase}/principal`
         );
-        if (imagePrincipale) {
-          await queryInterface.sequelize.query(
-            `UPDATE projet SET image_principale = ? WHERE id = ?`,
-            { replacements: [imagePrincipale, pid] }
-          );
-        }
+        await queryInterface.sequelize.query(
+          `UPDATE projet SET image_principale = ? WHERE id = ?`,
+          { replacements: [imagePrincipale || null, pid] }
+        );
       }
     }
 
@@ -169,6 +167,11 @@ module.exports = {
         dir: 'evenements/Communication/Accueil_Delegations',
         titre_fr: 'Accueil de délégations de la société civile nationale et internationale',
         label: { fr: 'Accueil délégations', ar: 'استقبال الوفود', en: 'Delegations reception' }
+      },
+      {
+        dir: 'evenements/Communication/Echanges_Visites',
+        titre_fr: 'Échanges de visites entre associations et organisations partenaires',
+        label: { fr: 'Échanges de visites', ar: 'تبادل الزيارات', en: 'Visits exchange' }
       },
       {
         dir: 'evenements/Communication/Visite_Egypte',
@@ -224,12 +227,10 @@ module.exports = {
           path.join(IMAGES_BASE, cfg.dir, 'principal'),
           `${urlBase}/principal`
         );
-        if (imagePrincipale) {
-          await queryInterface.sequelize.query(
-            `UPDATE evenement SET image_principale = ? WHERE id = ?`,
-            { replacements: [imagePrincipale, eid] }
-          );
-        }
+        await queryInterface.sequelize.query(
+          `UPDATE evenement SET image_principale = ? WHERE id = ?`,
+          { replacements: [imagePrincipale || null, eid] }
+        );
       }
     }
 
