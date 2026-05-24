@@ -983,18 +983,6 @@ function DonationFromSection({ t, i18n }) {
       <h1 className={styles.title}>{t("donationForm.title")}</h1>
       <p className={styles.subtitle}>{t("donationForm.subtitle")}</p>
 
-      {submitSuccess && (
-        <div className={styles.successMessage}>
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-            <path
-              d="M10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM8 15L3 10L4.41 8.59L8 12.17L15.59 4.58L17 6L8 15Z"
-              fill="white"
-            />
-          </svg>
-          <span>{t("donationForm.successMessage")}</span>
-        </div>
-      )}
-
       {submitError && (
         <div className={styles.errorMessage}>
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none">

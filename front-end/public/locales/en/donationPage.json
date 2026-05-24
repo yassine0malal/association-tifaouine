@@ -155,7 +155,7 @@
         "fullname": "Fullname *",
         "email": "Email *",
         "amount": "Amount (Optional)",
-        "project": "Choose the project *",
+        "project": "Choose the project (Optional)",
         "projectNone": "None",
         "receipt": "Upload receipt *",
         "message": "Your Message (Optional)"

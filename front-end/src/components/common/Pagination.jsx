@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import styles from "./pagination.module.css";
 
 export default function Pagination({ currentPage, totalPages, onPageChange }) {
+  
   const { t } = useTranslation('pagination')
   if(!currentPage || !totalPages) return null
   const getPages = () => {
@@ -36,6 +37,11 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
       totalPages,
     ];
   };
+
+  if(totalPages === 1) {
+    return null;
+  }
+
   const pages = getPages();
 
   return (

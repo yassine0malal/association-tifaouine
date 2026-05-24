@@ -155,7 +155,7 @@
         "fullname": "Nom complet *",
         "email": "E-mail *",
         "amount": "Montant (Optionnel)",
-        "project": "Choisissez le projet *",
+        "project": "Choisissez le projet (Optionnel)",
         "projectNone": "Aucun",
         "receipt": "Télécharger le reçu *",
         "message": "Votre Message (Optionnel)"
