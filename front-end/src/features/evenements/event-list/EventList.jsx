@@ -2,7 +2,7 @@ import styles from "./event-list.module.css";
 import PageHero from "../../../components/common/PageHero";
 import FilterButtons from "../../../components/common/FilterButtons";
 import EventCard from "../../../components/common/EventCard";
-import heroImg from "../../../assets/images/event_hero.png";
+import heroImg from "../../../assets/images/heros/hero2.jpeg";
 import { useDispatch, useSelector } from "react-redux";
 import Pagination from "../../../components/common/Pagination";
 import EventCardSkeleton from "../../../components/common/EventCardSkeleton";
@@ -39,6 +39,8 @@ function EventList() {
         lang: currentLang,
       }),
     );
+
+    window.scrollTo(0,500)
   }, [dispatch, currentPage, currentFilter, currentLang]);
 
   const renderEvents = () => {

@@ -16,7 +16,7 @@ import About from "./features/public/about/About.jsx";
 import Contact from "./features/public/contact/Contact.jsx";
 import Home from "./features/public/home/Home.jsx";
 import EventPage from "./features/evenements/event-page/EventPage.jsx";
-import JoinUsPage from "./features/benevolat/JoinUsPage.jsx";
+import JoinUsPage from "./features/join-us/JoinUsPage.jsx";
 import Partner from "./features/partners/Partner.jsx";
 import Domain from "./features/domains/domainsPage/Domain.jsx";
 import DonationPage from "./features/dons/DonationPage.jsx";

@@ -1,104 +1,116 @@
 /* Hero Section - Enhanced */
 .hero {
-    /* position: absolute; */
-    width: 100%;
-    height: 500px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    position: relative;
-    isolation: isolate;
-    background-attachment: fixed;
+  /* position: absolute; */
+  width: 100%;
+  height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  isolation: isolate;
+  background-attachment: fixed;
 }
 
 .hero::before {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    content: "";
-    background: linear-gradient(135deg, rgba(6, 30, 34, 0.45) 0%, rgba(6, 30, 34, 0.35) 100%);
-    z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  content: "";
+  background: linear-gradient(
+    135deg,
+    rgba(6, 30, 34, 0.25) 0%,
+    rgba(6, 30, 34, 0.15) 100%
+  );
+  z-index: 1;
 }
 
 .hero::after {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    content: "";
-    background: repeating-linear-gradient(45deg, rgba(203, 145, 79, 0.05) 0px, rgba(203, 145, 79, 0.05) 2px, transparent 2px, transparent 8px);
-    pointer-events: none;
-    z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  content: "";
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(203, 145, 79, 0.05) 0px,
+    rgba(203, 145, 79, 0.05) 2px,
+    transparent 2px,
+    transparent 8px
+  );
+  pointer-events: none;
+  z-index: 1;
 }
 
 .hero h1 {
-    color: #F0C36D;
-    font-size: 4rem;
-    font-weight: 800;
-    z-index: 2;
-    position: relative;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    animation: fadeInUp 0.8s ease-out;
-    text-align: center;
-    padding: 0 1rem;
+  color: #f0c36d;
+  font-size: 3.5rem;
+  font-weight: 800;
+  z-index: 2;
+  position: relative;
+  text-shadow: 0 2px 4px rgba(206, 227, 19, 0.2);
+  animation: fadeInUp 0.8s ease-out;
+  text-transform: uppercase;
+  max-width: 1200px;
+  letter-spacing: 2px;
+  text-align: center;
+  padding: 0 1rem;
 }
 
 @keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @media (max-width: 1024px) {
-    .hero {
-        height: 380px;
-        background-attachment: scroll;
-    }
-    
-    .hero h1 {
-        font-size: 3rem;
-    }
+  .hero {
+    height: 380px;
+    background-attachment: scroll;
+  }
+
+  .hero h1 {
+    font-size: 3rem;
+  }
 }
 
-
 @media (max-width: 768px) {
-    .hero {
-        height: 320px;
-    }
-    
-    .hero h1 {
-        font-size: 2.5rem;
-    }
+  .hero {
+    height: 320px;
+  }
+
+  .hero h1 {
+    font-size: 2.5rem;
+  }
 }
 
 @media (max-width: 640px) {
-    .hero {
-        height: 280px;
-    }
-    
-    .hero h1 {
-        font-size: 2rem;
-    }
+  .hero {
+    height: 280px;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+  }
 }
 
 /* Small Phones */
 @media (max-width: 480px) {
-    .hero {
-        height: 250px;
-    }
-    
-    .hero h1 {
-        font-size: 1.75rem;
-    }
+  .hero {
+    height: 250px;
+  }
+
+  .hero h1 {
+    font-size: 1.75rem;
+  }
 }

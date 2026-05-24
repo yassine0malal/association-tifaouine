@@ -3,7 +3,7 @@ import styles from "./join-us-page.module.css";
 import ApplicationForm from "./ApplicationForm";
 import { useTranslation } from "react-i18next";
 import bannerImg from "../../assets/images/from_banner_image.png";
-import mountainImg from "../../assets/images/tob9al_mountain.jpg";
+import heroImg from "../../assets/images/heros/asni.png";
 import lifeAtTifaouineImg1 from "../../assets/images/volunteers/lifeAttifaouine1.jpeg";
 import lifeAtTifaouineImg2 from "../../assets/images/volunteers/lifeAttifaouine2.jpeg";
 import lifeAtTifaouineImg3 from "../../assets/images/volunteers/lifeAttifaouine3.jpg";
@@ -472,7 +472,7 @@ function JoinUsPage() {
       <div className={styles.joinUsPage}>
         {/* <img src={mountainImg} className={styles.pageBg}/> */}
 
-        <PageHero title={t("hero")} heroImg={mountainImg} />
+        <PageHero title={t("hero")} heroImg={heroImg} />
         {/* SECTION 1: FOCUS AREA */}
 
         <FocusAreasSection t={t} />

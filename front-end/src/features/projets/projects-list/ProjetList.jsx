@@ -8,7 +8,7 @@ import Pagination from "../../../components/common/Pagination";
 import FilterButtons from "../../../components/common/FilterButtons";
 
 import styles from "./projectList.module.css";
-import heroImg from "../../../assets/images/projects_hero.jpg";
+import heroImg from "../../../assets/images/heros/hero1.jpeg";
 
 import { fetchProjects, setPage, setFilter } from "./projectsSlice";
 import { useTranslation } from "react-i18next";

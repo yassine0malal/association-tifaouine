@@ -1,5 +1,5 @@
 import styles from "./donation-page.module.css";
-import mountainImg from "../../assets/images/tob9al_mountain.jpg";
+import heroImg from "../../assets/images/heros/asni.png";
 import PageHero from "../../components/common/PageHero";
 import contactImg from "../../assets/images/donation/contact_img.jpg";
 import transparency_img1 from "../../assets/images/donation/transpaerncy_img1.jpeg";
@@ -563,32 +563,16 @@ function TransparencySection({ t }) {
       <div className={styles.container}>
         <div className={styles.images}>
           <div className={styles.image}>
-            <img
-              src={transparency_img1}
-              alt=""
-              aria-label="laoding"
-            />
+            <img src={transparency_img1} alt="" aria-label="laoding" />
           </div>
           <div className={styles.image}>
-            <img
-              src={transparency_img5}
-              alt=""
-              aria-label="laoding"
-            />
+            <img src={transparency_img5} alt="" aria-label="laoding" />
           </div>
           <div className={styles.image}>
-            <img
-              src={transparency_img3}
-              alt=""
-              aria-label="laoding"
-            />
+            <img src={transparency_img3} alt="" aria-label="laoding" />
           </div>
           <div className={styles.image}>
-            <img
-              src={transparency_img4}
-              alt=""
-              aria-label="laoding"
-            />
+            <img src={transparency_img4} alt="" aria-label="laoding" />
           </div>
         </div>
 
@@ -630,6 +614,7 @@ function TransparencySection({ t }) {
     </section>
   );
 }
+
 function DonationFromSection({ t, i18n }) {
   const dispatch = useDispatch();
   const dataForSelect = useSelector(
@@ -902,15 +887,18 @@ function DonationFromSection({ t, i18n }) {
         "montant",
         formData.amount ? parseFloat(formData.amount) : 0,
       );
-      
-      const typeDest = formData.project && formData.project !== "none" ? "specifique" : "general";
+
+      const typeDest =
+        formData.project && formData.project !== "none"
+          ? "specifique"
+          : "general";
       submitData.append("type_destination", typeDest);
       if (typeDest === "specifique") {
         submitData.append("projet_id", formData.project);
       }
 
       submitData.append("message", formData.message || "");
-      
+
       // Honeypot field
       submitData.append("website", "");
 
@@ -918,20 +906,28 @@ function DonationFromSection({ t, i18n }) {
         submitData.append("receipt", formData.receipt);
       }
 
-      const API_URL = import.meta.env.VITE_BASE_BACK_END_URL || "http://localhost:5000";
+      const API_URL =
+        import.meta.env.VITE_BASE_BACK_END_URL || "http://localhost:5000";
 
       // Fetch CSRF token
-      const csrfRes = await axios.get(`${API_URL}/api/dons/financier/csrf-token`, {
-        withCredentials: true,
-      });
+      const csrfRes = await axios.get(
+        `${API_URL}/api/dons/financier/csrf-token`,
+        {
+          withCredentials: true,
+        },
+      );
       const csrfToken = csrfRes.data.csrfToken;
 
-      const response = await axios.post(`${API_URL}/api/dons/financier`, submitData, {
-        withCredentials: true,
-        headers: {
-          "x-csrf-token": csrfToken,
+      const response = await axios.post(
+        `${API_URL}/api/dons/financier`,
+        submitData,
+        {
+          withCredentials: true,
+          headers: {
+            "x-csrf-token": csrfToken,
+          },
         },
-      });
+      );
 
       if (response.status === 200 || response.status === 201) {
         setSubmitSuccess(true);
@@ -962,11 +958,14 @@ function DonationFromSection({ t, i18n }) {
           setSubmitSuccess(false);
         }, 5000);
       } else {
-         throw new Error("Erreur serveur lors de la soumission");
+        throw new Error("Erreur serveur lors de la soumission");
       }
     } catch (error) {
       console.error("Submission error:", error);
-      const errorMsg = error.response?.data?.message || error.message || t("donationForm.errors.submissionFailed");
+      const errorMsg =
+        error.response?.data?.message ||
+        error.message ||
+        t("donationForm.errors.submissionFailed");
       setSubmitError(errorMsg);
 
       // Auto hide error message after 5 seconds
@@ -982,18 +981,6 @@ function DonationFromSection({ t, i18n }) {
     <section className={styles.donationForm}>
       <h1 className={styles.title}>{t("donationForm.title")}</h1>
       <p className={styles.subtitle}>{t("donationForm.subtitle")}</p>
-
-      {submitError && (
-        <div className={styles.errorMessage}>
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-            <path
-              d="M10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM11 15H9V13H11V15ZM11 11H9V5H11V11Z"
-              fill="white"
-            />
-          </svg>
-          <span>{submitError}</span>
-        </div>
-      )}
 
       <div className={styles.container}>
         <div className={styles.steps}>
@@ -1608,6 +1595,30 @@ function DonationFromSection({ t, i18n }) {
                 : t("donationForm.form.submitButton")}
             </button>
           </div>
+
+          {submitSuccess && (
+            <div className={styles.successMessage}>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path
+                  d="M10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM8 15L3 10L4.41 8.59L8 12.17L15.59 4.58L17 6L8 15Z"
+                  fill="white"
+                />
+              </svg>
+              <span>{t("donationForm.successMessage")}</span>
+            </div>
+          )}
+
+          {submitError && (
+            <div className={styles.errorMessage}>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path
+                  d="M10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM11 15H9V13H11V15ZM11 11H9V5H11V11Z"
+                  fill="white"
+                />
+              </svg>
+              <span>{submitError}</span>
+            </div>
+          )}
         </form>
       </div>
     </section>
@@ -1619,7 +1630,7 @@ function DonationPage() {
   return (
     <div className={styles.donationPage}>
       {/* page hero section */}
-      <PageHero title={t("hero.title")} heroImg={mountainImg} />
+      <PageHero title={t("hero.title")} heroImg={heroImg} />
 
       {/* current needs section */}
       <CurrentNeeds t={t} />

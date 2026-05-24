@@ -2,6 +2,7 @@ import styles from "./projectCard.module.css";
 import projectImg from "../../assets/images/project.jpeg";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import defaultProjectImage from '../../assets/images/defaults/projects_default_img.jpg'
 
 const apiUrl = import.meta.env.VITE_BASE_BACK_END_URL
 
@@ -14,12 +15,15 @@ export default function ProjectCard({
   image,
 }) {
 
+
+  const image_principale = image ? `${apiUrl}${image}` : defaultProjectImage;
+
   const { t , i18n } = useTranslation('common')
   const currentLang = i18n.language 
   return (
     <div className={styles.projectCard}>
       <div className={styles.cardImg}>
-        <img src={`${apiUrl}${image}`} alt="" aria-label="loading"/>
+        <img src={`${image_principale}`} alt="" aria-label="loading"/>
       </div>
 
       <div className={styles.cardContent}>

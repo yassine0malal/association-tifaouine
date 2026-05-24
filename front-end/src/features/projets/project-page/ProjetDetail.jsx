@@ -1,5 +1,5 @@
 import { Link, useParams } from "react-router-dom";
-import heroImg from "../../../assets/images/projects_hero.jpg";
+import heroImg from "../../../assets/images/heros/hero1.jpeg";
 import PageHero from "../../../components/common/PageHero";
 import styles from "./projectPage.module.css";
 import { useDispatch, useSelector } from "react-redux";
