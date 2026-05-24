@@ -33,11 +33,11 @@ const Evenement = sequelize.define('Evenement', {
         allowNull: false,
     },
     date_debut: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
         allowNull: false,
     },
     date_fin: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
         allowNull: true,
         validate: {
             isAfterStartDate(value) {
