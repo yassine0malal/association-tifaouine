@@ -2,11 +2,17 @@
  * DTOs pour les événements — retourne uniquement les champs nécessaires au frontend
  */
 
+const formatDate = (date) => {
+    if (!date) return null;
+    const d = new Date(date);
+    return isNaN(d.getTime()) ? null : d.toISOString().split('T')[0];
+};
+
 const toEvenementListDTO = (eve, lang) => ({
     id:     eve.id,
     title:  eve[`titre_${lang}`],
     domain: eve.Domaine ? eve.Domaine[`nom_${lang}`] : null,
-    date:   eve.date_debut,
+    date:   formatDate(eve.date_debut),
     image_principale:    eve.image_principale || null
 });
 
@@ -24,8 +30,8 @@ const toEvenementDetailDTO = (eve, lang, relatedEvents = [], lastedEvents = [], 
     category:    eve.Domaine ? eve.Domaine[`nom_${lang}`] : null,
     description: eve[`description_${lang}`] || null,
     location:    eve.lieu,
-    date_debut:  eve.date_debut,
-    date_fin:    eve.date_fin,
+    date_debut:  formatDate(eve.date_debut),
+    date_fin:    formatDate(eve.date_fin),
     image_principale: eve.image_principale || null,
 
     // Noms des partenaires uniquement
@@ -38,7 +44,7 @@ const toEvenementDetailDTO = (eve, lang, relatedEvents = [], lastedEvents = [], 
         id:     r.id,
         title:  r[`titre_${lang}`],
         domain: r.Domaine ? r.Domaine[`nom_${lang}`] : null,
-        date:   r.date_debut,
+        date:   formatDate(r.date_debut),
         img:    r.image_principale || null
     })),
 
@@ -47,7 +53,7 @@ const toEvenementDetailDTO = (eve, lang, relatedEvents = [], lastedEvents = [], 
         id:     l.id,
         title:  l[`titre_${lang}`],
         domain: l.Domaine ? l.Domaine[`nom_${lang}`] : null,
-        date:   l.date_debut,
+        date:   formatDate(l.date_debut),
         img:    l.image_principale || null
     })),
 
@@ -72,8 +78,8 @@ const toEvenementCompletDTO = ({ evenement, images }) => {
         titre_fr:         e.titre_fr,
         titre_ar:         e.titre_ar,
         titre_en:         e.titre_en,
-        date_debut:       e.date_debut,
-        date_fin:         e.date_fin || null,
+        date_debut:       formatDate(e.date_debut),
+        date_fin:         formatDate(e.date_fin),
         lieu:             e.lieu || null,
         description_fr:   e.description_fr || null,
         description_ar:   e.description_ar || null,

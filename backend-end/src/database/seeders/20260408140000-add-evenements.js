@@ -35,8 +35,24 @@ module.exports = {
     const P = {};
     projets.forEach(p => { P[p.titre_fr] = p.id; });
 
-    // Date par défaut : date de création de l'association
-    const DATE_DEFAUT = new Date('1998-01-01');
+    // Fonction pour générer une date aléatoire entre deux dates (format YYYY-MM-DD)
+    const getRandomDate = (start, end) => {
+      const date = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+      return date.toISOString().split('T')[0];
+    };
+
+    // Fonction pour générer une date de fin après la date de début (entre 1 et 10 jours après)
+    const getRandomEndDate = (startDateString) => {
+      const start = new Date(startDateString);
+      // Ajoute entre 1 et 10 jours à la date de début
+      const daysToAdd = Math.floor(Math.random() * 10) + 1;
+      const end = new Date(start.getTime() + daysToAdd * 24 * 60 * 60 * 1000);
+      return end.toISOString().split('T')[0];
+    };
+
+    // Date par défaut : date de création de l'association (1998)
+    const startDate = new Date('1998-01-01');
+    const endDate = new Date('2025-12-31');
     const now = new Date();
 
     const evenements = [
@@ -49,8 +65,8 @@ module.exports = {
         titre_ar:       'زيارة كاتب الدولة المكلف بالتنمية القروية',
         titre_fr:       'Visite du Secrétaire d\'État chargé du Développement Rural',
         titre_en:       'Visit of the Secretary of State for Rural Development',
-        date_debut:     DATE_DEFAUT,
-        date_fin:       null,
+        date_debut:     getRandomDate(startDate, endDate),
+        get date_fin() { return getRandomEndDate(this.date_debut); },
         lieu:           'Siège de l\'association, Asni',
         description_ar: 'زيارة رسمية على المستوى الوطني لكاتب الدولة المكلف بالتنمية القروية لمقر جمعية تيفاوين للاطلاع على مشاريعها وأنشطتها.',
         description_fr: 'Visite officielle au niveau national du Secrétaire d\'État chargé du Développement Rural au siège de l\'association Tifaouine pour découvrir ses projets et activités.',
@@ -62,7 +78,7 @@ module.exports = {
         titre_ar:       'زيارة عامل صاحب الجلالة على إقليم الحوز',
         titre_fr:       'Visite du Gouverneur de la Province du Haouz',
         titre_en:       'Visit of the Governor of the Province of Haouz',
-        date_debut:     DATE_DEFAUT,
+        date_debut:     null,
         date_fin:       null,
         lieu:           'Siège de l\'association, Asni',
         description_ar: 'زيارة رسمية على المستوى الجهوي لعامل صاحب الجلالة على إقليم الحوز لمقر جمعية تيفاوين.',
@@ -75,7 +91,7 @@ module.exports = {
         titre_ar:       'زيارة وزير الفلاحة الإسباني وحاكم منطقة الأندلس',
         titre_fr:       'Visite du Ministre de l\'Agriculture espagnol et du Gouverneur d\'Andalousie',
         titre_en:       'Visit of the Spanish Minister of Agriculture and Governor of Andalusia',
-        date_debut:     DATE_DEFAUT,
+        date_debut:     getRandomDate(startDate, endDate),
         date_fin:       null,
         lieu:           'Siège de l\'association, Asni',
         description_ar: 'زيارة رسمية دولية لوزير الفلاحة الإسباني وحاكم منطقة الأندلس لمقر جمعية تيفاوين في إطار التعاون الدولي.',
@@ -88,7 +104,7 @@ module.exports = {
         titre_ar:       'استقبال وفود المجتمع المدني الوطني والدولي',
         titre_fr:       'Accueil de délégations de la société civile nationale et internationale',
         titre_en:       'Reception of national and international civil society delegations',
-        date_debut:     DATE_DEFAUT,
+        date_debut:     getRandomDate(startDate, endDate),
         date_fin:       null,
         lieu:           'Siège de l\'association, Asni',
         description_ar: 'استقبال متعدد لوفود من المجتمع المدني الوطني والدولي للاطلاع على تجربة جمعية تيفاوين في مجال التنمية القروية.',
@@ -101,7 +117,7 @@ module.exports = {
         titre_ar:       'استقبال وفد من الصحراء المغربية برئاسة برلمانيي المنطقة',
         titre_fr:       'Accueil d\'une délégation du Sahara marocain conduite par des parlementaires',
         titre_en:       'Reception of a delegation from the Moroccan Sahara led by regional parliamentarians',
-        date_debut:     DATE_DEFAUT,
+        date_debut:     getRandomDate(startDate, endDate),
         date_fin:       null,
         lieu:           'Siège de l\'association, Asni',
         description_ar: 'استقبال وفد من الصحراء المغربية برئاسة برلمانيي المنطقة للاطلاع على تجربة الجمعية في التنمية القروية وتبادل الخبرات.',
@@ -114,7 +130,7 @@ module.exports = {
         titre_ar:       'استقبال فلاحي منطقة شفشاون برئاسة رئيس الغرفة الفلاحية وبرلمانيي المنطقة',
         titre_fr:       'Accueil des agriculteurs de Chefchaouen conduits par le président de la Chambre agricole',
         titre_en:       'Reception of Chefchaouen farmers led by the president of the Agricultural Chamber',
-        date_debut:     DATE_DEFAUT,
+        date_debut:     getRandomDate(startDate, endDate),
         date_fin:       null,
         lieu:           'Siège de l\'association, Asni',
         description_ar: 'زيارة تبادل خبرات لفلاحي منطقة شفشاون برئاسة رئيس الغرفة الفلاحية وبرلمانيي المنطقة للاستفادة من تجربة جمعية تيفاوين في التنمية الفلاحية.',
@@ -127,7 +143,7 @@ module.exports = {
         titre_ar:       'زيارة مدير الصندوق الدولي للتنمية الزراعية',
         titre_fr:       'Visite du Directeur du Fonds International de Développement Agricole (FIDA)',
         titre_en:       'Visit of the Director of the International Fund for Agricultural Development (IFAD)',
-        date_debut:     DATE_DEFAUT,
+        date_debut:     getRandomDate(startDate, endDate),
         date_fin:       null,
         lieu:           'Siège de l\'association, Asni',
         description_ar: 'زيارة دولية لمدير الصندوق الدولي للتنمية الزراعية (FIDA) لمقر جمعية تيفاوين في إطار متابعة مشاريع التنمية الفلاحية.',
@@ -143,7 +159,7 @@ module.exports = {
         titre_ar:       'زيارة رئيس الجمعية لجمهورية مصر',
         titre_fr:       'Visite du président de l\'association en République d\'Égypte',
         titre_en:       'Visit of the association president to the Republic of Egypt',
-        date_debut:     DATE_DEFAUT,
+        date_debut:     getRandomDate(startDate, endDate),
         date_fin:       null,
         lieu:           'Égypte',
         description_ar: 'زيارة رسمية خارجية لرئيس جمعية تيفاوين إلى جمهورية مصر في إطار التبادل والتواصل الدولي مع المنظمات والجمعيات المماثلة.',
@@ -156,7 +172,7 @@ module.exports = {
         titre_ar:       'المعرض الوطني للفلاحة بمكناس',
         titre_fr:       'Salon International de l\'Agriculture de Meknès (SIAM)',
         titre_en:       'International Agricultural Fair of Meknès (SIAM)',
-        date_debut:     DATE_DEFAUT,
+        date_debut:     getRandomDate(startDate, endDate),
         date_fin:       null,
         lieu:           'Meknès, Maroc',
         description_ar: 'مشاركة جمعية تيفاوين في المعرض الوطني للفلاحة بمكناس لعرض المنتجات والتجارب الفلاحية المحلية وتبادل الخبرات مع المشاركين.',
@@ -169,7 +185,7 @@ module.exports = {
         titre_ar:       'الملتقى الوطني للتنمية القروية بمكناس',
         titre_fr:       'Rencontre nationale sur le développement rural à Meknès',
         titre_en:       'National meeting on rural development in Meknès',
-        date_debut:     DATE_DEFAUT,
+        date_debut:     getRandomDate(startDate, endDate),
         date_fin:       null,
         lieu:           'Meknès, Maroc',
         description_ar: 'مشاركة جمعية تيفاوين في الملتقى الوطني للتنمية القروية بمكناس لمناقشة قضايا التنمية القروية وتقاسم التجارب.',
@@ -198,7 +214,7 @@ module.exports = {
         titre_ar:       'حملات تحسيسية للمحافظة على البيئة',
         titre_fr:       'Campagnes de sensibilisation environnementale',
         titre_en:       'Environmental awareness campaigns',
-        date_debut:     DATE_DEFAUT,
+        date_debut:     getRandomDate(startDate, endDate),
         date_fin:       null,
         lieu:           'Région d\'Asni',
         description_ar: 'حملات تحسيسية متكررة للمحافظة على البيئة الطبيعية في منطقة آسني تستهدف الساكنة المحلية والشباب للتوعية بأهمية حماية الموارد الطبيعية.',
@@ -211,7 +227,7 @@ module.exports = {
         titre_ar:       'حملات تحسيسية في المجال الصحي',
         titre_fr:       'Campagnes de sensibilisation sanitaire',
         titre_en:       'Health awareness campaigns',
-        date_debut:     DATE_DEFAUT,
+        date_debut:     getRandomDate(startDate, endDate),
         date_fin:       null,
         lieu:           'Région d\'Asni',
         description_ar: 'حملات تحسيسية متكررة في المجال الصحي تستهدف ساكنة منطقة آسني للتوعية بأهمية النظافة والوقاية من الأمراض والرعاية الصحية الأولية.',
@@ -224,7 +240,7 @@ module.exports = {
         titre_ar:       'حملات طبية',
         titre_fr:       'Caravanes médicales',
         titre_en:       'Medical caravans',
-        date_debut:     DATE_DEFAUT,
+        date_debut:     getRandomDate(startDate, endDate),
         date_fin:       null,
         lieu:           'Région d\'Asni',
         description_ar: 'تنظيم حملات طبية متكررة لتقديم الرعاية الصحية المجانية لساكنة منطقة آسني في مختلف التخصصات الطبية.',
@@ -237,7 +253,7 @@ module.exports = {
         titre_ar:       'برنامج التربية الوالدية',
         titre_fr:       'Programme d\'éducation parentale',
         titre_en:       'Parental education programme',
-        date_debut:     DATE_DEFAUT,
+        date_debut:     getRandomDate(startDate, endDate),
         date_fin:       null,
         lieu:           'Asni',
         description_ar: 'برنامج تكويني دوري موجه للآباء والأمهات لتعزيز مهاراتهم في التربية والرعاية الأسرية وتنشئة الأطفال.',
@@ -250,7 +266,7 @@ module.exports = {
         titre_ar:       'التحسيس بالبيئة وتكوين المنشطين البيئيين',
         titre_fr:       'Sensibilisation environnementale et formation des animateurs',
         titre_en:       'Environmental awareness and training of environmental facilitators',
-        date_debut:     DATE_DEFAUT,
+        date_debut:     getRandomDate(startDate, endDate),
         date_fin:       null,
         lieu:           'Région d\'Asni',
         description_ar: 'برنامج دوري للتحسيس بالبيئة وتكوين منشطين بيئيين محليين قادرين على نشر ثقافة حماية البيئة في مجتمعاتهم.',
@@ -266,7 +282,7 @@ module.exports = {
         titre_ar:       'تكوينات أعضاء الجمعية',
         titre_fr:       'Formations des membres de l\'association',
         titre_en:       'Training of association members',
-        date_debut:     DATE_DEFAUT,
+        date_debut:     getRandomDate(startDate, endDate),
         date_fin:       null,
         lieu:           'Asni',
         description_ar: 'تكوينات دورية لأعضاء جمعية تيفاوين في مجالات التسيير الجمعوي والتخطيط وتدبير المشاريع لتعزيز قدراتهم.',
@@ -279,7 +295,7 @@ module.exports = {
         titre_ar:       'تكوينات الفلاحين في مجالات الفلاحة',
         titre_fr:       'Formations des agriculteurs dans les domaines agricoles',
         titre_en:       'Training of farmers in agricultural fields',
-        date_debut:     DATE_DEFAUT,
+        date_debut:     getRandomDate(startDate, endDate),
         date_fin:       null,
         lieu:           'Région d\'Asni',
         description_ar: 'تكوينات متعددة لفلاحي المنطقة في مجالات الزراعة والري والتقليم وتثمين المنتوج المحلي لتحسين إنتاجيتهم ودخلهم.',
@@ -292,7 +308,7 @@ module.exports = {
         titre_ar:       'دروس الدعم للتلاميذ',
         titre_fr:       'Cours de soutien scolaire',
         titre_en:       'School support classes',
-        date_debut:     DATE_DEFAUT,
+        date_debut:     getRandomDate(startDate, endDate),
         date_fin:       null,
         lieu:           'Siège de l\'association, Asni',
         description_ar: 'دروس دعم مجانية لتلاميذ مدارس آسني تُقدَّم في مقر الجمعية لمساعدتهم على تحسين مستواهم الدراسي.',
@@ -321,7 +337,7 @@ module.exports = {
         titre_ar:       'تبادل الزيارات بين الجمعيات والمنظمات الشريكة',
         titre_fr:       'Échanges de visites entre associations et organisations partenaires',
         titre_en:       'Exchange visits between partner associations and organisations',
-        date_debut:     DATE_DEFAUT,
+        date_debut:     getRandomDate(startDate, endDate),
         date_fin:       null,
         lieu:           'Maroc et international',
         description_ar: 'تبادل متكرر للزيارات بين جمعية تيفاوين والجمعيات والمنظمات الشريكة الوطنية والدولية لتقاسم الخبرات وتعزيز التعاون.',
@@ -331,12 +347,17 @@ module.exports = {
     ];
 
     await queryInterface.bulkInsert('evenement',
-      evenements.map(e => ({
-        ...e,
-        image_principale: null,
-        created_at: now,
-        updated_at: now
-      }))
+      evenements.map(e => {
+        const generated_date_debut = getRandomDate(startDate, now);
+        return {
+          ...e,
+          date_debut: generated_date_debut,
+          date_fin: getRandomEndDate(generated_date_debut),
+          image_principale: null,
+          created_at: now,
+          updated_at: now
+        };
+      })
     );
   },
 

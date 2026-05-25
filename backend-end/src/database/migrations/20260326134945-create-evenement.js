@@ -37,11 +37,11 @@ module.exports = {
         allowNull: false
       },
       date_debut: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
         allowNull: false
       },
       date_fin: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
         allowNull: true
       },
       lieu: {
