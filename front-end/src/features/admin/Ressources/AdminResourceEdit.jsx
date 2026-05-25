@@ -15,7 +15,8 @@ import {
     Loader2,
     Save,
     Upload,
-    Image as ImageIcon
+    Image as ImageIcon,
+    Edit2
 } from "lucide-react";
 
 /**
