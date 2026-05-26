@@ -1,0 +1,2665 @@
+% ============================================================================
+% RAPPORT ACADÉMIQUE - PROJET SITE WEB ASSOCIATION TIFAOUINE
+% ============================================================================
+% Document Class: Report avec options pour un rendu professionnel
+% Auteur: Équipe de développement ENSET Mohammedia
+% Date: Avril 2026
+% ============================================================================
+
+\documentclass[12pt,a4paper,twoside,openright]{report}
+
+% ============================================================================
+% PACKAGES ESSENTIELS
+% ============================================================================
+
+% Encodage et langue
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+
+% Mise en page et géométrie
+\usepackage[
+    top=2.5cm,
+    bottom=2.5cm,
+    left=3cm,
+    right=2.5cm,
+    headheight=25pt
+]{geometry}
+
+% Graphiques et couleurs
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, shadows, calc}
+
+% Typographie avancée
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{setspace}
+\usepackage{ragged2e}
+
+% En-têtes et pieds de page
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+% Tables et listes
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{multirow}
+\usepackage{colortbl}
+\usepackage{amssymb}
+
+% Code source avec coloration syntaxique
+\usepackage{listings}
+\usepackage{lstautogobble}
+
+% Liens hypertextes
+\usepackage[
+    colorlinks=true,
+    linkcolor=blue!60!black,
+    urlcolor=blue!60!black,
+    citecolor=green!50!black,
+    bookmarks=true,
+    bookmarksopen=true,
+    pdfstartview=FitH
+]{hyperref}
+
+% Table des matières personnalisée
+\usepackage{tocloft}
+
+% Bibliographie
+\usepackage[
+    backend=biber,
+    style=ieee,
+    sorting=none
+]{biblatex}
+
+% Autres packages utiles
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{lipsum}
+
+% ============================================================================
+% DÉFINITION DES COULEURS (Palette Professionnelle)
+% ============================================================================
+
+\definecolor{primaryBlue}{RGB}{0, 82, 155}      % Royal Blue
+\definecolor{deepBlue}{RGB}{0, 33, 71}         % Deep Navy
+\definecolor{lightBlue}{RGB}{235, 245, 255}    % Background Blue
+\definecolor{oceanBlue}{RGB}{0, 105, 170}      % Intermediate Blue
+\definecolor{premiumGold}{RGB}{197, 168, 124}  % Soft Premium Gold
+\definecolor{secondaryGold}{RGB}{184, 134, 11}  % Original Gold
+\definecolor{accentTeal}{RGB}{0, 128, 128}      % Accent moderne
+\definecolor{darkGray}{RGB}{40, 40, 40}         % Stronger text
+\definecolor{lightGray}{RGB}{250, 250, 250}     % Very light background
+\definecolor{mediumGray}{RGB}{100, 100, 100}    % Subdued text
+
+% Couleurs pour le code
+\definecolor{codeBackground}{RGB}{248, 248, 248}
+\definecolor{codeComment}{RGB}{0, 128, 0}
+\definecolor{codeKeyword}{RGB}{0, 0, 255}
+\definecolor{codeString}{RGB}{163, 21, 21}
+
+% ============================================================================
+% CONFIGURATION DU CODE SOURCE (Listings)
+% ============================================================================
+
+\lstset{
+    backgroundcolor=\color{codeBackground},
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    captionpos=b,
+    commentstyle=\color{codeComment}\itshape,
+    keywordstyle=\color{codeKeyword}\bfseries,
+    stringstyle=\color{codeString},
+    numbers=left,
+    numberstyle=\tiny\color{mediumGray},
+    numbersep=8pt,
+    frame=single,
+    frameround=tttt,
+    rulecolor=\color{mediumGray},
+    showstringspaces=false,
+    tabsize=2,
+    autogobble=true,
+    xleftmargin=15pt,
+    xrightmargin=5pt
+}
+
+% Définition des langages
+\lstdefinelanguage{JavaScript}{
+    keywords={const, let, var, function, return, if, else, for, while, class, extends, import, export, from, async, await, try, catch},
+    keywordstyle=\color{codeKeyword}\bfseries,
+    ndkeywords={require, module, exports},
+    ndkeywordstyle=\color{accentTeal}\bfseries,
+    sensitive=true,
+    comment=[l]{//},
+    morecomment=[s]{/*}{*/},
+    morestring=[b]',
+    morestring=[b]"
+}
+
+% ============================================================================
+% CONFIGURATION DES EN-TÊTES ET PIEDS DE PAGE
+% ============================================================================
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\textcolor{primaryBlue}{\thepage}}
+\fancyhead[LO]{\textcolor{mediumGray}{\nouppercase{\rightmark}}}
+\fancyhead[RE]{\textcolor{mediumGray}{\nouppercase{\leftmark}}}
+\fancyfoot[C]{\textcolor{mediumGray}{\small Projet Site Web Association Tifaouine}}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.5pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primaryBlue}\leaders\hrule height \headrulewidth\hfill}}
+\renewcommand{\footrule}{\hbox to\headwidth{\color{primaryBlue}\leaders\hrule height \footrulewidth\hfill}}
+
+% Style pour les pages de chapitre
+\fancypagestyle{plain}{
+    \fancyhf{}
+    \fancyfoot[C]{\textcolor{mediumGray}{\thepage}}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.5pt}
+}
+
+% ============================================================================
+% PERSONNALISATION DES CHAPITRES ET SECTIONS
+% ============================================================================
+
+\usepackage{titlesec}
+
+% Chapitres - Design Moderne et Professionnel
+\titleformat{\chapter}[display]
+    {\normalfont\huge\bfseries\color{deepBlue}}
+    {\begin{tikzpicture}
+        \node[
+            fill=primaryBlue, 
+            text=white, 
+            inner xsep=15pt, 
+            inner ysep=12pt, 
+            rounded corners=4pt
+        ] (chapbox) {\Large\scshape\chaptertitlename\ \ \Huge\textbf{\thechapter}};
+        \fill[premiumGold] ([xshift=15pt, yshift=-3pt]chapbox.south west) rectangle ([xshift=-15pt, yshift=0pt]chapbox.south east);
+     \end{tikzpicture}}
+    {3ex}
+    {\Huge\bfseries}
+    [\vspace{1.5ex}\textcolor{primaryBlue!20}{\hrule height 1.5pt}\vspace{2ex}]
+
+% Sections - Design Épuré
+\titleformat{\section}
+    {\normalfont\Large\bfseries\color{deepBlue}}
+    {\textcolor{primaryBlue}{\thesection}\ \textcolor{premiumGold}{\vrule width 1.5pt}}
+    {1em}
+    {}
+    [\vspace{0.2cm}\textcolor{primaryBlue!30}{\hrule height 0.5pt}]
+
+% Sous-sections
+\titleformat{\subsection}
+    {\normalfont\large\bfseries\color{oceanBlue}}
+    {\thesubsection}
+    {1em}
+    {}
+    [\vspace{0.1cm}]
+
+% ============================================================================
+% MÉTADONNÉES DU DOCUMENT
+% ============================================================================
+
+\title{Développement d'un Site Web Institutionnel Trilingue pour l'Association Tifaouine}
+\author{Équipe de Développement}
+\date{Avril 2026}
+
+% Métadonnées PDF
+\hypersetup{
+    pdftitle={Rapport Projet Association Tifaouine},
+    pdfauthor={ENSET Mohammedia},
+    pdfsubject={Développement Web - Site Institutionnel},
+    pdfkeywords={React, Node.js, PostgreSQL, Association, Développement Rural}
+}
+
+% ============================================================================
+% COMMANDES PERSONNALISÉES
+% ============================================================================
+
+% Boîte d'information
+\newcommand{\infobox}[2]{
+    \begin{center}
+    \begin{tikzpicture}
+        \node[
+            rectangle,
+            rounded corners=5pt,
+            draw=primaryBlue,
+            fill=lightGray,
+            text width=0.9\textwidth,
+            inner sep=10pt,
+            drop shadow
+        ] {
+            \textbf{\textcolor{primaryBlue}{#1}}\\[5pt]
+            #2
+        };
+    \end{tikzpicture}
+    \end{center}
+}
+
+% Encadré de code
+\newcommand{\codebox}[1]{
+    \begin{center}
+    \fcolorbox{mediumGray}{codeBackground}{
+        \begin{minipage}{0.95\textwidth}
+            \ttfamily\small #1
+        \end{minipage}
+    }
+    \end{center}
+}
+
+% Figure de modélisation : insère l'image si présente, sinon cadre réservé (compilation sans fichier)
+% Usage : \figmodel[largeur]{chemin relatif}{légende}{label}
+\newcommand{\figmodel}[4][0.92]{
+    \begin{figure}[H]
+        \centering
+        \IfFileExists{#2}{
+            \includegraphics[width=#1\textwidth, height=0.78\textheight, keepaspectratio]{#2}
+        }{
+            \fcolorbox{primaryBlue}{lightBlue!20}{
+                \begin{minipage}{0.88\textwidth}
+                    \centering\vspace{10pt}
+                    {\bfseries\color{deepBlue}Emplacement réservé au diagramme}\\[8pt]
+                    {\small\color{darkGray}Exporter le fichier sous le nom suivant et le placer dans \texttt{IMG/Modelisation/} :}\\[6pt]
+                    {\ttfamily\color{oceanBlue}\detokenize{#2}}
+                    \vspace{10pt}
+                \end{minipage}
+            }
+        }
+        \caption{#3}
+        \label{#4}
+    \end{figure}
+}
+
+% Encadrement premium uniforme pour toutes les images du rapport
+\let\OriginalIncludeGraphics\includegraphics
+\renewcommand{\includegraphics}[2][]{%
+    \begingroup
+    \setlength{\fboxsep}{1.5pt}%
+    \setlength{\fboxrule}{0.35pt}%
+    \fcolorbox{primaryBlue!35}{white}{\OriginalIncludeGraphics[#1]{#2}}%
+    \endgroup
+}
+
+% Ligne de la liste des abréviations
+\newcommand{\abbrevrow}[2]{%
+    \textbf{\textcolor{primaryBlue}{#1}} & #2\\[4pt]
+}
+
+% Commentaire académique court placé après les diagrammes
+\newcommand{\diagramnote}[1]{
+    \vspace{-0.15cm}
+    \begin{quote}
+        \small\color{darkGray}#1
+    \end{quote}
+    \vspace{0.15cm}
+}
+
+% ============================================================================
+% DÉBUT DU DOCUMENT
+% ============================================================================
+
+\begin{document}
+\raggedbottom
+
+% Désactiver la numérotation pour les pages préliminaires
+\pagenumbering{roman}
+
+% ============================================================================
+% PAGE DE GARDE EXTRA-MAGNIFIQUE
+% ============================================================================
+
+\begin{titlepage}
+\thispagestyle{empty}
+
+\begin{tikzpicture}[remember picture, overlay]
+
+    %── FOND BLANC ─────────────────────────────────────────────────────────────
+    \fill[white] (current page.south west) rectangle (current page.north east);
+
+    %── LISERÉ OR EN HAUT (élégant, discret) ───────────────────────────────────
+    \fill[premiumGold]
+        (current page.north west)
+        rectangle ([yshift=-0.18cm]current page.north east);
+
+    %── LOGO ENSET (centré) ────────────────────────────────────────────────────
+    \node[anchor=north] at ([yshift=-0.4cm]current page.north) {
+        \includegraphics[height=2.7cm, keepaspectratio]{IMG/LOGO_ENSET.jpeg}
+    };
+
+    %── TEXTE INSTITUTIONNEL ───────────────────────────────────────────────────
+    \node[anchor=north, align=center,
+          font=\fontsize{6.2}{8}\selectfont\color{mediumGray}]
+        at ([yshift=-3.8cm]current page.north) {
+        ÉCOLE NORMALE SUPÉRIEURE DE L'ENSEIGNEMENT TECHNIQUE DE MOHAMMEDIA\\[1pt]
+        UNIVERSITÉ HASSAN II DE CASABLANCA
+    };
+
+    %── SÉPARATEUR ─────────────────────────────────────────────────────────────
+    \draw[primaryBlue!30, line width=0.5pt]
+        ([xshift=2cm, yshift=-5.0cm]current page.north west)
+        -- ([xshift=-2cm, yshift=-5.0cm]current page.north east);
+
+    %── DÉPARTEMENT ────────────────────────────────────────────────────────────
+    \node[anchor=north, font=\normalsize\bfseries\color{oceanBlue}]
+        at ([yshift=-5.5cm]current page.north) {
+        Département Mathématiques et Informatique
+    };
+
+    %── TITRE PRINCIPAL ────────────────────────────────────────────────────────
+    \node[anchor=north, font=\huge\bfseries\color{deepBlue}]
+        at ([yshift=-7.1cm]current page.north) {
+        Mémoire de Projet Professionnel
+    };
+
+    %── FILET OR SOUS LE TITRE ─────────────────────────────────────────────────
+    \draw[premiumGold, line width=1.4pt]
+        ([xshift=3.5cm, yshift=-8.3cm]current page.north west)
+        -- ([xshift=-3.5cm, yshift=-8.3cm]current page.north east);
+
+    %── BOÎTE TITRE PROJET (double bordure) ────────────────────────────────────
+    \draw[primaryBlue, line width=2pt]
+        ([xshift=2.2cm, yshift=-9.1cm]current page.north west)
+        rectangle
+        ([xshift=-2.2cm, yshift=-13.3cm]current page.north east);
+    \draw[primaryBlue!30, line width=0.5pt]
+        ([xshift=2.45cm, yshift=-9.35cm]current page.north west)
+        rectangle
+        ([xshift=-2.45cm, yshift=-13.05cm]current page.north east);
+    \node[text width=0.73\paperwidth, align=center]
+        at ([yshift=-11.2cm]current page.north) {
+        {\large\bfseries\color{darkGray}
+            Développement d'un Site Web Institutionnel Trilingue\\[4pt]
+            pour l'Association Tifaouine}\\[6pt]
+        {\small\color{mediumGray}\itshape
+            «~Agir ensemble pour l'avenir rural~»}
+    };
+
+    %── DATE DE SOUTENANCE ─────────────────────────────────────────────────────
+    \node[anchor=north, font=\normalsize\bfseries\color{darkGray}]
+        at ([yshift=-15.1cm]current page.north) {
+        Soutenu le~:\quad ......\,/\,......\,/\,2026
+    };
+
+    %── BOÎTE RÉALISÉ PAR / ENCADRÉ PAR (double bordure) ──────────────────────
+    \draw[primaryBlue, line width=1.8pt]
+        ([xshift=1.8cm, yshift=-16.5cm]current page.north west)
+        rectangle
+        ([xshift=-1.8cm, yshift=-21.5cm]current page.north east);
+    \draw[primaryBlue!30, line width=0.5pt]
+        ([xshift=2.05cm, yshift=-16.75cm]current page.north west)
+        rectangle
+        ([xshift=-2.05cm, yshift=-21.25cm]current page.north east);
+
+    %── Colonne GAUCHE : Réalisé par ───────────────────────────────────────────
+    \node[anchor=north west, text width=0.42\paperwidth]
+        at ([xshift=2.2cm, yshift=-16.9cm]current page.north west) {
+        \underline{\textbf{\color{deepBlue}Réalisé par~:}}\\[5pt]
+        {\small
+        \textcolor{primaryBlue}{--}\ Omar BOUHADDACH\,(CCN)\\[3pt]
+        \textcolor{primaryBlue}{--}\ Haddou OUTALHA \,(GLSID)\\[3pt]
+        \textcolor{primaryBlue}{--}\ Yassine MALAL \,(GLSID)\\[3pt]
+        \textcolor{primaryBlue}{--}\ Zakaria CHARGAOUI \,(BDCC)}
+    };
+
+    %── Colonne DROITE : Encadré par ───────────────────────────────────────────
+    \node[anchor=north east, text width=0.38\paperwidth]
+        at ([xshift=-2.2cm, yshift=-16.9cm]current page.north east) {
+        \underline{\textbf{\color{deepBlue}Encadré par~:}}\\[5pt]
+        {\small
+        \textcolor{primaryBlue}{--}\ Bousselham Abdelmajid\\[3pt]
+        \textcolor{primaryBlue}{--}\ Belafhaili Mohamed}
+    };
+
+    %── ANNÉE UNIVERSITAIRE ────────────────────────────────────────────────────
+    \node[anchor=north, font=\large\bfseries\color{darkGray}]
+        at ([yshift=-24.5cm]current page.north) {
+        Année Universitaire~: 2025-2026
+    };
+
+    %── PIED DE PAGE (primaryBlue — harmonisé avec le projet) ──────────────────
+    \fill[premiumGold]
+        ([yshift=1.55cm]current page.south west)
+        rectangle ([yshift=1.67cm]current page.south east);
+    \fill[primaryBlue]
+        (current page.south west)
+        rectangle ([yshift=1.55cm]current page.south east);
+    \node[white, font=\fontsize{6.5}{9}\selectfont, align=center]
+        at ([yshift=0.77cm]current page.south) {
+        \textbf{ENSET, Avenue Hassan II - B.P. 159 - Mohammedia - Maroc}\\[2pt]
+        $\bigtriangleup$\;05 23 32 22 20\;/\;05 23 32 35 30
+        \;--\;\underline{Fax} : 05 23 32 25 46
+        \;--\;Site Web : \underline{www.enset-media.ac.ma}\\[2pt]
+        E-Mail : contact@enset-media.ac.ma
+    };
+
+\end{tikzpicture}
+
+\end{titlepage}
+
+
+
+% ============================================================================
+% PAGE BLANCHE (Pour impression recto-verso)
+% ============================================================================
+
+\newpage
+\thispagestyle{empty}
+\mbox{}
+
+% ============================================================================
+% REMERCIEMENTS
+% ============================================================================
+
+\newpage
+\thispagestyle{plain}
+
+\begin{tikzpicture}[remember picture, overlay]
+    % Page corner decorations for a "Premium" look
+    \fill[primaryBlue!10] (current page.north east) circle (4cm);
+    \fill[primaryBlue!5] (current page.south west) circle (6cm);
+    
+    % Header design
+    \node[anchor=north west, xshift=2.5cm, yshift=-2.5cm] at (current page.north west) {
+        \begin{tikzpicture}
+            % Main Header Bar
+            \shade[left color=deepBlue, right color=primaryBlue] (0,0) rectangle (0.7\textwidth, 1.2);
+            % Accent line (Gold)
+            \fill[premiumGold] (0,-0.1) rectangle (0.7\textwidth, -0.05);
+            % Title
+            \node[white, anchor=west] at (0.3, 0.6) {\large\bfseries\scshape REMERCIEMENTS};
+        \end{tikzpicture}
+    };
+\end{tikzpicture}
+
+\vspace{2.5cm}
+
+\phantomsection
+\addcontentsline{toc}{chapter}{Remerciements}
+
+\begin{spacing}{1.5}
+\begin{minipage}{0.9\textwidth}
+
+Au terme de ce travail, il nous est agréable d'adresser nos sincères remerciements à l'ensemble des personnes qui ont contribué, de près ou de loin, à l'aboutissement de ce projet professionnel.
+
+\vspace{0.5cm}
+Nous tenons, en premier lieu, à exprimer notre profonde et respectueuse gratitude envers nos \textbf{encadrants pédagogiques} à l'\textbf{École Normale Supérieure de l'Enseignement Technique de Mohammedia (ENSET)}, pour la qualité de leur encadrement, la pertinence de leurs orientations scientifiques et la rigueur de leurs conseils méthodologiques. 
+
+\vspace{0.5cm}
+Nous réservons une mention toute particulière à \textbf{Madame Zahra Tazarine}, dont la disponibilité exemplaire, l'écoute bienveillante et l'implication sincère ont largement facilité notre travail. Sa capacité à nous guider avec clarté et à nous fournir les informations nécessaires au moment opportun a été déterminante dans la bonne marche de notre projet. 
+
+\vspace{0.5cm}
+Nous adressons également nos vifs remerciements à l'ensemble des \textbf{membres de l'Association Tifaouine}, qui ont fait preuve d'une disponibilité remarquable et d'un accueil chaleureux tout au long de notre collaboration. 
+
+\vspace{0.5cm}
+Enfin, nous souhaitons remercier nos familles et l'ensemble de nos proches pour leur soutien indéfectible et leurs encouragements constants, qui ont constitué une source d'énergie et de motivation inestimable tout au long de ce parcours académique.
+\vspace{0.5cm}
+\begin{flushright}
+\textit{\textcolor{mediumGray}{L'équipe de développement}}
+\end{flushright}
+
+\end{minipage}
+\end{spacing}
+
+\newpage
+\thispagestyle{empty}
+\mbox{}
+
+% ============================================================================
+% RÉSUMÉ (DESIGN EXTRA-PROFESSIONNEL)
+% ============================================================================
+
+\newpage
+\thispagestyle{plain}
+
+\begin{tikzpicture}[remember picture, overlay]
+    % Page corner decorations for a "Premium" look
+    \fill[primaryBlue!10] (current page.north east) circle (4cm);
+    \fill[primaryBlue!5] (current page.south west) circle (6cm);
+    
+    % Header design
+    \node[anchor=north west, xshift=2.5cm, yshift=-2.5cm] at (current page.north west) {
+        \begin{tikzpicture}
+            % Main Header Bar
+            \shade[left color=deepBlue, right color=primaryBlue] (0,0) rectangle (0.7\textwidth, 1.2);
+            % Accent line (Gold)
+            \fill[premiumGold] (0,-0.1) rectangle (0.7\textwidth, -0.05);
+            % Title
+            \node[white, anchor=west] at (0.3, 0.6) {\large\bfseries\scshape RÉSUMÉ};
+        \end{tikzpicture}
+    };
+\end{tikzpicture}
+
+\vspace{2.5cm}
+
+\begin{spacing}{1.45}
+\begin{minipage}{0.9\textwidth}
+
+    {\large\bfseries\color{deepBlue} Contexte et Problématique}\\[8pt]
+    Le présent rapport rend compte du développement d'une plateforme web institutionnelle trilingue pour le compte de l'\textbf{Association Tifaouine}, organisation à but non lucratif œuvrant pour le développement rural durable au Maroc. Face à l'absence de présence numérique structurée et à une gestion opérationnelle entièrement manuelle, l'association se trouvait dans l'impossibilité d'assurer une communication efficace avec ses donateurs, ses bénévoles et ses partenaires institutionnels. 
+
+    \vspace{0.45cm}
+
+    {\large\bfseries\color{deepBlue} Fonctionnalités et Résultats}\\[8pt]
+    La plateforme intègre plusieurs modules fonctionnels clés : gestion des membres, des bénévoles, des dons (financiers et matériels), des projets associatifs, des événements, des partenariats, ainsi qu'une bibliothèque de ressources numériques. Un \textbf{tableau de bord administrateur} centralise toutes les données et génère des notifications en temps réel. L'accent a été mis sur la \textbf{simplicité d'utilisation} et l'\textbf{accessibilité WCAG 2.1} pour garantir une adoption rapide par tous les profils d'utilisateurs.
+
+    \vspace{0.45cm}
+
+    {\large\bfseries\color{deepBlue} Qualité et Bonnes Pratiques}\\[8pt]
+    La conception du projet a respecté les standards de l'ingénierie logicielle : architecture \textbf{MVC}, séparation stricte des couches métier et de présentation, validation des entrées, et gestion centralisée des erreurs. Une attention particulière a été portée au \textbf{référencement naturel (SEO)}, à la performance (lazy loading, optimisation des requêtes) et à la \textbf{sécurité} de l'ensemble du système.
+
+\end{minipage}
+\end{spacing}
+
+\vfill
+
+% Keywords section as "Modern Tags"
+\begin{center}
+    \begin{tikzpicture}
+        \node[
+            rectangle, 
+            rounded corners=12pt, 
+            fill=white, 
+            draw=lightBlue, 
+            line width=1pt,
+            text width=0.88\textwidth, 
+            inner sep=15pt,
+            drop shadow={shadow xshift=0pt, shadow yshift=-4pt, opacity=0.15}
+        ] {
+            \justifying
+            \textbf{\textcolor{deepBlue}{Mots-clés}} \hspace{0.5cm} 
+            \tikz[baseline=-0.6ex] \node[fill=primaryBlue!10, text=primaryBlue, rounded corners=3pt, inner sep=3pt] {\tiny React};
+            \tikz[baseline=-0.6ex] \node[fill=primaryBlue!10, text=primaryBlue, rounded corners=3pt, inner sep=3pt] {\tiny Node.js};
+            \tikz[baseline=-0.6ex] \node[fill=primaryBlue!10, text=primaryBlue, rounded corners=3pt, inner sep=3pt] {\tiny PostgreSQL};
+            \tikz[baseline=-0.6ex] \node[fill=primaryBlue!10, text=primaryBlue, rounded corners=3pt, inner sep=3pt] {\tiny API REST};
+            \tikz[baseline=-0.6ex] \node[fill=primaryBlue!10, text=primaryBlue, rounded corners=3pt, inner sep=3pt] {\tiny SPA};
+            \tikz[baseline=-0.6ex] \node[fill=premiumGold!20, text=secondaryGold, rounded corners=3pt, inner sep=3pt] {\tiny Association};
+            \tikz[baseline=-0.6ex] \node[fill=premiumGold!20, text=secondaryGold, rounded corners=3pt, inner sep=3pt] {\tiny Rural};
+            \tikz[baseline=-0.6ex] \node[fill=premiumGold!20, text=secondaryGold, rounded corners=3pt, inner sep=3pt] {\tiny ONG};
+            \tikz[baseline=-0.6ex] \node[fill=primaryBlue!10, text=primaryBlue, rounded corners=3pt, inner sep=3pt] {\tiny Trilingue};
+        };
+    \end{tikzpicture}
+\end{center}
+
+
+% ============================================================================
+% DESIGN PREMIUM DES TABLES (TOC, LOF, LOT)
+% ============================================================================
+\renewcommand{\contentsname}{}
+\renewcommand{\listfigurename}{}
+\renewcommand{\listtablename}{}
+
+% --- Polices et couleurs ---
+\renewcommand{\cftchapfont}{\large\bfseries\color{deepBlue}}
+\renewcommand{\cftsecfont}{\normalsize\color{primaryBlue}}
+\renewcommand{\cftsubsecfont}{\small\color{darkGray}}
+\renewcommand{\cftchapleader}{\color{premiumGold}\cftdotfill{2}}
+\renewcommand{\cftsecleader}{\color{mediumGray}\cftdotfill{3}}
+\renewcommand{\cftsubsecleader}{\color{mediumGray}\cftdotfill{4}}
+\renewcommand{\cftchappagefont}{\bfseries\color{deepBlue}}
+\renewcommand{\cftsecpagefont}{\color{primaryBlue}}
+\renewcommand{\cftsubsecpagefont}{\small\color{darkGray}}
+\renewcommand{\cftfigfont}{\normalsize\color{primaryBlue}}
+\renewcommand{\cfttabfont}{\normalsize\color{primaryBlue}}
+\renewcommand{\cftfigpagefont}{\color{primaryBlue}}
+\renewcommand{\cfttabpagefont}{\color{primaryBlue}}
+\renewcommand{\cftfigleader}{\color{mediumGray}\cftdotfill{3}}
+\renewcommand{\cfttableader}{\color{mediumGray}\cftdotfill{3}}
+% --- Espacements ---
+\setlength{\cftbeforechapskip}{1.8ex}
+\setlength{\cftbeforesecskip}{0.6ex}
+\setlength{\cftbeforesubsecskip}{0.3ex}
+\setlength{\cftbeforefigskip}{0.6ex}
+\setlength{\cftbeforetabskip}{0.6ex}
+% --- Indentation ---
+\setlength{\cftchapindent}{0pt}
+\setlength{\cftsecindent}{1.5em}
+\setlength{\cftsubsecindent}{3.5em}
+
+% ============================================================================
+% TABLE DES MATIÈRES - PAGE AVEC DESIGN PREMIUM
+% ============================================================================
+\newpage
+\thispagestyle{plain}
+\begin{tikzpicture}[remember picture, overlay]
+    \fill[primaryBlue!10] (current page.north east) circle (4cm);
+    \fill[primaryBlue!5] (current page.south west) circle (6cm);
+    \node[anchor=north west, xshift=2.5cm, yshift=-2.5cm] at (current page.north west) {
+        \begin{tikzpicture}
+            \shade[left color=deepBlue, right color=primaryBlue] (0,0) rectangle (0.7\textwidth, 1.2);
+            \fill[premiumGold] (0,-0.1) rectangle (0.7\textwidth, -0.05);
+            \node[white, anchor=west] at (0.3, 0.6) {\large\bfseries\scshape TABLE DES MATIÈRES};
+        \end{tikzpicture}
+    };
+\end{tikzpicture}
+\vspace{2.5cm}
+\tableofcontents
+
+% ============================================================================
+% LISTE DES ABRÉVIATIONS - PAGE AVEC DESIGN PREMIUM
+% ============================================================================
+\newpage
+\thispagestyle{plain}
+\phantomsection
+\addcontentsline{toc}{chapter}{Liste des abréviations}
+\begin{tikzpicture}[remember picture, overlay]
+    \fill[primaryBlue!10] (current page.north east) circle (4cm);
+    \fill[primaryBlue!5] (current page.south west) circle (6cm);
+    \node[anchor=north west, xshift=2.5cm, yshift=-2.5cm] at (current page.north west) {
+        \begin{tikzpicture}
+            \shade[left color=deepBlue, right color=primaryBlue] (0,0) rectangle (0.7\textwidth, 1.2);
+            \fill[premiumGold] (0,-0.1) rectangle (0.7\textwidth, -0.05);
+            \node[white, anchor=west] at (0.3, 0.6) {\large\bfseries\scshape LISTE DES ABRÉVIATIONS};
+        \end{tikzpicture}
+    };
+\end{tikzpicture}
+\vspace{2.7cm}
+
+\begin{center}
+\begin{tikzpicture}
+    \node[
+        rectangle,
+        rounded corners=8pt,
+        draw=primaryBlue!70,
+        line width=0.9pt,
+        fill=lightGray,
+        text width=0.88\textwidth,
+        inner sep=14pt,
+        drop shadow
+    ] {
+        \renewcommand{\arraystretch}{1.25}
+        \begin{tabular}{>{\raggedright\arraybackslash}p{0.22\textwidth}>{\raggedright\arraybackslash}p{0.58\textwidth}}
+            \rowcolor{primaryBlue}
+            \textcolor{white}{\textbf{Abréviation}} & \textcolor{white}{\textbf{Signification}} \\
+            \\
+            \abbrevrow{API}{Application Programming Interface}
+            \abbrevrow{BDD}{Base de données}
+            \abbrevrow{CRUD}{Create, Read, Update, Delete}
+            \abbrevrow{CSS}{Cascading Style Sheets}
+            \abbrevrow{HTML}{HyperText Markup Language}
+            \abbrevrow{HTTP}{HyperText Transfer Protocol}
+            \abbrevrow{JWT}{JSON Web Token}
+            \abbrevrow{MVC}{Modèle--Vue--Contrôleur}
+            \abbrevrow{ORM}{Object-Relational Mapping}
+            \abbrevrow{REST}{Representational State Transfer}
+            \abbrevrow{SGBD}{Système de gestion de base de données}
+            \abbrevrow{SQL}{Structured Query Language}
+            \abbrevrow{UI}{User Interface}
+            \abbrevrow{UX}{User Experience}
+            \abbrevrow{URL}{Uniform Resource Locator}
+        \end{tabular}
+    };
+\end{tikzpicture}
+\end{center}
+
+% ============================================================================
+% LISTE DES FIGURES - PAGE AVEC DESIGN PREMIUM
+% ============================================================================
+\newpage
+\thispagestyle{plain}
+\phantomsection
+\addcontentsline{toc}{chapter}{Liste des figures}
+\begin{tikzpicture}[remember picture, overlay]
+    \fill[primaryBlue!10] (current page.north east) circle (4cm);
+    \fill[primaryBlue!5] (current page.south west) circle (6cm);
+    \node[anchor=north west, xshift=2.5cm, yshift=-2.5cm] at (current page.north west) {
+        \begin{tikzpicture}
+            \shade[left color=deepBlue, right color=primaryBlue] (0,0) rectangle (0.7\textwidth, 1.2);
+            \fill[premiumGold] (0,-0.1) rectangle (0.7\textwidth, -0.05);
+            \node[white, anchor=west] at (0.3, 0.6) {\large\bfseries\scshape LISTE DES FIGURES};
+        \end{tikzpicture}
+    };
+\end{tikzpicture}
+\vspace{2.5cm}
+\listoffigures
+
+% ============================================================================
+% LISTE DES TABLEAUX - PAGE AVEC DESIGN PREMIUM
+% ============================================================================
+\newpage
+\thispagestyle{plain}
+\phantomsection
+\addcontentsline{toc}{chapter}{Liste des tableaux}
+\begin{tikzpicture}[remember picture, overlay]
+    \fill[primaryBlue!10] (current page.north east) circle (4cm);
+    \fill[primaryBlue!5] (current page.south west) circle (6cm);
+    \node[anchor=north west, xshift=2.5cm, yshift=-2.5cm] at (current page.north west) {
+        \begin{tikzpicture}
+            \shade[left color=deepBlue, right color=primaryBlue] (0,0) rectangle (0.7\textwidth, 1.2);
+            \fill[premiumGold] (0,-0.1) rectangle (0.7\textwidth, -0.05);
+            \node[white, anchor=west] at (0.3, 0.6) {\large\bfseries\scshape LISTE DES TABLEAUX};
+        \end{tikzpicture}
+    };
+\end{tikzpicture}
+\vspace{2.5cm}
+\listoftables
+
+\newpage
+% Passage à la numérotation arabe pour le contenu principal
+\pagenumbering{arabic}
+
+% ============================================================================
+% CHAPITRE 1 : PRÉSENTATION GÉNÉRALE
+% ============================================================================
+\chapter{Présentation Générale}
+
+% ---------------------------------------------------------------------------
+% Intro du chapitre — encadré premium avec bordure latérale colorée
+% ---------------------------------------------------------------------------
+\vspace{0.3cm}
+\noindent
+\begin{tikzpicture}
+    \draw[primaryBlue, line width=4pt] (0,0) -- (0,-2.6);
+    \node[anchor=north west, text width=0.88\textwidth, inner sep=10pt] at (0.3, 0) {
+        \color{darkGray}\small\setstretch{1.4}
+        Ce premier chapitre pose les fondements conceptuels et contextuels du projet.
+        Il présente l'Association Tifaouine, son cadre de travail et ses domaines d'intervention,
+        puis analyse la situation existante ayant motivé la transformation numérique.
+        Enfin, il expose la solution retenue et détaille les besoins fonctionnels et techniques
+        identifiés lors des phases d'analyse et de conception.
+    };
+\end{tikzpicture}
+
+
+% ===========================================================================
+\section{Présentation de l'Association Tifaouine}
+% ===========================================================================
+
+\subsection{Cadre Général et Contexte de Création}
+
+\begin{wrapfigure}{r}{0.22\textwidth}
+    \vspace{-0.4cm}
+    \centering
+    \begin{tikzpicture}
+        \node[
+            circle, draw=premiumGold, line width=1.5pt,
+            inner sep=4pt,
+            fill=white,
+            drop shadow={shadow xshift=0pt, shadow yshift=-2pt, opacity=0.15}
+        ]{
+            \includegraphics[width=0.18\textwidth, keepaspectratio]{IMG/logo-prev.png}
+        };
+    \end{tikzpicture}
+    \vspace{-0.4cm}
+\end{wrapfigure}
+
+L'\textbf{Association Tifaouine} est une organisation non gouvernementale (ONG) marocaine à but non lucratif, fondée avec pour mission principale de contribuer au développement socio-économique durable des communautés rurales. Son nom, \textit{Tifaouine}, reflète l'identité culturelle et la proximité avec le monde rural, portant avec lui une promesse d'action collective et de solidarité.
+
+Enracinée dans des valeurs d'équité, de solidarité et de développement humain, l'association s'est construite sur la conviction que l'amélioration des conditions de vie des populations rurales passe par une approche intégrée, conjuguant éducation, santé, accès aux ressources naturelles et valorisation du tissu local. Dans un contexte marocain marqué par des disparités persistantes entre zones urbaines et rurales, le rôle de Tifaouine revêt une importance capitale.
+
+\vspace{0.4cm}
+\infobox{Mission Fondatrice}{\textit{« Promouvoir le développement durable et inclusif des communautés rurales marocaines en fédérant les ressources humaines, matérielles et financières au service de l'intérêt général. »}}
+
+\vspace{0.4cm}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.80\textwidth, keepaspectratio]{IMG/colage.jpeg}
+    \caption{Association Tifaouine}
+    \label{fig:energie solaire}
+\end{figure}
+\vspace{0.4cm}
+
+
+\subsection{Domaines d'Intervention et Activités}
+
+L'association structure son action autour de quatre axes stratégiques majeurs, couvrant les besoins essentiels des populations cibles :
+
+\begin{itemize}[label=\textcolor{primaryBlue}{\textbf{$\triangleright$}}, leftmargin=1.5cm, itemsep=0.4cm]
+    
+    \item \textbf{Éducation et Formation :}
+    La lutte contre l'analphabétisme et le décrochage scolaire figure parmi les priorités de Tifaouine. L'association organise des sessions de soutien scolaire, des ateliers de formation professionnelle et des actions de sensibilisation à destination des familles rurales. Elle œuvre également pour faciliter l'accès des filles à l'enseignement, facteur clé de développement humain.
+
+    \item \textbf{Santé Communautaire :}
+    Des caravanes médicales sont organisées régulièrement dans les zones enclavées, mettant à disposition des consultations gratuites en médecine générale, ophtalmologie et dentisterie. Des campagnes de vaccination, d'hygiène et de sensibilisation aux maladies chroniques complètent ce volet sanitaire, contribuant significativement à l'amélioration des indicateurs de santé locaux.
+
+    \item \textbf{Accès à l'Eau Potable et Assainissement :}
+    L'accès à l'eau est un défi majeur dans les milieux ruraux marocains. Tifaouine intervient sur le terrain par des projets de forage de puits, de réhabilitation de systèmes d'adduction d'eau et d'installation de bornes-fontaines. Ces interventions améliorent directement la qualité de vie des habitants et réduisent les corvées d'eau, notamment pour les femmes et les enfants.
+
+    \item \textbf{Développement Agricole et Économique :}
+    L'association accompagne les agriculteurs locaux dans la modernisation de leurs pratiques agricoles, le renforcement des coopératives et l'accès aux marchés. Elle soutient également des projets générateurs de revenus, notamment en faveur des femmes rurales, contribuant ainsi à l'autonomisation économique des communautés.
+
+\end{itemize}
+
+\vspace{0.4cm}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.65\textwidth, keepaspectratio]{IMG/domaines.jpeg}
+    \caption{Association Tifaouine}
+    \label{fig: Domaines d’intervention de l’Association Tifaouine.}
+\end{figure}
+\vspace{0.4cm}
+
+\begin{center}
+\begin{tikzpicture}
+    \node[
+        rectangle, rounded corners=10pt,
+        fill=lightBlue!60, draw=premiumGold, line width=1.2pt,
+        text width=0.88\textwidth, inner sep=18pt,
+        drop shadow={shadow xshift=0pt, shadow yshift=-3pt, opacity=0.12}
+    ]{
+        \begin{minipage}{0.06\textwidth}
+            \centering
+            \textcolor{premiumGold}{\Large\textbf{$\star$}}\\[4pt]
+            \textcolor{premiumGold}{\Large\textbf{$\star$}}\\[4pt]
+            \textcolor{premiumGold}{\Large\textbf{$\star$}}
+        \end{minipage}
+        \hspace{0.02\textwidth}
+        \begin{minipage}{0.82\textwidth}
+            {\normalsize\bfseries\color{deepBlue} Partenariats et Réseaux de l'Association}\\[6pt]
+            {\small\color{darkGray}
+            Tifaouine s'inscrit dans un réseau partenarial solide, incluant des \textbf{collectivités locales}, des \textbf{organisations internationales de développement} (ONG, institutions de coopération bilatérale) ainsi que des \textbf{entreprises privées} engagées dans la responsabilité sociale (RSE). Ces collaborations renforcent la capacité d'intervention de l'association et garantissent la pérennité de ses projets sur le terrain.
+            }
+        \end{minipage}
+    };
+\end{tikzpicture}
+\end{center}
+
+\vspace{0.5cm}
+\noindent\textcolor{primaryBlue!25}{\rule{\textwidth}{0.5pt}}
+\vspace{0.4cm}
+
+
+% ===========================================================================
+\section{Analyse de la Situation Actuelle et Identification des Besoins}
+% ===========================================================================
+
+\subsection{Diagnostic de la Situation Existante}
+
+Avant le démarrage de ce projet, l'association Tifaouine fonctionnait sans outil numérique central. L'ensemble des processus administratifs, communicationnels et opérationnels reposait sur des méthodes manuelles ou des outils bureautiques déconnectés (tableurs, courriers électroniques, registres papier). Cette situation engendrait des frictions importantes à plusieurs niveaux de l'organisation.
+
+L'analyse des besoins, conduite à travers des entretiens avec les responsables et membres de l'association, a permis d'identifier les problématiques suivantes :
+
+\begin{itemize}[label=\textcolor{secondaryGold}{\textbf{$\blacksquare$}}, leftmargin=1.5cm, itemsep=0.35cm]
+
+    \item \textbf{Absence de vitrine numérique institutionnelle :}
+    Tifaouine ne disposait d'aucun site web ou portail officiel permettant de présenter ses activités, ses projets et ses réalisations au grand public. Cette lacune limitait considérablement sa visibilité, sa crédibilité auprès des partenaires potentiels et sa capacité à attirer des donateurs et des bénévoles.
+
+    \item \textbf{Gestion fragmentée et non centralisée :}
+    Le suivi des membres, des bénévoles, des dons et des projets s'effectuait de manière décentralisée, sans système unifié. Les données étaient dispersées entre différents responsables, rendant difficile toute vision globale de l'activité associative et augmentant les risques d'erreurs ou de pertes d'informations.
+
+    \item \textbf{Collecte des dons artisanale :}
+    Le processus de collecte de dons (financiers et matériels) reposait sur des démarches informelles, sans traçabilité numérique ni système de suivi en temps réel. Cela constituait un frein important à la confiance des donateurs et à la transparence vis-à-vis des parties prenantes.
+
+    \item \textbf{Communication limitée et non structurée :}
+    Les échanges avec les partenaires, les donateurs et le public général se faisaient principalement par téléphone ou courriel, sans canal unifié, ce qui nuisait à la cohérence et à la réactivité de la communication institutionnelle.
+
+    \item \textbf{Manque d'outils de reporting et de suivi :}
+    Les responsables de l'association ne disposaient d'aucun tableau de bord leur permettant de suivre en temps réel l'avancement des projets, l'état des dons ou les statistiques d'adhésion. Cette absence d'indicateurs rendait la prise de décision difficile et peu éclairée.
+
+\end{itemize}
+
+\vspace{0.5cm}
+
+% Tableau de synthèse de la situation avant/après
+\begin{center}
+\begin{tikzpicture}
+    \node[
+        rectangle, rounded corners=8pt,
+        fill=white, draw=primaryBlue!30, line width=0.8pt,
+        inner sep=0pt,
+        drop shadow={shadow xshift=0pt, shadow yshift=-3pt, opacity=0.1}
+    ]{
+        \begin{tabular}{>{\bfseries\color{deepBlue}}p{0.22\textwidth} >{\color{darkGray}\small}p{0.3\textwidth} >{\color{darkGray}\small}p{0.3\textwidth}}
+            \rowcolor{deepBlue!90}
+            \textcolor{white}{\textbf{Axe}} & \textcolor{white}{\textbf{Situation Avant}} & \textcolor{white}{\textbf{Objectif Visé}} \\
+            \rowcolor{lightBlue!50}
+            Visibilité & Inexistante (pas de présence web) & Plateforme institutionnelle trilingue \\
+            \rowcolor{white}
+            Gestion des dons & Manuelle, non traçable & Module de suivi transparent \\
+            \rowcolor{lightBlue!50}
+            Gestion membres & Registres papier & Base de données centralisée \\
+            \rowcolor{white}
+            Communication & E-mail / Téléphone & Formulaire de contact intégré \\
+            \rowcolor{lightBlue!50}
+            Reporting & Inexistant & Tableau de bord administrateur \\
+        \end{tabular}
+    };
+\end{tikzpicture}
+\captionof{table}{Synthèse comparative de la situation avant et après la transformation numérique}
+\end{center}
+
+\vspace{0.6cm}
+
+% ===========================================================================
+\section{Présentation de la Solution Proposée}
+% ===========================================================================
+
+\subsection{Vision Globale de la Solution}
+
+Face aux lacunes identifiées lors du diagnostic, l'équipe de développement a conçu une solution numérique globale, cohérente et évolutive. Cette solution s'articule autour d'une \textbf{plateforme web institutionnelle trilingue} (Français / Arabe / Anglais), développée selon les standards modernes du génie logiciel, et visant à couvrir l'intégralité des besoins opérationnels et communicationnels de l'association.
+
+La démarche adoptée s'inscrit dans une approche de \textbf{transformation numérique progressive}, respectueuse de la culture organisationnelle de l'association et conçue pour être adoptée rapidement par des utilisateurs non nécessairement experts en informatique.
+
+\vspace{0.5cm}
+
+\subsection{Axes de la Transformation}
+
+\begin{enumerate}[label=\textcolor{primaryBlue}{\textbf{\Alph*.}}, leftmargin=1.5cm, itemsep=0.5cm]
+
+    \item \textbf{Développement d'une Plateforme Web Institutionnelle (SPA) :}
+    La solution centrale est un site web moderne de type \textit{Single Page Application} (SPA), développé avec \textbf{React 19} pour le front-end et \textbf{Node.js / Express.js} pour le back-end. Il offre une expérience utilisateur fluide, rapide et responsive, adaptée aussi bien aux ordinateurs qu'aux smartphones. Cette plateforme représente la vitrine numérique officielle de l'association et le hub central de toutes ses activités en ligne.
+
+    \item \textbf{Réorganisation et Digitalisation des Processus Internes :}
+    Au-delà du site public, un espace d'administration sécurisé permet aux responsables de l'association de gérer l'ensemble des données : membres, bénévoles, dons, projets, événements, partenariats et ressources documentaires. Cette centralisation garantit une cohérence des informations, une traçabilité totale et un gain de temps opérationnel considérable.
+
+    \item \textbf{Modernisation de l'Identité Visuelle :}
+    Conjointement au développement technique, l'équipe a procédé à une \textbf{refonte du logo} de l'association. Le nouveau logo, vectorisé et déclinable sur tous les supports (web, impression, réseaux sociaux), renforce l'image de marque de Tifaouine et lui confère une identité visuelle moderne, mémorable et professionnelle.
+
+\end{enumerate}
+
+\vspace{0.5cm}
+\infobox{Valeur Ajoutée Centrale}{La plateforme développée ne se limite pas à un simple site vitrine. Elle constitue un véritable \textbf{écosystème numérique associatif}, intégrant des outils de gestion, de communication et de reporting en un seul point d'accès sécurisé, accessible depuis n'importe quel appareil connecté.}
+\vspace{0.5cm}
+
+% ===========================================================================
+\section{Détection et Spécification des Besoins}
+% ===========================================================================
+
+\subsection{Besoins Fonctionnels}
+
+Les besoins fonctionnels ont été identifiés lors de séances de travail collaboratif avec les responsables de l'association. Ils représentent l'ensemble des fonctionnalités que le système doit impérativement fournir pour répondre aux attentes des utilisateurs finaux. Une attention particulière a été portée à la \textbf{simplicité d'utilisation} et à l'\textbf{expérience utilisateur (UX)}, facteur déterminant pour garantir une adoption réelle et durable de la solution :
+
+\begin{itemize}[label=\textcolor{primaryBlue}{$\bullet$}, leftmargin=1.5cm, itemsep=0.35cm]
+
+    \item \textbf{Gestion des Utilisateurs et des Accès :}
+    Le système distingue plusieurs profils d'utilisateurs (Administrateur, Membre, Bénévole) avec des droits d'accès spécifiques. L'inscription, la connexion sécurisée et la gestion des profils constituent le socle de l'espace privé de la plateforme.
+
+    \item \textbf{Gestion des Projets et Événements :}
+    Les responsables peuvent créer, éditer et publier des fiches projets détaillées (objectifs, domaine d'intervention, avancement, partenaires) ainsi que des événements associatifs. Le public accède à ces informations en lecture seule, renforçant la transparence de l'association.
+
+    \item \textbf{Gestion des Dons Financiers et Matériels :}
+    Un module dédié permet d'enregistrer, de suivre et de catégoriser les dons reçus. Les donateurs peuvent soumettre une demande de don via la plateforme, et les administrateurs valident et archivent ces contributions dans un registre numérique fiable et consultable.
+
+    \item \textbf{Gestion des Domaines d'Intervention et des Partenariats :}
+    Chaque domaine d'action (eau, agriculture, santé, éducation) est documenté et présenté de manière structurée. Les partenaires institutionnels et privés sont répertoriés avec leurs logos, et leurs contributions aux projets sont mises en évidence pour valoriser ces collaborations.
+
+    \item \textbf{Bibliothèque Numérique de Ressources :}
+    La plateforme intègre un espace documentaire permettant le téléchargement et la consultation de documents officiels (rapports d'activité, brochures, guides, études). Chaque document est accompagné d'une image de couverture et de métadonnées descriptives.
+
+    \item \textbf{Module de Communication et Formulaire de Contact :}
+    Un formulaire de contact public permet aux visiteurs d'entrer en relation directe avec l'association. Les messages reçus sont stockés en base de données et génèrent une notification pour les administrateurs, garantissant une réactivité et un suivi optimal.
+
+    \item \textbf{Système de Notifications Administrateur :}
+    Un mécanisme de notification interne alerte les administrateurs de toute nouvelle activité significative : réception d'un don, inscription d'un membre ou d'un bénévole, nouveau message de contact. Cela assure une gestion proactive et réactive de l'association.
+
+    \item \textbf{Statistiques et Tableau de Bord :}
+    L'interface d'administration intègre un tableau de bord synthétique présentant les indicateurs clés : nombre de membres actifs, total des dons collectés, projets en cours, événements à venir. Ces données facilitent le pilotage stratégique de l'association.
+
+\end{itemize}
+
+\vspace{0.6cm}
+
+\subsection{Besoins Techniques (Non Fonctionnels)}
+
+Les besoins non fonctionnels définissent les qualités systémiques que la plateforme doit satisfaire indépendamment de ses fonctionnalités métier. Ces contraintes sont essentielles pour garantir la robustesse, la pérennité et la fiabilité de la solution :
+
+\begin{itemize}[label=\textcolor{primaryBlue}{$\bullet$}, leftmargin=1.5cm, itemsep=0.35cm]
+
+    \item \textbf{Performance et Rapidité :}
+    L'architecture SPA (Single Page Application) assure des transitions de pages instantanées sans rechargement complet. L'optimisation des requêtes SQL, le \textit{lazy loading} des composants React et la compression des assets garantissent des temps de chargement inférieurs aux standards de performance web recommandés par Google.
+
+    \item \textbf{Sécurité et Protection des Données :}
+    La sécurité est intégrée à chaque couche de l'architecture. L'authentification est basée sur des tokens \textbf{JWT} (JSON Web Tokens) avec mécanisme de rafraîchissement. Les mots de passe sont hachés avec \textbf{bcrypt}. Les routes d'administration sont protégées par des \textit{middlewares} de vérification des rôles. Les entrées utilisateurs sont validées et assainies pour prévenir les injections SQL et les attaques XSS.
+
+    \item \textbf{Maintenabilité et Évolutivité :}
+    Le code source est organisé selon le patron d'architecture \textbf{MVC} (Modèle-Vue-Contrôleur), avec une séparation stricte des responsabilités. L'utilisation de l'ORM \textbf{Sequelize} et d'un système de migrations versionnées garantit une gestion maîtrisée de l'évolution du schéma de base de données. La structure modulaire du front-end (composants React réutilisables) facilite les futures extensions fonctionnelles.
+
+    \item \textbf{Adoptabilité et Accessibilité :}
+    L'interface est entièrement \textit{responsive}, s'adaptant automatiquement à toutes les tailles d'écran (mobile, tablette, bureau). Le support natif du trilinguisme \textbf{Français / Arabe / Anglais}, avec gestion de la direction de texte \textbf{RTL} (Right-To-Left) pour l'arabe, permet de toucher un public aussi large que possible. Le respect des recommandations \textbf{WCAG 2.1} assure l'accessibilité aux personnes en situation de handicap.
+
+    \item \textbf{Disponibilité et Robustesse :}
+    La plateforme est conçue pour fonctionner de manière continue et fiable. Les erreurs serveur sont capturées et journalisées de manière centralisée pour faciliter le débogage. Une gestion des exceptions propre et une réponse HTTP cohérente garantissent une expérience utilisateur stable même en cas d'incident technique.
+
+\end{itemize}
+
+\vspace{0.5cm}
+
+% Tableau récapitulatif besoins
+\begin{center}
+\begin{tikzpicture}
+    \node[
+        rectangle, rounded corners=8pt,
+        fill=white, draw=primaryBlue!30, line width=0.8pt,
+        inner sep=0pt,
+        drop shadow={shadow xshift=0pt, shadow yshift=-3pt, opacity=0.1}
+    ]{
+        \begin{tabular}{>{\bfseries\color{deepBlue}}p{0.22\textwidth} >{\color{primaryBlue}\small\bfseries}p{0.12\textwidth} >{\color{darkGray}\small}p{0.44\textwidth}}
+            \rowcolor{deepBlue!90}
+            \textcolor{white}{\textbf{Besoin Technique}} & \textcolor{white}{\textbf{Priorité}} & \textcolor{white}{\textbf{Solution Implémentée}} \\
+            \rowcolor{lightBlue!50}
+            Performance & Élevée & SPA React 19, lazy loading, optimisation PostgreSQL \\
+            \rowcolor{white}
+            Sécurité & Critique & JWT, bcrypt, validation Joi, middlewares d'autorisation \\
+            \rowcolor{lightBlue!50}
+            Maintenabilité & Élevée & Architecture MVC, Sequelize ORM, migrations versionnées \\
+            \rowcolor{white}
+            Adoptabilité & Élevée & Design responsive, bilinguisme FR/AR, WCAG 2.1 \\
+            \rowcolor{lightBlue!50}
+            Robustesse & Élevée & Gestion centralisée des erreurs, journalisation, tests \\
+        \end{tabular}
+    };
+\end{tikzpicture}
+\captionof{table}{Synthèse des besoins techniques et des solutions implémentées}
+\end{center}
+
+% ============================================================================
+% CHAPITRE 2 : MODÉLISATION ET CONCEPTION
+% ============================================================================
+\chapter{Modélisation et Conception}
+
+\vspace{0.3cm}
+\noindent
+\begin{tikzpicture}
+    \draw[primaryBlue, line width=4pt] (0,0) -- (0,-3.1);
+    \node[anchor=north west, text width=0.88\textwidth, inner sep=10pt] at (0.3, 0) {
+        \color{darkGray}\small\setstretch{1.4}
+        Ce chapitre présente la modélisation fonctionnelle et structurelle de la plateforme
+        au plus près de l'{}implémentation réelle : cas d'{}utilisation, diagramme de classes
+        (entités Sequelize / schéma PostgreSQL) et scénarios dynamiques (diagrammes de séquence).
+    };
+\end{tikzpicture}
+
+% ---------------------------------------------------------------------------
+\section{Résumé de la démarche de modélisation}
+% ---------------------------------------------------------------------------
+
+La modélisation a été menée en parallèle de l'{}analyse des besoins et du développement incrémental du back-end (\textbf{Node.js}, \textbf{Express}, \textbf{Sequelize}, \textbf{PostgreSQL}). Les diagrammes UML illustrés dans ce chapitre visent à documenter :
+
+\begin{itemize}[label=\textcolor{primaryBlue}{$\bullet$}, leftmargin=1.5cm, itemsep=0.3cm]
+    \item les \textbf{interactions des acteurs} (visiteur, administrateur) avec le système ;
+    \item la \textbf{structure des données} et les cardinalités effectivement implémentées (clés étrangères, tables de liaison) ;
+    \item les \textbf{enchaînements techniques} représentatifs (authentification, création de contenu, don, consultation de ressource, formulaires publics).
+\end{itemize}
+
+\vspace{0.4cm}
+
+% ---------------------------------------------------------------------------
+\section{Diagramme des cas d'{}utilisation}
+% ---------------------------------------------------------------------------
+
+\subsection{Description générale}
+
+Deux acteurs principaux interagissent avec le \textbf{système Association} modélisé par l'{}API et le site :
+
+\begin{itemize}[label=\textcolor{primaryBlue}{$\triangleright$}, leftmargin=1.5cm, itemsep=0.25cm]
+    \item \textbf{Visiteur} : consultation du contenu institutionnel (projets, événements, domaines, ressources, partenariats), envoi de messages, souscription à la newsletter, soumission d'{}une demande d'{}adhésion ou de bénévolat, don financier public.
+    \item \textbf{Administrateur} : authentification sécurisée, gestion du contenu et des données opérationnelles (membres, bénévoles, dons, messages, statistiques, notifications).
+\end{itemize}
+
+Les cas d'{}administration \textbf{incluent} systématiquement la vérification des droits (JWT, rôle admin), conformément aux routes protégées du projet.
+
+
+
+\subsection{Décomposition du diagramme de cas d'utilisation}
+
+Pour améliorer la lisibilité du rapport, le diagramme global peut être décliné en deux vues : \textbf{espace public} et \textbf{administration}. Ce découpage est \textit{facultatif}.
+
+\figmodel[0.90]{IMG/Modelisation/cu_espace_public.png}{Cas d'{}utilisation --- périmètre public (visiteur)}{fig:cu-public}
+\diagramnote{La vue publique regroupe les fonctionnalités accessibles sans connexion : consultation des projets, événements, domaines et ressources, mais aussi interaction avec l'{}association par les formulaires de contact, de don, d'{}adhésion et de bénévolat. Elle traduit l'{}objectif principal du site vitrine : rendre les informations institutionnelles visibles et transformer le visiteur en acteur potentiel de l'{}association.}
+
+\figmodel[0.88]{IMG/Modelisation/cu_administration.png}{Cas d'{}utilisation --- périmètre administration}{fig:cu-admin}
+\diagramnote{La vue d'{}administration représente les opérations internes de pilotage : gestion du contenu, traitement des demandes, réponse aux messages et suivi des dons. Le cas d'{}utilisation d'{}authentification est transversal, car il conditionne l'{}accès aux actions sensibles et matérialise la protection des routes administratives dans le back-end.}
+
+\subsection{Diagramme global}
+
+\figmodel{IMG/Modelisation/Use_Case.jpeg}{Diagramme global des cas d'{}utilisation --- Association Tifaouine}{fig:cu-global}
+\diagramnote{Ce diagramme donne une vue synthétique du périmètre fonctionnel de la plateforme. Il distingue clairement l'{}espace public, destiné au visiteur, et l'{}espace d'{}administration, réservé aux responsables authentifiés. Cette séparation met en évidence la logique de sécurité du système : les actions de consultation restent ouvertes, tandis que les opérations de gestion nécessitent une authentification et un contrôle de rôle.}
+
+% ---------------------------------------------------------------------------
+\section{Diagramme de classes}
+% ---------------------------------------------------------------------------
+
+Le diagramme de classes présente une \textbf{vue conceptuelle UML} de la plateforme. Il ne se limite pas à la structure technique de la base de données : il décrit les principales classes métier, leurs attributs essentiels et les relations qui organisent le fonctionnement global du système. Cette modélisation permet de comprendre comment les objets du domaine interagissent entre eux, par exemple entre les utilisateurs, les profils, les contenus publiés, les événements, les dons, les adhésions et les ressources associées.
+
+\begin{itemize}[label=\textcolor{premiumGold}{$\star$}, leftmargin=1.5cm, itemsep=0.2cm]
+    \item Les classes isolées ou faiblement liées, comme \texttt{Message}, \texttt{Abonne} ou \texttt{AdminNotification}, représentent des fonctionnalités transversales du système. Elles servent à gérer les échanges avec les visiteurs, les abonnements, les indicateurs de suivi et les notifications internes. Leur présence dans le diagramme montre que ces éléments participent au comportement global de la plateforme, même lorsqu'{}ils ne dépendent pas directement d'{}une autre classe métier.
+\end{itemize}
+
+\subsection{Utilisateurs, profils et authentification}
+
+\figmodel{IMG/Modelisation/Utilisateurs_authentification_class.png}{Diagramme de classes --- utilisateurs, profils (admin, membre, bénévole), jetons et blacklist}{fig:classe-auth}
+\diagramnote{Ce premier sous-ensemble structure la gestion des identités. La classe \texttt{Utilisateur} centralise les informations communes, tandis que les profils \texttt{Admin}, \texttt{Membre} et \texttt{Benevole} spécialisent les rôles métier. Les classes liées aux jetons matérialisent la stratégie d'{}authentification : refresh token persistant, révocation possible et blacklist pour sécuriser les sessions.}
+
+\subsection{Contenu : domaines, projets, événements, ressources}
+
+\figmodel{IMG/Modelisation/Domaine.png}{Diagramme de classes --- domaines, projets, événements, ressources multimédias}{fig:classe-contenu}
+\diagramnote{Ce diagramme formalise le noyau métier de publication. Les domaines organisent les actions de l'{}association, les projets et événements portent les activités concrètes, et les ressources ajoutent les médias ou documents associés. Les cardinalités indiquent qu'{}un domaine peut contenir plusieurs projets ou événements, tandis qu'{}une ressource est rattachée à un objet de contenu selon la règle métier définie.}
+
+\subsection{Partenariats et tables de liaison}
+
+\figmodel{IMG/Modelisation/Partenariats_class.png}{Diagramme de classes --- partenariats et associations (\texttt{projet\_partenariat}, \texttt{evenement\_partenariat})}{fig:classe-partenariats}
+\diagramnote{La modélisation des partenariats repose sur des tables de liaison afin de représenter des relations plusieurs-à-plusieurs. Un partenaire peut contribuer à plusieurs projets ou événements, et un même projet peut mobiliser plusieurs partenaires. Cette solution relationnelle évite la duplication des données et reste cohérente avec l'{}implémentation PostgreSQL.}
+
+\subsection{Dons, messages, statistiques et notifications}
+
+\figmodel{IMG/Modelisation/diagramme.png}{Diagramme de classes --- dons (généralisation financier / matériel), messages, stats, notifications, abonnés}{fig:classe-transversal}
+\diagramnote{Ce dernier groupe rassemble les fonctionnalités transversales. La classe \texttt{Don} porte les attributs communs, puis les dons financiers et matériels précisent les informations propres à chaque type. Les messages, statistiques, notifications et abonnés complètent le système en assurant le suivi administratif, la communication et l'{}observation de l'{}activité.}
+
+% ---------------------------------------------------------------------------
+\section{Diagrammes de séquence}
+% ---------------------------------------------------------------------------
+
+
+
+\subsection{Connexion administrateur et gestion de l'{}authentification}
+
+Après soumission des identifiants (\texttt{POST /api/auth/login}), le serveur vérifie l'{}administrateur (email + mot de passe \texttt{bcrypt}), émet un JWT d'{}accès et un JWT de rafraîchissement, place ces jetons en \textbf{cookies HttpOnly}, et enregistre le refresh token en base. Le rafraîchissement (\texttt{POST /api/auth/refresh-token}) et la déconnexion invalident ou retirent les jetons selon les règles implémentées.
+
+\figmodel{IMG/Modelisation/Login_sequence.jpeg}{Séquence --- authentification administrateur (JWT, cookies, refresh token)}{fig:seq-login}
+\diagramnote{Cette séquence détaille le parcours de connexion depuis la saisie des identifiants jusqu'{}à la création des cookies sécurisés. Les alternatives permettent de représenter les deux cas d'{}échec principaux : utilisateur introuvable et mot de passe incorrect. En cas de succès, le service émet les jetons et enregistre le refresh token afin de permettre une session contrôlée et révocable.}
+
+\subsection{Rafraîchissement du jeton d'{}accès}
+
+Lorsque la session expire, le client appelle \texttt{POST /api/auth/refresh-token} avec le cookie de rafraîchissement. Le serveur vérifie le jeton, retrouve l'{}administrateur associé et renvoie un nouveau jeton d'{}accès sous forme de cookie.
+
+\figmodel{IMG/Modelisation/Refreche_token_sequence.png}{Séquence --- rafraîchissement du jeton d'{}accès}{fig:seq-refresh}
+\diagramnote{Le rafraîchissement du jeton améliore l'{}expérience utilisateur sans affaiblir la sécurité. L'{}access token peut rester de courte durée, tandis que le refresh token permet de générer un nouveau jeton après vérification. Le scénario alternatif prévoit le rejet immédiat lorsque le jeton est absent, invalide ou expiré.}
+
+\subsection{Ajout d'{}un projet (parcours administrateur complet)}
+
+L'{}administrateur authentifié crée un projet via \texttt{POST /api/projets/complet} : validation, upload des médias, transaction base de données (projet, éventuels partenaires, ressources de galerie). Les middlewares \texttt{verifyToken} et \texttt{isAdmin} protègent cette opération.
+
+\figmodel{IMG/Modelisation/Project_sequence.png}{Séquence --- création d'{}un projet complet avec médias et partenariats}{fig:seq-projet}
+\diagramnote{La création d'{}un projet illustre une opération administrative complexe. Le traitement combine authentification, validation des données, upload des fichiers, création du projet, association éventuelle des partenaires et insertion des ressources. L'{}usage d'{}une transaction garantit la cohérence : si une étape échoue, l'{}ensemble de l'{}opération peut être annulé.}
+
+\subsection{Ajout d'{}un événement}
+
+L'{}administrateur authentifié ajoute un événement via l'{}interface d'{}administration. La requête passe par les middlewares d'{}authentification et de validation, puis le service crée l'{}événement et ses relations dans une transaction.
+
+\figmodel{IMG/Modelisation/event_sequence.jpeg}{Séquence --- ajout d'{}un événement par l'{}administrateur}{fig:seq-evenement}
+\diagramnote{La séquence d'{}ajout d'{}événement met en évidence le même principe de contrôle que pour les projets : l'{}administrateur doit être autorisé, les données sont validées, puis le service orchestre les insertions nécessaires. Les blocs alternatifs rendent explicites les erreurs d'{}autorisation et de validation, ce qui correspond à une API robuste et prévisible.}
+
+\subsection{Effectuer un don financier}
+
+Le visiteur soumet un don via \texttt{POST /api/dons/financier} (accès public, validation Joi). Le service crée une ligne \texttt{don} (statut initial \texttt{en\_attente}) et une ligne \texttt{don\_financier} dans une transaction, puis une notification administrateur.
+
+\figmodel{IMG/Modelisation/don_sequence.jpeg}{Séquence --- enregistrement d'{}un don financier et notification}{fig:seq-don}
+\diagramnote{Le don financier est un scénario public, mais il reste fortement contrôlé par la validation des données. Le système crée d'{}abord le don principal, puis l'{}enregistrement financier détaillé, avant de notifier l'{}administration. Le statut initial \texttt{en\_attente} permet de conserver une étape de vérification humaine avant validation définitive.}
+\vspace{-0.7cm}
+\subsection{Formulaire « devenir membre »}
+
+Le visiteur envoie un formulaire multipart vers \texttt{POST /api/etre-membre}. Le service vérifie l'{}unicité de l'{}email, crée l'{}utilisateur et le profil membre dans une transaction, puis enregistre une notification pour l'{}administration.
+
+\figmodel{IMG/Modelisation/membre_sequence.png}{Séquence --- soumission d'{}une demande d'{}adhésion membre}{fig:seq-membre}
+\diagramnote{La demande d'{}adhésion membre montre la transformation d'{}un visiteur en utilisateur potentiel du système. La vérification de l'{}unicité de l'{}email évite les doublons, puis la transaction crée simultanément le compte utilisateur, le profil membre et la notification destinée aux administrateurs.}
+\vspace{-0.7cm}
+\subsection{Formulaire « devenir bénévole »}
+
+Le visiteur envoie un formulaire multipart vers \texttt{POST /api/etre-benevole}. Le service vérifie l'{}unicité de l'{}email, crée l'{}utilisateur et le profil bénévole dans une transaction, puis enregistre une notification pour l'{}administration.
+
+\figmodel{IMG/Modelisation/benevole_sequence.jpeg}{Séquence --- soumission d'{}une demande de bénévolat}{fig:seq-benevole}
+\diagramnote{La demande de bénévolat suit une logique proche de l'{}adhésion, avec des pièces justificatives et informations spécifiques au profil bénévole. Le scénario distingue clairement le cas d'{}un email déjà utilisé et le cas d'{}une nouvelle demande acceptée, ce qui facilite la compréhension du comportement attendu côté interface et côté API.}
+\vspace{-0.7cm}
+% ---------------------------------------------------------------------------
+\section{Bilan du chapitre}
+% ---------------------------------------------------------------------------
+
+Ce chapitre a formalisé la vision \textbf{fonctionnelle} (cas d'{}utilisation), \textbf{statique} (classes et relations) et \textbf{dynamique} (séquences clés) de la plateforme. Cette modélisation constitue une base de compréhension claire du système, en montrant comment les besoins exprimés sont structurés, organisés et traduits en une solution cohérente.
+
+\vspace{0.5cm}
+\noindent\textcolor{primaryBlue!25}{\rule{\textwidth}{0.5pt}}
+\vspace{0.4cm}
+
+% ============================================================================
+% CHAPITRE 3 : ARCHITECTURE TECHNIQUE ET CHOIX TECHNOLOGIQUES
+% ============================================================================
+\chapter{Réalisation du projet}
+
+% ---------------------------------------------------------------------------
+% Intro du chapitre
+% ---------------------------------------------------------------------------
+\vspace{0.3cm}
+\noindent
+\begin{tikzpicture}
+    \draw[primaryBlue, line width=4pt] (0,0) -- (0,-2.6);
+    \node[anchor=north west, text width=0.88\textwidth, inner sep=10pt] at (0.3, 0) {
+        \color{darkGray}\small\setstretch{1.4}
+        Ce chapitre présente l'architecture technique de la plateforme et justifie les choix
+        technologiques effectués. Il détaille la stack technologique adoptée, l'organisation
+        du code, les principes de conception appliqués, ainsi que l'identité visuelle et
+        la stratégie de déploiement retenue pour garantir performance, sécurité et maintenabilité.
+    };
+\end{tikzpicture}
+
+% ===========================================================================
+\section{Vue d'Ensemble de l'Architecture}
+% ===========================================================================
+
+\subsection{Architecture Globale du Système}
+
+La plateforme repose sur une \textbf{architecture client-serveur moderne} de type \textbf{SPA} (Single Page Application) avec séparation stricte entre le front-end et le back-end. Cette approche garantit une séparation claire des responsabilités, facilite la maintenance et permet une évolution indépendante de chaque couche.
+
+\vspace{0.5cm}
+
+% Diagramme d'architecture sous forme d'image
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{IMG/image_frontend/archi_global.jpg}
+    \caption{Architecture globale de la plateforme Tifaouine}
+    \label{fig:architecture}
+\end{figure}
+
+\vspace{0.4cm}
+
+\subsection{Principes Architecturaux Adoptés}
+
+L'architecture de la plateforme respecte plusieurs principes fondamentaux du génie logiciel moderne :
+
+\begin{itemize}[label=\textcolor{primaryBlue}{$\bullet$}, leftmargin=1.5cm, itemsep=0.35cm]
+
+    \item \textbf{Séparation des Préoccupations (Separation of Concerns) :}
+    Le front-end gère exclusivement la présentation et l'interaction utilisateur, tandis que le back-end centralise la logique métier, la validation des données et l'accès à la base de données. Cette séparation facilite les tests, la maintenance et l'évolution indépendante de chaque couche.
+
+    \item \textbf{Architecture MVC (Modèle-Vue-Contrôleur) :}
+    Le back-end est structuré selon le patron MVC : les \textit{modèles} définissent la structure des données (Sequelize), les \textit{contrôleurs} gèrent la logique métier et les \textit{routes} exposent les points d'accès API. Cette organisation rend le code modulaire, testable et évolutif.
+
+    \item \textbf{API RESTful :}
+    L'ensemble des échanges entre le front-end et le back-end s'effectue via une API REST respectant les conventions HTTP (GET, POST, PUT, DELETE). Les réponses sont formatées en JSON, garantissant une interopérabilité maximale et une documentation claire des endpoints.
+
+    \item \textbf{Authentification par JWT (cookies HttpOnly) :}
+    L'API émet un \textit{access token} et un \textit{refresh token} signés (JWT). Ils sont renvoyés au navigateur dans des \textbf{cookies HttpOnly} (réduction du risque XSS). Les refresh tokens actifs sont également enregistrés en base (\texttt{refresh\_token}) pour validation et révocation à la déconnexion ; l'access token peut être invalidé via une table de \textit{blacklist} lors du logout.
+
+\end{itemize}
+
+\vspace{0.5cm}
+\noindent\textcolor{primaryBlue!25}{\rule{\textwidth}{0.5pt}}
+\vspace{0.4cm}
+
+% ===========================================================================
+\section{Frontend : Interface Utilisateur Moderne et Réactive}
+% ===========================================================================
+
+\subsection{Technologies et Bibliothèques Utilisées}
+
+Le front-end de la plateforme repose sur un ensemble de technologies modernes permettant de construire une interface utilisateur réactive, multilingue, fluide et adaptée aux besoins du site public ainsi que du back-office administrateur.
+
+\begin{figure}[H]
+\centering
+\begin{minipage}[c]{0.62\textwidth}
+    \centering
+    \textcolor{primaryBlue}{\textbf{\textit{React et Vite :}}}
+
+    \vspace{0.3cm}
+    \justifying
+    \textit{React} est la bibliothèque JavaScript utilisée pour construire les composants de l'interface utilisateur du site public et du back-office administrateur. \textit{Vite} complète cette stack en assurant un environnement de développement rapide, un rechargement instantané et une génération optimisée du projet pour la production.
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.28\textwidth}
+    \centering
+    \includegraphics[width=0.9\linewidth]{IMG/image_frontend/react_vitepng.png}
+    \caption{React et Vite}
+\end{minipage}
+\end{figure}
+
+\vspace{0.4cm}
+
+\begin{figure}[H]
+\centering
+\begin{minipage}[c]{0.62\textwidth}
+    \centering
+    \textcolor{primaryBlue}{\textbf{\textit{React Router DOM :}}}
+
+    \vspace{0.3cm}
+    \justifying
+    \textit{React Router DOM} est utilisé pour gérer la navigation dans l'application React. Il permet d'organiser les routes publiques, les pages multilingues, les redirections et les routes protégées du back-office administrateur de manière déclarative.
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.28\textwidth}
+    \centering
+    \includegraphics[width=0.9\linewidth]{IMG/image_frontend/react_router.png}
+    \caption{React Router DOM}
+\end{minipage}
+\end{figure}
+
+\vspace{0.4cm}
+
+\begin{figure}[H]
+\centering
+\begin{minipage}[c]{0.62\textwidth}
+    \centering
+    \textcolor{primaryBlue}{\textbf{\textit{Redux Toolkit :}}}
+
+    \vspace{0.3cm}
+    \justifying
+    \textit{Redux Toolkit} et \textit{React Redux} assurent la gestion centralisée de l'état global de l'application. Cette solution facilite le partage des données entre les composants, la gestion de l'authentification administrateur, des notifications et des appels API asynchrones.
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.28\textwidth}
+    \centering
+    \includegraphics[width=0.9\linewidth]{IMG/image_frontend/redax.png}
+    \caption{Redux Toolkit}
+\end{minipage}
+\end{figure}
+
+\vspace{0.4cm}
+
+\begin{figure}[H]
+\centering
+\begin{minipage}[c]{0.62\textwidth}
+    \centering
+    \textcolor{primaryBlue}{\textbf{\textit{Axios :}}}
+
+    \vspace{0.3cm}
+    \justifying
+    \textit{Axios} est le client HTTP utilisé pour communiquer avec l'API back-end. Il permet d'exécuter les requêtes \texttt{GET}, \texttt{POST}, \texttt{PUT} et \texttt{DELETE}, de gérer les erreurs réseau et d'intégrer les mécanismes d'authentification avec les tokens JWT.
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.28\textwidth}
+    \centering
+    \includegraphics[width=0.9\linewidth]{IMG/image_frontend/axios.jpg}
+    \caption{Axios}
+\end{minipage}
+\end{figure}
+
+\vspace{0.4cm}
+
+\begin{figure}[H]
+\centering
+\begin{minipage}[c]{0.62\textwidth}
+    \centering
+    \textcolor{primaryBlue}{\textbf{\textit{i18next :}}}
+
+    \vspace{0.3cm}
+    \justifying
+    \textit{i18next}, \textit{react-i18next} et \textit{i18next-http-backend} forment la stack d'internationalisation du front-end. Elle permet de gérer les traductions dynamiques en français, arabe et anglais, de charger les fichiers de langue par module et d'adapter automatiquement l'affichage au sens LTR ou RTL.
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.28\textwidth}
+    \centering
+    \includegraphics[width=0.9\linewidth]{IMG/image_frontend/i18next.png}
+    \caption{i18next}
+\end{minipage}
+\end{figure}
+
+\vspace{0.4cm}
+
+\begin{figure}[H]
+\centering
+\begin{minipage}[c]{0.62\textwidth}
+    \centering
+    \textcolor{primaryBlue}{\textbf{\textit{Framer Motion :}}}
+
+    \vspace{0.3cm}
+    \justifying
+    \textit{Framer Motion} est une bibliothèque d'animations déclaratives pour React. Elle est utilisée pour créer des transitions de page, des animations au défilement et des micro-interactions qui améliorent l'expérience utilisateur sur les sections importantes du site.
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.28\textwidth}
+    \centering
+    \includegraphics[width=0.9\linewidth]{IMG/image_frontend/framer_motion.jpg}
+    \caption{Framer Motion}
+\end{minipage}
+\end{figure}
+
+\vspace{0.4cm}
+
+\begin{figure}[H]
+\centering
+\begin{minipage}[c]{0.62\textwidth}
+    \centering
+    \textcolor{primaryBlue}{\textbf{\textit{Lucide React et React Icons :}}}
+
+    \vspace{0.3cm}
+    \justifying
+    \textit{Lucide React} et \textit{React Icons} fournissent des icônes SVG modernes et légères pour l'interface. Elles sont utilisées dans la navigation, les formulaires, les boutons d'action et les écrans d'administration, tout en permettant une personnalisation simple des couleurs et des tailles.
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.28\textwidth}
+    \centering
+    \includegraphics[width=0.9\linewidth]{IMG/image_frontend/Lucide.png}
+    \caption{Lucide React}
+\end{minipage}
+\end{figure}
+
+\vspace{0.4cm}
+
+\begin{figure}[H]
+\centering
+\begin{minipage}[c]{0.62\textwidth}
+    \centering
+    \textcolor{primaryBlue}{\textbf{\textit{Swiper et Embla Carousel :}}}
+
+    \vspace{0.3cm}
+    \justifying
+    \textit{Swiper} et \textit{Embla Carousel React} sont utilisés pour créer des carrousels responsives et tactiles. Ils permettent d'afficher les galeries de projets, les événements, les témoignages et les partenaires avec une navigation fluide adaptée aux écrans mobiles.
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.28\textwidth}
+    \centering
+    \includegraphics[width=0.9\linewidth]{IMG/image_frontend/swiper.png}
+    \caption{Swiper}
+\end{minipage}
+\end{figure}
+
+\vspace{0.4cm}
+
+\begin{figure}[H]
+\centering
+\begin{minipage}[c]{0.62\textwidth}
+    \centering
+    \textcolor{primaryBlue}{\textbf{\textit{Vanilla Tilt.js :}}}
+
+    \vspace{0.3cm}
+    \justifying
+    \textit{Vanilla Tilt.js} est utilisé pour ajouter des effets visuels interactifs sur certaines cartes de l'interface. Il apporte un léger effet de profondeur au survol, ce qui rend les sections de présentation plus dynamiques sans alourdir la structure principale de l'application.
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.28\textwidth}
+    \centering
+    \includegraphics[width=0.9\linewidth]{IMG/image_frontend/vanilla-tilt.js.jpg}
+    \caption{Vanilla Tilt.js}
+\end{minipage}
+\end{figure}
+\vspace{0.5cm}
+\begin{figure}[H]
+\centering
+\begin{minipage}[c]{0.62\textwidth}
+    \centering
+    \textcolor{primaryBlue}{\textbf{\textit{Figma :}}}
+
+    \vspace{0.3cm}
+    \justifying
+    \textit{Figma} est l'outil de conception utilisé pour préparer les maquettes de l'interface avant le développement. Il facilite la création des écrans, l'organisation du parcours utilisateur, la validation du design avec l'équipe et la cohérence visuelle entre les pages publiques et le back-office administrateur.
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.28\textwidth}
+    \centering
+    \includegraphics[width=0.9\linewidth]{IMG/image_frontend/Figma-logo-lockup.jpg}
+    \caption{Figma}
+\end{minipage}
+\end{figure}
+
+
+\vspace{0.5cm}
+
+\subsection{Gestion de l'État avec Redux Toolkit}
+
+La gestion de l'état global de l'application repose sur \textbf{Redux Toolkit}, la solution officielle recommandée par l'équipe Redux. Cette approche centralise les données partagées entre composants (authentification, notifications, préférences utilisateur) et simplifie considérablement la logique de gestion d'état par rapport à Redux classique.
+
+\vspace{0.3cm}
+
+\infobox{Avantages de Redux Toolkit}{
+    \textbf{Moins de code boilerplate} : Configuration simplifiée avec \texttt{configureStore()} et \texttt{createSlice()}. \\
+    \textbf{Immutabilité automatique} : Utilisation d'Immer pour des mutations d'état sûres. \\
+    \textbf{DevTools intégrés} : Débogage facilité avec Redux DevTools Extension.
+}
+
+\vspace{0.5cm}
+
+\subsection{Internationalisation et Support Trilingue}
+
+Le support natif du \textbf{français}, de l'\textbf{arabe} et de l'\textbf{anglais} est assuré par la bibliothèque \textbf{i18next}, reconnue comme la solution de référence pour l'internationalisation en React. La plateforme détecte automatiquement la langue du navigateur et permet à l'utilisateur de basculer manuellement entre les trois langues.
+
+\vspace{0.3cm}
+
+\textbf{Particularités du support de l'arabe :}
+\begin{itemize}[label=\textcolor{primaryBlue}{$\circ$}, leftmargin=1.5cm, itemsep=0.25cm]
+    \item \textbf{Direction RTL (Right-To-Left)} : Inversion automatique de la mise en page via CSS \texttt{direction: rtl}
+    \item \textbf{Typographie adaptée} : Utilisation de la police \textit{El Messiri} optimisée pour l'arabe
+    \item \textbf{Traductions contextuelles} : Fichiers JSON séparés pour chaque langue avec clés structurées
+\end{itemize}
+
+\vspace{0.5cm}
+\noindent\textcolor{primaryBlue!25}{\rule{\textwidth}{0.5pt}}
+\vspace{0.4cm}
+
+% ===========================================================================
+\section{Design et Identité Visuelle}
+% ===========================================================================
+
+\subsection{Refonte du Logo de l'Association}
+
+Dans le cadre de la modernisation de l'identité visuelle de l'association, l'équipe a procédé à une \textbf{refonte complète du logo}. Le nouveau logo a été conçu pour refléter les valeurs de l'association tout en garantissant une excellente lisibilité sur tous les supports (web, impression, réseaux sociaux).
+
+\vspace{0.4cm}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        % Cadre premium pour le logo
+        \node[
+            rectangle, rounded corners=12pt,
+            fill=white, draw=premiumGold, line width=2pt,
+            inner sep=20pt,
+            drop shadow={shadow xshift=0pt, shadow yshift=-4pt, opacity=0.2}
+        ] (logobox) {
+            \includegraphics[height=4.5cm, keepaspectratio]{IMG/logo-prev.png}
+        };
+        % Bordure intérieure décorative
+        \draw[primaryBlue!30, line width=0.8pt, rounded corners=10pt] 
+            ([xshift=5pt, yshift=-5pt]logobox.north west) rectangle ([xshift=-5pt, yshift=5pt]logobox.south east);
+    \end{tikzpicture}
+    \caption{Logo modernisé de l'Association Tifaouine}
+    \label{fig:logo}
+\end{figure}
+
+\vspace{0.4cm}
+
+\textbf{Caractéristiques du nouveau logo :}
+\begin{itemize}[label=\textcolor{premiumGold}{$\star$}, leftmargin=1.5cm, itemsep=0.3cm]
+    \item \textbf{Format vectoriel (SVG)} : Garantit une qualité parfaite à toutes les échelles
+    \item \textbf{Palette de couleurs cohérente} : Intégration harmonieuse avec la charte graphique du site
+    \item \textbf{Symbolique forte} : Évocation du monde rural et de la solidarité communautaire
+    \item \textbf{Déclinaisons multiples} : Versions couleur, monochrome et inversée pour tous les contextes
+\end{itemize}
+
+\vspace{0.5cm}
+
+\subsection{Palette de Couleurs et Charte Graphique}
+
+La charte graphique de la plateforme repose sur une palette de couleurs soigneusement sélectionnée pour véhiculer les valeurs de l'association : \textbf{chaleur}, \textbf{confiance} et \textbf{professionnalisme}. Les couleurs principales sont inspirées des tons naturels et terreux, en harmonie avec l'identité rurale de Tifaouine.
+
+\vspace{0.5cm}
+
+\begin{center}
+\begin{tikzpicture}
+    \node[
+        rectangle, rounded corners=10pt,
+        fill=white, draw=primaryBlue!30, line width=1pt,
+        inner sep=15pt,
+        drop shadow={shadow xshift=0pt, shadow yshift=-3pt, opacity=0.12}
+    ]{
+        \begin{minipage}{0.88\textwidth}
+            \centering
+            {\large\bfseries\color{deepBlue} Palette de Couleurs Principale}\\[10pt]
+            
+            % Couleur Accent (Or/Beige)
+            \begin{tikzpicture}
+                \fill[color={rgb,255:red,203;green,145;blue,79}] (0,0) rectangle (2,1.2);
+                \node[white, font=\small\bfseries] at (1, 0.6) {\texttt{\#CB914F}};
+            \end{tikzpicture}
+            \hspace{0.3cm}
+            \begin{minipage}[b]{0.25\textwidth}
+                \small\color{darkGray}
+                \textbf{Accent Principal}\\
+                Or chaleureux\\
+                Boutons, liens
+            \end{minipage}
+            \hspace{0.5cm}
+            
+            % Couleur Texte
+            \begin{tikzpicture}
+                \fill[color={rgb,255:red,107;green,99;blue,117}] (0,0) rectangle (2,1.2);
+                \node[white, font=\small\bfseries] at (1, 0.6) {\texttt{\#6B6375}};
+            \end{tikzpicture}
+            \hspace{0.3cm}
+            \begin{minipage}[b]{0.25\textwidth}
+                \small\color{darkGray}
+                \textbf{Texte Principal}\\
+                Gris doux\\
+                Corps de texte
+            \end{minipage}
+            
+            \vspace{0.5cm}
+            
+            % Couleur Vert (Actions)
+            \begin{tikzpicture}
+                \fill[color={rgb,255:red,75;green,175;blue,71}] (0,0) rectangle (2,1.2);
+                \node[white, font=\small\bfseries] at (1, 0.6) {\texttt{\#4BAF47}};
+            \end{tikzpicture}
+            \hspace{0.3cm}
+            \begin{minipage}[b]{0.25\textwidth}
+                \small\color{darkGray}
+                \textbf{Succès/Actions}\\
+                Vert nature\\
+                Validations
+            \end{minipage}
+            \hspace{0.5cm}
+            
+            % Couleur Fond
+            \begin{tikzpicture}
+                \fill[color={rgb,255:red,248;green,248;blue,243}] (0,0) rectangle (2,1.2);
+                \draw[color={rgb,255:red,100;green,100;blue,100}, line width=0.5pt] (0,0) rectangle (2,1.2);
+                \node[color={rgb,255:red,40;green,40;blue,40}, font=\small\bfseries] at (1, 0.6) {\texttt{\#F8F8F3}};
+            \end{tikzpicture}
+            \hspace{0.3cm}
+            \begin{minipage}[b]{0.25\textwidth}
+                \small\color{darkGray}
+                \textbf{Fond Sections}\\
+                Beige clair\\
+                Arrière-plans
+            \end{minipage}
+        \end{minipage}
+    };
+\end{tikzpicture}
+\end{center}
+
+\vspace{0.5cm}
+
+\subsection{Typographie et Accessibilité}
+
+La typographie joue un rôle central dans l'expérience utilisateur et l'accessibilité de la plateforme. Deux familles de polices principales ont été sélectionnées :
+
+\begin{itemize}[label=\textcolor{primaryBlue}{$\bullet$}, leftmargin=1.5cm, itemsep=0.3cm]
+    \item \textbf{Manrope} (Latin) : Police sans-serif moderne, hautement lisible, utilisée pour le français
+    \item \textbf{El Messiri} (Arabe) : Police optimisée pour l'arabe avec excellente lisibilité en RTL
+\end{itemize}
+
+\vspace{0.3cm}
+
+\textbf{Respect des normes d'accessibilité WCAG 2.1 :}
+\begin{itemize}[label=\textcolor{primaryBlue}{$\circ$}, leftmargin=1.5cm, itemsep=0.25cm]
+    \item \textbf{Contraste des couleurs} : Ratio minimum de 4.5:1 entre texte et arrière-plan
+    \item \textbf{Taille de police} : Minimum 16px pour le corps de texte, scalable via zoom navigateur
+    \item \textbf{Navigation au clavier} : Tous les éléments interactifs accessibles via Tab
+    \item \textbf{Attributs ARIA} : Labels descriptifs pour les lecteurs d'écran
+\end{itemize}
+
+\vspace{0.5cm}
+\noindent\textcolor{primaryBlue!25}{\rule{\textwidth}{0.5pt}}
+\vspace{0.4cm}
+
+% ===========================================================================
+\section{Backend : API REST Robuste et Sécurisée}
+% ===========================================================================
+
+\subsection{Technologies et Architecture Backend}
+
+
+
+Le back-end de la plateforme repose sur un ensemble de technologies modernes permettant de construire une API REST sécurisée, maintenable et adaptée aux besoins de gestion des projets, événements, dons, membres et bénévoles de l'association.
+
+\begin{figure}[H]
+\centering
+\begin{minipage}[c]{0.62\textwidth}
+    \centering
+    \textcolor{primaryBlue}{\textbf{\textit{Node.js :}}}
+
+    \vspace{0.3cm}
+    \justifying
+    \textit{Node.js} est un environnement d'exécution JavaScript côté serveur utilisé pour développer la logique applicative du back-end. Il permet de traiter efficacement les requêtes HTTP, d'orchestrer les services métier et de gérer les échanges entre l'API, la base de données et les différents modules de la plateforme.
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.28\textwidth}
+    \centering
+    \includegraphics[width=0.9\linewidth]{IMG/image_backend/Node.js_logo.svg.png}
+    \caption{Node.js}
+\end{minipage}
+\end{figure}
+
+\vspace{0.4cm}
+
+\begin{figure}[H]
+\centering
+\begin{minipage}[c]{0.62\textwidth}
+    \centering
+    \textcolor{primaryBlue}{\textbf{\textit{Express.js :}}}
+
+    \vspace{0.3cm}
+    \justifying
+    \textit{Express.js} est un framework web minimaliste pour Node.js. Il est utilisé pour définir les routes de l'API REST, organiser les middlewares, traiter les requêtes des utilisateurs et connecter les contrôleurs aux services métier du projet.
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.28\textwidth}
+    \centering
+    \includegraphics[width=0.9\linewidth]{IMG/image_backend/_express-js-icon-png-transparent-png.png}
+    \caption{Express.js}
+\end{minipage}
+\end{figure}
+
+\vspace{0.4cm}
+
+\begin{figure}[H]
+\centering
+\begin{minipage}[c]{0.62\textwidth}
+    \centering
+    \textcolor{primaryBlue}{\textbf{\textit{PostgreSQL :}}}
+
+    \vspace{0.3cm}
+    \justifying
+    \textit{PostgreSQL} est le système de gestion de base de données relationnelle choisi pour assurer la persistance et l'intégrité des données. Il stocke les informations liées aux utilisateurs, projets, dons, partenariats, événements et autres entités principales de l'application.
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.28\textwidth}
+    \centering
+    \includegraphics[width=0.9\linewidth]{IMG/image_backend/postgresql-clip-art-database-logo-database-symbol.jpg}
+    \caption{PostgreSQL}
+\end{minipage}
+\end{figure}
+
+\vspace{0.4cm}
+
+\begin{figure}[H]
+\centering
+\begin{minipage}[c]{0.62\textwidth}
+    \centering
+    \textcolor{primaryBlue}{\textbf{\textit{Sequelize ORM :}}}
+
+    \vspace{0.3cm}
+    \justifying
+    \textit{Sequelize} est un ORM JavaScript utilisé pour manipuler la base de données PostgreSQL à travers des modèles. Il facilite la définition des entités, la gestion des relations, les opérations CRUD et l'automatisation des migrations de schéma.
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.28\textwidth}
+    \centering
+    \includegraphics[width=0.9\linewidth]{IMG/image_backend/sequelize-logo.png}
+    \caption{Sequelize ORM}
+\end{minipage}
+\end{figure}
+
+\vspace{0.4cm}
+
+\begin{figure}[H]
+\centering
+\begin{minipage}[c]{0.62\textwidth}
+    \centering
+    \textcolor{primaryBlue}{\textbf{\textit{JWT :}}}
+
+    \vspace{0.3cm}
+    \justifying
+    \textit{JWT} (JSON Web Token) est utilisé pour sécuriser l'authentification du back-office administrateur. Cette technologie permet une authentification stateless basée sur des tokens, facilitant la protection des routes privées et la gestion des sessions utilisateur.
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.28\textwidth}
+    \centering
+    \includegraphics[width=0.9\linewidth]{IMG/image_backend/jwt_logo.jpg}
+    \caption{JWT}
+\end{minipage}
+\end{figure}
+
+\vspace{0.4cm}
+
+\begin{figure}[H]
+\centering
+\begin{minipage}[c]{0.62\textwidth}
+    \centering
+    \textcolor{primaryBlue}{\textbf{\textit{bcryptjs :}}}
+
+    \vspace{0.3cm}
+    \justifying
+    \textit{bcryptjs} est une bibliothèque de hachage utilisée pour protéger les mots de passe des utilisateurs. Elle transforme les mots de passe en empreintes sécurisées avant leur stockage, ce qui renforce la confidentialité des données sensibles.
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.28\textwidth}
+    \centering
+    \includegraphics[width=0.9\linewidth]{IMG/image_backend/bcrypt.png}
+    \caption{bcryptjs}
+\end{minipage}
+\end{figure}
+
+\vspace{0.4cm}
+
+\begin{figure}[H]
+\centering
+\begin{minipage}[c]{0.62\textwidth}
+    \centering
+    \textcolor{primaryBlue}{\textbf{\textit{Multer :}}}
+
+    \vspace{0.3cm}
+    \justifying
+    \textit{Multer} est un middleware Express spécialisé dans la gestion des fichiers envoyés depuis les formulaires. Il permet de traiter l'upload des photos, documents et autres ressources médias avec des règles de validation sur le type et la taille des fichiers.
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.28\textwidth}
+    \centering
+    \includegraphics[width=0.9\linewidth]{IMG/image_backend/multer.png}
+    \caption{Multer}
+\end{minipage}
+\end{figure}
+
+\vspace{0.4cm}
+
+\begin{figure}[H]
+\centering
+\begin{minipage}[c]{0.62\textwidth}
+    \centering
+    \textcolor{primaryBlue}{\textbf{\textit{Joi :}}}
+
+    \vspace{0.3cm}
+    \justifying
+    \textit{Joi} est une bibliothèque de validation de données utilisée pour contrôler les informations reçues par l'API. Elle permet de vérifier les champs obligatoires, les formats attendus et les contraintes métier avant le traitement des requêtes.
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.28\textwidth}
+    \centering
+    \includegraphics[width=0.9\linewidth]{IMG/image_backend/joi.png}
+    \caption{Joi}
+\end{minipage}
+\end{figure}
+
+\vspace{0.4cm}
+
+\begin{figure}[H]
+\centering
+\begin{minipage}[c]{0.62\textwidth}
+    \centering
+    \textcolor{primaryBlue}{\textbf{\textit{Git et GitHub :}}}
+
+    \vspace{0.3cm}
+    \justifying
+    \textit{Git} est un système de contrôle de version distribué permettant de suivre l'historique complet des modifications du code source, gérer les branches et organiser le développement parallèle. \textit{GitHub} complète cette gestion en offrant une plateforme centralisée pour l'hébergement du repository, les pull requests, les revues de code et la collaboration entre les membres de l'équipe.
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.28\textwidth}
+    \centering
+    \includegraphics[width=0.9\linewidth]{IMG/image_backend/git_github.jpg}
+    \caption{Git et GitHub}
+\end{minipage}
+\end{figure}
+
+\vspace{0.4cm}
+
+\begin{figure}[H]
+\centering
+\begin{minipage}[c]{0.62\textwidth}
+    \centering
+    \textcolor{primaryBlue}{\textbf{\textit{RESTful API :}}}
+
+    \vspace{0.3cm}
+    \justifying
+    L'API du projet suit les principes \textit{REST} (Representational State Transfer). Elle organise les ressources à travers des endpoints HTTP standardisés tels que \texttt{GET}, \texttt{POST}, \texttt{PUT} et \texttt{DELETE}, utilise des codes de statut adaptés comme \texttt{200}, \texttt{201}, \texttt{400}, \texttt{401}, \texttt{404} et \texttt{500}, puis retourne des réponses JSON cohérentes pour faciliter l'intégration avec le front-end React.
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.28\textwidth}
+    \centering
+    \includegraphics[width=0.9\linewidth]{IMG/image_backend/restful_apis.png}
+    \caption{RESTful API}
+\end{minipage}
+\end{figure}
+
+\vspace{0.4cm}
+
+\begin{figure}[H]
+\centering
+\begin{minipage}[c]{0.62\textwidth}
+    \centering
+    \textcolor{primaryBlue}{\textbf{\textit{Postman :}}}
+
+    \vspace{0.3cm}
+    \justifying
+    \textit{Postman} est une plateforme utilisée pour le développement, le test et la documentation des API. Elle permet de tester les endpoints REST du back-end, notamment l'authentification et les opérations CRUD des modules projets, événements et dons, tout en organisant les requêtes par collection et en facilitant la validation du comportement de l'API.
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.28\textwidth}
+    \centering
+    \includegraphics[width=0.9\linewidth]{IMG/image_backend/postman.png}
+    \caption{Postman}
+\end{minipage}
+\end{figure}
+\vspace{0.5cm}
+\begin{figure}[H]
+\centering
+\begin{minipage}[c]{0.62\textwidth}
+    \centering
+    \textcolor{primaryBlue}{\textbf{\textit{Architecture en couches :}}}
+
+    \vspace{0.3cm}
+    \justifying
+    L'architecture back-end suit une organisation en quatre couches : routes, contrôleurs, services et repositories. Cette structuration sépare les responsabilités, améliore la lisibilité du code, facilite les tests et rend l'application plus évolutive.
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.28\textwidth}
+    \centering
+    \includegraphics[width=0.9\linewidth]{IMG/image_backend/archi.png}
+    \caption{Architecture back-end}
+\end{minipage}
+\end{figure}
+\vspace{0.5cm}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{IMG/image_backend/backend.jpg}
+    \caption{Flux de traitement d'une requête dans le back-end (\texttt{backend-end})}
+    \label{fig:backend-couches}
+\end{figure}
+\subsection{Sécurité et Bonnes Pratiques}
+
+La sécurité est une priorité absolue dans la conception du back-end. Plusieurs mécanismes de protection ont été implémentés :
+
+\begin{enumerate}[label=\textcolor{primaryBlue}{\textbf{\arabic*.}}, leftmargin=1.5cm, itemsep=0.4cm]
+
+    \item \textbf{Authentification JWT avec Refresh Tokens :}
+    Les utilisateurs reçoivent un \textit{access token} (durée de vie : 1h) et un \textit{refresh token} (durée de vie : 7 jours) stocké en cookie HttpOnly. Cette approche limite l'exposition des tokens et permet une révocation granulaire.
+
+    \item \textbf{Hachage des Mots de Passe avec bcrypt :}
+    Les mots de passe ne sont jamais stockés en clair. L'algorithme bcrypt avec un coût de 10 rounds garantit une protection contre les attaques par force brute et les tables arc-en-ciel.
+
+    \item \textbf{Validation des Entrées avec Joi :}
+    Toutes les données reçues du client sont validées côté serveur via des schémas Joi. Cette validation prévient les injections SQL, les attaques XSS et garantit l'intégrité des données.
+
+    \item \textbf{Protection CORS Stricte :}
+    Le middleware CORS est configuré avec une whitelist explicite des origines autorisées. Seul le domaine du front-end peut effectuer des requêtes vers l'API.
+
+    \item \textbf{Headers de Sécurité avec Helmet :}
+    Le middleware Helmet configure automatiquement les headers HTTP de sécurité (CSP, X-Frame-Options, HSTS, etc.) pour protéger contre les attaques courantes.
+
+    \item \textbf{Rate Limiting :}
+    Un limiteur de taux (express-rate-limit) protège les endpoints sensibles (login, inscription) contre les attaques par force brute et les abus.
+
+\end{enumerate}
+
+\vspace{0.5cm}
+
+\subsection{Base de Données PostgreSQL}
+
+Le choix de \textbf{PostgreSQL} comme système de gestion de base de données repose sur plusieurs critères techniques :
+
+\begin{itemize}[label=\textcolor{primaryBlue}{$\bullet$}, leftmargin=1.5cm, itemsep=0.3cm]
+    \item \textbf{Robustesse et Fiabilité} : PostgreSQL est ACID-compliant, garantissant l'intégrité des transactions
+    \item \textbf{Performance} : Optimisations avancées (index B-tree, requêtes complexes, jointures efficaces)
+    \item \textbf{Extensibilité} : Support natif de JSON, types personnalisés et extensions (PostGIS, pg\_trgm)
+    \item \textbf{Open Source} : Licence permissive, communauté active et documentation exhaustive
+    \item \textbf{Compatibilité Cloud} : Support natif par les principaux hébergeurs (Railway, Heroku, AWS RDS)
+\end{itemize}
+
+\vspace{0.3cm}
+
+\textbf{Gestion des Migrations avec Sequelize CLI :}
+
+L'évolution du schéma de base de données est gérée via un système de migrations versionnées. Chaque modification de structure (ajout de table, colonne, index) est documentée dans un fichier de migration horodaté, garantissant une traçabilité complète et une synchronisation entre environnements (développement, staging, production).
+
+\vspace{0.5cm}
+\noindent\textcolor{primaryBlue!25}{\rule{\textwidth}{0.5pt}}
+\vspace{0.4cm}
+
+% Présentation des interfaces
+\section{Présentation des interfaces utilisateur}
+
+Cette section présente les principales interfaces développées pour la plateforme web de l'Association Tifaouine. Les écrans sont organisés par module fonctionnel afin de distinguer clairement les interfaces accessibles au visiteur ou à l'utilisateur standard et celles réservées à l'administrateur.
+
+\subsection{Interfaces de l'utilisateur standard}
+
+Les interfaces publiques permettent aux visiteurs de consulter les informations de l'association, découvrir ses domaines d'intervention, parcourir les projets, consulter les ressources et contacter l'équipe. Elles privilégient une navigation simple, une présentation visuelle claire et une expérience adaptée aux différents supports.
+
+\subsubsection*{Page À propos}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/about/about1.png}
+    \caption{Interface publique de présentation de l'association}
+    \label{fig:interface-about-user-1}
+\end{figure}
+
+Cette interface introduit l'identité de l'Association Tifaouine, ses valeurs et sa mission. Elle permet à l'utilisateur standard de comprendre rapidement le contexte du projet et les objectifs sociaux de la plateforme.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/about/about2.png}
+    \caption{Section complémentaire de la page À propos}
+    \label{fig:interface-about-user-2}
+\end{figure}
+
+Cette partie complète la présentation institutionnelle par des informations plus détaillées sur les activités de l'association. La mise en page met en valeur le contenu textuel tout en conservant une lecture fluide.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/about/about3.png}
+    \caption{Présentation visuelle des informations associatives}
+    \label{fig:interface-about-user-3}
+\end{figure}
+
+Cette interface renforce la dimension visuelle de la page en structurant les informations importantes sous forme de blocs lisibles. Elle contribue à améliorer la compréhension globale de l'association.
+
+\subsubsection*{Domaines d'intervention}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/domains/domain1.png}
+    \caption{Liste des domaines d'intervention}
+    \label{fig:interface-domain-user-1}
+\end{figure}
+
+Cette interface affiche les principaux domaines d'action de l'association. Elle aide l'utilisateur à identifier les secteurs concernés par les initiatives, comme l'éducation, le développement local ou l'accompagnement social.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/domains/domain2.png}
+    \caption{Détails visuels des domaines d'intervention}
+    \label{fig:interface-domain-user-2}
+\end{figure}
+
+Cette seconde vue met en avant les domaines sous une forme plus détaillée et visuelle. Elle facilite la découverte progressive des axes d'intervention et améliore l'expérience de navigation.
+
+\subsubsection*{Projets}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/projects/projectA1.png}
+    \caption{Interface publique de consultation des projets}
+    \label{fig:interface-project-user-1}
+\end{figure}
+
+Cette interface permet à l'utilisateur standard de consulter les projets réalisés ou en cours. Chaque projet est présenté de manière synthétique afin de faciliter la lecture et l'accès aux informations essentielles.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/projects/projectA2.png}
+    \caption{Affichage détaillé des projets côté utilisateur}
+    \label{fig:interface-project-user-2}
+\end{figure}
+
+Cette vue complète la consultation des projets en affichant davantage de détails sur les actions menées. Elle permet au visiteur de mieux comprendre l'impact des initiatives de l'association.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/projects/projets1.png}
+    \caption{Page publique des projets avec pagination}
+    \label{fig:interface-project-user-pagination}
+\end{figure}
+
+Cette page présente les projets sous forme de cartes paginées afin d'améliorer la performance de chargement. Chaque page affiche un nombre fixe de projets, limité à neuf éléments, ce qui permet de réduire la quantité de données affichées simultanément tout en conservant une navigation claire.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/projects/single-projet1.png}
+    \caption{Page de détail d'un projet}
+    \label{fig:interface-project-user-details}
+\end{figure}
+
+Lorsque l'utilisateur clique sur le bouton de consultation, la plateforme affiche une page dédiée au projet sélectionné. Cette vue regroupe le titre, la description, la galerie d'images et les métadonnées importantes, comme le nombre de personnes aidées, l'état du projet ou encore son avancement.
+
+\subsubsection*{Événements}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/events/events.png}
+    \caption{Page publique des événements}
+    \label{fig:interface-events-user-list}
+\end{figure}
+
+La page des événements reprend le principe de pagination utilisé pour les projets, mais avec une présentation graphique adaptée à la nature événementielle du contenu. Les événements sont affichés sous forme de cartes permettant d'identifier rapidement les informations essentielles et d'accéder aux détails.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/events/single-events.png}
+    \caption{Page de détail d'un événement}
+    \label{fig:interface-events-user-details}
+\end{figure}
+
+Après la sélection d'un événement, l'utilisateur est redirigé vers une page détaillée contenant la description complète, les informations principales et une galerie visuelle. Cette organisation facilite la compréhension du contexte de l'événement et valorise les activités menées par l'association.
+
+\subsubsection*{Rejoignez-nous}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/join-us/join-us2.png}
+    \caption{Formulaire d'inscription membre ou bénévole}
+    \label{fig:interface-join-user-2}
+\end{figure}
+
+Lorsque l'utilisateur choisit un parcours, un formulaire adapté apparaît pour collecter les informations nécessaires. Les champs varient selon le type d'engagement choisi, ce qui permet de traiter séparément les demandes d'adhésion des membres et les candidatures des bénévoles.
+
+\subsubsection*{Dons}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/dons/dons1.png}
+    \caption{Page publique des dons}
+    \label{fig:interface-dons-user-1}
+\end{figure}
+
+La page des dons présente les informations nécessaires pour soutenir financièrement l'association. Elle met à disposition les coordonnées bancaires de l'Association Tifaouine, sans intégrer de paiement en ligne, conformément au choix de l'association de privilégier les virements et les moyens de paiement traditionnels.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/dons/dons2.png}
+    \caption{Formulaire de confirmation d'un don}
+    \label{fig:interface-dons-user-2}
+\end{figure}
+
+En fin de page, un formulaire permet au donateur de confirmer son don afin que l'association puisse l'enregistrer dans la base de données. Cette étape améliore la traçabilité des contributions et facilite leur suivi par l'administration.
+
+\subsubsection*{Partenaires}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/partenaires/partenaires1.png}
+    \caption{Présentation publique des partenaires}
+    \label{fig:interface-partners-user-1}
+\end{figure}
+
+Cette interface présente les partenaires de l'association dans un format clair et accessible. Elle valorise les collaborations qui soutiennent les actions de développement menées par l'organisation.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/partenaires/partenaires2.png}
+    \caption{Affichage complémentaire des partenaires}
+    \label{fig:interface-partners-user-2}
+\end{figure}
+
+Cette partie complète la présentation des partenaires en offrant une organisation visuelle cohérente. Elle facilite l'identification des institutions ou organismes associés au projet.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/partenaires/partenaires3.png}
+    \caption{Mise en valeur des partenaires de l'association}
+    \label{fig:interface-partners-user-3}
+\end{figure}
+
+Cette interface renforce la crédibilité de la plateforme en mettant en évidence le réseau de partenariat. Elle contribue à donner une image institutionnelle professionnelle du site.
+
+\subsubsection*{Ressources}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/ressources/ressources1.png}
+    \caption{Interface publique de consultation des ressources}
+    \label{fig:interface-resources-user-1}
+\end{figure}
+
+Cette interface permet aux visiteurs d'accéder aux ressources publiées par l'association. Elle centralise les documents ou contenus utiles et facilite leur consultation depuis l'espace public.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/ressources/ressources2.png}
+    \caption{Organisation des ressources disponibles}
+    \label{fig:interface-resources-user-2}
+\end{figure}
+
+Cette vue améliore la lisibilité des ressources grâce à une présentation structurée. Elle permet à l'utilisateur de repérer rapidement les éléments pertinents.
+
+\subsubsection*{Contact}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/contact/contact.png}
+    \caption{Interface publique de contact}
+    \label{fig:interface-contact-user}
+\end{figure}
+
+Cette interface offre un moyen simple de communication entre les visiteurs et l'association. Elle permet l'envoi de messages et facilite la prise de contact avec l'équipe responsable.
+
+\subsubsection*{Adaptation responsive}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.55 \textwidth]{IMG/image_design_frontend/responsive/HomeResponsive.png}
+    \caption{Interface d'accueil adaptée aux appareils mobiles}
+    \label{fig:interface-responsive-home}
+\end{figure}
+
+Cette interface montre l'adaptation de la page d'accueil aux écrans mobiles. Le design responsive garantit une navigation confortable sur smartphone et améliore l'accessibilité de la plateforme.
+
+\subsection{Interfaces de l'administrateur}
+
+Les interfaces administrateur sont réservées aux utilisateurs autorisés. Elles permettent la gestion du contenu publié sur le site, le suivi des abonnés, la consultation des messages de contact, la supervision des notifications et l'administration des modules dynamiques.
+
+\subsubsection*{Tableau de bord}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/dashboard.png}
+    \caption{Tableau de bord administrateur}
+    \label{fig:interface-admin-dashboard}
+\end{figure}
+
+Le tableau de bord offre une vue globale sur l'activité de la plateforme. Il centralise les informations importantes et permet à l'administrateur d'accéder rapidement aux différents modules de gestion.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.55\textwidth]{IMG/image_design_frontend/responsive/HomeResponsive.png}
+    \caption{Tableau de bord administrateur en version responsive}
+    \label{fig:interface-admin-dashboard-responsive}
+\end{figure}
+
+Cette vue illustre l'adaptation du tableau de bord aux écrans réduits. Elle garantit que l'administration reste accessible même depuis un appareil mobile.
+
+\subsubsection*{Gestion des projets}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/projects/projectAdd.png}
+    \caption{Ajout d'un nouveau projet par l'administrateur}
+    \label{fig:interface-admin-project-add}
+\end{figure}
+
+Cette interface permet à l'administrateur de créer un nouveau projet en renseignant les informations nécessaires. Elle assure une alimentation simple et structurée du contenu affiché dans l'espace public.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/projects/projectEdit1.png}
+    \caption{Modification des informations d'un projet}
+    \label{fig:interface-admin-project-edit-1}
+\end{figure}
+
+Cette interface permet de modifier les données d'un projet existant. Elle facilite la mise à jour régulière des informations publiées sur le site.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/projects/projectEdit2.png}
+    \caption{Gestion avancée du contenu d'un projet}
+    \label{fig:interface-admin-project-edit-2}
+\end{figure}
+
+Cette vue complète le processus de modification en donnant accès aux champs détaillés du projet. Elle permet à l'administrateur d'assurer la cohérence et la qualité du contenu.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/projects/projectEdit3.png}
+    \caption{Finalisation de la modification d'un projet}
+    \label{fig:interface-admin-project-edit-3}
+\end{figure}
+
+Cette interface représente une étape complémentaire de gestion des projets. Elle permet de finaliser les modifications avant leur affichage public.
+
+\subsubsection*{Gestion des événements}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/events/eventsA1.png}
+    \caption{Liste des événements dans le tableau de bord}
+    \label{fig:interface-admin-events-list}
+\end{figure}
+
+Cette interface permet à l'administrateur de consulter et gérer les événements enregistrés. Elle reprend une organisation proche de celle des projets afin d'assurer une expérience cohérente dans le tableau de bord.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/events/eventsEdit1.png}
+    \caption{Modification principale d'un événement}
+    \label{fig:interface-admin-events-edit-1}
+\end{figure}
+
+Cette vue permet de modifier les informations principales d'un événement existant. L'administrateur peut corriger les contenus, ajuster les informations affichées et préparer la mise à jour publique.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/events/eventsEdit2.png}
+    \caption{Modification complémentaire d'un événement}
+    \label{fig:interface-admin-events-edit-2}
+\end{figure}
+
+Cette seconde interface complète l'édition de l'événement en donnant accès aux éléments détaillés, notamment les contenus associés et les informations visuelles nécessaires à une présentation complète.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/events/eventsCreate1.png}
+    \caption{Création d'un nouvel événement}
+    \label{fig:interface-admin-events-create-1}
+\end{figure}
+
+Cette interface permet à l'administrateur de créer un événement en renseignant les données principales. Elle facilite l'alimentation régulière du site public avec les nouvelles activités de l'association.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/events/eventsCreate2.png}
+    \caption{Finalisation de la création d'un événement}
+    \label{fig:interface-admin-events-create-2}
+\end{figure}
+
+Cette vue complète le processus de création par l'ajout des informations détaillées et des éléments multimédias. Elle permet de publier des événements riches et bien structurés.
+
+\subsubsection*{Gestion des membres}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/join-us/memberA1.png}
+    \caption{Liste des membres dans le tableau de bord}
+    \label{fig:interface-admin-members-list}
+\end{figure}
+
+Cette interface affiche la liste des membres de l'association ainsi que leur statut. L'administrateur peut distinguer les membres actifs et non actifs afin d'assurer un suivi organisé des adhésions.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/join-us/memberA2.png}
+    \caption{Détail administratif d'un membre}
+    \label{fig:interface-admin-members-detail-1}
+\end{figure}
+
+Cette vue présente les informations détaillées d'un membre sélectionné. Elle permet à l'administrateur de vérifier les données personnelles et de préparer les opérations de mise à jour.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/join-us/memberA3.png}
+    \caption{Modification du statut et des documents d'un membre}
+    \label{fig:interface-admin-members-detail-2}
+\end{figure}
+
+Cette interface permet de modifier le statut du membre et de gérer les images ou documents associés. Elle centralise les éléments nécessaires au suivi administratif de l'adhésion.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/join-us/memberCreate1.png}
+    \caption{Création d'un nouveau membre}
+    \label{fig:interface-admin-members-create-1}
+\end{figure}
+
+Cette interface permet à l'administrateur d'ajouter manuellement un nouveau membre dans la base de données. Elle est utile lorsque l'inscription est collectée en dehors du formulaire public.
+
+\subsubsection*{Gestion des bénévoles}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/join-us/benevoleA1.png}
+    \caption{Liste des bénévoles dans le tableau de bord}
+    \label{fig:interface-admin-volunteers-list}
+\end{figure}
+
+Cette interface affiche la liste des bénévoles avec leur statut. La séparation entre membres et bénévoles permet de gérer des parcours différents, adaptés aux rôles et responsabilités de chaque profil.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/join-us/benevoleA2.png}
+    \caption{Détail administratif d'un bénévole}
+    \label{fig:interface-admin-volunteers-detail-1}
+\end{figure}
+
+Cette vue permet à l'administrateur de consulter les informations d'un bénévole et d'évaluer son dossier. Elle facilite le suivi des candidatures et la gestion opérationnelle des personnes engagées.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/join-us/benevoleA3.png}
+    \caption{Modification du statut et des documents d'un bénévole}
+    \label{fig:interface-admin-volunteers-detail-2}
+\end{figure}
+
+Cette interface permet de mettre à jour le statut du bénévole et de gérer les images ou documents associés à son dossier. Elle garantit une meilleure traçabilité administrative.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/join-us/benevoleCreate1.png}
+    \caption{Création d'un nouveau bénévole}
+    \label{fig:interface-admin-volunteers-create}
+\end{figure}
+
+Cette interface permet à l'administrateur d'ajouter un nouveau bénévole depuis le tableau de bord. Elle complète le formulaire public en offrant une saisie interne contrôlée.
+
+\subsubsection*{Gestion des dons}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/dons/donsA1.png}
+    \caption{Liste des dons financiers}
+    \label{fig:interface-admin-dons-list}
+\end{figure}
+
+Cette interface affiche les dons financiers confirmés par les utilisateurs. Elle permet à l'administrateur de suivre les contributions reçues et de maintenir un registre clair des opérations.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/dons/donsA2.png}
+    \caption{Détail d'un don financier}
+    \label{fig:interface-admin-dons-detail-1}
+\end{figure}
+
+Cette vue présente les informations complètes d'un don sélectionné. Elle facilite la vérification des données et l'organisation du suivi financier.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/dons/donsA3.png}
+    \caption{Informations complémentaires d'un don}
+    \label{fig:interface-admin-dons-detail-2}
+\end{figure}
+
+Cette interface complète la consultation d'un don en affichant les détails nécessaires à son traitement administratif. Elle contribue à renforcer la transparence et la traçabilité des contributions.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/dons/donsCreate1.png}
+    \caption{Ajout d'un don matériel}
+    \label{fig:interface-admin-dons-create-material}
+\end{figure}
+
+Lorsque l'association reçoit un don matériel, comme des vêtements ou des fournitures, l'administrateur peut l'ajouter manuellement dans la base de données. Cette fonctionnalité permet de suivre les contributions non financières avec la même rigueur que les dons financiers.
+
+\subsubsection*{Gestion des domaines}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/domains/domainsA1.png}
+    \caption{Liste des domaines dans le tableau de bord}
+    \label{fig:interface-admin-domains-list}
+\end{figure}
+
+Cette interface permet de consulter les domaines d'intervention enregistrés pour l'association. Elle sert de point d'entrée pour administrer les axes d'action affichés sur le site public.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/domains/domainsEdit1.png}
+    \caption{Modification d'un domaine}
+    \label{fig:interface-admin-domains-edit}
+\end{figure}
+
+Cette vue permet à l'administrateur de modifier un domaine existant afin de corriger son contenu ou d'actualiser sa présentation.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/domains/domainsDelete.png}
+    \caption{Suppression d'un domaine}
+    \label{fig:interface-admin-domains-delete}
+\end{figure}
+
+Cette interface illustre la suppression d'un domaine d'intervention. Elle permet de contrôler les actions sensibles avant la suppression définitive des données.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/domains/domainsCreate1.png}
+    \caption{Création d'un nouveau domaine}
+    \label{fig:interface-admin-domains-create}
+\end{figure}
+
+Cette interface permet d'ajouter un nouveau domaine d'intervention dans le tableau de bord. Elle assure l'évolution du contenu institutionnel selon les activités réelles de l'association.
+
+\subsubsection*{Profil administrateur}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/profile/profileA1.png}
+    \caption{Page de profil administrateur}
+    \label{fig:interface-admin-profile}
+\end{figure}
+
+Cette page présente un espace simple de gestion du profil administrateur. Elle permet de modifier les informations du compte de connexion et contribue à sécuriser l'accès au tableau de bord.
+
+\subsubsection*{Gestion des partenaires}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/partenaires/partenairesA1.png}
+    \caption{Liste des partenaires côté administrateur}
+    \label{fig:interface-admin-partners-1}
+\end{figure}
+
+Cette interface permet à l'administrateur de consulter les partenaires enregistrés. Elle constitue un point d'entrée pour l'ajout, la modification ou la suppression des informations relatives aux partenaires.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/partenaires/partenairesA2.png}
+    \caption{Gestion administrative des partenaires}
+    \label{fig:interface-admin-partners-2}
+\end{figure}
+
+Cette vue complète la gestion des partenaires en présentant les actions disponibles pour administrer les contenus. Elle contribue à maintenir une présentation publique fiable et actualisée.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/partenaires/partenaireEdit1.png}
+    \caption{Modification d'un partenaire}
+    \label{fig:interface-admin-partner-edit-1}
+\end{figure}
+
+Cette interface permet de mettre à jour les informations d'un partenaire. Elle garantit la flexibilité nécessaire pour corriger ou enrichir les données affichées.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/partenaires/partenaireEdit2.png}
+    \caption{Finalisation de la modification d'un partenaire}
+    \label{fig:interface-admin-partner-edit-2}
+\end{figure}
+
+Cette seconde vue de modification permet de compléter les informations du partenaire avant validation. Elle améliore la précision de la gestion administrative.
+
+\subsubsection*{Gestion des ressources}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/ressources/ressourcesA1.png}
+    \caption{Interface administrateur de gestion des ressources}
+    \label{fig:interface-admin-resources}
+\end{figure}
+
+Cette interface permet à l'administrateur d'organiser les ressources publiées sur le site. Elle facilite la mise à disposition de documents ou contenus utiles pour les utilisateurs.
+
+\subsubsection*{Gestion des messages de contact}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/contact/contactA1.png}
+    \caption{Liste des messages reçus via le formulaire de contact}
+    \label{fig:interface-admin-contact-1}
+\end{figure}
+
+Cette interface permet à l'administrateur de consulter les messages envoyés par les visiteurs. Elle centralise les demandes reçues et facilite leur suivi.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/contact/contactA2.png}
+    \caption{Détail d'un message de contact}
+    \label{fig:interface-admin-contact-2}
+\end{figure}
+
+Cette vue affiche les détails d'un message sélectionné. Elle aide l'administrateur à traiter les demandes de manière plus précise et organisée.
+
+\subsubsection*{Gestion des abonnés et notifications}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/abonnes/abonnes.png}
+    \caption{Interface de gestion des abonnés}
+    \label{fig:interface-admin-subscribers}
+\end{figure}
+
+Cette interface affiche la liste des abonnés à la plateforme ou à la newsletter. Elle permet à l'administrateur de suivre les inscriptions et de gérer la communication avec les utilisateurs intéressés.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{IMG/image_design_frontend/notification.png}
+    \caption{Interface de gestion des notifications}
+    \label{fig:interface-admin-notifications}
+\end{figure}
+
+Cette interface permet de gérer les notifications liées aux activités de la plateforme. Elle aide l'administrateur à suivre les événements importants et à améliorer la réactivité de la gestion.
+
+
+% ============================================================================
+% CHAPITRE 4 : CONCLUSION GÉNÉRALE ET PERSPECTIVES
+% ============================================================================
+\chapter*{Conclusion Générale et Perspectives}
+\addcontentsline{toc}{chapter}{Conclusion Générale et Perspectives}
+
+\vspace{0.3cm}
+\noindent
+\begin{tikzpicture}
+    \draw[primaryBlue, line width=4pt] (0,0) -- (0,-2.6);
+    \node[anchor=north west, text width=0.88\textwidth, inner sep=10pt] at (0.3, 0) {
+        \color{darkGray}\small\setstretch{1.4}
+        Ce dernier chapitre dresse le bilan global du projet de transformation digitale de
+        l'Association Tifaouine. Il met en lumière les compétences acquises tout
+        au long de cette aventure humaine et technique, et esquisse les perspectives
+        d'évolution futures pour consolider et étendre l'impact de la plateforme.
+    };
+\end{tikzpicture}
+
+\section*{Conclusion}
+\addcontentsline{toc}{section}{Conclusion}
+
+Le projet de développement de la plateforme web trilingue pour l'Association Tifaouine a représenté un défi tout particulièrement enrichissant, tant sur le plan technique qu'humain. De l'analyse initiale des besoins avec le client jusqu'au déploiement de la solution, ce projet nous a permis de concrétiser nos apprentissages théoriques à travers la réalisation d'un produit logiciel complet, robuste et qui répond à de réelles problématiques sociales.
+
+\textbf{Les acquis majeurs retenus de ce projet se résument ainsi :}
+\begin{itemize}[label=\textcolor{primaryBlue}{\textbf{$\triangleright$}}, leftmargin=1.5cm, itemsep=0.35cm]
+    \item \textbf{Maîtrise technologique Full-Stack} : La conception et l'implémentation de la stack PERN (PostgreSQL, Express, React, Node.js) nous a permis d'approfondir nos compétences en développement d'API REST sécurisées, en gestion d'état complexe côté client (Redux Toolkit) et en design d'interfaces adaptatives.
+    \item \textbf{Rigueur méthodologique} : L'application scrupuleuse des standards de développement et du génie logiciel : modélisation UML, respect du motif MVC, validation des données (Joi), sécurisation de bout en bout (JWT, bcrypt) et internationalisation fine (i18next).
+    \item \textbf{Communication et compréhension métier} : L'échange direct avec les acteurs de l'association a largement affûté notre capacité à abstraire des processus administratifs (gestion des dons, adhésion des bénévoles) pour proposer une solution ergonomique qui fluidifie le suivi interne.
+\end{itemize}
+
+\vspace{0.4cm}
+\infobox{Bilan Humain}{Au-delà de la technique, ce projet a cultivé notre esprit citoyen. Accompagner l'Association Tifaouine dans sa transition numérique, c'est soutenir de façon concrète le développement rural et l'entraide locale. Cette mission donne un sens profond à notre futur métier d'ingénieur.}
+\vspace{0.4cm}
+
+\section*{Perspectives d'Évolution}
+\addcontentsline{toc}{section}{Perspectives d'Évolution}
+
+Si la version actuelle offre déjà une centralisation puissante des données, le cycle de vie du logiciel est un processus d'amélioration continu. Conjointement avec l'association, plusieurs axes de développement futur prometteurs ont été pensés pour étendre cet écosystème numérique :
+
+\begin{enumerate}[label=\textcolor{premiumGold}{\textbf{\arabic*.}}, leftmargin=1.5cm, itemsep=0.4cm]
+    \item \textbf{Intégration d'une passerelle de Paiement Sécurisé} : La mise en place d'un module de paiement électronique (ex: CMI ou Stripe) pour automatiser la récolte des dons financiers en ligne et simplifier les campagnes participatives.
+    \item \textbf{Développement d'une Application Mobile Native} : Développer l'équivalent mobile (React Native ou Flutter) pour cibler un public plus jeune, offrir des notifications push directes et faciliter les inscriptions aux événements associatifs depuis un smartphone.
+    \item \textbf{Espace Membre et Intranet Collaboratif} : Développer un module communautaire interne où les membres et les bénévoles pourront échanger entre eux, lancer des idées de projets et coordonner leurs missions de terrain en direct via un forum privé.
+    \item \textbf{Tableaux de bord prédictifs et IA} : Exploiter les statistiques d'affluence des dons et des engagements bénévoles à l'aide d'outils de Business Intelligence et d'algorithmes prédictifs afin de guider l'association dans sa prise de décision.
+\end{enumerate}
+
+\vspace{0.5cm}
+\noindent\textcolor{primaryBlue!25}{\rule{\textwidth}{0.5pt}}
+\vspace{0.4cm}
+
+
+% ============================================================================
+% WEBOGRAPHIE ET BIBLIOGRAPHIE
+% ============================================================================
+\chapter*{Webographie et Bibliographie}
+\addcontentsline{toc}{chapter}{Webographie et Bibliographie}
+
+\vspace{0.3cm}
+\noindent
+\begin{tikzpicture}
+    \draw[primaryBlue, line width=4pt] (0,0) -- (0,-2.0);
+    \node[anchor=north west, text width=0.88\textwidth, inner sep=10pt] at (0.3, 0) {
+        \color{darkGray}\small\setstretch{1.4}
+        Cette section regroupe l'ensemble des références documentaires, techniques et
+        bibliographiques qui ont nourri la réflexion, la conception et le développement
+        de ce projet associatif.
+    };
+\end{tikzpicture}
+\vspace{0.6cm}
+
+\begin{center}
+\begin{tikzpicture}
+    \node[
+        rectangle, rounded corners=10pt,
+        fill=white, draw=primaryBlue!30, line width=1pt,
+        inner sep=15pt,
+        drop shadow={shadow xshift=0pt, shadow yshift=-3pt, opacity=0.12}
+    ]{
+        \begin{minipage}{0.88\textwidth}
+            {\Large\bfseries\color{deepBlue} Documentation Officielle et Technologies}
+            \vspace{0.3cm}
+
+            \begin{itemize}[label=\textcolor{secondaryGold}{\textbf{$\blacksquare$}}, leftmargin=0.8cm, itemsep=0.25cm]
+                \item \textbf{React \& Vite} -- Écosystème frontend et performances : \href{https://react.dev}{https://react.dev} et \href{https://vitejs.dev/}{vitejs.dev}
+                \item \textbf{Node.js \& Express.js} -- L'environnement d'exécution côté serveur et le framework web : \href{https://nodejs.org/}{nodejs.org} | \href{https://expressjs.com/}{expressjs.com}
+                \item \textbf{PostgreSQL} -- Modélisation relationnelle de données : \href{https://www.postgresql.org/docs/}{postgresql.org/docs}
+                \item \textbf{Sequelize ORM} -- Mapping objet-relationnel Node.js : \href{https://sequelize.org/}{sequelize.org}
+                \item \textbf{Redux Toolkit} -- Gestion optimale des états : \href{https://redux-toolkit.js.org/}{redux-toolkit.js.org}
+                \item \textbf{i18next} -- Internationalisation web et traduction RTL/LTR : \href{https://www.i18next.com/}{i18next.com}
+            \end{itemize}
+        \end{minipage}
+    };
+\end{tikzpicture}
+\end{center}
+
+\vspace{0.6cm}
+
+\begin{center}
+\begin{tikzpicture}
+    \node[
+        rectangle, rounded corners=10pt,
+        fill=white, draw=primaryBlue!30, line width=1pt,
+        inner sep=15pt,
+        drop shadow={shadow xshift=0pt, shadow yshift=-3pt, opacity=0.12}
+    ]{
+        \begin{minipage}{0.88\textwidth}
+            {\Large\bfseries\color{deepBlue} Webographie : Conception, Sécurité et Composants}
+            \vspace{0.3cm}
+
+            \begin{itemize}[label=\textcolor{secondaryGold}{\textbf{$\blacksquare$}}, leftmargin=0.8cm, itemsep=0.25cm]
+                \item \textbf{Principes de Sécurité Web} -- OWASP (Open Web Application Security Project) et le fonctionnement des Json Web Tokens : \href{https://jwt.io/}{jwt.io}.
+                \item \textbf{Maquettage et Design System} -- Figma (\href{https://www.figma.com/}{figma.com}) et respects des critères d'accessibilité numérique WCAG 2.1.
+                \item \textbf{Actifs graphiques et Animations} -- Bibliothèque Lucide React (\href{https://lucide.dev}{lucide.dev}), typographies Google Fonts et animations UI via Framer Motion (\href{https://www.framer.com/motion/}{framer.com/motion}).
+            \end{itemize}
+        \end{minipage}
+    };
+\end{tikzpicture}
+\end{center}
+
+
+
+
+
+\end{document}
